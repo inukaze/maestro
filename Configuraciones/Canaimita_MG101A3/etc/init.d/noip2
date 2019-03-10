@@ -1,0 +1,46 @@
+#!/sbin/openrc-run
+
+### BEGIN INIT INFO
+# Provides:          noip2
+# Required-Start:    $local_fs $network
+# Required-Stop:     $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: noip2
+# Description:       Start/stop The NOIP Daemon"
+### END INIT INFO
+
+description="Start/Stop the no-ip daemon"
+
+depend()
+{
+        after *
+        keyword notimeout
+}
+
+checkconfig() {
+	if [ ! -f /etc/no-ip2.conf ]
+	then
+		einfo "Answer the following questions about your no-ip account."
+		noip2 -C || return 1
+	fi
+}
+
+start()
+{
+	checkconfig || return 1
+        ebegin "Starting NoIP"
+
+        start-stop-daemon --quiet --start -x /usr/bin/noip2 -- -c /etc/no-ip2.conf
+
+        eend $? "Failed to start NoIP"
+}
+
+stop()
+{
+        ebegin "Stopping NoIP"
+	start-stop-daemon --quiet --stop -x /usr/bin/noip2
+        #killall -TERM /usr/bin/noip2
+
+        eend $? $"Failed to stop NoIP"
+}

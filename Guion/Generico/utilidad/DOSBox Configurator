@@ -1,0 +1,760 @@
+
+
+#!/bin/bash
+# 
+# Autor :       Inukaze ( Venezuela )
+# Sitio         :       http://https://goo.gl/ij6WqW
+# Correo-E      :       bloginukaze@gmail.com
+# Licensia      :       GPL 3
+#
+# Acerca de este Script :       
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones del
+# Emulador conocido como "DOSBox"
+#
+# Este Generara el archivo de configuracion
+# Para el Abandonware en especifico
+# Para Evitar Errores.
+#
+# Aqui comienza :
+Titulo="BattleChess"
+Ruta_Actual="$PWD" &> /dev/null
+Ejecutable="chess.exe"
+
+echo `xrandr --current | grep current | awk '{print $8}'` >> RES1
+echo `xrandr --current | grep current | awk '{print $10}'` >> RES2
+cat RES2 | sed -i 's/,//g' RES2
+P1RES=$(cat RES1)
+P2RES=$(cat RES2)
+rm RES1 RES2
+echo "$P1RES"'x'"$P2RES" >> RES
+Resolucion=$(cat RES)
+rm RES
+
+if [ -f ".$Titulo.desktop" ]; then rm -rf ".$Titulo.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh Iniciar
+Name=$Titulo
+Icon=$PWD/.$Titulo.png
+Path=$PWD
+StartupNotify=true
+X-KDE-SubstituteUID=false" >> ".$Titulo.desktop"
+chmod a+o+x ".$Titulo.desktop"
+
+TarjetaDeVideo=$(lspci -v | grep "VGA" | cut -d " " -f05)
+MemoriaDeVideo=$(lspci -v -s `lspci | awk '/VGA/{print $1}'` | sed -n '/Memory.*, prefetchable/s/.*\[size=\([^]]\+\)M\]/\1/p')
+ControladorDeV=$(lspci -nnk | grep -i vga -A3 | grep 'in use' | cut -d " " -f05)
+soporte3d=$(glxinfo | grep "direct rendering: Yes" | cut -d " " -f03)
+
+        echo "Tarjeta De Video : $TarjetaDeVideo "
+        echo "Memoria De Video : $MemoriaDeVideo MB"
+        
+        if [ "$soporte3d" = "Yes" ];
+                        then
+                                echo "Funcion De Video : Soporte 3D & Renderizado Directo"
+                                output=$(echo output=opengl)
+                        else
+                                echo "Funcion De Video : Sin Soporte 3D"
+                                output=$(echo output=overlay)
+        fi
+
+# Resoluciones 3:2
+#       if [ "$Resolucion" = "1152x768" ]; then
+#               windowresolution=$(echo windowresolution=960x640)
+#               scaler=$(echo scaler=2xsai)
+#       fi
+        if [ "$Resolucion" = "1440x960" ]; then
+                windowresolution=$(echo windowresolution=1152x768)
+                scaler=$(echo scaler=2xsai)
+        fi
+        if [ "$Resolucion" = "2160x1440" ]; then
+                windowresolution=$(echo windowresolution=1440x960)
+                scaler=$(echo scaler=2xsai)
+        fi
+
+# Resoluciones 4:3
+        if [ "$Resolucion" = "640x480" ]; then
+                windowresolution=$(echo windowresolution=512x384)
+                scaler=$(echo scaler=2xsai)
+        fi
+        if [ "$Resolucion" = "800x600" ]; then
+                windowresolution=$(echo windowresolution=640x480)
+                scaler=$(echo scaler=2xsai)
+        fi
+        
+        if [ "$Resolucion" = "832x624" ]; then
+                windowresolution=$(echo windowresolution=640x480)
+                scaler=$(echo scaler=2xsai)
+        fi
+        
+        if [ "$Resolucion" = "960x720" ]; then
+                windowresolution=$(echo windowresolution=800x600)
+                scaler=$(echo scaler=2xsai)
+        fi
+        
+        if [ "$Resolucion" = "1024x768" ]; then
+                windowresolution=$(echo windowresolution=800x600)
+                scaler=$(echo scaler=2xsai)     
+        fi
+        if [ "$Resolucion" = "1152x864" ]; then
+                windowresolution=$(echo windowresolution=1024x768)
+                scaler=$(echo scaler=2xsai)     
+        fi
+        if [ "$Resolucion" = "1280x960" ]; then
+                windowresolution=$(echo windowresolution=1152x864)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "1400x1050" ]; then
+                windowresolution=$(echo windowresolution=1280x960)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "1440x1080" ]; then
+                windowresolution=$(echo windowresolution=1400x1050)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "1600x1200" ]; then
+                windowresolution=$(echo windowresolution=1440x1080)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "1792x1344" ]; then
+                windowresolution=$(echo windowresolution=1600x1200)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "1856x1392" ]; then
+                windowresolution=$(echo windowresolution=1792x1344)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "2048x1536" ]; then
+                windowresolution=$(echo windowresolution=1856x1392)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "2304x1728" ]; then
+                windowresolution=$(echo windowresolution=2048x1536)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "2560x1920" ]; then
+                windowresolution=$(echo windowresolution=2304x1728)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "2800x2100" ]; then
+                windowresolution=$(echo windowresolution=2560x1920)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "3200x2400" ]; then
+                windowresolution=$(echo windowresolution=2800x2100)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "4096x3072" ]; then
+                windowresolution=$(echo windowresolution=3200x2400)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "6400x4800" ]; then
+                windowresolution=$(echo windowresolution=4096x3072)
+                scaler=$(echo scaler=none)      
+        fi
+
+# Resoluciones 5:3
+        if [ "$Resolucion" = "800x480" ]; then
+                windowresolution=$(echo windowresolution=400x240)
+                scaler=$(echo scaler=2xsai)     
+        fi
+        if [ "$Resolucion" = "1280x768" ]; then
+                windowresolution=$(echo windowresolution=800x480)
+                scaler=$(echo scaler=none)      
+        fi
+
+# Resoluciones 5:4
+        if [ "$Resolucion" = "600x480" ]; then
+                windowresolution=$(echo windowresolution=640x512)
+                scaler=$(echo scaler=2xsai)     
+        fi
+        if [ "$Resolucion" = "1280x1024" ]; then
+                windowresolution=$(echo windowresolution=600x480)
+                scaler=$(echo scaler=none)      
+        fi      
+        if [ "$Resolucion" = "1800x1440" ]; then
+                windowresolution=$(echo windowresolution=1280x1024)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "2560x2048" ]; then
+                windowresolution=$(echo windowresolution=1800x1440)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "5120x4096" ]; then
+                windowresolution=$(echo windowresolution=2560x2048)
+                scaler=$(echo scaler=none)      
+        fi
+
+# Resoluciones 8:5
+        if [ "$Resolucion" = "768x480" ]; then
+                windowresolution=$(echo windowresolution=640x400)
+                scaler=$(echo scaler=2xsai)     
+        fi
+        if [ "$Resolucion" = "1024x640" ]; then
+                windowresolution=$(echo windowresolution=768x480)
+                scaler=$(echo scaler=2xsai)     
+        fi
+        if [ "$Resolucion" = "1152x720" ]; then
+                windowresolution=$(echo windowresolution=1024x640)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "1280x800" ]; then
+                windowresolution=$(echo windowresolution=1152x720)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "1440x900" ]; then
+                windowresolution=$(echo windowresolution=1280x800)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "1680x1050" ]; then
+                windowresolution=$(echo windowresolution=1440x900)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "1920x1200" ]; then
+                windowresolution=$(echo windowresolution=1680x1050)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "2048x1280" ]; then
+                windowresolution=$(echo windowresolution=1920x1200)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "2304x1440" ]; then
+                windowresolution=$(echo windowresolution=2048x1280)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "2560x1600" ]; then
+                windowresolution=$(echo windowresolution=2304x1440)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "2880x1800" ]; then
+                windowresolution=$(echo windowresolution=2560x1600)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "3840x2400" ]; then
+                windowresolution=$(echo windowresolution=2880x1800)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "5120x3200" ]; then
+                windowresolution=$(echo windowresolution=3840x2400)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "7680x4800" ]; then
+                windowresolution=$(echo windowresolution=5120x3200)
+                scaler=$(echo scaler=none)      
+        fi
+
+# Resoluciones 16:9
+        if [ "$Resolucion" = "960x540" ]; then
+                windowresolution=$(echo windowresolution=640x360)
+                scaler=$(echo scaler=2xsai)     
+        fi
+        if [ "$Resolucion" = "1024x576" ]; then
+                windowresolution=$(echo windowresolution=960x540)
+                scaler=$(echo scaler=2xsai)     
+        fi
+        if [ "$Resolucion" = "1280x720" ]; then
+                windowresolution=$(echo windowresolution=1024x576)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "1600x900" ]; then
+                windowresolution=$(echo windowresolution=1280x720)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "1920x1080" ]; then
+                windowresolution=$(echo windowresolution=1600x900)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "2048x1152" ]; then
+                windowresolution=$(echo windowresolution=1920x1080)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "2560x1440" ]; then
+                windowresolution=$(echo windowresolution=2048x1152)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "3840x2160" ]; then
+                windowresolution=$(echo windowresolution=2560x1440)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "4096x2304" ]; then
+                windowresolution=$(echo windowresolution=3840x2160)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "7680x4320" ]; then
+                windowresolution=$(echo windowresolution=4096x2304)
+                scaler=$(echo scaler=none)      
+        fi
+        if [ "$Resolucion" = "8192x4608" ]; then
+                windowresolution=$(echo windowresolution=7680x4320)
+                scaler=$(echo scaler=none)      
+        fi
+
+if test -f "$Ruta_Actual/.$Titulo.conf"
+    then
+        rm -rf "$Ruta_Actual/.$Titulo.conf"
+    else
+        echo
+fi
+
+
+echo '
+# Este es el archivo de configuración para DOSBox 0.74. (Por favor use la última versión de DOSBox)
+# Las líneas que comienzan con un # son comentarios y son ignoradas por DOSBox.
+# Son usadas para documentar (brevemente) el efecto de cada opción.
+
+[sdl]
+#       fullscreen: Iniciar DOSBox en pantalla completa. (Presionar ALT-Intro para regresar)
+#       fulldouble: Usar doble búfer en pantalla completa. Puede reducir el parpadeo de la pantalla, pero también puede ralentizar a DOSBox.
+#   fullResolucion: Qué resolución usar para pantalla completa: original o tamaño fijo (ej: 1024x768).
+#                     Usar la resolución nativa de su monitor con aspect=true puede dar los mejores resultados.
+#                     Si ve una ventana chica en una pantalla grande, pruebe una salida que no sea surface.
+# windowresolution: Escala la ventana a esta resolución SI el dispositivo de salida soporta escalado por hardware.
+#                     (¡output=surface no lo soporta!)
+#           output: Qué sistema de video usar para la salida.
+#                   Posibles valores: surface, overlay, opengl, openglnb, ddraw.
+#         autolock: El cursor se capturará automáticamente si hace clic en la pantalla. (Presione CTRL-F10 para liberarlo)
+#      sensitivity: Sensibilidad del ratón.
+#      waitonerror: Esperar antes de cerrar la consola si DOSBox tiene un error.
+#         priority: Niveles de prioridad para DOSBox. La segunda entrada detrás de la coma es para cuando DOSBox no tiene foco o está minimizado.
+#                     pause sólo es válido para la segunda entrada.
+#                   Posibles valores: lowest, lower, normal, higher, highest, pause.
+#       mapperfile: Archivo usado para cargar/guardar las asignaciones de tecla/evento. Resetmapper sólo trabaja con el valor por defecto.
+#     usescancodes: Evita el uso de symkeys, puede no funcionar en todos los sistemas operativos.
+
+fullscreen=true
+fulldouble=true
+fullResolucion='"$Resolucion"'
+'"$windowresolution"'
+'"$output"'
+autolock=true
+sensitivity=250
+waitonerror=true
+priority=higher,normal
+mapperfile=
+usescancodes=false
+
+[dosbox]
+# language: Selecciona otro archivo de idioma.
+#  machine: El tipo de máquina que DOSBox intenta emular.
+#           Posibles valores: hercules, cga, tandy, pcjr, ega, vgaonly, svga_s3, svga_et3000, svga_et4000, svga_paradise, vesa_nolfb, vesa_oldvbe.
+# captures: Directorio en el se capturan cosas como la pantalla, MIDI y wave.
+#  memsize: Cantidad de memoria en megabytes que tiene DOSBox.
+#             Este valor es mejor dejarlo por defecto para evitar problemas con algunos
+#             juegos, aunque unos pocos pueden requerir un valor más alto.
+#             Generalmente no hay mejora de velocidad al aumentar este valor.
+
+language=.espanol.lang
+machine=svga_s3
+captures=capture
+memsize=31
+
+[render]
+# frameskip: Cuántos cuadros DOSBox saltea antes de dibujar uno.
+#    aspect: Realizar corrección de aspecto, ¡si el método de salida no soporta escalado esto puede ralentizar las cosas!.
+#    scaler: Escalador usado para ampliar o mejorar los modos de baja resolución. Si
+#            "forced" es designado, el escalador será usado aún si el resultado pudiera ser
+#            indeseado.
+#            Posibles valores: none, normal2x, normal3x, advmame2x, advmame3x, advinterp2x, advinterp3x, hq2x, hq3x, 2xsai, super2xsai, supereagle, tv2x, tv3x, rgb2x, rgb3x, scan2x, scan3x.
+
+frameskip=0
+aspect=true
+'"$scaler"'
+
+[cpu]
+#      core: Núcleo de procesador usado en la emulación. auto cambiará a dynamic si está 
+#            disponible y es apropiado.
+#            Posibles valores: auto, dynamic, normal, simple.
+#   cputype: Tipo de procesador usado en la emulación. auto es la opción más rápida.
+#            Posibles valores: auto, 386, 386_slow, 486_slow, pentium_slow, 386_prefetch.
+#    cycles: Cantidad de instrucciones que DOSBox intenta emular cada milisegundo.
+#            Establecer este valor muy alto ocasiona retrasos en el sonido.
+#            Los ciclos se pueden establecer de 3 maneras:
+#              "auto"          intenta adivinar lo que necesita un juego.
+#                              Generalmente funciona, pero puede fallar para ciertos juegos.
+#              "fixed #number" establecerá una cantidad fija de ciclos. Generalmente esto es
+#                              lo que necesita si "auto" falla (Ejemplo: fixed 4000).
+#              "max"           asignará cuantos ciclos pueda manejar su computadora.
+#            
+#            Posibles valores: auto, fixed, max.
+#   cycleup: Cantidad de ciclos a disminuir/incrementar con las combinaciones de teclas.
+#            (CTRL-F11/CTRL-F12)
+# cycledown: Si es menor a 100 será un porcentaje.
+
+core=auto
+cputype=auto
+cycles=8192
+cycleup=10
+cycledown=20
+
+[mixer]
+#   nosound: Habilita el modo silencioso, aunque el sonido sigue siendo emulando.
+#      rate: Frecuencia de muestreo del mezclador, establecer la frecuencia de cualquier dispositivo más alta que esto probablemente reduzca su calidad de sonido.
+#            Posibles valores: 22050, 48000, 32000, 22050, 16000, 11025, 8000, 49716.
+# blocksize: Tamaño de bloque del mezclador, bloques más grandes pueden ayudar a reducir el tartamudeo del sonido pero también irá más retrasado.
+#            Posibles valores: 1024, 2048, 4096, 8192, 512, 256.
+# prebuffer: Cuántos milisegundos de datos mantener al principio del bloque.
+
+nosound=false
+rate=22050
+blocksize=512
+prebuffer=20
+
+[midi]
+#     mpu401: Tipo de MPU-401 a emular.
+#             Posibles valores: intelligent, uart, none.
+# mididevice: Dispositivo que recibirá los datos MIDI del MPU-401.
+#             Posibles valores: default, win32, alsa, oss, coreaudio, coremidi, none.
+# midiconfig: Opciones especiales de configuración para el controlador del dispositivo. Generalmente esto es el id del dispositivo que quiere usar.
+#               Mire el manual para más detalles.
+
+mpu401=intelligent
+mididevice=alsa
+midiconfig=128:1
+
+[sblaster]
+#  sbtype: Tipo de SoundBlaster a emular. gb es GameBlaster.
+#          Posibles valores: sb1, sb2, sbpro1, sbpro2, sb16, gb, none.
+#  sbbase: La dirección IO de la SoundBlaster.
+#          Posibles valores: 220, 240, 260, 280, 2a0, 2c0, 2e0, 300.
+#     irq: El número de interrupción de la SoundBlaster.
+#          Posibles valores: 7, 5, 3, 9, 10, 11, 12.
+#     dma: EL número DMA de la SoundBlaster.
+#          Posibles valores: 1, 5, 0, 3, 6, 7.
+#    hdma: El número DMA Alto de la SoundBlaster.
+#          Posibles valores: 1, 5, 0, 3, 6, 7.
+# sbmixer: Permitir al mezclador SoundBlaster modificar al mezclador DOSBox.
+# oplmode: Tipo de emulación OPL. En "auto" el modo es determinado según el tipo de SoundBlaster. Todos los modos OPL son compatibles con Adlib, excepto 'cms'.
+#          Posibles valores: auto, cms, opl2, dualopl2, opl3, none.
+#  oplemu: Proveedor de la emulación OPL. compat puede brindar mejor calidad (mire oplrate también).
+#          Posibles valores: default, compat, fast.
+# oplrate: Frecuencia de muestreo de la emulación de música OPL. Use 49716 para la calidad más alta (establezca la frecuencia del mezclador acorde).
+#          Posibles valores: 22050, 49716, 48000, 32000, 22050, 16000, 11025, 8000.
+
+sbtype=sb16
+sbbase=220
+irq=7
+dma=1
+hdma=5
+sbmixer=true
+oplmode=auto
+oplemu=default
+oplrate=22050
+
+[gus]
+#      gus: Habilita la emulación de Gravis Ultrasound.
+#  gusrate: Frecuencia de muestreo de la emulación Ultrasound.
+#           Posibles valores: 22050, 48000, 32000, 22050, 16000, 11025, 8000, 49716.
+#  gusbase: La dirección base IO de la Gravis Ultrasound.
+#           Posibles valores: 240, 220, 260, 280, 2a0, 2c0, 2e0, 300.
+#   gusirq: El número de interrupción de la Gravis Ultrasound.
+#           Posibles valores: 5, 3, 7, 9, 10, 11, 12.
+#   gusdma: El canal DMA de la Gravis Ultrasound.
+#           Posibles valores: 3, 0, 1, 5, 6, 7.
+# ultradir: Ruta del directorio Ultrasound. En este directorio
+#           debería haber un directorio MIDI que contenga
+#           los archivos de parches para la reproducción GUS.
+#           Los parches usados con Timidity deberían funcionar bien.
+
+gus=true
+gusrate=22050
+gusbase=240
+gusirq=5
+gusdma=3
+ultradir=C:\ULTRASND
+
+[speaker]
+# pcspeaker: Habilita la emulación de altavoz interno.
+#    pcrate: Frecuencia de muestreo de la generación de sonido del altavoz interno.
+#            Posibles valores: 22050, 48000, 32000, 22050, 16000, 11025, 8000, 49716.
+#     tandy: Habilita la emulación de Tandy Sound System. Para "auto", la emulación sólo está presente cuando machine está establecido en "tandy".
+#            Posibles valores: auto, on, off.
+# tandyrate: Frecuencia de muestreo de la generación de Tandy 3-Voice.
+#            Posibles valores: 22050, 48000, 32000, 22050, 16000, 11025, 8000, 49716.
+#    disney: Habilita la emulación de Disney Sound Source. (compatible con Covox Voice Master y Speech Thing).
+
+pcspeaker=true
+pcrate=22050
+tandy=auto
+tandyrate=22050
+disney=true
+
+[joystick]
+# joysticktype: Tipo de joystick a emular: auto (por defecto), none,
+#               2axis (soporta dos joysticks),
+#               4axis (soporta un joystick, el primer joystick es usado),
+#               4axis_2 (soporta un joystick, el segundo joystick es usado),
+#               fcs (Thrustmaster), ch (CH Flightstick).
+#               none deshabilita la emulación de joystick.
+#               auto elige la emulación dependiendo de los joystick reales.
+#               (Recuerde reiniciar el archivo de asignaciones de DOSBox si lo guardó antes)
+#               Posibles valores: auto, 2axis, 4axis, 4axis_2, fcs, ch, none.
+#        timed: habilita intervalos temporizados para los ejes. Experimente con esta opción si su joystick se desvía.
+#     autofire: dispara continuamente mientras mantenga el botón presionado.
+#       swap34: intercambia el 3er y el 4to eje. puede ser útil para ciertos joysticks.
+#   buttonwrap: habilita ajuste de los botones al número de botones emulado
+
+joysticktype=auto
+timed=true
+autofire=false
+swap34=false
+buttonwrap=false
+
+[serial]
+# serial1: establece tipo de dispositivo conectado al puerto com.
+#          Puede ser disabled, dummy, modem, nullmodem, directserial.
+#          Parámetros adicionales deben estar en la misma línea en la forma 
+#          parámetro:valor. Parámetro para todos los tipos es irq (opcional).
+#          para directserial: realport (requerido), rxdelay (opcional).
+#                         (realport:COM1 realport:ttyS0).
+#          para modem: listenport (opcional).
+#          para nullmodem: server, rxdelay, txdelay, telnet, usedtr,
+#                       transparent, port, inhsocket (todos opcionales).
+#          Ejemplo: serial1=modem listenport:5000
+#          Posibles valores: dummy, disabled, modem, nullmodem, directserial.
+# serial2: vea serial1
+#          Posibles valores: dummy, disabled, modem, nullmodem, directserial.
+# serial3: vea serial1
+#          Posibles valores: dummy, disabled, modem, nullmodem, directserial.
+# serial4: vea serial1
+#          Posibles valores: dummy, disabled, modem, nullmodem, directserial.
+
+serial1=dummy
+serial2=dummy
+serial3=disabled
+serial4=disabled
+
+[dos]
+#            xms: Habilita soporte para XMS.
+#            ems: Habilita soporte para EMS. Por defecto (=true) provee la mejor compatibilidad
+#                 pero ciertas aplicaciones pueden correr mejor con otras opciones, o requerir
+#                 que el soporte para EMS esté deshabilitado (=false) para funcionar.
+#            umb: Habilita soporte para UMB.
+# keyboardlayout: Código de idioma de la disposición del teclado (o none).
+
+xms=true
+ems=true
+umb=true
+keyboardlayout=auto
+
+[ipx]
+# ipx: Habilita emulación de IPX sobre UDP/IP.
+ipx=false
+
+[autoexec]
+# Las líneas en esta sección serán ejecutadas al inicio.
+# Puede poner sus líneas MOUNT acá.
+SET ULTRADIR=C:\ULTRASND
+SET ULTRASND=240,3,3,5,5
+SET BLASTER=A220 I7 D1 H5 T6
+keyb sp 850
+
+@echo off
+mount c '"$Ruta_Actual/.$Titulo"'
+c:
+'"$Ejecutable"'
+exit' | tee "$Ruta_Actual/.$Titulo.conf" &> /dev/null
+
+cd $HOME
+
+if [ -e Desktop ]; then cd Desktop; DirectorioEscritorio="$HOME/Desktop"; fi
+if [ -e Escritorio ]; then cd Escritorio; DirectorioEscritorio="$HOME/Escritorio"; fi
+
+if [ ! -e "$DirectorioEscritorio" ]; then
+        mkdir -p "$DirectorioEscritorio"
+        cd "$DirectorioEscritorio"
+fi
+
+if [ -e $DirectorioEscritorio ]; then
+        cd "$DirectorioEscritorio"
+fi
+
+
+# Escribir Los Archivos de "Enlace(s)"
+# Necesarios dentro de la Carpeta "$HOME/$DirectorioEscritorio"
+
+# Primero Borrar cualquier archivo Anterior
+# De Escritorio , para Evitar Conflictos y no crear archivos innecesarios.
+
+if [ -f "$Titulo.desktop" ]; then rm -rf "$Titulo.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$Ruta_Actual'"'"/Iniciar
+Name=$Titulo
+Icon=$Ruta_Actual/.$Titulo.png
+Path="'"'$Ruta_Actual'"'"
+StartupNotify=true
+X-KDE-SubstituteUID=false" >> "$Titulo.desktop"
+
+chmod a+o+x "$Titulo.desktop"
+
+# Detectar si esta en uso "cairo-dock" y agregar un SubDock
+# Dentro del SubDock agregar el Icono.
+
+CairoDock=`ps -A | grep cairo-dock | awk '{print $4}' | head -1`
+
+if [ "$CairoDock" = "cairo-dock" ]; then
+        VersionDelCairoDock=$(cat "$HOME/.config/cairo-dock/current_theme/cairo-dock.conf" | head -n 1)
+        Contenedor="$HOME/.config/cairo-dock/current_theme/launchers/01container.desktop"
+        IconoParaElContenedor="$HOME/.config/cairo-dock/current_theme/launchers/01$Titulo.desktop"
+
+if test ! -f "$Contenedor" 
+        then
+        echo "$VersionDelCairoDock
+
+#[gtk-about]
+
+[Desktop Entry]
+
+#F[Icon]
+frame_maininfo=
+
+#d+ Name of the container it belongs to:
+Container=_MainDock_
+
+#s[New sub-dock] Sub-dock's name:
+Name=Abandonware
+
+#v
+sep_display=
+
+#Y+[Use an image;1;1;Draw sub-dock's content as emblems;0;0;Draw sub-dock's content as stack;0;0;Draw sub-dock's content inside a box;0;0] How to render the icon:
+render=0
+
+#S+ Image's name or path:
+Icon=$Ruta_Actual/.MSDos.png
+
+
+#X[Extra parameters]
+frame_extra=
+
+#n Name of the view used for the sub-dock:
+Renderer=
+
+#i-[0;16] Only show in this specific viewport:
+#{If '0' the container will be displayed on every viewport.}
+ShowOnViewport=0
+
+#f[0;100] Order you want for this launcher among the others:
+Order=1
+
+Icon Type=1
+Type=Container" | tee "$Contenedor" &> /dev/null
+fi
+
+if test -f "$Contenedor"
+        then
+                if test -f "$IconoParaElContenedor"
+                        then
+                        rm "$IconoParaElContenedor"
+                fi
+fi
+
+if test ! -f "$IconoParaElContenedor"
+then    
+        echo "$VersionDelCairoDock
+
+#[gtk-about]
+
+[Desktop Entry]
+
+#F[Icon]
+frame_maininfo=
+
+#d+ Name of the container it belongs to:
+Container=Abandonware
+
+#v
+sep_display=
+
+#s[Default] Launcher's name:
+Name=$Titulo
+
+#S+[Default] Image's name or path:
+Icon=$Ruta_Actual/.$Titulo.png
+
+#s[Default] Command to launch on click:
+#{Example: nautilus --no-desktop, gedit, etc. You can even enter a shortkey, e.g. <Alt>F1, <Ctrl>c,  <Ctrl>v, etc}
+Exec=sh "'"'$Ruta_Actual'"'"/Iniciar
+
+
+#X[Extra parameters]
+frame_extra=
+
+#b Don't link the launcher with its window
+#{If you chose to mix launcher and applications, this option will deactivate this behaviour for this launcher only. It can be useful for instance for a launcher that launches a script in a terminal, but you don't want it to steal the terminal's icon from the taskbar.} 
+prevent inhibate=false
+
+#K[Default] Class of the program:
+#{The only reason you may want to modify this parameter is if you made this launcher by hands. If you dropped it into the dock from the menu, it is nearly sure that you shouldn't touch it. It defines the class of the program, which is useful to link the application with its launcher.}
+StartupWMClass=
+
+#b Run in a terminal?
+Terminal=false
+
+#i-[0;16] Only show in this specific viewport:
+#{If '0' the launcher will be displayed on every viewport.}
+ShowOnViewport=0
+
+#f[0;100] Order you want for this launcher among the others:
+Order=1
+
+Icon Type=0
+Type=Application
+Origin=$DirectorioEscritorio/$Titulo.desktop" | tee "$IconoParaElContenedor" &> /dev/null
+
+`dbus-send --session --dest=org.cairodock.CairoDock /org/cairodock/CairoDock org.cairodock.CairoDock.Reboot`
+fi
+fi
+
+# Plank
+Plank=`ps -A | grep plank | awk '{print $4}' | head -1`
+if [ "$Plank" = "plank" ];
+then
+        if test -d "$HOME/.config/plank/dock1/launchers" 
+                then
+                if test -f "$HOME/.config/plank/dock1/launchers/$Titulo.dockitem"
+                        then
+                        rm "$HOME/.config/plank/dock1/launchers/$Titulo.dockitem"
+                fi
+                if test ! -f "$HOME/.config/plank/dock1/launchers/$Titulo.dockitem"
+                        then
+                        echo "[PlankItemsDockItemPreferences] 
+Launcher=file://$Ruta_Actual/.$Titulo.desktop" | tee "$HOME/.config/plank/dock1/launchers/$Titulo.dockitem" &> /dev/null
+                        killall -9 plank ; plank &
+                fi
+        fi
+fi
+
+# WBar
+WBar=`ps -A | grep wbar | awk '{print $4}' | head -1`
+
+if [ "$WBar" = "wbar" ];
+then
+if test -f "$HOME/.wbar" 
+        then
+                if grep -q "i: '$Ruta_Actual/.$Titulo.png'" "$HOME/.wbar" ; then echo ; else
+                echo "" >> "$HOME/.wbar"
+                echo "i: $Ruta_Actual/.$Titulo.png" >> "$HOME/.wbar" ; fi
+         
+                if grep -q "c: '$Ruta_Actual/Iniciar'" "$HOME/.wbar" ; then echo ; else
+                echo "c: $Ruta_Actual/Iniciar" >> "$HOME/.wbar"; fi
+        
+                if grep -q "t: $Titulo" "$HOME/.wbar" ; then echo ; else
+                echo "t: $Titulo" >> "$HOME/.wbar" ; fi 
+
+        killall wbar ; wbar & 
+        fi
+fi
+
+

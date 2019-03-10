@@ -1,0 +1,311 @@
+#!/bin/sh
+#!/bin/bash
+#
+# Autor	:	Inukaze ( Venezuela )
+# Sitio		:	http://inukaze.wordpResolucions.com
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+
+# Obtener el nombre del nucleo del sistema
+Nucleo=$(uname -s)
+
+if		[ $Nucleo = "Darwin" ]; then
+		Nucleo=mac
+elif		[ $Nucleo = "Linux" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "FreeBSD" ]; then
+		Nucleo=linux
+else
+		echo "Sistema Operativo NO SOPORTADO"
+fi
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if	       [ $Arquitectura = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+         elif [ $Arquitectura = "x86_64" ]; then
+			export WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="64 Bits"
+	else
+		echo "Arquitectura NO SOPORTADA"
+fi
+
+# Muestra en la terminal La arquitectura &
+# La version especifica de Wine usada
+wver=$(wine --version)
+echo ""
+echo ""
+echo "Corriendo '$wver' en '$Nucleo' ( Maquina de '$Arquitectura' )"
+echo ""
+echo ""
+
+# Solucion de Resolucion - Parte 1
+echo `xrandr --current | grep current | awk '{print $8}'` >> Resolucion1
+echo `xrandr --current | grep current | awk '{print $10}'` >> Resolucion2
+cat Resolucion2 | sed -i 's/,//g' Resolucion2
+P1Resolucion=$(cat Resolucion1)
+P2Resolucion=$(cat Resolucion2)
+rm Resolucion1 Resolucion2
+echo "$P1Resolucion"'x'"$P2Resolucion" >> Resolucion
+Resolucion=$(cat Resolucion)
+rm Resolucion
+# Solucion de Resolucion - Parte 1
+
+# Agregando ValoResolucion al Registro de Wine :
+
+# Audio
+echo "REGEDIT4" >> audio.reg
+echo "" >> audio.reg
+echo "[HKEY_CURRENT_USER\Software\Wine\DirectSound]" >> audio.reg
+echo '"DefaultSampleRate"="44100"' >> audio.reg
+echo '"HardwareAcceleration"="Emulation"' >> audio.reg
+regedit -s audio.reg
+rm -rf audio.reg
+
+echo "REGEDIT4" >> v3d.reg
+echo "" >> v3d.reg
+echo '[HKEY_CURRENT_USER\Software\Wine\Direct3D]' >> v3d.reg
+echo '"DirectDrawRenderer"="opengl"' >> v3d.reg
+echo '"OffscreenRenderingMode"="backbuffer"' >> v3d.reg
+echo '"PixelShaderMode"="enabled"' >> v3d.reg
+echo '"VertexShaderMode"="hardware"' >> v3d.reg
+echo '"VideoMemorySize"="64"' >> v3d.reg
+regedit -s v3d.reg
+rm -rf v3d.reg
+
+# Establecer la Resolucion Actual Dentro del Juego :
+if			[ $Resolucion = "640x480" ]; then
+echo "REGEDIT4" >> video.reg
+echo "" >> video.reg
+echo "[HKEY_CURRENT_USER\Software\Blizzard Entertainment\Warcraft III\Video]" >> video.reg
+echo '"Resolucionheight"=dword:000001e0' >> video.reg
+echo '"Resolucionwidth"=dword:00000280' >> video.reg
+# Agrego mi Tasa de RefResolucionco
+echo '"refResolucionhrate"=dword:00000046' >> video.reg
+regedit -s video.reg
+	elif	[ $Resolucion = "800x600" ]; then
+echo "REGEDIT4" >> video.reg
+echo "" >> video.reg
+echo "[HKEY_CURRENT_USER\Software\Blizzard Entertainment\Warcraft III\Video]" >> video.reg
+echo '"Resolucionheight"=dword:00000258' >> video.reg
+echo '"Resolucionwidth"=dword:00000320' >> video.reg
+# Agrego mi Tasa de RefResolucionco
+echo '"refResolucionhrate"=dword:00000046' >> video.reg
+regedit -s video.reg
+	elif	[ $Resolucion = "1024x768" ]; then
+echo "REGEDIT4" >> video.reg
+echo "" >> video.reg
+echo "[HKEY_CURRENT_USER\Software\Blizzard Entertainment\Warcraft III\Video]" >> video.reg
+echo '"Resolucionheight"=dword:00000300' >> video.reg
+echo '"Resolucionwidth"=dword:00000400' >> video.reg
+# Agrego mi Tasa de RefResolucionco
+echo '"refResolucionhrate"=dword:00000046' >> video.reg
+regedit -s video.reg
+rm -rf video.reg
+else
+	echo "Resolucion Desconocida"
+fi
+
+echo "REGEDIT4" >> cinematicas.reg
+echo "" >> cinematicas.reg
+echo "[HKEY_CURRENT_USER\Software\Blizzard Entertainment\Warcraft III\Video]" >> cinematicas.reg
+#Original : 800x368
+#echo '"cinematicheight"=dword:00000182' >> cinematicas.reg
+#echo '"cinematicwidth"=dword:00000320' >> cinematicas.reg
+#Aceptable : 800x600x85Hz
+echo '"cinematicheight"=dword:00000258' >> cinematicas.reg
+echo '"cinematicwidth"=dword:00000320' >> cinematicas.reg
+echo '"cinematicoverrides"=dword:00000001' >> cinematicas.reg
+echo '"cinematicrefResolucionh"=dword:00000055' >> cinematicas.reg
+echo '"cinematicbpp"=dword:00000030' >> cinematicas.reg
+regedit -s cinematicas.reg
+rm -rf cinematicas.reg
+# Establecer la Resolucion Actual Dentro del Juego :
+
+
+# ValoResolucion Altos para Efectos en el Juegos :
+echo "REGEDIT4" >> video.reg
+echo "[HKEY_CURRENT_USER\Software\Blizzard Entertainment\Warcraft III\Video]" >> video.reg
+echo '"animquality"=dword:00000002' >> video.reg
+echo '"colordepth"=dword:00000018' >> video.reg
+echo '"gamma"=dword:00000014' >> video.reg
+echo '"lights"=dword:00000002' >> video.reg
+echo '"lockfb"=dword:00000001' >> video.reg
+echo '"maxfps"=dword:0000003c' >> video.reg
+echo '"miplevel"=dword:00000000' >> video.reg
+echo '"modeldetail"=dword:00000002' >> video.reg
+echo '"occlusion"=dword:00000001' >> video.reg
+echo '"particles"=dword:00000002' >> video.reg
+echo '"spellfilter"=dword:00000002' >> video.reg
+echo '"texcolordepth"=dword:00000018' >> video.reg
+echo '"texquality"=dword:00000002' >> video.reg
+echo '"unitshadows"=dword:00000001' >> video.reg
+# ValoResolucion Altos para Efectos en el Juegos :
+
+# Sin ver la intro :
+echo "[HKEY_CURRENT_USER\Software\Blizzard Entertainment\Warcraft III\Misc]" >> video.reg
+echo '"seenintromovie"=dword:00000000' >> video.reg
+regedit -s video.reg
+rm -rf video.reg
+# Sin ver la intro :
+
+# Todos los valoResolucion Resoluciontantes del Juego :
+echo "REGEDIT4" >> war3.reg
+echo "" >> war3.reg
+echo "[HKEY_LOCAL_MACHINE\SOFTWARE\Blizzard Entertainment\Warcraft III]" >> war3.reg
+echo '"InstallPath"="c:\\\software\\\"' >> war3.reg
+echo '"RUTA"="c:\\\software\\\war3.exe"' >> war3.reg
+echo "" >> war3.reg
+echo "[HKEY_CURRENT_USER\Software\Blizzard Entertainment\Warcraft III]" >> war3.reg
+echo '"InstallPath"="c:\\\software"' >> war3.reg
+echo '"Program"="c:\\\software\\\Warcraft III.exe"' >> war3.reg
+echo '"War3CD"="d:\\\"' >> war3.reg
+echo '"InstallPathX"="c:\\\software"' >> war3.reg
+echo '"ProgramX"="c:\\\software\\\Frozen Throne.exe"' >> war3.reg
+echo '"War3XCD"="d:\\\"' >> war3.reg
+echo "" >> war3.reg
+echo "[HKEY_CURRENT_USER\Software\Blizzard Entertainment\Warcraft III\DelOpt0]" >> war3.reg
+echo '"Path0"="c:\\\software\\\save"' >> war3.reg
+echo '"File0"="w3z"' >> war3.reg
+echo '"Path1"="c:\\\software\\\save"' >> war3.reg
+echo '"File1"="w3v"' >> war3.reg
+echo '"Path2"="c:\\\software\\\save"' >> war3.reg
+echo '"File2"="w3p"' >> war3.reg
+echo "" >> war3.reg
+echo "[HKEY_CURRENT_USER\Software\Blizzard Entertainment\Warcraft III\DelOpt1]" >> war3.reg
+echo '"Path0"="c:\\\software\\\Replay"' >> war3.reg
+echo "[HKEY_CURRENT_USER\Software\Blizzard Entertainment\Warcraft III\DelOpt2]" >> war3.reg
+echo '"Path0"="c:\\\software\\\Logs"' >> war3.reg
+echo '"File0"="log"' >> war3.reg
+echo '"Path1"="c:\\\software\\\Logs"' >> war3.reg
+echo '"File1"="txt"' >> war3.reg
+echo '"Path2"="c:\\\software\\\Logs"' >> war3.reg
+echo '"File2"="w3g"' >> war3.reg
+echo '"Path3"="c:\\\software\\\Logs"' >> war3.reg
+echo '"File3"="j"' >> war3.reg
+echo "" >> war3.reg
+echo "[HKEY_CURRENT_USER\Software\Blizzard Entertainment\Warcraft III\DelOpt3]" >> war3.reg
+echo '"Path0"="c:\\\software\\\Errors"' >> war3.reg
+echo '"File0"="txt"' >> war3.reg
+echo "" >> war3.reg
+echo "[HKEY_CURRENT_USER\Software\Blizzard Entertainment\Warcraft III\Gameplay]" >> war3.reg
+echo '"gamespeed"=dword:00000003' >> war3.reg
+echo '"mousescroll"=dword:00000032' >> war3.reg
+echo '"mousescrolldisable"=dword:00000000' >> war3.reg
+echo '"keyscroll"=dword:00000032' >> war3.reg
+echo '"tooltips"=dword:00000001' >> war3.reg
+echo '"formations"=dword:00000001' >> war3.reg
+echo '"herobar"=dword:00000001' >> war3.reg
+echo '"netgameport"=dword:000017e0' >> war3.reg
+echo '"inputsprocket"=dword:00000000' >> war3.reg
+echo '"ammtype"=dword:00000000' >> war3.reg
+echo '"ammstyles"=""' >> war3.reg
+echo '"ammmapprefs"=""' >> war3.reg
+echo '"ammmaphashes"=""' >> war3.reg
+echo '"ammrace"=dword:00000020' >> war3.reg
+echo '"customfilter"=dword:00000000' >> war3.reg
+echo '"custommask"=dword:00000000' >> war3.reg
+echo '"allyFilter"=dword:00000000' >> war3.reg
+echo '"creepFilter"=dword:00000001' >> war3.reg
+echo '"terrainFilter"=dword:00000001' >> war3.reg
+echo '"subgrouporder"=dword:00000000' >> war3.reg
+echo '"multiboardon"=dword:00000001' >> war3.reg
+echo '"customkeys"=dword:00000000' >> war3.reg
+echo '"healthbars"=dword:00000000' >> war3.reg
+echo '"formationtoggle"=dword:00000001' >> war3.reg
+echo '"schedrace"=dword:00000020' >> war3.reg
+echo '"autosaveReplay"=dword:00000000' >> war3.reg
+echo "" >> war3.reg
+echo "[HKEY_CURRENT_USER\Software\Blizzard Entertainment\Warcraft III\Map]" >> war3.reg
+echo '"skirmish_V0"=""' >> war3.reg
+echo '"skirmish_V1"=""' >> war3.reg
+echo '"lan_V0"=""' >> war3.reg
+echo '"lan_V1"=""' >> war3.reg
+echo '"battlenet_V0"=""' >> war3.reg
+echo '"battlenet_V1"=""' >> war3.reg
+echo "" >> war3.reg
+echo "[HKEY_CURRENT_USER\Software\Blizzard Entertainment\Warcraft III\Misc]" >> war3.reg
+echo '"campaignprofile"=""' >> war3.reg
+echo '"clickedtourn"=dword:00000000' >> war3.reg
+echo '"clickedclan"=dword:00000000' >> war3.reg
+echo '"clickedladder"=dword:00000000' >> war3.reg
+echo '"clickedad"=dword:00000000' >> war3.reg
+echo '"chatsupport"=dword:00000000' >> war3.reg
+echo "" >> war3.reg
+echo "[HKEY_CURRENT_USER\Software\Blizzard Entertainment\Warcraft III\Sound]" >> war3.reg
+echo '"provider"=dword:00000001' >> war3.reg
+echo '"positional"=dword:00000001' >> war3.reg
+echo '"environmental"=dword:00000001' >> war3.reg
+echo '"music"=dword:00000001' >> war3.reg
+echo '"musicvolume"=dword:00000028' >> war3.reg
+echo '"sfx"=dword:00000001' >> war3.reg
+echo '"sfxvolume"=dword:00000064' >> war3.reg
+echo '"ambient"=dword:00000001' >> war3.reg
+echo '"movement"=dword:00000001' >> war3.reg
+echo '"unit"=dword:00000001' >> war3.reg
+echo '"subtitles"=dword:00000000' >> war3.reg
+echo '"nomidi"=dword:00000000' >> war3.reg
+echo '"softwaremidi"=dword:00000001' >> war3.reg
+echo '"nosoundwarn"=dword:00000001' >> war3.reg
+echo '"donotusewaveout"=dword:00000000' >> war3.reg
+echo "" >> war3.reg
+echo "[HKEY_CURRENT_USER\Software\Blizzard Entertainment\Warcraft III\String]" >> war3.reg
+echo '"userbnet"=""' >> war3.reg
+echo '"userlocal"=""' >> war3.reg
+regedit -s war3.reg
+rm -rf war3.reg
+# Final de Los ValoResolucion Resoluciontantes del Juego #

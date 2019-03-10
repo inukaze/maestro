@@ -1,0 +1,1870 @@
+#!/bin/bash
+# 
+# Autor		:       Inukaze ( Venezuela )
+# Sitio         :       http://https://goo.gl/ij6WqW
+# Correo-E      :       bloginukaze@gmail.com
+# Licencia      :       GPL 2
+#
+# Acerca de este Script :       
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD     , Solaris             , MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+
+# Ahora apartir de aqui comienza mi Script :
+rm -rf "$HOME"/.usuarioenuso &> /dev/null
+touch "$HOME"/.usuarioenuso &> /dev/null
+echo "$USERNAME" | sudo tee "$HOME"/.usuarioenuso &> /dev/null
+#Usuario=$(echo $HOME | awk -F'/' '/^/ { print $3 }')
+Usuario=$(cat "$HOME"/.usuarioenuso) &> /dev/null
+export Usuario &> /dev/null
+echo "El Usuario Actual es : $Usuario"
+RUTACTUAL="$PWD" &> /dev/null
+#DIRORIGEN=""$( cd -P "$( dirname "$" )" && pwd )""
+DIRORIGEN=$(pwd)
+#CONFIGURAR="su $USERNAME -c 2>/dev/null 1>/dev/null wineboot >/dev/null"
+export CONFIGURAR &> /dev/null
+rm -rf "$HOME"/.usuarioenuso
+rm -rf "$HOME"/.config/menus/applications-merged/wine*
+rm -rf "$HOME"/.local/share/desktop-directories/wine*
+rm -rf "$HOME"/.local/share/icons/????_*.xpm
+rm -rf "$HOME"/.local/share/applications/wine
+mkdir -p "$HOME/.local/share/icons/hicolor" &> /dev/null
+cd "$HOME/.local/share/icons/hicolor"
+wget https://dl.dropboxusercontent.com/u/3164499/Linux/wine-icons.tar.gz &> /dev/null
+tar xfvz wine-icons.tar.gz &> /dev/null
+rm -rf wine-icons.tar.gz
+2>/dev/null 1>/dev/null find . -type d -maxdepth 1 | while read DIRNAME; do sudo update-icon-caches "${DIRNAME}"; done &> /dev/null
+cd "$RUTACTUAL"
+
+if [ "$(whoami)" != root ]; then
+
+	echo
+	echo
+	echo 'Por favor ejecuta este script como root'
+	echo 'ó en su defecto usando "sudo" antes del script'
+	echo
+	echo 'Utilize este Script bajo su Propio Riesgro'
+	echo 'El Autor , o sea yo , no me hago responsable'
+	echo 'de las consecuencias imprevistas que puedan'
+	echo 'acontecer en tu sistema operativo'
+	echo
+	echo
+	
+else
+
+# Extraido del Script "install-addons.sh" del sitio de wine
+# Y Adaptado para este script por "Inukaze (De Venezuela)"
+if test -d /usr/local/share/wine
+then
+    WINE_SHARE_PREFIX=/usr/local/share/wine
+else
+    WINE_SHARE_PREFIX=/usr/share/wine
+fi
+
+Titulo="Instalador Manual de Wine"
+Pregunta="Por Favor Elige una Opcion : " 
+Versiones=( 
+"1.6.2"
+"1.7.0"
+"1.7.1"
+"1.7.2"
+"1.7.3"
+"1.7.4"
+"1.7.5"
+"1.7.6"
+"1.7.7"
+"1.7.8"
+"1.7.9"
+"1.7.10"
+"1.7.11"
+"1.7.12"
+"1.7.13"
+"1.7.14"
+"1.7.15"
+"1.7.16"
+"1.7.17"
+"1.7.18"
+"1.7.19"
+"1.7.20"
+"1.7.21"
+"1.7.22"
+"1.7.23"
+"1.7.24"
+"1.7.25"
+"1.7.26"
+"1.7.27"
+"1.7.28"
+"1.7.29"
+"1.7.30"
+"1.7.31"
+"1.7.32"
+"Salir"
+)
+
+## Binarios de Wine ##
+sudo rm -rf /usr/bin/msiexec
+sudo rm -rf /usr/bin/notepad
+sudo rm -rf /usr/bin/regedit
+sudo rm -rf /usr/bin/regsvr32
+sudo rm -rf /usr/bin/wine-auto
+sudo rm -rf /usr/bin/wineboot
+sudo rm -rf /usr/bin/winebuild
+sudo rm -rf /usr/bin/winecfg
+sudo rm -rf /usr/bin/wineconsole
+sudo rm -rf /usr/bin/winecpp
+sudo rm -rf /usr/bin/winedbg
+sudo rm -rf /usr/bin/winedump
+sudo rm -rf /usr/bin/winefile
+sudo rm -rf /usr/bin/wineg++
+sudo rm -rf /usr/bin/winegcc
+sudo rm -rf /usr/bin/winemaker
+sudo rm -rf /usr/bin/winemine
+sudo rm -rf /usr/bin/winepath
+sudo rm -rf /usr/bin/wineserver
+sudo rm -rf /usr/bin/wmc
+sudo rm -rf /usr/bin/wrc
+sudo rm -rf /usr/bin/widl
+sudo rm -rf /usr/bin/wine 
+sudo rm -rf /usr/bin/wine-preloader 
+sudo rm -rf /usr/bin/wine64 
+sudo rm -rf /usr/bin/wine64-preloader 
+sudo rm -rf /usr/bin/function_grep.pl
+sudo rm -rf /usr/local/bin/msiexec
+sudo rm -rf /usr/local/bin/notepad
+sudo rm -rf /usr/local/bin/regedit
+sudo rm -rf /usr/local/bin/regsvr32
+sudo rm -rf /usr/local/bin/wine-auto
+sudo rm -rf /usr/local/bin/wineboot
+sudo rm -rf /usr/local/bin/winebuild
+sudo rm -rf /usr/local/bin/winecfg
+sudo rm -rf /usr/local/bin/wineconsole
+sudo rm -rf /usr/local/bin/winecpp
+sudo rm -rf /usr/local/bin/winedbg
+sudo rm -rf /usr/local/bin/winedump
+sudo rm -rf /usr/local/bin/winefile
+sudo rm -rf /usr/local/bin/wineg++
+sudo rm -rf /usr/local/bin/wine
+sudo rm -rf /usr/local/bin/winegcc
+sudo rm -rf /usr/local/bin/winemaker
+sudo rm -rf /usr/local/bin/winemine
+sudo rm -rf /usr/local/bin/winepath
+sudo rm -rf /usr/local/bin/wineserver
+sudo rm -rf /usr/local/bin/wmc
+sudo rm -rf /usr/local/bin/wrc
+sudo rm -rf /usr/local/bin/widl
+sudo rm -rf /usr/local/bin/function_grep.pl
+sudo rm -rf /usr/local/share/binfmts/wine
+sudo rm -rf /usr/lib/i386-linux-gnu/wine/ 
+sudo rm -rf /usr/lib/x86_64-linux-gnu/wine/ 
+sudo rm -rf /usr/local/bin/wine 
+sudo rm -rf /usr/local/bin/wine-preloader 
+sudo rm -rf /usr/local/bin/wine64 
+sudo rm -rf /usr/local/bin/wine64-preloader 
+sudo rm -rf /var/lib/binfmts/wine
+
+# Documentos & Manuales
+sudo rm -rf /usr/share/doc/wine*
+sudo rm -rf /usr/share/lintian/overrides/wine*
+sudo rm -rf /usr/share/man/de.UTF-8/man1/wine.1.gz
+sudo rm -rf /usr/share/man/de.UTF-8/man1/winemaker.1.gz
+sudo rm -rf /usr/share/man/de.UTF-8/man1/wineserver.1.gz
+sudo rm -rf /usr/share/man/fr.UTF-8/man1/wine.1.gz
+sudo rm -rf /usr/share/man/fr.UTF-8/man1/winemaker.1.gz
+sudo rm -rf /usr/share/man/fr.UTF-8/man1/wineserver.1.gz
+sudo rm -rf /usr/share/man/man1/msiexec.1.gz
+sudo rm -rf /usr/share/man/man1/notepad.1.gz
+sudo rm -rf /usr/share/man/man1/regedit.1.gz
+sudo rm -rf /usr/share/man/man1/regsvr32.1.gz
+sudo rm -rf /usr/share/man/man1/widl.1.gz
+sudo rm -rf /usr/share/man/man1/wine.1.gz
+sudo rm -rf /usr/share/man/man1/wineboot.1.gz
+sudo rm -rf /usr/share/man/man1/winebuild.1.gz
+sudo rm -rf /usr/share/man/man1/winecfg.1.gz
+sudo rm -rf /usr/share/man/man1/wineconsole.1.gz
+sudo rm -rf /usr/share/man/man1/winecpp.1.gz
+sudo rm -rf /usr/share/man/man1/winedbg.1.gz
+sudo rm -rf /usr/share/man/man1/winedump.1.gz
+sudo rm -rf /usr/share/man/man1/winefile.1.gz
+sudo rm -rf /usr/share/man/man1/wineg++.1.gz
+sudo rm -rf /usr/share/man/man1/winegcc.1.gz
+sudo rm -rf /usr/share/man/man1/winemaker.1.gz
+sudo rm -rf /usr/share/man/man1/winemine.1.gz
+sudo rm -rf /usr/share/man/man1/winepath.1.gz
+sudo rm -rf /usr/share/man/man1/wineserver.1.gz
+sudo rm -rf /usr/share/man/man1/wmc.1.gz
+sudo rm -rf /usr/share/man/man1/wrc.1.gz
+sudo rm -rf /usr/share/man/pl.UTF-8/man1/wine.1.gz
+sudo rm -rf /usr/share/doc/wine-gecko*
+sudo rm -rf /usr/share/doc/wine-mono*
+sudo rm -rf /usr/local/share/doc/wine*
+sudo rm -rf /usr/local/share/lintian/overrides/wine*
+sudo rm -rf /usr/local/share/man/de.UTF-8/man1/wine.1.gz
+sudo rm -rf /usr/local/share/man/de.UTF-8/man1/winemaker.1.gz
+sudo rm -rf /usr/local/share/man/de.UTF-8/man1/wineserver.1.gz
+sudo rm -rf /usr/local/share/man/fr.UTF-8/man1/wine.1.gz
+sudo rm -rf /usr/local/share/man/fr.UTF-8/man1/winemaker.1.gz
+sudo rm -rf /usr/local/share/man/fr.UTF-8/man1/wineserver.1.gz
+sudo rm -rf /usr/local/share/man/man1/msiexec.1.gz
+sudo rm -rf /usr/local/share/man/man1/notepad.1.gz
+sudo rm -rf /usr/local/share/man/man1/regedit.1.gz
+sudo rm -rf /usr/local/share/man/man1/regsvr32.1.gz
+sudo rm -rf /usr/local/share/man/man1/widl.1.gz
+sudo rm -rf /usr/local/share/man/man1/wine.1.gz
+sudo rm -rf /usr/local/share/man/man1/wineboot.1.gz
+sudo rm -rf /usr/local/share/man/man1/winebuild.1.gz
+sudo rm -rf /usr/local/share/man/man1/winecfg.1.gz
+sudo rm -rf /usr/local/share/man/man1/wineconsole.1.gz
+sudo rm -rf /usr/local/share/man/man1/winecpp.1.gz
+sudo rm -rf /usr/local/share/man/man1/winedbg.1.gz
+sudo rm -rf /usr/local/share/man/man1/winedump.1.gz
+sudo rm -rf /usr/local/share/man/man1/winefile.1.gz
+sudo rm -rf /usr/local/share/man/man1/wineg++.1.gz
+sudo rm -rf /usr/local/share/man/man1/winegcc.1.gz
+sudo rm -rf /usr/local/share/man/man1/winemaker.1.gz
+sudo rm -rf /usr/local/share/man/man1/winemine.1.gz
+sudo rm -rf /usr/local/share/man/man1/winepath.1.gz
+sudo rm -rf /usr/local/share/man/man1/wineserver.1.gz
+sudo rm -rf /usr/local/share/man/man1/wmc.1.gz
+sudo rm -rf /usr/local/share/man/man1/wrc.1.gz
+sudo rm -rf /usr/local/share/man/pl.UTF-8/man1/wine.1.gz
+sudo rm -rf /usr/local/share/doc/wine-gecko*
+sudo rm -rf /usr/local/share/doc/wine-mono*
+
+# Enlaces y otros
+sudo rm -rf /usr/bin/wmc
+sudo rm -rf /usr/bin/wrc
+sudo rm -rf /usr/bin/widl
+sudo rm -rf /usr/bin/function_grep.pl
+sudo rm -rf /usr/share/applications/wine-browsedrive.desktop
+sudo rm -rf /usr/share/applications/wine-notepad.desktop
+sudo rm -rf /usr/share/applications/wine-uninstaller.desktop
+sudo rm -rf /usr/share/applications/wine-winecfg.desktop
+sudo rm -rf /usr/share/applications/wine.desktop
+sudo rm -rf /usr/share/binfmts/wine
+sudo rm -rf /usr/share/desktop-directories/wine-Programs-Accessories.directory
+sudo rm -rf /usr/share/desktop-directories/wine-Programs.directory
+sudo rm -rf /usr/share/desktop-directories/wine-wine.directory
+sudo rm -rf /etc/xdg/menus/applications-merged/wine.menu
+sudo rm -rf /usr/lib/wine/ 
+sudo rm -rf /usr/lib/mime/packages/wine*
+sudo rm -rf /usr/local/lib/mime/packages/wine*
+sudo rm -rf /usr/share/wine
+sudo rm -rf /usr/local/share/wine
+sudo rm -rf /usr/share/applications/wine-browsedrive.desktop
+sudo rm -rf /usr/share/applications/wine-notepad.desktop
+sudo rm -rf /usr/share/applications/wine-uninstaller.desktop
+sudo rm -rf /usr/share/applications/wine-winecfg.desktop
+sudo rm -rf /usr/share/applications/wine.desktop
+sudo rm -rf /usr/share/binfmts/wine
+sudo rm -rf /usr/share/desktop-directories/wine-Programs-Accessories.directory
+sudo rm -rf /usr/share/desktop-directories/wine-Programs.directory
+sudo rm -rf /usr/share/desktop-directories/wine-wine.directory
+sudo rm -rf /etc/xdg/menus/applications-merged/wine.menu
+sudo rm -rf /usr/local/share/applications/wine-browsedrive.desktop
+sudo rm -rf /usr/local/share/applications/wine-notepad.desktop
+sudo rm -rf /usr/local/share/applications/wine-uninstaller.desktop
+sudo rm -rf /usr/local/share/applications/wine-winecfg.desktop
+sudo rm -rf /usr/local/share/applications/wine.desktop
+sudo rm -rf /usr/local/share/desktop-directories/wine-Programs-Accessories.directory
+sudo rm -rf /usr/local/share/desktop-directories/wine-Programs.directory
+sudo rm -rf /usr/local/share/desktop-directories/wine-wine.directory
+sudo rm -rf /etc/xdg/menus/applications-merged/wine.menu
+sudo rm -rf /usr/lib/libwine.so
+sudo rm -rf /usr/lib/libwine.so.1
+sudo rm -rf /usr/lib/libwine.so.1.0
+
+# ICONOS #
+sudo rm -rf /usr/share/icons/hicolor/16x16/apps/wine-notepad.png
+sudo rm -rf /usr/share/icons/hicolor/16x16/apps/wine-uninstaller.png
+sudo rm -rf /usr/share/icons/hicolor/16x16/apps/wine-winecfg.png
+sudo rm -rf /usr/share/icons/hicolor/16x16/apps/wine.png
+sudo rm -rf /usr/share/icons/hicolor/16x16/places/folder-wine.png
+sudo rm -rf /usr/share/icons/hicolor/22x22/apps/wine-notepad.png
+sudo rm -rf /usr/share/icons/hicolor/22x22/apps/wine-uninstaller.png
+sudo rm -rf /usr/share/icons/hicolor/22x22/apps/wine-winecfg.png
+sudo rm -rf /usr/share/icons/hicolor/22x22/apps/wine.png
+sudo rm -rf /usr/share/icons/hicolor/22x22/places/folder-wine.png
+sudo rm -rf /usr/share/icons/hicolor/24x24/apps/wine-notepad.png
+sudo rm -rf /usr/share/icons/hicolor/24x24/apps/wine-uninstaller.png
+sudo rm -rf /usr/share/icons/hicolor/24x24/apps/wine-winecfg.png
+sudo rm -rf /usr/share/icons/hicolor/24x24/apps/wine.png
+sudo rm -rf /usr/share/icons/hicolor/24x24/places/folder-wine.png
+sudo rm -rf /usr/share/icons/hicolor/32x32/apps/wine-notepad.png
+sudo rm -rf /usr/share/icons/hicolor/32x32/apps/wine-uninstaller.png
+sudo rm -rf /usr/share/icons/hicolor/32x32/apps/wine-winecfg.png
+sudo rm -rf /usr/share/icons/hicolor/32x32/apps/wine.png
+sudo rm -rf /usr/share/icons/hicolor/32x32/places/folder-wine.png
+sudo rm -rf /usr/share/icons/hicolor/48x48/apps/wine-notepad.png
+sudo rm -rf /usr/share/icons/hicolor/48x48/apps/wine-uninstaller.png
+sudo rm -rf /usr/share/icons/hicolor/48x48/apps/wine-winecfg.png
+sudo rm -rf /usr/share/icons/hicolor/48x48/apps/wine.png
+sudo rm -rf /usr/share/icons/hicolor/48x48/places/folder-wine.png
+sudo rm -rf /usr/share/icons/hicolor/scalable/apps/notepad-48.svg
+sudo rm -rf /usr/share/icons/hicolor/scalable/apps/wine-uninstaller.svg
+sudo rm -rf /usr/share/icons/hicolor/scalable/apps/wine-winecfg.svg
+sudo rm -rf /usr/share/icons/hicolor/scalable/apps/wine.svg
+sudo rm -rf /usr/local/share/icons/hicolor/16x16/apps/wine-notepad.png
+sudo rm -rf /usr/local/share/icons/hicolor/16x16/apps/wine-uninstaller.png
+sudo rm -rf /usr/local/share/icons/hicolor/16x16/apps/wine-winecfg.png
+sudo rm -rf /usr/local/share/icons/hicolor/16x16/apps/wine.png
+sudo rm -rf /usr/local/share/icons/hicolor/16x16/places/folder-wine.png
+sudo rm -rf /usr/local/share/icons/hicolor/22x22/apps/wine-notepad.png
+sudo rm -rf /usr/local/share/icons/hicolor/22x22/apps/wine-uninstaller.png
+sudo rm -rf /usr/local/share/icons/hicolor/22x22/apps/wine-winecfg.png
+sudo rm -rf /usr/local/share/icons/hicolor/22x22/apps/wine.png
+sudo rm -rf /usr/local/share/icons/hicolor/22x22/places/folder-wine.png
+sudo rm -rf /usr/local/share/icons/hicolor/24x24/apps/wine-notepad.png
+sudo rm -rf /usr/local/share/icons/hicolor/24x24/apps/wine-uninstaller.png
+sudo rm -rf /usr/local/share/icons/hicolor/24x24/apps/wine-winecfg.png
+sudo rm -rf /usr/local/share/icons/hicolor/24x24/apps/wine.png
+sudo rm -rf /usr/local/share/icons/hicolor/24x24/places/folder-wine.png
+sudo rm -rf /usr/local/share/icons/hicolor/32x32/apps/wine-notepad.png
+sudo rm -rf /usr/local/share/icons/hicolor/32x32/apps/wine-uninstaller.png
+sudo rm -rf /usr/local/share/icons/hicolor/32x32/apps/wine-winecfg.png
+sudo rm -rf /usr/local/share/icons/hicolor/32x32/apps/wine.png
+sudo rm -rf /usr/local/share/icons/hicolor/32x32/places/folder-wine.png
+sudo rm -rf /usr/local/share/icons/hicolor/48x48/apps/wine-notepad.png
+sudo rm -rf /usr/local/share/icons/hicolor/48x48/apps/wine-uninstaller.png
+sudo rm -rf /usr/local/share/icons/hicolor/48x48/apps/wine-winecfg.png
+sudo rm -rf /usr/local/share/icons/hicolor/48x48/apps/wine.png
+sudo rm -rf /usr/local/share/icons/hicolor/48x48/places/folder-wine.png
+sudo rm -rf /usr/local/share/icons/hicolor/scalable/apps/notepad-48.svg
+sudo rm -rf /usr/local/share/icons/hicolor/scalable/apps/wine-uninstaller.svg
+sudo rm -rf /usr/local/share/icons/hicolor/scalable/apps/wine-winecfg.svg
+sudo rm -rf /usr/local/share/icons/hicolor/scalable/apps/wine.svg
+
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+case "$Arquitectura" in
+    x86)	Arquitectura="x86"					;;
+    i?86)	Arquitectura="x86"					;;
+    amd64)	Arquitectura="amd64"					;;
+    x86_64)	Arquitectura="x86_64"					;;
+* ) echo    "Tu Arquitectura '$Arquitectura' -> NO ESTA SOPORTADA."	;;
+esac
+
+Instalar_Wine(){
+
+if [	"$Arquitectura" = "x86_64" ]; then
+	  Arquitectura="amd64"
+fi
+
+    case $1 in
+    1.7.32)
+        VersionWine=1.7.32
+	case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=d3ff8af93ecf258504524747fa0732cc60ac5586;;
+        amd64) VersionWine_SHA1SUM=227be1c78376af80fda803fead29f823a17ff06b;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.31)
+        VersionWine=1.7.31
+	case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=444b7222b6798b91cb57bf8859a34566664c6232;;
+        amd64) VersionWine_SHA1SUM=06591df5e5a4d01a8a9f0e44a4efd35efa0e0f5d;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.30)
+        VersionWine=1.7.30
+	case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=e53fcb721913deeca0bd9ae017b9ab379e75adef;;
+        amd64) VersionWine_SHA1SUM=d13240f8b73c5f7f39b999b8d848937ed178dabf;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.29)
+        VersionWine=1.7.29
+	case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=5740ccbe2a620f929368b44cace7bd1b876585ba;;
+        amd64) VersionWine_SHA1SUM=1620d8ca538a5bdd276be8ee390f1eb38825c663;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.28)
+        VersionWine=1.7.28
+	case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=00ed128dd78bb497038f2fe5ab2325c5bd0f558f;;
+        amd64) VersionWine_SHA1SUM=3459b94b7daf644ef5e8962f296602f40c615e64;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.27)
+        VersionWine=1.7.27
+	case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=4d6b42314cf07900bb93b1131b61abb11d20fa43;;
+        amd64) VersionWine_SHA1SUM=4cdddbd0a2480b7010d2edf9e855d792c9796f8b;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.26)
+        VersionWine=1.7.26
+	case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=91feb35036277c287e28f3596b187d672c1c6e38;;
+        amd64) VersionWine_SHA1SUM=40dd034d0affa114675ad065d465cadca1e0c92e;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.25)
+	VersionWine=1.7.25
+	case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=def218117f1c486bf1a434147936ee708620e050;;
+        amd64) VersionWine_SHA1SUM=4cd32371a6c3a8f40cc50a1f0b3926c9fea8589a;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.24)
+        VersionWine=1.7.24
+	case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=47feb3a54ed7b72cfd03a0d43bd69fe4e6312b43;;
+        amd64) VersionWine_SHA1SUM=31ac55aad169d36b0e10ec4069b91ea29dd879f8;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.23)
+        VersionWine=1.7.23
+	case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=69981f0c11d45b98822fd8e8ab557eafab3f0011;;
+        amd64) VersionWine_SHA1SUM=fbc387975c45b98fbda1fc2d5b40a93ae09b25cc;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.22)
+        VersionWine=1.7.22
+	case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=2b1432d7e42faaf1e607359ce5e73700c7aab334;;
+        amd64) VersionWine_SHA1SUM=2078208b4a5f268fcff4d68c747ccb183afdaac3;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.21)
+    	VersionWine=1.7.21
+	case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=0b360db4a644b70e1fbe90863f626a2c92c41d7a;;
+        amd64) VersionWine_SHA1SUM=4fdfd7531d39f3c55796fcce9a08cda23f2c3f31;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.20)
+	VersionWine=1.7.20
+	case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=9b1c2041a559fc788a9b996b4c0d39b287ea292c;;
+        amd64) VersionWine_SHA1SUM=60449618a1f9d5d3a5f4a6095efc494310ba8546;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;    
+    1.7.19)
+	VersionWine=1.7.19
+	case "$Arquitectura" in
+	x86)	VersionWine_SHA1SUM=c95cfe2ba1b796c67a8fe7c79cbdee1953f400d6;;
+	amd64)	VersionWine_SHA1SUM=4c12df4a65c61bc3981274e60f3a345fb0942daa;;
+	esac
+	ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+	;;
+    1.7.18)
+        VersionWine=1.7.18
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=3006d235e41266f625ae45ac5d553f15613af88a;;
+        amd64) VersionWine_SHA1SUM=bd43c11332ca19af8d178d0326db447f6bf42587;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.17)
+        VersionWine=1.7.17
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=cbd594a8b66bf3eb38b7e065e0cd26394404c0a4;;
+        amd64) VersionWine_SHA1SUM=e24d327b396d24fbd224d56cd8dbb4a827f2a2fe;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.16)
+        VersionWine=1.7.16
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=3702d5e9e609b59d4dade8f8cb6b3a1d6ab64bed;;
+        amd64) VersionWine_SHA1SUM=4cdc1e57b1707acf7a86c193d18dbf22ebf12226;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.15)
+        VersionWine=1.7.15
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=acf18e5d9a218783c518d7f9aac9214ca6911a56;;
+        amd64) VersionWine_SHA1SUM=bf1d23854a587509cce9d85309b61632f7b95a51;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.14)
+        VersionWine=1.7.14
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=53689f641ef47e6d7f9e6c4ba8c72a463805f204;;
+        amd64) VersionWine_SHA1SUM=fbd75aea999b9d65af4ed8abd497c17172fbd85c;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.13)
+        VersionWine=1.7.13
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=851f1ef7343f2bc8f0164c95108611a8166eb75b;;
+        amd64) VersionWine_SHA1SUM=e5d6addaf9293bf88393d27b5732bcf255d2e4de;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.12)
+        VersionWine=1.7.12
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=9ae82d42b7c249f06fde643adab80b5536737e6a;;
+        amd64) VersionWine_SHA1SUM=9633656b14bb97f03d9fa7d65910781522ab41cb;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.11)
+        VersionWine=1.7.11
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=a2049b89244512146e4332d5a30ff4b0e191273a;;
+        amd64) VersionWine_SHA1SUM=6fa0f6b44d9ce4289171ed29cf1c19fb8b2a3cdb;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.10)
+        VersionWine=1.7.10
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=61982f7681ca5bc4ea76f169408862cccc667e39;;
+        amd64) VersionWine_SHA1SUM=e1b437c7a1c73d1485049651ef6a7de5b26be055;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.9)
+        VersionWine=1.7.9
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=158bb950cf740e4edf39468525eeffcb9ad2d9e7;;
+        amd64) VersionWine_SHA1SUM=47babea7b565845083fc53c12ec4124a370de099;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.8)
+        VersionWine=1.7.8
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=9b746722734b23c525bd1b2d4d7210358a2236f9;;
+        amd64) VersionWine_SHA1SUM=475c825bd75794821a57ba8d21c3aab1a5075d81;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.7)
+        VersionWine=1.7.7
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=e2fbd10fb5afd769e4e324d504c661f104d2cad8;;
+        amd64) VersionWine_SHA1SUM=226d5826a5c4e36d7bfa2d162ece9e8e23c38a94;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.6)
+        VersionWine=1.7.6
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=cc043b18232744c7bb8890a1b0bf5291fdd98c03;;
+        amd64) VersionWine_SHA1SUM=f7f0618bac002e545a132e11883239dfac5e3276;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.5)
+        VersionWine=1.7.5
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=0f8f8a1d9926d8df3cc1df1bad829a1922f47bf3;;
+        amd64) VersionWine_SHA1SUM=f3641b18e3577db246d390e04476c157032c3c6c;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.4)
+        VersionWine=1.7.4
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=b64c84b17ffd1c29a68efc6bf55270edffe18bf4;;
+        amd64) VersionWine_SHA1SUM=ef9f7bb72b255ce589f0dd620f00f1da68be9e7a;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.3)
+        VersionWine=1.7.3
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=353049c6dbc991982b1295ca58b75d15b4d1638c;;
+        amd64) VersionWine_SHA1SUM=7d8214aa2983b606f7fe47098c423b93be91001d;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.2)
+        VersionWine=1.7.2
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=9fd9f1774eea0f4d76461e58849877f3c006f160;;
+        amd64) VersionWine_SHA1SUM=c48a47eff080f0e47e5fd82f71c880272b8a1c9e;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.1)
+        VersionWine=1.7.1
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=efd34a8026b27c2417c86d23057ad3d08d3ee31b;;
+        amd64) VersionWine_SHA1SUM=bb75f94d2b6fc258cb4f04e33e05aafaf48201e1;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.7.0)
+        VersionWine=1.7.0
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=e0945a7dbbf84914b1f000168ebbade5a8078348;;
+        amd64) VersionWine_SHA1SUM=48a39c45b329e7fc35130a9af8245265091fe5a7;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    1.6.2)
+        VersionWine=1.6.2
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=c102ba31a9df3b4246cd112290d212fdb697cc09;;
+        amd64) VersionWine_SHA1SUM=05f940cce913280768f38ccdb5d56a361b6bc51a;;
+        esac
+        ExtensionVersionWine=.pol
+	export VersionWine
+	export ExtensionVersionWine
+        ;;
+    esac
+
+    cd "$DIRORIGEN"
+    if test -f PlayOnLinux-wine-"$Opcion-linux-$Arquitectura".pol
+    then
+	SUMA_POL_OBTENIDA=$(sha1sum < PlayOnLinux-wine-"$Opcion-linux-$Arquitectura".pol | sed 's/(stdin)= //;s/ .*//')
+	if [ "$SUMA_POL_OBTENIDA" = "$VersionWine_SHA1SUM" ]
+	then
+	  printf "\n"
+		WINE_SHARE_PREFIX=/usr
+		2>/dev/null 1>/dev/null tar xfvj PlayOnLinux-wine-"$Opcion-linux-$Arquitectura".pol
+		rm -rf playonlinux files
+		sudo chmod a+o+x -R wineversion/"$Opcion"
+		cd wineversion/"$Opcion"
+		RUTACTUAL="$PWD"
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/function_grep.pl
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/msiexec
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/notepad
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/regedit
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/regsvr32
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/widl
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wine
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wine64
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wine64-preloader
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wineboot
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winebuild
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winecfg
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wineconsole
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winecpp
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winedbg
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winedump
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winefile
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wineg++
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winegcc
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winemaker
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winemine
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winepath
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wine-preloader
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wineserver
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wmc
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wrc
+		sudo rm -rf $WINE_SHARE_PREFIX/lib/wine/fakedlls
+		sudo rm -rf $WINE_SHARE_PREFIX/lib/wine
+		sudo rm -rf $WINE_SHARE_PREFIX/lib/libwine.so
+		sudo rm -rf $WINE_SHARE_PREFIX/lib/libwine.so.1
+		sudo rm -rf $WINE_SHARE_PREFIX/lib/libwine.so.1.0
+		sudo rm -rf $WINE_SHARE_PREFIX/share/applications/wine.desktop
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/de.UTF-8/man1/wine.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/de.UTF-8/man1/winemaker.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/de.UTF-8/man1/wineserver.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/fr.UTF-8/man1/wine.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/fr.UTF-8/man1/winemaker.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/fr.UTF-8/man1/wineserver.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/msiexec.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/notepad.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/regedit.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/regsvr32.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/widl.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/wine.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/wineboot.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winebuild.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winecfg.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/wineconsole.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winecpp.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winedbg.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winedump.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winefile.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/wineg++.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winegcc.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winemaker.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winemine.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winepath.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/wineserver.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/wmc.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/wrc.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/pl.UTF-8/man1/wine.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/wine/fonts
+		sudo rm -rf $WINE_SHARE_PREFIX/share/wine
+			if        [ "$Arquitectura" = "amd64" ]; then
+					sudo rm -rf $WINE_SHARE_PREFIX/lib/wine/fakedlls
+					sudo rm -rf $WINE_SHARE_PREFIX/lib/wine
+					sudo rm -rf $WINE_SHARE_PREFIX/lib/libwine.so
+					sudo rm -rf $WINE_SHARE_PREFIX/lib/libwine.so.1
+					sudo rm -rf $WINE_SHARE_PREFIX/lib/libwine.so.1.0
+					sudo rm -rf $WINE_SHARE_PREFIX/lib64/wine/fakedlls
+					sudo rm -rf $WINE_SHARE_PREFIX/lib64/wine
+					sudo rm -rf $WINE_SHARE_PREFIX/lib64/libwine.so
+					sudo rm -rf $WINE_SHARE_PREFIX/lib64/libwine.so.1
+					sudo rm -rf $WINE_SHARE_PREFIX/lib64/libwine.so.1.0
+
+						if test -d "$RUTACTUAL"/lib64
+							then
+								sudo rm -rf	"$WINE_SHARE_PREFIX"/lib64/wine
+								sudo mkdir -p	"$WINE_SHARE_PREFIX"/lib64/wine
+								sudo cp -rf	"$RUTACTUAL"/lib64/wine/** "$WINE_SHARE_PREFIX"/lib64/wine
+							fi
+						
+						if test -d /usr/lib/x86_64-linux-gnu
+							then								
+								sudo rm -rf	/usr/lib/x86_64-linux-gnu/wine							
+								sudo mkdir -p	/usr/lib/x86_64-linux-gnu/wine						
+								sudo cp -rf	"$RUTACTUAL/lib64"/wine/** /usr/lib/x86_64-linux-gnu/wine
+						fi
+					
+						if [ -d /etc/ld.so.conf.d ]
+						then
+							sudo chmod 777 /etc/ld.so.conf.d
+							if [ -d /lib32 ] || [ -d /usr/lib32 ]							
+							then
+							echo
+									if [ -e /etc/ld.so.conf.d/i686-linux-gnu.conf ]; then
+										sudo cp /etc/ld.so.conf.d/i686-linux-gnu.conf /etc/ld.so.conf.d/i686-linux-gnu.conf.original
+										sudo sed '/lib32/d' /etc/ld.so.conf.d/i686-linux-gnu.conf >> /etc/ld.so.conf.d/i686-linux-gnu.conf.inukaze
+										sudo mv /etc/ld.so.conf.d/i686-linux-gnu.conf.inukaze /etc/ld.so.conf.d/i686-linux-gnu.conf
+										echo "/lib32" >> /etc/ld.so.conf.d/i686-linux-gnu.conf
+										echo "/usr/lib32" >> /etc/ld.so.conf.d/i686-linux-gnu.conf	
+									elif [ -e /etc/ld.so.conf.d/lib32-glibc.conf ]; then
+										sudo cp /etc/ld.so.conf.d/lib32-glibc.conf /etc/ld.so.conf.d/lib32-glibc.conf.original
+										sudo sed '/lib32/d' /etc/ld.so.conf.d/lib32-glibc.conf >> /etc/ld.so.conf.d/lib32-glibc.conf.inukaze
+										sudo mv /etc/ld.so.conf.d/lib32-glibc.conf.inukaze /etc/ld.so.conf.d/lib32-glibc.conf
+										echo "/lib32" >> /etc/ld.so.conf.d/lib32-glibc.conf
+										echo "/usr/lib32" >> /etc/ld.so.conf.d/lib32-glibc.conf					
+									fi
+							fi
+							sudo chmod 755 /etc/ld.so.conf.d
+						fi 
+			fi
+				
+		sudo cp -rf "$RUTACTUAL/bin"/** $WINE_SHARE_PREFIX/bin/
+		sudo cp -rf "$RUTACTUAL/lib"/** $WINE_SHARE_PREFIX/lib/
+		sudo cp -rf "$RUTACTUAL/share"/** $WINE_SHARE_PREFIX/share/
+		
+		if test -d /usr/lib/i386-linux-gnu
+			then
+				sudo rm -rf /usr/lib/i386-linux-gnu/wine
+				sudo mkdir -p /usr/lib/i386-linux-gnu/wine								
+				sudo cp -rf "$RUTACTUAL/lib"/** /usr/lib/i386-linux-gnu/wine/
+		fi
+
+		if test -d /lib
+			then
+				sudo rm -rf /lib/wine
+				sudo ln -sf /usr/lib/i386-linux-gnu/wine /lib/wine
+		fi
+
+		if test -d /lib32
+			then
+				sudo rm -rf /lib32/wine
+				sudo ln -sf /usr/lib/i386-linux-gnu/wine /lib32/wine
+		fi
+						
+		if test -d /usr/lib32
+			then
+				sudo rm -rf /usr/lib32/wine
+				sudo ln -sf /usr/lib/i386-linux-gnu/wine /usr/lib32/wine
+		fi
+
+		cd ../..
+		sudo rm -rf wineversion
+		cd ..
+		RUTACTUAL="$PWD"
+		
+		#Descargar Iconos , Extraerlos
+		#Coloarlos en /usr/share/icons/hicolor
+		sudo mkdir -p /usr/share/icons/hicolor &> /dev/null
+		cd /usr/share/icons/hicolor
+		sudo wget https://dl.dropboxusercontent.com/u/3164499/Linux/wine-icons.tar.gz &> /dev/null
+		sudo tar xfvz wine-icons.tar.gz &> /dev/null
+		sudo rm -rf wine-icons.tar.gz
+		cd /usr/share/icons
+		2>/dev/null 1>/dev/null find . -type d -maxdepth 1 | while read DIRNAME; do sudo update-icon-caches "${DIRNAME}"; done &> /dev/null
+		cd "$RUTACTUAL"
+		
+		# Crear Directorios & Enlaces:
+		sudo mkdir -p /etc/xdg/menus/applications-merged
+		sudo mkdir -p /usr/share/desktop-directories
+		echo '<!DOCTYPE Menu PUBLIC "-//freedesktop//DTD Menu 1.0//EN"
+			"http://www.freedesktop.org/standards/menu-spec/menu-1.0.dtd">
+			<Menu>
+			  <Name>Applications</Name>
+			  <Menu>
+			    <Name>wine-wine</Name>
+			    <Directory>wine-wine.directory</Directory>
+			    <Include>
+			      <Category>Wine</Category>
+			    </Include>
+			  <Menu>
+			    <Name>wine-Programs</Name>
+			    <Directory>wine-Programs.directory</Directory>
+			    <Include>
+			        <Category>Wine-Programs</Category>
+			    </Include>
+			  <Menu>
+			    <Name>wine-Programs-Accessories</Name>
+			    <Directory>wine-Programs-Accessories.directory</Directory>
+			    <Include>
+			        <Category>Wine-Programs-Accessories</Category>
+			    </Include>
+			  </Menu>
+			  </Menu>
+			  </Menu>
+			</Menu>' | sudo tee /etc/xdg/menus/applications-merged/wine.menu &> /dev/null
+			echo		"[Desktop Entry]
+					Type=Directory
+					Name=Programs
+					Name[cs]=Aplikace
+					Name[sv]=Program
+					Name[da]=Programmer
+					Name[de]=Programme
+					Name[es]=Programas
+					Name[eu]=Programak
+					Name[el]=Προγράμματα
+					Name[fr]=Programmes
+					Name[he]=תכניות
+					Name[hu]=Programok
+					Name[it]=Programmi
+					Name[lt]=Programos
+					Name[nl]=Programmas
+					Name[pt]=Programas
+					Name[pt_br]=Programas
+					Icon=folder" | sudo tee /usr/share/desktop-directories/wine-Programs.directory &> /dev/null
+			echo		"[Desktop Entry]
+					Type=Directory
+					Name=Accessories
+					Name[cs]=Příslušenství
+					Name[sv]=Tillbehör
+					Name[da]=Tilbehør
+					Name[de]=Zubehör
+					Name[es]=Accesorios
+					Name[el]=Βοηθήματα
+					Name[fr]=Accessoires
+					Name[he]=עזרים
+					Name[nl]=Bureau-Accessoires
+					Name[hu]=Kellékek
+					Name[pt]=Acessórios
+					Name[pt_br]=Acessórios
+					Name[it]=Accessori
+					Icon=folder" | sudo tee /usr/share/desktop-directories/wine-Programs-Accessories.directory &> /dev/null
+			echo		"[Desktop Entry]
+					Type=Directory
+					Name=Wine
+					Icon=wine" | sudo tee /usr/share/desktop-directories/wine-wine.directory &> /dev/null
+			echo		"[Desktop Entry]
+					Name=Notepad
+					Name[cs]=Poznámkový blok
+					Name[sv]=Anteckningar
+					Name[de]=Editor
+					Name[fi]=Muistio
+					Name[pl]=Notatnik
+					Name[ca]=Bloc de notes
+					Name[it]=Blocco note
+					Name[nl]=Kladblok
+					Name[hu]=Jegyzettömb
+					Name[ru]=Блокнот
+					Name[el]=Σημειωματάριο
+					Name[es]=Bloc de Notas
+					Name[pt_br]=Bloco de Notas
+					Comment=A clone of Windows Notepad
+					Comment[cs]=Klon aplikace Microsoft® Poznámkový blok
+					Comment[sv]=En klon av Windows Anteckningar
+					Comment[de]=Ein Windows Editor Klon
+					Comment[fi]=Windows Muistio -klooni
+					Comment[pl]=Klon Notatnika Windows
+					Comment[ca]=Un clon del Windows Notepad
+					Comment[pt_br]=Uma cópia do Bloco de Notas do Windows
+					Comment[es]=Un clon del Bloc de Notas de Windows
+					Comment[el]=Κλώνος του Σημειωματάριου των Windows
+					Comment[ru]=Клон Блокнота Windows
+					Comment[hu]=A windowsos Jegyzettömb klónja
+					Comment[it]=Un clone del «Blocco note» di Windows
+					Comment[nl]=Een kloon van Kladblok in Windows
+					Exec=notepad
+					Terminal=false
+					Type=Application
+					Icon=wine-notepad
+					Categories=Wine-Programs-Accessories;" | sudo tee /usr/share/applications/wine-notepad.desktop &> /dev/null
+			echo		"[Desktop Entry]
+					Type=Application
+					Name=Wine Windows Program Loader
+					Name[ar]=منظومة واين لتشغيل برامج وندوز
+					Name[cs]=Zavaděč programů pro Wine
+					Name[de]=Wine Windows-Programmstarter
+					Name[es]=Wine Cargador de programas de Windows
+					Name[lt]=Wine Windows programų paleidyklė
+					Name[nl]=Wine Windows programmalader
+					Name[sv]=Wine Windows Programstartare
+					Name[ro]=Wine - Încărcătorul de programe Windows
+					Name[ru]=Wine - загрузчик Windows программ
+					Name[uk]=Wine - завантажувач Windows програм
+					Name[fr]=Wine - Chargeur de programmes Windows
+					Name[ca]=Wine - Carregador d'aplicacions del Windows
+					Name[pt]=Carregador de aplicativos Windows Wine
+					Name[pt_br]=Carregador de aplicativos Windows Wine
+					Name[it]=Wine Carica Programmi Windows
+					Name[da]=Wine, Programstarter til Windows-programmer
+					Name[nb]=Wine - for kjøring av Windows-programmer
+					Name[nn]=Wine - for køyring av Windows-program
+					Name[sr]=Wine - дизач Windows програма
+					Name[sr@latin]=Wine - dizač Windows programa
+					Name[hr]=Wine - dizač Windows programa
+					Name[he]=Wine — מריץ תכניות Windows
+					Exec=wine start /unix %f
+					MimeType=application/x-ms-dos-executable;application/x-msi;application/x-ms-shortcut;
+					Icon=wine
+					NoDisplay=true
+					StartupNotify=true" | sudo tee /usr/share/applications/wine.desktop &> /dev/null
+			echo		"[Desktop Entry]
+					Name=Browse C: Drive
+					Name[cs]=Procházet disk C:
+					Name[sv]=Bläddra i C:
+					Name[da]=Udforsk C: drev
+					Name[de]=Durchsuche C:
+					Name[eu]=Arakatu C: diskoa
+					Name[fi]=Selaa C:-asemaa
+					Name[fr]=Parcourir le disque C:
+					Name[he]=סיור בכונן C:
+					Name[pl]=Przeglądaj napęd C:
+					Name[ca]=Navegeu per l'unitat C:
+					Name[it]=Esplora unità C:
+					Name[lt]=Naršyti C: diską
+					Name[nl]=Station C: bekijken
+					Name[hu]=A C: meghajtó tallózása
+					Name[ru]=Обзор диска C:
+					Name[el]=Περιήγηση στο C:
+					Name[es]=Explorar la unidad C:
+					Name[pt]=Navegar no Disco C:
+					Name[pt_br]=Explorar C:
+					Comment=Browse your virtual C: drive
+					Comment[cs]=Procházet virtuální diskovou jednotku C:
+					Comment[sv]=Bläddra i virtuella enheten C:
+					Comment[de]=Durchsuche das virtuelle C: Laufwerk
+					Comment[fi]=Selaa virtuaalista C:-asemaa
+					Comment[pl]=Przeglądanie wirtualnego napędu C:
+					Comment[ca]=Navegeu per la vostra unitat virtual C:
+					Comment[pt_br]=Explorar a unidade virtual C:
+					Comment[es]=Explorar la unidad virtual C:
+					Comment[el]=Περιήγηση στον εικονικό οδηγό C:
+					Comment[ru]=Обзор виртуального диска C:
+					Comment[hu]=A virtuális C: meghajtó tallózása
+					Comment[it]=Esplora l'unità virtuale C:
+					Comment[nl]=Bekijk uw virtuele C: schijf
+					Exec=xdg-open .wine/dosdevices/c:
+					Terminal=false
+					Type=Application
+					Icon=folder-wine
+					Categories=Wine;" | sudo tee /usr/share/applications/wine-browsedrive.desktop &> /dev/null
+			echo		"[Desktop Entry]
+					Name=Uninstall Wine Software
+					Name[cs]=Odinstalovat software z Wine
+					Name[sv]=Avinstallera Wine-programvara
+					Name[da]=Fjern Wine software
+					Name[de]=Deinstalliere Wine Applikationen
+					Name[eu]=Desinstalatu Wine-ko softwarea
+					Name[fi]=Poista Wine-ohjelmien asennuksia
+					Name[fr]=Désinstaller un logiciel Wine
+					Name[he]=הסרת תוכנות מ־Wine
+					Name[pl]=Deinstalacja oprogramowania Wine
+					Name[ca]=Elimineu programes del Wine
+					Name[it]=Disinstalla software di Wine
+					Name[lt]=Pašalinti Wine programas
+					Name[nl]=Wine programma's verwijderen
+					Name[hu]=Wine szoftverek eltávolítása
+					Name[ru]=Удаление программ Wine
+					Name[el]=Απεγκατάσταση προγραμμάτων Wine
+					Name[es]=Desinstala software de Wine
+					Name[pt]=Desinstalar Programas do Wine
+					Name[pt_br]=Gerenciador de Programas do Wine
+					Comment=Uninstall Windows applications for Wine
+					Comment[cs]=Odinstalovat software pro Windows z prostředí Wine
+					Comment[sv]=Avinstallera Windows-program för Wine
+					Comment[de]=Wine Applikations Deinstallations Programm
+					Comment[fi]=Poista Wineen asennettuja Windows-sovelluksia
+					Comment[pl]=Deinstalowanie oprogramowania dla Wine
+					Comment[ca]=Elimineu programes del Windows que hageu instaŀlat amb el Wine
+					Comment[pt_br]=Desinstalar ou Reparar um Programa instalado no Wine
+					Comment[es]=Desinstala una aplicación Windows en Wine
+					Comment[el]=Απεγκατάσταση προγραμμάτων Windows από το Wine
+					Comment[ru]=Удаление Windows-программ, установленных под Wine
+					Comment[hu]=Windows alkalmazások eltávolítása a Wine-ból
+					Comment[it]=Disinstalla le applicazioni Windows per Wine
+					Comment[nl]=Verwijder Windows programma's voor Wine
+					Exec=wine uninstaller
+					Terminal=false
+					Type=Application
+					Icon=wine-uninstaller
+					Categories=Wine;" | sudo tee /usr/share/applications/wine-uninstaller.desktop &> /dev/null
+			echo		"[Desktop Entry]
+					Name=Configure Wine
+					Name[cs]=Nastavení Wine
+					Name[sv]=Konfigurera Wine
+					Name[da]=Konfigurer Wine
+					Name[de]=Konfiguriere Wine
+					Name[eu]=Konfiguratu Wine
+					Name[fi]=Winen asetukset
+					Name[fr]=Configurer Wine
+					Name[he]=תצורת Wine
+					Name[pl]=Konfiguracja Wine
+					Name[ca]=Configureu el Wine
+					Name[it]=Configura Wine
+					Name[lt]=Wine nustatymai
+					Name[nl]=Wine configureren
+					Name[hu]=A Wine beállítása
+					Name[ru]=Настройка Wine
+					Name[el]=Ρύθμιση Wine
+					Name[es]=Configurar Wine
+					Name[pt]=Configurar o Wine
+					Name[pt_br]=Configurar o Wine
+					Comment=Change application-specific and general Wine options
+					Comment[cs]=Upravit specifická nastavení aplikací a obecné nastavení Wine
+					Comment[sv]=Ändra programspecifika och allmänna Wine-alternativ
+					Comment[de]=Ändere Wine Optionen und Applikations-spezifische Einstellungen
+					Comment[fi]=Muuta yleisiä ja sovelluskohtaisia Winen asetuksia
+					Comment[pl]=Konfigurowanie ustawień aplikacji i ogólnych opcji Wine
+					Comment[ca]=Canvieu la configuració general del Wine i especifiqueu opcions per a programes concrets
+					Comment[pt_br]=Configurar as opções do Wine e dos programas nele instalados
+					Comment[es]=Cambia la configuración de Wine en general o de una aplicación específica
+					Comment[el]=Αλλαγή γενικών ρυθμίσεων του Wine ή επιλογών εφαρμογών
+					Comment[ru]=Изменение общих параметров Wine и настройка параметров для отдельных приложений
+					Comment[hu]=Alkalmazásspecifikus és általános Wine beállítások módosítása
+					Comment[it]=Cambia le opzioni delle singole applicazioni e quelle generali di Wine
+					Comment[nl]=Verander instellingen voor specifieke programma's en Wine in het algemeen
+					Exec=winecfg
+					Terminal=false
+					Icon=wine-winecfg
+					Type=Application
+					Categories=Wine;" | sudo tee /usr/share/applications/wine-winecfg.desktop &> /dev/null
+			sudo ln -sf "/usr/share/wine" "/usr/local/share/wine"
+			sudo ln -sf "/usr/share/wine-gecko" "/usr/local/share/wine-gecko"
+			sudo ln -sf "/usr/share/winetricks" "/usr/local/share/wine-tricks"
+			sudo ln -sf "/usr/lib/libwine.so" "/usr/local/lib/libwine.so"
+			sudo ln -sf "/usr/lib/libwine.so.1" "/usr/local/lib/libwine.so.1"
+			sudo ln -sf "/usr/lib/libwine.so.1.0" "/usr/local/lib/libwine.so.1.0"
+			sudo ln -sf "/usr/lib/wine" "/usr/local/lib/wine"
+			sudo ln -sf "/usr/share/applications/wine.desktop" "/usr/local/share/applications/wine.desktop"
+			sudo ln -sf "/usr/share/applications/wine-winecfg.desktop" "/usr/local/share/applications/wine-winecfg.desktop"
+			sudo ln -sf "/usr/share/applications/wine-uninstaller.desktop" "/usr/local/share/applications/wine-uninstaller.desktop"
+			sudo ln -sf "/usr/share/applications/wine-browsedrive.desktop" "/usr/local/share/applications/wine-browsedrive.desktop"
+			sudo ln -sf "/usr/share/applications/wine-notepad.desktop" "/usr/local/share/applications/wine-notepad.desktop"
+			sudo ln -sf "/usr/bin/function_grep.pl" "/usr/local/bin/function_grep.pl"
+			sudo ln -sf "/usr/bin/msiexec" "/usr/local/bin/msiexec"
+			sudo ln -sf "/usr/bin/notepad" "/usr/local/bin/notepad"
+			sudo ln -sf "/usr/bin/regedit" "/usr/local/bin/regedit"
+			sudo ln -sf "/usr/bin/regsvr32" "/usr/local/bin/regsvr32"
+			sudo ln -sf "/usr/bin/widl" "/usr/local/bin/widl"
+			sudo ln -sf "/usr/bin/wine" "/usr/local/bin/wine"
+			sudo ln -sf "/usr/bin/wineboot" "/usr/local/bin/wineboot"
+			sudo ln -sf "/usr/bin/winebuild" "/usr/local/bin/winebuild"
+			sudo ln -sf "/usr/bin/winecfg" "/usr/local/bin/winecfg"
+			sudo ln -sf "/usr/bin/wineconsole" "/usr/local/bin/wineconsole"
+			sudo ln -sf "/usr/bin/winecpp" "/usr/local/bin/winecpp"
+			sudo ln -sf "/usr/bin/winedbg" "/usr/local/bin/winedbg"
+			sudo ln -sf "/usr/bin/winedump" "/usr/local/bin/winedump"
+			sudo ln -sf "/usr/bin/winefile" "/usr/local/bin/winefile"
+			sudo ln -sf "/usr/bin/wineg++" "/usr/local/bin/wineg++"
+			sudo ln -sf "/usr/bin/winegcc" "/usr/local/bin/winegcc"
+			sudo ln -sf "/usr/bin/winemaker" "/usr/local/bin/winemaker"
+			sudo ln -sf "/usr/bin/winemine" "/usr/local/bin/winemine"
+			sudo ln -sf "/usr/bin/winepath" "/usr/local/bin/winepath"
+			sudo ln -sf "/usr/bin/wine-preloader" "/usr/local/bin/wine-preloader"
+			sudo ln -sf "/usr/bin/wineserver" "/usr/local/bin/wineserver"
+			sudo ln -sf "/usr/bin/wmc" "/usr/local/bin/wmc"
+			sudo ln -sf "/usr/bin/wrc" "/usr/local/bin/wrc"
+			if        [ "$Arquitectura" = "amd64" ]; then
+				sudo mkdir -p "/usr/local/lib64" &> /dev/null
+				sudo ln -sf "/usr/lib64/wine" "/usr/local/lib64/wine"
+				sudo ln -sf "/usr/lib64/libwine.so" "/usr/local/lib64/libwine.so"
+				sudo ln -sf "/usr/lib64/libwine.so.1" "/usr/local/lib64/libwine.so.1"
+				sudo ln -sf "/usr/lib64/libwine.so.1.0" "/usr/local/lib64/libwine.so.1.0"			
+				if [ -f /usr/bin/wine64 ] || [ -f /usr/bin/wine64-preloader ]
+				then
+					sudo ln -sf "/usr/bin/wine64" "/usr/local/bin/wine64"
+					sudo ln -sf "/usr/bin/wine64-preloader" "/usr/local/bin/wine64-preloader"
+				fi
+			fi
+		fi
+	fi
+
+    cd "$DIRORIGEN"
+    if test ! -f PlayOnLinux-wine-"$Opcion-linux-$Arquitectura".pol
+    then
+	cd "$DIRORIGEN"
+        wget http://www.playonlinux.com/wine/binaries/linux-$Arquitectura/PlayOnLinux-wine-"$Opcion-linux-$Arquitectura".pol
+        SUMA_POL_OBTENIDA=$(sha1sum < PlayOnLinux-wine-"$Opcion-linux-$Arquitectura".pol | sed 's/(stdin)= //;s/ .*//')
+	        if [ "$SUMA_POL_OBTENIDA"x != "$VersionWine_SHA1SUM"x ]
+        		then
+printf "\n"
+sudo echo "Suma Conseguida : $SUMA_POL_OBTENIDA " $'\n'
+sudo echo "Suma Necesaria  : $VersionWine_SHA1SUM " $'\n'
+sudo echo "Integridad Incorrecta. Vuelve a Intentarlo" $'\n'
+printf "\n"
+        	fi
+
+		WINE_SHARE_PREFIX=/usr
+		2>/dev/null 1>/dev/null tar xfvj PlayOnLinux-wine-"$Opcion-linux-$Arquitectura".pol
+		rm -rf playonlinux files
+		sudo chmod a+o+x -R wineversion/"$Opcion"
+		cd wineversion/"$Opcion"
+		RUTACTUAL="$PWD"
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/function_grep.pl
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/msiexec
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/notepad
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/regedit
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/regsvr32
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/widl
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wine
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wine64
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wine64-preloader
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wineboot
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winebuild
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winecfg
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wineconsole
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winecpp
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winedbg
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winedump
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winefile
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wineg++
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winegcc
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winemaker
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winemine
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/winepath
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wine-preloader
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wineserver
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wmc
+		sudo rm -rf $WINE_SHARE_PREFIX/bin/wrc
+		sudo rm -rf $WINE_SHARE_PREFIX/lib/wine/fakedlls
+		sudo rm -rf $WINE_SHARE_PREFIX/lib/wine
+		sudo rm -rf $WINE_SHARE_PREFIX/lib/libwine.so
+		sudo rm -rf $WINE_SHARE_PREFIX/lib/libwine.so.1
+		sudo rm -rf $WINE_SHARE_PREFIX/lib/libwine.so.1.0
+		sudo rm -rf $WINE_SHARE_PREFIX/share/applications/wine.desktop
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/de.UTF-8/man1/wine.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/de.UTF-8/man1/winemaker.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/de.UTF-8/man1/wineserver.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/fr.UTF-8/man1/wine.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/fr.UTF-8/man1/winemaker.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/fr.UTF-8/man1/wineserver.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/msiexec.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/notepad.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/regedit.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/regsvr32.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/widl.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/wine.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/wineboot.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winebuild.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winecfg.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/wineconsole.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winecpp.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winedbg.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winedump.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winefile.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/wineg++.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winegcc.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winemaker.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winemine.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/winepath.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/wineserver.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/wmc.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/man1/wrc.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/man/pl.UTF-8/man1/wine.1
+		sudo rm -rf $WINE_SHARE_PREFIX/share/wine/fonts
+		sudo rm -rf $WINE_SHARE_PREFIX/share/wine
+		Arquitectura=$(uname -m)
+			if        [ "$Arquitectura" = "amd64" ]; then
+					sudo rm -rf $WINE_SHARE_PREFIX/lib/wine/fakedlls/
+					sudo rm -rf $WINE_SHARE_PREFIX/lib/wine
+					sudo rm -rf $WINE_SHARE_PREFIX/lib/libwine.so
+					sudo rm -rf $WINE_SHARE_PREFIX/lib/libwine.so.1
+					sudo rm -rf $WINE_SHARE_PREFIX/lib/libwine.so.1.0
+					sudo rm -rf $WINE_SHARE_PREFIX/lib64/wine/fakedlls/
+					sudo rm -rf $WINE_SHARE_PREFIX/lib64/wine
+					sudo rm -rf $WINE_SHARE_PREFIX/lib64/libwine.so
+					sudo rm -rf $WINE_SHARE_PREFIX/lib64/libwine.so.1
+					sudo rm -rf $WINE_SHARE_PREFIX/lib64/libwine.so.1.0
+
+						if test -d "$RUTACTUAL"/lib64
+							then
+								sudo rm -rf	"$WINE_SHARE_PREFIX"/lib64/wine
+								sudo mkdir -p	"$WINE_SHARE_PREFIX"/lib64/wine
+								sudo cp -rf	"$RUTACTUAL"/lib64/wine/** "$WINE_SHARE_PREFIX"/lib64/wine
+							fi
+						
+						if test -d /usr/lib/x86_64-linux-gnu
+							then								
+								sudo rm -rf	/usr/lib/x86_64-linux-gnu/wine							
+								sudo mkdir -p	/usr/lib/x86_64-linux-gnu/wine						
+								sudo cp -rf	"$RUTACTUAL/lib64"/wine/** /usr/lib/x86_64-linux-gnu/wine
+						fi
+
+						if [ -d /etc/ld.so.conf.d ]
+						then
+							sudo chmod 777 /etc/ld.so.conf.d
+							if [ -d /lib32 ] || [ -d /usr/lib32 ]							
+							then
+							echo
+									if [ -e /etc/ld.so.conf.d/i686-linux-gnu.conf ]; then
+										sudo cp /etc/ld.so.conf.d/i686-linux-gnu.conf /etc/ld.so.conf.d/i686-linux-gnu.conf.original
+										sudo sed '/lib32/d' /etc/ld.so.conf.d/i686-linux-gnu.conf >> /etc/ld.so.conf.d/i686-linux-gnu.conf.inukaze
+										sudo mv /etc/ld.so.conf.d/i686-linux-gnu.conf.inukaze /etc/ld.so.conf.d/i686-linux-gnu.conf
+										echo "/lib32" >> /etc/ld.so.conf.d/i686-linux-gnu.conf
+										echo "/usr/lib32" >> /etc/ld.so.conf.d/i686-linux-gnu.conf	
+									elif [ -e /etc/ld.so.conf.d/lib32-glibc.conf ]; then
+										sudo cp /etc/ld.so.conf.d/lib32-glibc.conf /etc/ld.so.conf.d/lib32-glibc.conf.original
+										sudo sed '/lib32/d' /etc/ld.so.conf.d/lib32-glibc.conf >> /etc/ld.so.conf.d/lib32-glibc.conf.inukaze
+										sudo mv /etc/ld.so.conf.d/lib32-glibc.conf.inukaze /etc/ld.so.conf.d/lib32-glibc.conf
+										echo "/lib32" >> /etc/ld.so.conf.d/lib32-glibc.conf
+										echo "/usr/lib32" >> /etc/ld.so.conf.d/lib32-glibc.conf					
+									fi
+							fi
+							sudo chmod 755 /etc/ld.so.conf.d
+						fi						
+			fi
+				
+		sudo cp -rf "$RUTACTUAL"/bin/* $WINE_SHARE_PREFIX/bin
+		sudo cp -rf "$RUTACTUAL"/lib/* $WINE_SHARE_PREFIX/lib
+		sudo cp -rf "$RUTACTUAL"/share/* $WINE_SHARE_PREFIX/share
+	
+		if test -d /usr/lib/i386-linux-gnu
+			then
+				sudo rm -rf /usr/lib/i386-linux-gnu/wine
+				sudo mkdir -p /usr/lib/i386-linux-gnu/wine								
+				sudo cp -rf "$RUTACTUAL"/lib/** /usr/lib/i386-linux-gnu/wine
+		fi
+
+		if test -d /lib
+			then
+				sudo rm -rf /lib32/wine
+				sudo ln -sf /usr/lib/i386-linux-gnu/wine /lib32/wine
+		fi
+
+		if test -d /lib32
+			then
+				sudo rm -rf /lib32/wine
+				sudo ln -sf /usr/lib/i386-linux-gnu/wine /lib32/wine
+		fi
+						
+		if test -d /usr/lib32
+			then
+				sudo rm -rf /usr/lib32/wine
+				sudo ln -sf /usr/lib/i386-linux-gnu/wine /usr/lib32/wine
+		fi
+	
+		cd ../..
+		sudo rm -rf wineversion
+		cd ..
+		RUTACTUAL="$PWD"
+		#Descargar Iconos , Extraerlos
+		#Coloarlos en /usr/share/icons/hicolor
+		sudo mkdir -p /usr/share/icons/hicolor &> /dev/null
+		cd /usr/share/icons/hicolor
+		sudo wget https://dl.dropboxusercontent.com/u/3164499/Linux/wine-icons.tar.gz &> /dev/null
+		sudo tar xfvz wine-icons.tar.gz &> /dev/null
+		sudo rm -rf wine-icons.tar.gz
+		cd /usr/share/icons
+		2>/dev/null 1>/dev/null find . -type d -maxdepth 1 | while read DIRNAME; do sudo update-icon-caches "${DIRNAME}"; done &> /dev/null
+		cd "$RUTACTUAL"
+		
+		# Crear Directorios & Enlaces:
+		sudo mkdir -p /etc/xdg/menus/applications-merged
+		sudo mkdir -p /usr/share/desktop-directories
+		echo '<!DOCTYPE Menu PUBLIC "-//freedesktop//DTD Menu 1.0//EN"
+			"http://www.freedesktop.org/standards/menu-spec/menu-1.0.dtd">
+			<Menu>
+			  <Name>Applications</Name>
+			  <Menu>
+			    <Name>wine-wine</Name>
+			    <Directory>wine-wine.directory</Directory>
+			    <Include>
+			      <Category>Wine</Category>
+			    </Include>
+			  <Menu>
+			    <Name>wine-Programs</Name>
+			    <Directory>wine-Programs.directory</Directory>
+			    <Include>
+			        <Category>Wine-Programs</Category>
+			    </Include>
+			  <Menu>
+			    <Name>wine-Programs-Accessories</Name>
+			    <Directory>wine-Programs-Accessories.directory</Directory>
+			    <Include>
+			        <Category>Wine-Programs-Accessories</Category>
+			    </Include>
+			  </Menu>
+			  </Menu>
+			  </Menu>
+			</Menu>' | sudo tee /etc/xdg/menus/applications-merged/wine.menu &> /dev/null
+			echo		"[Desktop Entry]
+					Type=Directory
+					Name=Programs
+					Name[cs]=Aplikace
+					Name[sv]=Program
+					Name[da]=Programmer
+					Name[de]=Programme
+					Name[es]=Programas
+					Name[eu]=Programak
+					Name[el]=Προγράμματα
+					Name[fr]=Programmes
+					Name[he]=תכניות
+					Name[hu]=Programok
+					Name[it]=Programmi
+					Name[lt]=Programos
+					Name[nl]=Programmas
+					Name[pt]=Programas
+					Name[pt_br]=Programas
+					Icon=folder" | sudo tee /usr/share/desktop-directories/wine-Programs.directory &> /dev/null
+			echo		"[Desktop Entry]
+					Type=Directory
+					Name=Accessories
+					Name[cs]=Příslušenství
+					Name[sv]=Tillbehör
+					Name[da]=Tilbehør
+					Name[de]=Zubehör
+					Name[es]=Accesorios
+					Name[el]=Βοηθήματα
+					Name[fr]=Accessoires
+					Name[he]=עזרים
+					Name[nl]=Bureau-Accessoires
+					Name[hu]=Kellékek
+					Name[pt]=Acessórios
+					Name[pt_br]=Acessórios
+					Name[it]=Accessori
+					Icon=folder" | sudo tee /usr/share/desktop-directories/wine-Programs-Accessories.directory &> /dev/null
+			echo		"[Desktop Entry]
+					Type=Directory
+					Name=Wine
+					Icon=wine" | sudo tee /usr/share/desktop-directories/wine-wine.directory &> /dev/null
+			echo		"[Desktop Entry]
+					Name=Notepad
+					Name[cs]=Poznámkový blok
+					Name[sv]=Anteckningar
+					Name[de]=Editor
+					Name[fi]=Muistio
+					Name[pl]=Notatnik
+					Name[ca]=Bloc de notes
+					Name[it]=Blocco note
+					Name[nl]=Kladblok
+					Name[hu]=Jegyzettömb
+					Name[ru]=Блокнот
+			           #exit 1
+		Name[el]=Σημειωματάριο
+					Name[es]=Bloc de Notas
+					Name[pt_br]=Bloco de Notas
+					Comment=A clone of Windows Notepad
+					Comment[cs]=Klon aplikace Microsoft® Poznámkový blok
+					Comment[sv]=En klon av Windows Anteckningar
+					Comment[de]=Ein Windows Editor Klon
+					Comment[fi]=Windows Muistio -klooni
+					Comment[pl]=Klon Notatnika Windows
+					Comment[ca]=Un clon del Windows Notepad
+					Comment[pt_br]=Uma cópia do Bloco de Notas do Windows
+					Comment[es]=Un clon del Bloc de Notas de Windows
+					Comment[el]=Κλώνος του Σημειωματάριου των Windows
+					Comment[ru]=Клон Блокнота Windows
+					Comment[hu]=A windowsos Jegyzettömb klónja
+					Comment[it]=Un clone del «Blocco note» di Windows
+					Comment[nl]=Een kloon van Kladblok in Windows
+					Exec=notepad
+					Terminal=false
+					Type=Application
+					Icon=wine-notepad
+					Categories=Wine-Programs-Accessories;" | sudo tee /usr/share/applications/wine-notepad.desktop &> /dev/null
+			echo		"[Desktop Entry]
+					Type=Application
+					Name=Wine Windows Program Loader
+					Name[ar]=منظومة واين لتشغيل برامج وندوز
+					Name[cs]=Zavaděč programů pro Wine
+					Name[de]=Wine Windows-Programmstarter
+					Name[es]=Wine Cargador de programas de Windows
+					Name[lt]=Wine Windows programų paleidyklė
+					Name[nl]=Wine Windows programmalader
+					Name[sv]=Wine Windows Programstartare
+					Name[ro]=Wine - Încărcătorul de programe Windows
+					Name[ru]=Wine - загрузчик Windows программ
+					Name[uk]=Wine - завантажувач Windows програм
+					Name[fr]=Wine - Chargeur de programmes Windows
+					Name[ca]=Wine - Carregador d'aplicacions del Windows
+					Name[pt]=Carregador de aplicativos Windows Wine
+					Name[pt_br]=Carregador de aplicativos Windows Wine
+					Name[it]=Wine Carica Programmi Windows
+					Name[da]=Wine, Programstarter til Windows-programmer
+					Name[nb]=Wine - for kjøring av Windows-programmer
+					Name[nn]=Wine - for køyring av Windows-program
+					Name[sr]=Wine - дизач Windows програма
+					Name[sr@latin]=Wine - dizač Windows programa
+					Name[hr]=Wine - dizač Windows programa
+					Name[he]=Wine — מריץ תכניות Windows
+					Exec=wine start /unix %f
+					MimeType=application/x-ms-dos-executable;application/x-msi;application/x-ms-shortcut;
+					Icon=wine
+					NoDisplay=true
+					StartupNotify=true" | sudo tee /usr/share/applications/wine.desktop &> /dev/null
+			echo		"[Desktop Entry]
+					Name=Browse C: Drive
+					Name[cs]=Procházet disk C:
+					Name[sv]=Bläddra i C:
+					Name[da]=Udforsk C: drev
+					Name[de]=Durchsuche C:
+					Name[eu]=Arakatu C: diskoa
+					Name[fi]=Selaa C:-asemaa
+					Name[fr]=Parcourir le disque C:
+					Name[he]=סיור בכונן C:
+					Name[pl]=Przeglądaj napęd C:
+					Name[ca]=Navegeu per l'unitat C:
+					Name[it]=Esplora unità C:
+					Name[lt]=Naršyti C: diską
+					Name[nl]=Station C: bekijken
+					Name[hu]=A C: meghajtó tallózása
+					Name[ru]=Обзор диска C:
+					Name[el]=Περιήγηση στο C:
+					Name[es]=Explorar la unidad C:
+					Name[pt]=Navegar no Disco C:
+					Name[pt_br]=Explorar C:
+					Comment=Browse your virtual C: drive
+					Comment[cs]=Procházet virtuální diskovou jednotku C:
+					Comment[sv]=Bläddra i virtuella enheten C:
+					Comment[de]=Durchsuche das virtuelle C: Laufwerk
+					Comment[fi]=Selaa virtuaalista C:-asemaa
+					Comment[pl]=Przeglądanie wirtualnego napędu C:
+					Comment[ca]=Navegeu per la vostra unitat virtual C:
+					Comment[pt_br]=Explorar a unidade virtual C:
+					Comment[es]=Explorar la unidad virtual C:
+					Comment[el]=Περιήγηση στον εικονικό οδηγό C:
+					Comment[ru]=Обзор виртуального диска C:
+					Comment[hu]=A virtuális C: meghajtó tallózása
+					Comment[it]=Esplora l'unità virtuale C:
+					Comment[nl]=Bekijk uw virtuele C: schijf
+					Exec=xdg-open .wine/dosdevices/c:
+					Terminal=false
+					Type=Application
+					Icon=folder-wine
+					Categories=Wine;" | sudo tee /usr/share/applications/wine-browsedrive.desktop &> /dev/null
+			sudo echo	"[Desktop Entry]
+					Name=Uninstall Wine Software
+					Name[cs]=Odinstalovat software z Wine
+					Name[sv]=Avinstallera Wine-programvara
+					Name[da]=Fjern Wine software
+					Name[de]=Deinstalliere Wine Applikationen
+					Name[eu]=Desinstalatu Wine-ko softwarea
+					Name[fi]=Poista Wine-ohjelmien asennuksia
+					Name[fr]=Désinstaller un logiciel Wine
+					Name[he]=הסרת תוכנות מ־Wine
+					Name[pl]=Deinstalacja oprogramowania Wine
+					Name[ca]=Elimineu programes del Wine
+					Name[it]=Disinstalla software di Wine
+					Name[lt]=Pašalinti Wine programas
+					Name[nl]=Wine programma's verwijderen
+					Name[hu]=Wine szoftverek eltávolítása
+					Name[ru]=Удаление программ Wine
+					Name[el]=Απεγκατάσταση προγραμμάτων Wine
+					Name[es]=Desinstala software de Wine
+					Name[pt]=Desinstalar Programas do Wine
+					Name[pt_br]=Gerenciador de Programas do Wine
+					Comment=Uninstall Windows applications for Wine
+					Comment[cs]=Odinstalovat software pro Windows z prostředí Wine
+					Comment[sv]=Avinstallera Windows-program för Wine
+					Comment[de]=Wine Applikations Deinstallations Programm
+					Comment[fi]=Poista Wineen asennettuja Windows-sovelluksia
+					Comment[pl]=Deinstalowanie oprogramowania dla Wine
+					Comment[ca]=Elimineu programes del Windows que hageu instaŀlat amb el Wine
+					Comment[pt_br]=Desinstalar ou Reparar um Programa instalado no Wine
+					Comment[es]=Desinstala una aplicación Windows en Wine
+					Comment[el]=Απεγκατάσταση προγραμμάτων Windows από το Wine
+					Comment[ru]=Удаление Windows-программ, установленных под Wine
+					Comment[hu]=Windows alkalmazások eltávolítása a Wine-ból
+					Comment[it]=Disinstalla le applicazioni Windows per Wine
+					Comment[nl]=Verwijder Windows programma's voor Wine
+					Exec=wine uninstaller
+					Terminal=false
+					Type=Application
+					Icon=wine-uninstaller
+					Categories=Wine;" | sudo tee /usr/share/applications/wine-uninstaller.desktop &> /dev/null
+			echo		"[Desktop Entry]
+					Name=Configure Wine
+					Name[cs]=Nastavení Wine
+					Name[sv]=Konfigurera Wine
+					Name[da]=Konfigurer Wine
+					Name[de]=Konfiguriere Wine
+					Name[eu]=Konfiguratu Wine
+					Name[fi]=Winen asetukset
+					Name[fr]=Configurer Wine
+					Name[he]=תצורת Wine
+					Name[pl]=Konfiguracja Wine
+					Name[ca]=Configureu el Wine
+					Name[it]=Configura Wine
+					Name[lt]=Wine nustatymai
+					Name[nl]=Wine configureren
+					Name[hu]=A Wine beállítása
+					Name[ru]=Настройка Wine
+					Name[el]=Ρύθμιση Wine
+					Name[es]=Configurar Wine
+					Name[pt]=Configurar o Wine
+					Name[pt_br]=Configurar o Wine
+					Comment=Change application-specific and general Wine options
+					Comment[cs]=Upravit specifická nastavení aplikací a obecné nastavení Wine
+					Comment[sv]=Ändra programspecifika och allmänna Wine-alternativ
+					Comment[de]=Ändere Wine Optionen und Applikations-spezifische Einstellungen
+					Comment[fi]=Muuta yleisiä ja sovelluskohtaisia Winen asetuksia
+					Comment[pl]=Konfigurowanie ustawień aplikacji i ogólnych opcji Wine
+					Comment[ca]=Canvieu la configuració general del Wine i especifiqueu opcions per a programes concrets
+					Comment[pt_br]=Configurar as opções do Wine e dos programas nele instalados
+					Comment[es]=Cambia la configuración de Wine en general o de una aplicación específica
+					Comment[el]=Αλλαγή γενικών ρυθμίσεων του Wine ή επιλογών εφαρμογών
+					Comment[ru]=Изменение общих параметров Wine и настройка параметров для отдельных приложений
+					Comment[hu]=Alkalmazásspecifikus és általános Wine beállítások módosítása
+					Comment[it]=Cambia le opzioni delle singole applicazioni e quelle generali di Wine
+					Comment[nl]=Verander instellingen voor specifieke programma's en Wine in het algemeen
+					Exec=winecfg
+					Terminal=false
+					Icon=wine-winecfg
+					Type=Application
+					Categories=Wine;" | sudo tee /usr/share/applications/wine-winecfg.desktop &> /dev/null
+			sudo ln -sf "/usr/share/wine" "/usr/local/share/wine"
+			sudo ln -sf "/usr/share/wine-gecko" "/usr/local/share/wine-gecko"
+			sudo ln -sf "/usr/share/winetricks" "/usr/local/share/wine-tricks"
+			sudo ln -sf "/usr/lib/libwine.so" "/usr/local/lib/libwine.so"
+			sudo ln -sf "/usr/lib/libwine.so.1" "/usr/local/lib/libwine.so.1"
+			sudo ln -sf "/usr/lib/libwine.so.1.0" "/usr/local/lib/libwine.so.1.0"
+			sudo ln -sf "/usr/lib/wine" "/usr/local/lib/wine"
+			sudo ln -sf "/usr/share/applications/wine.desktop" "/usr/local/share/applications/wine.desktop"
+			sudo ln -sf "/usr/share/applications/wine-winecfg.desktop" "/usr/local/share/applications/wine-winecfg.desktop"
+			sudo ln -sf "/usr/share/applications/wine-uninstaller.desktop" "/usr/local/share/applications/wine-uninstaller.desktop"
+			sudo ln -sf "/usr/share/applications/wine-browsedrive.desktop" "/usr/local/share/applications/wine-browsedrive.desktop"
+			sudo ln -sf "/usr/share/applications/wine-notepad.desktop" "/usr/local/share/applications/wine-notepad.desktop"
+			sudo ln -sf "/usr/share/desktop-directories/wine-wine.directory" "/usr/local/share/desktop-directories/wine-wine.directory"
+			sudo ln -sf "/usr/share/desktop-directories/wine-Programs-Accessories.directory" "/usr/local/share/desktop-directories/wine-Programs-Accessories.directory"
+			sudo ln -sf "/usr/share/desktop-directories/wine-Programs.directory" "/usr/local/share/desktop-directories/wine-Programs.directory"
+			sudo ln -sf "/usr/bin/function_grep.pl" "/usr/local/bin/function_grep.pl"
+			sudo ln -sf "/usr/bin/msiexec" "/usr/local/bin/msiexec"
+			sudo ln -sf "/usr/bin/notepad" "/usr/local/bin/notepad"
+			sudo ln -sf "/usr/bin/regedit" "/usr/local/bin/regedit"
+			sudo ln -sf "/usr/bin/regsvr32" "/usr/local/bin/regsvr32"
+			sudo ln -sf "/usr/bin/widl" "/usr/local/bin/widl"
+			sudo ln -sf "/usr/bin/wine" "/usr/local/bin/wine"
+			sudo ln -sf "/usr/bin/wineboot" "/usr/local/bin/wineboot"
+			sudo ln -sf "/usr/bin/winebuild" "/usr/local/bin/winebuild"
+			sudo ln -sf "/usr/bin/winecfg" "/usr/local/bin/winecfg"
+			sudo ln -sf "/usr/bin/wineconsole" "/usr/local/bin/wineconsole"
+			sudo ln -sf "/usr/bin/winecpp" "/usr/local/bin/winecpp"
+			sudo ln -sf "/usr/bin/winedbg" "/usr/local/bin/winedbg"
+			sudo ln -sf "/usr/bin/winedump" "/usr/local/bin/winedump"
+			sudo ln -sf "/usr/bin/winefile" "/usr/local/bin/winefile"
+			sudo ln -sf "/usr/bin/wineg++" "/usr/local/bin/wineg++"
+			sudo ln -sf "/usr/bin/winegcc" "/usr/local/bin/winegcc"
+			sudo ln -sf "/usr/bin/winemaker" "/usr/local/bin/winemaker"
+			sudo ln -sf "/usr/bin/winemine" "/usr/local/bin/winemine"
+			sudo ln -sf "/usr/bin/winepath" "/usr/local/bin/winepath"
+			sudo ln -sf "/usr/bin/wine-preloader" "/usr/local/bin/wine-preloader"
+			sudo ln -sf "/usr/bin/wineserver" "/usr/local/bin/wineserver"
+			sudo ln -sf "/usr/bin/wmc" "/usr/local/bin/wmc"
+			sudo ln -sf "/usr/bin/wrc" "/usr/local/bin/wrc"
+			if        [ "$Arquitectura" = "x86_64" ]; then
+					echo
+				if test ! -d "/usr/local/lib64"
+					then
+					sudo mkdir -p "/usr/local/lib64" &> /dev/null
+				fi
+				if test ! -f /usr/local/lib64/wine
+					then
+					sudo ln -sf "/usr/lib64/wine" "/usr/local/lib64/wine"
+				fi
+				
+				if test ! -f "/usr/local/lib64/libwine.so"
+					then
+					sudo ln -sf "/usr/lib64/libwine.so" "/usr/local/lib64/libwine.so"
+				fi
+				
+				if test ! -f "/usr/local/lib64/libwine.so.1"
+					then
+					sudo ln -sf "/usr/lib64/libwine.so.1" "/usr/local/lib64/libwine.so.1"
+				fi
+				
+				if test ! -f "/usr/local/lib64/libwine.so.1.0"
+					then
+					sudo ln -sf "/usr/lib64/libwine.so.1.0" "/usr/local/lib64/libwine.so.1.0"
+				fi
+				
+				if [ -f /usr/bin/wine64 ] || [ -f /usr/bin/wine64-preloader ]
+				then
+					sudo ln -sf "/usr/bin/wine64" "/usr/local/bin/wine64"
+					sudo ln -sf "/usr/bin/wine64-preloader" "/usr/local/bin/wine64-preloader"
+				fi
+			fi
+		fi
+}
+
+Instalar_WineGecko(){
+Arquitectura=$(uname -m)
+case "$Arquitectura" in
+    x86)	Arquitectura="x86"					;;
+    i?86)	Arquitectura="x86"					;;
+    amd64)	Arquitectura="x86_64"					;;
+    x86_64)	Arquitectura="x86_64"					;;
+* ) echo    "Tu Arquitectura '$Arquitectura' -> NO ESTA SOPORTADA."	;;
+esac
+
+# cp: no se puede efectuar `stat' sobre «wine_gecko-2.34-x86_64.msi»: No existe el archivo o el directorio
+# wine_gecko-2.34-x86_64.msi
+
+
+    case $1 in
+    2.21)
+        VERSION_GECKO=2.21
+        case "$Arquitectura" in
+        x86)    GECKO_SHA1SUM_NECESARIA=a514fc4d53783a586c7880a676c415695fe934a3;;
+        x86_64) GECKO_SHA1SUM_NECESARIA=c6f249ff2c6eb7dfe423ef246aba54e1a3b26934;;
+        esac
+        SUFIJO_GECKO=.msi
+        ;;
+    2.24)
+        VERSION_GECKO=2.24
+        case "$Arquitectura" in
+        x86)    GECKO_SHA1SUM_NECESARIA=b4923c0565e6cbd20075a0d4119ce3b48424f962;;
+        x86_64) GECKO_SHA1SUM_NECESARIA=da65fb99a53d87c831030ec8787e31d797f60e60;;
+        esac
+        SUFIJO_GECKO=.msi
+        ;;
+    2.34)
+        VERSION_GECKO=2.34
+        case "$Arquitectura" in
+        x86)    GECKO_SHA1SUM_NECESARIA=e9646cf9d683a6f4e254bcff3864a863fe8287e9;;
+        x86_64) GECKO_SHA1SUM_NECESARIA=2b4274f7c3b22b74c35ebc0423bb943597af3945;;
+        esac
+        SUFIJO_GECKO=.msi
+        ;;
+    esac
+   
+    if test -f wine_gecko-$VERSION_GECKO-"$Arquitectura"$SUFIJO_GECKO
+    then
+	GECKO_SHA1SUM_OBTENIDA=$(sha1sum < wine_gecko-$VERSION_GECKO-"$Arquitectura"$SUFIJO_GECKO | sed 's/(stdin)= //;s/ .*//')
+		if [ "$GECKO_SHA1SUM_OBTENIDA" = "$GECKO_SHA1SUM_NECESARIA" ]
+			then
+			sudo echo -e "Integridad 100% Correcta de Gecko : $VERSION_GECKO "
+			sudo mkdir -p $WINE_SHARE_PREFIX/gecko/
+			sudo cp wine_gecko-"$1-$Arquitectura$SUFIJO_GECKO" $WINE_SHARE_PREFIX/gecko/
+		fi
+    fi
+
+    if test ! -f $WINE_SHARE_PREFIX/gecko/wine_gecko-"$VERSION_GECKO-$Arquitectura$SUFIJO_GECKO"
+    then
+	cd "$DIRORIGEN"
+        wget http://downloads.sourceforge.net/wine/wine_gecko-"$VERSION_GECKO-$Arquitectura$SUFIJO_GECKO"
+
+        GECKO_SHA1SUM_OBTENIDA=$(sha1sum < wine_gecko-"$VERSION_GECKO-$Arquitectura$SUFIJO_GECKO" | sed 's/(stdin)= //;s/ .*//')
+	printf "\n"
+	echo "  Suma GECKO Necesaria  : $GECKO_SHA1SUM_NECESARIA " && printf "\n"
+	printf "\n"
+	
+        if [ "$GECKO_SHA1SUM_OBTENIDA"x != "$GECKO_SHA1SUM_NECESARIA"x ]
+        then
+           rm -f wine_gecko-"$VERSION_GECKO-$Arquitectura$SUFIJO_GECKO"
+	   printf "\n"
+	   echo "Suma GECKO Conseguida : $GECKO_SHA1SUM_OBTENIDA " && printf "\n"
+           echo "Integridad de Wine Gecko Incorrecta , Vuelve a Intentarlo." && printf "\n"
+	   printf "\n"
+        fi
+
+        sudo mkdir -p $WINE_SHARE_PREFIX/gecko
+        sudo cp wine_gecko-"$VERSION_GECKO-$Arquitectura$SUFIJO_GECKO" $WINE_SHARE_PREFIX/gecko/	
+    fi
+}
+
+Instalar_WineMono(){
+
+# 
+# wine_gecko-2.34-x86_64.msi
+
+Arquitectura=$(uname -m)
+
+    case $1 in
+    0.0.8) MONO_SHA1SUM_NECESARIA=dd349e72249ce5ff981be0e9dae33ac4a46a9f60;;
+    4.5.2) MONO_SHA1SUM_NECESARIA=73d6b8aa7a8921f43b22c6d930e8d7e421058187;;
+    4.5.4) MONO_SHA1SUM_NECESARIA=2b271d0bc92d5c9c45febd76fb11f9fcc29ea6d8;;
+    *) return;;
+    esac
+
+    if test -f "wine-mono-$1.msi"
+    then
+	MONO_SHA1SUM_OBTENIDA=$(sha1sum < "wine-mono-$1.msi" | sed 's/(stdin)= //;s/ .*//')
+		if [ "$MONO_SHA1SUM_OBTENIDA"x = "$MONO_SHA1SUM_NECESARIA"x ]
+			then
+			sudo echo -e "\\v Integridad 100% Correcta de Mono : $1"	
+			sudo mkdir -p $WINE_SHARE_PREFIX/mono/
+			sudo cp "wine-mono-$1.msi" $WINE_SHARE_PREFIX/mono/
+		fi
+	#$CONFIGURAR
+    fi
+    
+    if test ! -f "$WINE_SHARE_PREFIX/mono/wine-mono-$1.msi" 
+    then
+	cd "$DIRORIGEN"
+        wget "http://downloads.sourceforge.net/wine/wine-mono-$1.msi"
+
+        MONO_SHA1SUM_OBTENIDA=$(sha1sum < "wine-mono-$1.msi" | sed 's/(stdin)= //;s/ .*//')
+	printf "\n"
+	echo "Suma de MONO Necesaria  : $MONO_SHA1SUM_NECESARIA " $'\v'
+	printf "\n"
+	
+        if [ "$MONO_SHA1SUM_OBTENIDA"x != "$MONO_SHA1SUM_NECESARIA"x ]
+        then
+	   printf "\n"
+	   echo "Suma de MONO Conseguida : $MONO_SHA1SUM_OBTENIDA " $'\n'
+           echo "Integridad de Wine Mono Incorrecta , Vuelve a Intentarlo." $'\n'
+	   printf "\n"
+        fi
+        sudo mkdir -p $WINE_SHARE_PREFIX/mono
+        sudo cp "wine-mono-$1.msi" $WINE_SHARE_PREFIX/mono
+	#$CONFIGURAR
+    fi
+
+}
+
+echo
+echo 'Por Favor usa un Numero'
+echo 'Para Instalar la Version de Wine Deseada'
+echo 'La Opcion 1 - Siempre Contendra la Version "Estable" de Wine'
+echo
+echo "$Titulo"
+PS3="$Pregunta"
+
+select Opcion in "${Versiones[@]}" ; do 
+printf "\n"
+    case "$REPLY" in
+
+	1  ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.21)" $'\r' "$(Instalar_WineMono 0.0.8)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	2  ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.21)" $'\r' "$(Instalar_WineMono 0.0.8)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	3  ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.21)" $'\r' "$(Instalar_WineMono 0.0.8)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	4  ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.21)" $'\r' "$(Instalar_WineMono 0.0.8)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	5  ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 0.0.8)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	6  ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 0.0.8)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	7  ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 0.0.8)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	8  ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 0.0.8)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	9  ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 0.0.8)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	10 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	11 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	12 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	13 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	14 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	15 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	16 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	17 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	18 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	19 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	20 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	21 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	22 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	23 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	24 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	25 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	26 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	27 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	28 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	29 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	30 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	31 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	32 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.24)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	33 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.34)" $'\r' "$(Instalar_WineMono 4.5.2)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	34 ) echo "Has escogido la Opcion Numero : $REPLY" $'\n' "$(Instalar_Wine $Opcion)" $'\n'	"$(Instalar_WineGecko 2.34)" $'\r' "$(Instalar_WineMono 4.5.4)" $'\n\n' "Wine $Opcion ha sido instalado por Inukaze (De Venezuela)" $'\n'; break;;
+	35 ) echo "Hasta La Proxima!" $'\n' && break;;
+	Salir ) echo "Hasta La Proxima!" $'\n' && break;;
+    $(( ${#Versiones[@]}+1 )) ) echo && echo "Hasta Luego!" && echo; break;;
+    *) echo "Opcion Invilada. Por Favor Elige Una Opcion Valida." $'\n';continue;;
+    esac
+done
+fi

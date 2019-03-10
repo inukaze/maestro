@@ -1,0 +1,629 @@
+#!/bin/bash
+# 
+# Autor :       Inukaze ( Venezuela )
+# Sitio         :       http://inukaze.wordpResolucions.com
+# Correo-E      :       bloginukaze@gmail.com
+# Licensia      :       GPL 3
+#
+# Acerca de este Script :       
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD     , Solaris             , MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+
+#if "Comprobrar que estoy en el sistema grafico"
+#       if "al estar en el sistema grafico comprobrar que esta zenity o mate-dialog"
+#   else
+#       si no esta instalado "zenity ni mate-dialog" 
+#       mostrar este script en la terminal
+#GRAFICO#while Opcion=$(zenity --title="$Titulo" --text="$Pregunta" --list \
+#GRAFICO#                   --column="Options" "${Versiones[@]}"); do
+#GRAFICO#
+#GRAFICO#    case "$Opcion" in
+#GRAFICO#    "${Versiones[0]}" ) zenity --info --text="You picked $opt, option 1";;
+#GRAFICO#    "${Versiones[1]}" ) zenity --info --text="You picked $opt, option 2";;
+#GRAFICO#    "${Versiones[2]}" ) zenity --info --text="You picked $opt, option 3";;
+#GRAFICO#    *) zenity --error --text="Opcion Invilada. Por Favor Elige Una Opcion Valida.";;
+#GRAFICO#    esac
+#GRAFICO#
+#GRAFICO#done
+#else
+#
+
+
+# Determinar el Directorio Actual
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+
+# Obtener el nombre del usuario actual
+rm -rf $HOME/.usuarioenuso
+touch $HOME/.usuarioenuso
+echo "$USERNAME" >> $HOME/.usuarioenuso
+Usuario=$(cat $HOME/.usuarioenuso)
+rm -rf $HOME/.usuarioenuso
+# Obtener el nombre del usuario actual
+
+# Comprobrar que tengo permisos de SuperUsuario / Root
+# Si los tengo continuar con el Script , si no detener
+if [ $(whoami) != root ]; then
+        echo
+        echo 'Por favor ejecuta este script como root'
+        echo 'ó en su defecto usando "sudo" antes del script'
+        echo
+else
+
+## Binarios de Wine ##
+sudo rm -rf /usr/bin/msiexec
+sudo rm -rf /usr/bin/notepad
+sudo rm -rf /usr/bin/regedit
+sudo rm -rf /usr/bin/regsvr32
+sudo rm -rf /usr/bin/wine-auto
+sudo rm -rf /usr/bin/wineboot
+sudo rm -rf /usr/bin/winebuild
+sudo rm -rf /usr/bin/winecfg
+sudo rm -rf /usr/bin/wineconsole
+sudo rm -rf /usr/bin/winecpp
+sudo rm -rf /usr/bin/winedbg
+sudo rm -rf /usr/bin/winedump
+sudo rm -rf /usr/bin/winefile
+sudo rm -rf /usr/bin/wineg++
+sudo rm -rf /usr/bin/winegcc
+sudo rm -rf /usr/bin/winemaker
+sudo rm -rf /usr/bin/winemine
+sudo rm -rf /usr/bin/winepath
+sudo rm -rf /usr/bin/wineserver
+sudo rm -rf /usr/lib/mime/packages/wine*
+
+# Documentos & Manuales
+sudo rm -rf /usr/share/doc/wine*
+sudo rm -rf /usr/share/lintian/overrides/wine*
+sudo rm -rf /usr/share/man/de.UTF-8/man1/wine.1.gz
+sudo rm -rf /usr/share/man/de.UTF-8/man1/winemaker.1.gz
+sudo rm -rf /usr/share/man/de.UTF-8/man1/wineserver.1.gz
+sudo rm -rf /usr/share/man/fr.UTF-8/man1/wine.1.gz
+sudo rm -rf /usr/share/man/fr.UTF-8/man1/winemaker.1.gz
+sudo rm -rf /usr/share/man/fr.UTF-8/man1/wineserver.1.gz
+sudo rm -rf /usr/share/man/man1/msiexec.1.gz
+sudo rm -rf /usr/share/man/man1/notepad.1.gz
+sudo rm -rf /usr/share/man/man1/regedit.1.gz
+sudo rm -rf /usr/share/man/man1/regsvr32.1.gz
+sudo rm -rf /usr/share/man/man1/widl.1.gz
+sudo rm -rf /usr/share/man/man1/wine.1.gz
+sudo rm -rf /usr/share/man/man1/wineboot.1.gz
+sudo rm -rf /usr/share/man/man1/winebuild.1.gz
+sudo rm -rf /usr/share/man/man1/winecfg.1.gz
+sudo rm -rf /usr/share/man/man1/wineconsole.1.gz
+sudo rm -rf /usr/share/man/man1/winecpp.1.gz
+sudo rm -rf /usr/share/man/man1/winedbg.1.gz
+sudo rm -rf /usr/share/man/man1/winedump.1.gz
+sudo rm -rf /usr/share/man/man1/winefile.1.gz
+sudo rm -rf /usr/share/man/man1/wineg++.1.gz
+sudo rm -rf /usr/share/man/man1/winegcc.1.gz
+sudo rm -rf /usr/share/man/man1/winemaker.1.gz
+sudo rm -rf /usr/share/man/man1/winemine.1.gz
+sudo rm -rf /usr/share/man/man1/winepath.1.gz
+sudo rm -rf /usr/share/man/man1/wineserver.1.gz
+sudo rm -rf /usr/share/man/man1/wmc.1.gz
+sudo rm -rf /usr/share/man/man1/wrc.1.gz
+sudo rm -rf /usr/share/man/pl.UTF-8/man1/wine.1.gz
+sudo rm -rf /usr/share/wine
+sudo rm -rf /usr/share/doc/wine-gecko*
+sudo rm -rf /usr/share/doc/wine-mono*
+
+# Binarios & Enlaces
+sudo rm -rf /usr/bin/wmc
+sudo rm -rf /usr/bin/wrc
+sudo rm -rf /usr/bin/widl
+sudo rm -rf /usr/bin/function_grep.pl
+sudo rm -rf /usr/share/applications/wine-browsedrive.desktop
+sudo rm -rf /usr/share/applications/wine-notepad.desktop
+sudo rm -rf /usr/share/applications/wine-uninstaller.desktop
+sudo rm -rf /usr/share/applications/wine-winecfg.desktop
+sudo rm -rf /usr/share/applications/wine.desktop
+sudo rm -rf /usr/share/binfmts/wine
+sudo rm -rf /usr/share/desktop-directories/wine-Programs-Accessories.directory
+sudo rm -rf /usr/share/desktop-directories/wine-Programs.directory
+sudo rm -rf /usr/share/desktop-directories/wine-wine.directory
+
+# ICONOS #
+sudo rm -rf /usr/share/icons/hicolor/16x16/apps/wine-notepad.png
+sudo rm -rf /usr/share/icons/hicolor/16x16/apps/wine-uninstaller.png
+sudo rm -rf /usr/share/icons/hicolor/16x16/apps/wine-winecfg.png
+sudo rm -rf /usr/share/icons/hicolor/16x16/apps/wine.png
+sudo rm -rf /usr/share/icons/hicolor/16x16/places/folder-wine.png
+sudo rm -rf /usr/share/icons/hicolor/22x22/apps/wine-notepad.png
+sudo rm -rf /usr/share/icons/hicolor/22x22/apps/wine-uninstaller.png
+sudo rm -rf /usr/share/icons/hicolor/22x22/apps/wine-winecfg.png
+sudo rm -rf /usr/share/icons/hicolor/22x22/apps/wine.png
+sudo rm -rf /usr/share/icons/hicolor/22x22/places/folder-wine.png
+sudo rm -rf /usr/share/icons/hicolor/24x24/apps/wine-notepad.png
+sudo rm -rf /usr/share/icons/hicolor/24x24/apps/wine-uninstaller.png
+sudo rm -rf /usr/share/icons/hicolor/24x24/apps/wine-winecfg.png
+sudo rm -rf /usr/share/icons/hicolor/24x24/apps/wine.png
+sudo rm -rf /usr/share/icons/hicolor/24x24/places/folder-wine.png
+sudo rm -rf /usr/share/icons/hicolor/32x32/apps/wine-notepad.png
+sudo rm -rf /usr/share/icons/hicolor/32x32/apps/wine-uninstaller.png
+sudo rm -rf /usr/share/icons/hicolor/32x32/apps/wine-winecfg.png
+sudo rm -rf /usr/share/icons/hicolor/32x32/apps/wine.png
+sudo rm -rf /usr/share/icons/hicolor/32x32/places/folder-wine.png
+sudo rm -rf /usr/share/icons/hicolor/48x48/apps/wine-notepad.png
+sudo rm -rf /usr/share/icons/hicolor/48x48/apps/wine-uninstaller.png
+sudo rm -rf /usr/share/icons/hicolor/48x48/apps/wine-winecfg.png
+sudo rm -rf /usr/share/icons/hicolor/48x48/apps/wine.png
+sudo rm -rf /usr/share/icons/hicolor/48x48/places/folder-wine.png
+sudo rm -rf /usr/share/icons/hicolor/scalable/apps/notepad-48.svg
+sudo rm -rf /usr/share/icons/hicolor/scalable/apps/wine-uninstaller.svg
+sudo rm -rf /usr/share/icons/hicolor/scalable/apps/wine-winecfg.svg
+sudo rm -rf /usr/share/icons/hicolor/scalable/apps/wine.svg
+
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if              [ "$Arquitectura" = "i386" ]; then
+                        Arquitectura="x86"
+        elif    [ "$Arquitectura" = "i486" ]; then
+                        Arquitectura="x86"
+        elif    [ "$Arquitectura" = "i586" ]; then
+                        Arquitectura="x86"
+        elif    [ "$Arquitectura" = "i686" ]; then
+                        Arquitectura="x86"
+    elif        [ "$Arquitectura" = "x86_64" ]; then
+                        Arquitectura="x86_64"
+        else
+                echo "Arquitectura -> NO SOPORTADA"
+fi 
+
+# Extraido del Script "install-addons.sh" del sitio de wine
+# Adaptado Y Mejorado Para este script por "Inukaze (De Venezuela)"
+WINE_SHARE_PREFIX="/usr/local/share/wine"
+if [ -d "$WINE_SHARE_PREFIX" ]; then
+                WINE_SHARE_PREFIX="/usr/local/share/wine"
+        else
+                WINE_SHARE_PREFIX="/usr/share/wine"
+fi
+
+Instalar_WineGecko()
+{
+    case "$1" in
+    2.21)
+        GECKO_VERSION=2.21
+        case "$Arquitectura" in
+        x86)    GECKO_SHA1SUM=a514fc4d53783a586c7880a676c415695fe934a3;;
+        x86_64) GECKO_SHA1SUM=c6f249ff2c6eb7dfe423ef246aba54e1a3b26934;;
+        esac
+        GECKO_SUFFIX=.msi
+        ;;
+    2.24)
+        GECKO_VERSION=2.24
+        case "$Arquitectura" in
+        x86)    GECKO_SHA1SUM=b4923c0565e6cbd20075a0d4119ce3b48424f962;;
+        x86_64) GECKO_SHA1SUM=da65fb99a53d87c831030ec8787e31d797f60e60;;
+        esac
+        GECKO_SUFFIX=.msi
+        ;;
+    esac
+
+    gotsum=$(sha1sum < wine_gecko-$1-"$Arquitectura".msi | sed 's/(stdin)= //;s/ .*//')
+    if test ! -f "$WINE_SHARE_PREFIX"/gecko/wine_gecko-"$1"-"$Arquitectura""$GECKO_SUFFIX"
+    then
+        chmod a+o+x wine_gecko-$1-"$Arquitectura""$GECKO_SUFFIX"
+        if test -f wine_gecko-"$1"-"$Arquitectura""$GECKO_SUFFIX"
+                then
+                sudo mkdir -p $WINE_SHARE_PREFIX/gecko
+                sudo cp wine_gecko-$1-"$Arquitectura""$GECKO_SUFFIX" $WINE_SHARE_PREFIX/gecko
+                rm -rf wine_gecko-$1-"$Arquitectura""$GECKO_SUFFIX"
+                else
+                wget http://downloads.sourceforge.net/wine/wine_gecko-$1-"$Arquitectura""$GECKO_SUFFIX"
+                chmod a+o+x wine_gecko-$1-"$Arquitectura""$GECKO_SUFFIX"
+                if [ "$gotsum"x != "$GECKO_SHA1SUM"x ]
+                        then
+                        rm -rf wine_gecko-$1-"$Arquitectura"$GECKO_SUFFIX
+                        echo "Integridad de Wine Gecko Incorrecta , Vuelve a Intentarlo."
+                        exit 1
+                fi
+                sudo mkdir -p $WINE_SHARE_PREFIX/gecko
+                sudo cp wine_gecko-$1-"$Arquitectura""$GECKO_SUFFIX" $WINE_SHARE_PREFIX/gecko
+                rm -rf wine_gecko-$1-"$Arquitectura""$GECKO_SUFFIX"
+        fi
+
+        
+                if test -f $WINE_SHARE_PREFIX/gecko/wine_gecko-$GECKO_VERSION-"$Arquitectura"$GECKO_SUFFIX
+                then
+                        echo "Gecko $GECKO_VERSION  ha sido Instalado" #en $WINE_SHARE_PREFIX"
+                        rm -rf wine_gecko-$GECKO_VERSION-"$Arquitectura"$GECKO_SUFFIX
+                fi
+
+
+    fi
+}
+
+Instalar_WineMono()
+{
+    case "$1" in
+    0.0.8) MONO_SHA1SUM=dd349e72249ce5ff981be0e9dae33ac4a46a9f60;;
+    4.5.2) MONO_SHA1SUM=73d6b8aa7a8921f43b22c6d930e8d7e421058187;;
+    *) return;;
+    esac
+
+    gotsum=$(sha1sum < wine-mono-"$1".msi | sed 's/(stdin)= //;s/ .*//')
+    if test ! -f $WINE_SHARE_PREFIX/mono/wine-mono-"$1".msi
+    then
+        chmod a+o+x wine-mono-"$1".msi
+        if test -f wine-mono-"$1".msi
+                then
+                        sudo mkdir -p $WINE_SHARE_PREFIX/mono
+                        sudo cp wine-mono-"$1".msi $WINE_SHARE_PREFIX/mono
+                        rm -rf  wine-mono-"$1".msi
+                else
+                        wget http://downloads.sourceforge.net/wine/wine-mono-"$1".msi
+                        chmod a+o+x wine-mono-"$1".msi
+                        if [ "$gotsum"x != "$MONO_SHA1SUM"x ]
+                                then
+                                rm -rf wine-mono-"$1".msi
+                                echo "Integridad de Wine Mono Incorrecta , Vuelve a Intentarlo."
+                                exit 1
+                        fi
+                        sudo mkdir -p $WINE_SHARE_PREFIX/mono
+                        sudo cp wine-mono-"$1".msi $WINE_SHARE_PREFIX/mono
+                        rm -rf  wine-mono-"$1".msi
+
+                fi
+
+                if test -f $WINE_SHARE_PREFIX/mono/wine-mono-"$1".msi
+                then
+                        echo "Mono  $1 ha sido Instalado" #en $WINE_SHARE_PREFIX"
+                        rm -rf $WINE_SHARE_PREFIX/mono/wine-mono-"$1".msi
+                fi
+
+
+    fi
+}
+# Extraido del Script "install-addons.sh" del sitio de wine
+# Adaptado Y Mejorado Para este script por "Inukaze (De Venezuela)"
+
+
+echo
+echo 'Por Favor usa un Numero'
+echo 'Para Instalar la Version de Wine Deseada'
+echo 'La Opcion 1 - Siempre Contendra la Version "Estable" de Wine'
+echo
+
+Titulo="Instalador Manual de Wine"
+Pregunta="Por Favor Elige una Opcion :"
+Versiones=("1.6.2" "1.7.0" "1.7.1" "1.7.2" "1.7.3" "1.7.4" "1.7.5" "1.7.6" "1.7.8" "1.7.9" "1.7.10" "1.7.11" "1.7.12" "1.7.13" "1.7.14" "1.7.15" "1.7.16" "1.7.17" "1.7.18")
+
+echo "$Titulo"
+echo
+PS3="$Pregunta"
+select Opcion in "${Versiones[@]}" "Salir" ; do 
+echo
+
+Instalar_Wine()
+{
+        Arquitectura=$(uname -m)
+        if          [ "$Arquitectura" = "i386" ]; then
+                        Arquitectura="x86"
+        elif    [ "$Arquitectura" = "i486" ]; then
+                        Arquitectura="x86"
+        elif    [ "$Arquitectura" = "i586" ]; then
+                        Arquitectura="x86"
+        elif    [ "$Arquitectura" = "i686" ]; then
+                        Arquitectura="x86"
+    elif        [ "$Arquitectura" = "x86_64" ]; then
+                        Arquitectura="x86_64"
+        else
+                echo "Arquitectura -> NO SOPORTADA"
+fi 
+
+    case "$1" in
+    1.7.18)
+        VersionWine=1.7.18
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=3006d235e41266f625ae45ac5d553f15613af88a;;
+        x86_64) VersionWine_SHA1SUM=bd43c11332ca19af8d178d0326db447f6bf42587;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.17)
+        VersionWine=1.7.17
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=cbd594a8b66bf3eb38b7e065e0cd26394404c0a4;;
+        x86_64) VersionWine_SHA1SUM=e24d327b396d24fbd224d56cd8dbb4a827f2a2fe;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.16)
+        VersionWine=1.7.16
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=3702d5e9e609b59d4dade8f8cb6b3a1d6ab64bed;;
+        x86_64) VersionWine_SHA1SUM=4cdc1e57b1707acf7a86c193d18dbf22ebf12226;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.15)
+        VersionWine=1.7.15
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=acf18e5d9a218783c518d7f9aac9214ca6911a56;;
+        x86_64) VersionWine_SHA1SUM=bf1d23854a587509cce9d85309b61632f7b95a51;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.14)
+        VersionWine=1.7.14
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=53689f641ef47e6d7f9e6c4ba8c72a463805f204;;
+        x86_64) VersionWine_SHA1SUM=fbd75aea999b9d65af4ed8abd497c17172fbd85c;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.13)
+        VersionWine=1.7.13
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=851f1ef7343f2bc8f0164c95108611a8166eb75b;;
+        x86_64) VersionWine_SHA1SUM=e5d6addaf9293bf88393d27b5732bcf255d2e4de;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.12)
+        VersionWine=1.7.12
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=9ae82d42b7c249f06fde643adab80b5536737e6a;;
+        x86_64) VersionWine_SHA1SUM=9633656b14bb97f03d9fa7d65910781522ab41cb;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.11)
+        VersionWine=1.7.11
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=a2049b89244512146e4332d5a30ff4b0e191273a;;
+        x86_64) VersionWine_SHA1SUM=6fa0f6b44d9ce4289171ed29cf1c19fb8b2a3cdb;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.10)
+        VersionWine=1.7.10
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=61982f7681ca5bc4ea76f169408862cccc667e39;;
+        x86_64) VersionWine_SHA1SUM=e1b437c7a1c73d1485049651ef6a7de5b26be055;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.9)
+        VersionWine=1.7.9
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=158bb950cf740e4edf39468525eeffcb9ad2d9e7;;
+        x86_64) VersionWine_SHA1SUM=47babea7b565845083fc53c12ec4124a370de099;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.8)
+        VersionWine=1.7.8
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=9b746722734b23c525bd1b2d4d7210358a2236f9;;
+        x86_64) VersionWine_SHA1SUM=475c825bd75794821a57ba8d21c3aab1a5075d81;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.7)
+        VersionWine=1.7.7
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=e2fbd10fb5afd769e4e324d504c661f104d2cad8;;
+        x86_64) VersionWine_SHA1SUM=226d5826a5c4e36d7bfa2d162ece9e8e23c38a94;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.6)
+        VersionWine=1.7.6
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=cc043b18232744c7bb8890a1b0bf5291fdd98c03;;
+        x86_64) VersionWine_SHA1SUM=f7f0618bac002e545a132e11883239dfac5e3276;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.5)
+        VersionWine=1.7.5
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=0f8f8a1d9926d8df3cc1df1bad829a1922f47bf3;;
+        x86_64) VersionWine_SHA1SUM=f3641b18e3577db246d390e04476c157032c3c6c;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.4)
+        VersionWine=1.7.4
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=b64c84b17ffd1c29a68efc6bf55270edffe18bf4;;
+        x86_64) VersionWine_SHA1SUM=ef9f7bb72b255ce589f0dd620f00f1da68be9e7a;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.3)
+        VersionWine=1.7.3
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=353049c6dbc991982b1295ca58b75d15b4d1638c;;
+        x86_64) VersionWine_SHA1SUM=7d8214aa2983b606f7fe47098c423b93be91001d;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.2)
+        VersionWine=1.7.2
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=9fd9f1774eea0f4d76461e58849877f3c006f160;;
+        x86_64) VersionWine_SHA1SUM=c48a47eff080f0e47e5fd82f71c880272b8a1c9e;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.1)
+        VersionWine=1.7.1
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=efd34a8026b27c2417c86d23057ad3d08d3ee31b;;
+        x86_64) VersionWine_SHA1SUM=bb75f94d2b6fc258cb4f04e33e05aafaf48201e1;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.7.0)
+        VersionWine=1.7.0
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=e0945a7dbbf84914b1f000168ebbade5a8078348;;
+        x86_64) VersionWine_SHA1SUM=48a39c45b329e7fc35130a9af8245265091fe5a7;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+    1.6.2)
+        VersionWine=1.6.2
+        case "$Arquitectura" in
+        x86)    VersionWine_SHA1SUM=c102ba31a9df3b4246cd112290d212fdb697cc09;;
+        x86_64) VersionWine_SHA1SUM=05f940cce913280768f38ccdb5d56a361b6bc51a;;
+        esac
+        ExtensionVersionWine=.pol
+        ;;
+
+    esac
+
+Nucleo=$(uname -s)
+
+        if              [ "$Nucleo" = "Darwin" ]; then
+                            Nucleo=darwin
+        elif            [ "$Nucleo" = "Linux" ]; then
+                                Nucleo=linux
+        else
+                echo "Sistema Operativo -> NO SOPORTADO"
+        fi
+
+        Arquitectura=$(uname -m)
+        if          [ "$Arquitectura" = "i386" ]; then
+                        Arquitectura="x86"
+        elif    [ "$Arquitectura" = "i486" ]; then
+                        Arquitectura="x86"
+        elif    [ "$Arquitectura" = "i586" ]; then
+                        Arquitectura="x86"
+        elif    [ "$Arquitectura" = "i686" ]; then
+                        Arquitectura="x86"
+    elif        [ "$Arquitectura" = "x86_64" ]; then
+                        Arquitectura="amd64"
+        else
+                echo "Arquitectura -> NO SOPORTADA"
+        fi 
+
+
+        POLWINE=PlayOnLinux-wine-$Opcion-"$Nucleo"-"$Arquitectura"
+    if test ! -f $POLWINE$ExtensionVersionWine 
+    then
+        echo
+                wget http://www.playonlinux.com/wine/binaries/"$Nucleo"-"$Arquitectura"/PlayOnLinux-wine-$Opcion-"$Nucleo"-"$Arquitectura".pol
+                gotsum=$(sha1sum < PlayOnLinux-wine-$Opcion-"$Nucleo"-"$Arquitectura"$ExtensionVersionWine | sed 's/(stdin)= //;s/ .*//')
+                if [ "$gotsum"x != "$VersionWine_SHA1SUM"x ]
+                        then
+                                rm -f PlayOnLinux-wine-$Opcion-"$Nucleo"-"$Arquitectura".pol
+                                echo "Integridad de Wine Incorrecta. Vuelve a Intentarlo"
+                                exit 1
+                fi
+                tar xfvj PlayOnLinux-wine-$Opcion-"$Nucleo"-"$Arquitectura".pol 
+                if test -d playonlinux
+                        then
+                        rm -rf playonlinux 
+                fi
+                if test -d files
+                        then
+                        rm -rf files
+                fi
+                sudo chmod a+o+x -R wineversion/$Opcion
+                cd wineversion/$Opcion
+                sudo cp -rf bin lib share /usr
+                echo
+                cd "$RUTA"
+                rm -rf wineversion
+    fi
+
+    if test -f PlayOnLinux-wine-$Opcion-"$Nucleo"-"$Arquitectura".pol 
+    then
+                gotsum=$(sha1sum < PlayOnLinux-wine-$Opcion-"$Nucleo"-"$Arquitectura"$ExtensionVersionWine | sed 's/(stdin)= //;s/ .*//')
+                if [ "$gotsum"x != "$VersionWine_SHA1SUM"x ]
+                        then
+                                rm -f PlayOnLinux-wine-$Opcion-"$Nucleo"-"$Arquitectura".pol
+                                echo "Integridad de Wine Incorrecta. Vuelve a Intentarlo"
+                                exit 1
+                        else
+
+                                tar xfvj PlayOnLinux-wine-$Opcion-"$Nucleo"-"$Arquitectura".pol 2>>/dev/null
+                if test -d playonlinux
+                        then
+                                        rm -rf playonlinux 
+                fi
+                if test -d files
+                        then
+                                        rm -rf files
+                fi
+                        sudo chmod a+o+x -R wineversion/$Opcion
+                        cd wineversion/$Opcion
+                        echo
+                        sudo cp -rf bin lib share /usr 2>>/dev/null
+                        cd "$RUTA"
+                        rm -rf wineversion
+                        rm -rf PlayOnLinux-wine-$Opcion-"$Nucleo"-"$Arquitectura".pol
+        fi
+        
+
+        fi
+
+}
+  
+VersionWine()
+{
+        if test -x /usr/bin/wine 
+        then
+        VersionWine=$(/usr/bin/wine --version | sed 's/^[-wine= \t]*//')
+                        if [ "$Opcion" = "$VersionWine" ]; then
+                                echo "Wine $VersionWine ha sido instalado"
+                        fi
+        fi
+
+}
+
+echo
+    case "$REPLY" in
+
+    1  ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 0.0.8 && Instalar_WineGecko 2.21 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    2  ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 0.0.8 && Instalar_WineGecko 2.21 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    3  ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 0.0.8 && Instalar_WineGecko 2.21 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    4  ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 0.0.8 && Instalar_WineGecko 2.21 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    5  ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 0.0.8 && Instalar_WineGecko 2.24 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    6  ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 0.0.8 && Instalar_WineGecko 2.24 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    7  ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 0.0.8 && Instalar_WineGecko 2.24 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    8  ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 0.0.8 && Instalar_WineGecko 2.24 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    9  ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 0.0.8 && Instalar_WineGecko 2.24 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    10 ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 4.5.2 && Instalar_WineGecko 2.24 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    11 ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 4.5.2 && Instalar_WineGecko 2.24 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    12 ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 4.5.2 && Instalar_WineGecko 2.24 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    13 ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 4.5.2 && Instalar_WineGecko 2.24 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    14 ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 4.5.2 && Instalar_WineGecko 2.24 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    15 ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 4.5.2 && Instalar_WineGecko 2.24 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    16 ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 4.5.2 && Instalar_WineGecko 2.24 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    17 ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 4.5.2 && Instalar_WineGecko 2.24 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    18 ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 4.5.2 && Instalar_WineGecko 2.24 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+    19 ) echo "Has escogido la Opcion Numero : $REPLY , Version de Wine $Opcion " &&  Instalar_Wine $Opcion>>/dev/null && Instalar_WineMono 4.5.2 && Instalar_WineGecko 2.24 && echo && echo "$(VersionWine) + Gecko (HTML) + Mono (.NET)" && echo; break;;
+        Salir ) echo && echo "Hasta Luego!" && echo; break;;
+
+
+    $(( ${#Versiones[@]}+1 )) ) echo && echo "Hasta Luego!" && echo; break;;
+    *) echo && echo "Opcion Invilada. Por Favor Elige Una Opcion Valida." && echo;continue;;
+
+    esac
+
+done
+
+fi

@@ -1,0 +1,758 @@
+#!/usr/bin/env bash
+
+echo '
+Autor ----------------> Inukaze ( Venezuela )
+Sitio ----------------> https://goo.gl/ij6WqW
+Correo-E -------------> bloginukaze@gmail.com
+Licencia -------------> GPL 2
+
+********* Inicio : Acerca de este Script **********
+
+ Este Mini-Script es para mover las carpetas
+ de Wine. a una nueva ubicacion.
+
+********** Fin : Acerca de este Script ************'
+cd "$HOME"
+
+#Variables de Entorno Globales :
+Destino="/media/Compartido/Videojuegos/Partidas/Wine/$USER"
+#Escritorio="$Destino/Escritorio"
+Documentos="$Destino/Documentos"
+Imagenes="$Destino/Imagenes"
+Musica="$Destino/Musica"
+Videos="$Destino/Videos"
+ApplicationData="$Destino/Application Data"
+Cookies="$Destino/Cookies"
+LocalSettings="$Destino/Local Settings"
+Temp="$Destino/Temp"
+Escritorio="$HOME/Escritorio"
+AppData="$Destino/AppData"
+Partidas="$Destino/Partidas"
+PrefijoPOL="$HOME/.PlayOnLinux/wineprefix"
+Proton37="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/share/default_pfx/drive_c/users/steamuser"
+
+#Crear Carpetas de Destino :
+mkdir -p "$Destino"
+mkdir -p "$Documentos"
+mkdir -p "$Imagenes"
+mkdir -p "$Musica"
+mkdir -p "$Videos"
+mkdir -p "$ApplicationData/Microsoft/Windows/Themes"
+mkdir -p "$Cookies"
+mkdir -p "$LocalSettings/Application Data/Microsoft"
+mkdir -p "$LocalSettings/Application Data/History"
+mkdir -p "$LocalSettings/Application Data/Temporary Internet Files"
+mkdir -p "$Temp"
+mkdir -p "$AppData"
+mkdir -p "$Partidas"
+
+#Prevenir que se ejecuten las funciones antes de que sean llamadas
+unset ArregloEsp
+unset ArregloEng
+unset ArregloPol
+
+ArregloEsp(){
+#Comprobar que las carpetas ya son enlaces simbolicos. en caso de ser directorios eliminarlos
+#Entonces crear un enlace simbolico a la nueva ruta comun.
+
+#Mis Documentos
+if [ "$(readlink -f "$PWD/Mis Documentos")" = "$Documentos" ]; then
+    if [ -L "$PWD/Mis Documentos" ]; then
+        if [ -e "$PWD/Mis Documentos" ]; then
+		    echo "$PWD/Mis Documentos -> Ya esta arreglado"
+        else
+		    echo "$PWD/Mis Documentos -> Esta Roto"
+		    unlink "Mis Documentos" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/Mis Documentos" ]; then
+	echo "$PWD/Mis Documentos es un directorio - Eliminando"
+	rm -rf "$PWD/Mis Documentos"
+    fi
+    echo 'Creando Enlace Simbolico de "Mis Documentos"'
+    ln -sf "$Documentos" "$PWD/Mis Documentos" &> /dev/null
+fi
+#Mis Documentos
+
+#Mis imágenes
+if [ "$(readlink -f "$PWD/Mis imágenes")" = "$Imagenes" ]; then
+    if [ -L "$PWD/Mis imágenes" ]; then
+        if [ -e "$PWD/Mis imágenes" ]; then
+		    echo "$PWD/Mis imágenes -> Ya esta arreglado"
+        else
+		    echo "$PWD/Mis imágenes -> Esta Roto"
+		    unlink "Mis imágenes" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/Mis imágenes" ]; then
+	echo "$PWD/Mis imágenes es un directorio - Eliminando"
+	rm -rf "$PWD/Mis imágenes"
+    fi
+    echo 'Creando Enlace Simbolico de "Mis imágenes"'
+    ln -sf "$Imagenes" "$PWD/Mis imágenes" &> /dev/null
+fi
+#Mis imágenes
+
+#Mi música
+if [ "$(readlink -f "$PWD/Mi música")" = "$Musica" ]; then
+    if [ -L "$PWD/Mi música" ]; then
+        if [ -e "$PWD/Mi música" ]; then
+		    echo "$PWD/Mi música -> Ya esta arreglado"
+        else
+		    echo "$PWD/Mi música -> Esta Roto"
+		    unlink "Mi música" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/Mi música" ]; then
+	echo "$PWD/Mi música es un directorio - Eliminando"
+	rm -rf "$PWD/Mi música"
+    fi
+    echo 'Creando Enlace Simbolico de "Mi música"'
+    ln -sf "$Musica" "$PWD/Mi música" &> /dev/null
+fi
+#Mi música
+
+#Mis vídeos
+if [ "$(readlink -f "$PWD/Mis vídeos")" = "$Videos" ]; then
+    if [ -L "$PWD/Mis vídeos" ]; then
+        if [ -e "$PWD/Mis vídeos" ]; then
+		    echo "$PWD/Mis vídeos -> Ya esta arreglado"
+        else
+		    echo "$PWD/Mis vídeos -> Esta Roto"
+		    unlink "Mis vídeos" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/Mis vídeos" ]; then
+	echo "$PWD/Mis vídeos es un directorio - Eliminando"
+	rm -rf "$PWD/Mis vídeos"
+    fi
+    echo 'Creando Enlace Simbolico de "Mis vídeos"'
+    ln -sf "$Videos" "$PWD/Mis vídeos" &> /dev/null
+fi
+#Mis vídeos
+
+#Escritorio
+if [ "$(readlink -f "$PWD/Escritorio")" = "$Escritorio" ]; then
+    if [ -L "$PWD/Escritorio" ]; then
+        if [ -e "$PWD/Escritorio" ]; then
+		    echo "$PWD/Escritorio -> Ya esta arreglado"
+        else
+		    echo "$PWD/Escritorio -> Esta Roto"
+		    unlink "Escritorio" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/Escritorio" ]; then
+	echo "$PWD/Escritorio es un directorio - Eliminando"
+	rm -rf "$PWD/Escritorio"
+    fi
+    echo 'Creando Enlace Simbolico de "Escritorio"'
+    ln -sf "$HOME/Escritorio" "$PWD/Escritorio" &> /dev/null
+fi
+#Escritorio
+
+#Partidas
+if [ "$(readlink -f "$PWD/Saved Games")" = "$Partidas" ]; then
+    if [ -L "$PWD/Saved Games" ]; then
+        if [ -e "$PWD/Saved Games" ]; then
+		    echo "$PWD/Saved Games -> Ya esta arreglado"
+        else
+		    echo "$PWD/Saved Games -> Esta Roto"
+		    unlink "Saved Games" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/Saved Games" ]; then
+	echo "$PWD/Saved Games es un directorio - Eliminando"
+	rm -rf "$PWD/Saved Games"
+    fi
+    echo 'Creando Enlace Simbolico de "Partidas"'
+    ln -sf "$Partidas" "$PWD/Saved Games" &> /dev/null
+fi
+#Partidas
+
+#Borrar los carpetas de destino
+unlink "My Documents" &> /dev/null
+unlink "My Pictures" &> /dev/null
+unlink "My Music" &> /dev/null
+unlink "My Videos" &> /dev/null
+unlink "Desktop" &> /dev/null
+rm -rf "My Music.winecfg"
+rm -rf "My Documents.winecfg"
+rm -rf "My Pictures.winecfg"
+rm -rf "My Videos.winecfg"
+rm -rf "Desktop.winecfg"
+rm -rf "Application Data"
+rm -rf "Local Settings"
+rm -rf "Cookies"
+rm -rf "Temp"
+rm -rf "AppData"
+rm -rf "Saved Games"
+
+#Enlazar Nuevas carpetas :
+ln -sf "$ApplicationData" "$PWD/Application Data" &> /dev/null
+ln -sf "$Cookies" "$PWD/Cookies" &> /dev/null
+ln -sf "$AppData" "$PWD/AppData" &> /dev/null
+ln -sf "$LocalSettings" "$PWD/Local Settings" &> /dev/null
+ln -sf "$Temp" "$PWD/Temp" &> /dev/null
+ln -sf "$Partidas" "$PWD/Saved Games" &> /dev/null
+}
+
+ArregloEng(){
+#Comprobar que las carpetas ya son enlaces simbolicos. en caso de ser directorios eliminarlos
+#Entonces crear un enlace simbolico a la nueva ruta comun.
+
+#My Documents
+if [ "$(readlink -f "$PWD/My Documents")" = "$Documentos" ]; then
+    if [ -L "$PWD/My Documents" ]; then
+        if [ -e "$PWD/My Documents" ]; then
+		    echo "$PWD/My Documents -> Ya esta arreglado"
+        else
+		    echo "$PWD/My Documents -> Esta Roto"
+		    unlink "My Documents" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/My Documents" ]; then
+	echo "$PWD/My Documents es un directorio - Eliminando"
+	rm -rf "$PWD/My Documents"
+    fi
+    echo 'Creando Enlace Simbolico de "My Documents"'
+    ln -sf "$Documentos" "$PWD/My Documents" &> /dev/null
+fi
+#My Documents
+
+#My Pictures
+if [ "$(readlink -f "$PWD/My Pictures")" = "$Imagenes" ]; then
+    if [ -L "$PWD/My Pictures" ]; then
+        if [ -e "$PWD/My Pictures" ]; then
+		    echo "$PWD/My Pictures -> Ya esta arreglado"
+        else
+		    echo "$PWD/My Pictures -> Esta Roto"
+		    unlink "My Pictures" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/My Pictures" ]; then
+	echo "$PWD/My Pictures es un directorio - Eliminando"
+	rm -rf "$PWD/My Pictures"
+    fi
+    echo 'Creando Enlace Simbolico de "My Pictures"'
+    ln -sf "$Imagenes" "$PWD/My Pictures" &> /dev/null
+fi
+#My Pictures
+
+#My Music
+if [ "$(readlink -f "$PWD/My Music")" = "$Musica" ]; then
+    if [ -L "$PWD/My Music" ]; then
+        if [ -e "$PWD/My Music" ]; then
+		    echo "$PWD/My Music -> Ya esta arreglado"
+        else
+		    echo "$PWD/My Music -> Esta Roto"
+		    unlink "My Music" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/My Music" ]; then
+	echo "$PWD/My Music es un directorio - Eliminando"
+	rm -rf "$PWD/My Music"
+    fi
+    echo 'Creando Enlace Simbolico de "My Music"'
+    ln -sf "$Musica" "$PWD/My Music" &> /dev/null
+fi
+#My Music
+
+#My Videos
+if [ "$(readlink -f "$PWD/My Videos")" = "$Videos" ]; then
+    if [ -L "$PWD/My Videos" ]; then
+        if [ -e "$PWD/My Videos" ]; then
+		    echo "$PWD/My Videos -> Ya esta arreglado"
+        else
+		    echo "$PWD/My Videos -> Esta Roto"
+		    unlink "My Videos" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/My Videos" ]; then
+	echo "$PWD/My Videos es un directorio - Eliminando"
+	rm -rf "$PWD/My Videos"
+    fi
+    echo 'Creando Enlace Simbolico de "My Videos"'
+    ln -sf "$Videos" "$PWD/My Videos" &> /dev/null
+fi
+#My Videos
+
+#Desktop
+if [ "$(readlink -f "$PWD/Desktop")" = "$Escritorio" ]; then
+    if [ -L "$PWD/Desktop" ]; then
+        if [ -e "$PWD/Desktop" ]; then
+		    echo "$PWD/Desktop -> Ya esta arreglado"
+        else
+		    echo "$PWD/Desktop -> Esta Roto"
+		    unlink "Desktop" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/Desktop" ]; then
+	echo "$PWD/Desktop es un directorio - Eliminando"
+	rm -rf "$PWD/Desktop"
+    fi
+    echo 'Creando Enlace Simbolico de "Desktop"'
+    ln -sf "$HOME/Escritorio" "$PWD/Desktop" &> /dev/null
+fi
+#Desktop
+
+#Saved Games
+if [ "$(readlink -f "$PWD/Saved Games")" = "$Partidas" ]; then
+    if [ -L "$PWD/Saved Games" ]; then
+        if [ -e "$PWD/Saved Games" ]; then
+		    echo "$PWD/Saved Games -> Ya esta arreglado"
+        else
+		    echo "$PWD/Saved Games -> Esta Roto"
+		    unlink "Saved Games" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/Saved Games" ]; then
+	echo "$PWD/Saved Games es un directorio - Eliminando"
+	rm -rf "$PWD/Saved Games"
+    fi
+    echo 'Creando Enlace Simbolico de "Partidas"'
+    ln -sf "$Partidas" "$PWD/Saved Games" &> /dev/null
+fi
+#Saved Games
+
+#Borrar los carpetas de destino
+unlink "Mis Documentos" &> /dev/null
+unlink "Mis imágenes" &> /dev/null 
+unlink "Mi música" &> /dev/null
+unlink "Mis vídeos" &> /dev/null
+unlink "Escritorio" &> /dev/null
+rm -rf "My Music.winecfg"
+rm -rf "My Documents.winecfg"
+rm -rf "My Pictures.winecfg"
+rm -rf "My Videos.winecfg"
+rm -rf "Desktop.winecfg"
+rm -rf "Application Data"
+rm -rf "Local Settings"
+rm -rf "Cookies"
+rm -rf "Temp"
+rm -rf "AppData"
+rm -rf "Saved Games"
+
+#Enlazar Nuevas carpetas :
+ln -sf "$AppData" "$PWD/AppData" &> /dev/null
+ln -sf "$ApplicationData" "$PWD/Application Data" &> /dev/null
+ln -sf "$Cookies" "$PWD/Cookies" &> /dev/null
+ln -sf "$LocalSettings" "$PWD/Local Settings" &> /dev/null
+ln -sf "$Temp" "$PWD/Temp" &> /dev/null
+ln -sf "$Partidas" "$PWD/Saved Games" &> /dev/null
+}
+
+ArregloPol(){
+#Comprobar que las carpetas ya son enlaces simbolicos. en caso de ser directorios eliminarlos
+#Entonces crear un enlace simbolico a la nueva ruta comun.
+
+#Moje Dokumenty
+if [ "$(readlink -f "$PWD/Moje Dokumenty")" = "$Documentos" ]; then
+    if [ -L "$PWD/Moje Dokumenty" ]; then
+        if [ -e "$PWD/Moje Dokumenty" ]; then
+		    echo "$PWD/Moje Dokumenty -> Ya esta arreglado"
+        else
+		    echo "$PWD/Moje Dokumenty -> Esta Roto"
+		    unlink "Moje Dokumenty" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/Moje Dokumenty" ]; then
+	echo "$PWD/Moje Dokumenty es un directorio - Eliminando"
+	rm -rf "$PWD/Moje Dokumenty"
+    fi
+    echo 'Creando Enlace Simbolico de "Moje Dokumenty"'
+    ln -sf "$Documentos" "$PWD/Moje Dokumenty" &> /dev/null
+fi
+#Moje Dokumenty
+
+#Moje obrazy
+if [ "$(readlink -f "$PWD/Moje obrazy")" = "$Imagenes" ]; then
+    if [ -L "$PWD/Moje obrazy" ]; then
+        if [ -e "$PWD/Moje obrazy" ]; then
+		    echo "$PWD/Moje obrazy -> Ya esta arreglado"
+        else
+		    echo "$PWD/Moje obrazy -> Esta Roto"
+		    unlink "Moje obrazy" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/Moje obrazy" ]; then
+	echo "$PWD/Moje obrazy es un directorio - Eliminando"
+	rm -rf "$PWD/Moje obrazy"
+    fi
+    echo 'Creando Enlace Simbolico de "Moje obrazy"'
+    ln -sf "$Imagenes" "$PWD/Moje obrazy"
+fi
+#Moje obrazy
+
+#Moja muzyka
+if [ "$(readlink -f "$PWD/Moja muzyka")" = "$Musica" ]; then
+    if [ -L "$PWD/Moja muzyka" ]; then
+        if [ -e "$PWD/Moja muzyka" ]; then
+		    echo "$PWD/Moja muzyka -> Ya esta arreglado"
+        else
+		    echo "$PWD/Moja muzyka -> Esta Roto"
+		    unlink "Moja muzyka" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/Moja muzyka" ]; then
+	echo "$PWD/Moja muzyka es un directorio - Eliminando"
+	rm -rf "$PWD/Moja muzyka"
+    fi
+    echo 'Creando Enlace Simbolico de "Moja muzyka"'
+    ln -sf "$Musica" "$PWD/Moja muzyka" &> /dev/null
+fi
+#Moja muzyka
+
+#Moje wideo
+if [ "$(readlink -f "$PWD/Moje wideo")" = "$Videos" ]; then
+    if [ -L "$PWD/Moje wideo" ]; then
+        if [ -e "$PWD/Moje wideo" ]; then
+		    echo "$PWD/Moje wideo -> Ya esta arreglado"
+        else
+		    echo "$PWD/Moje wideo -> Esta Roto"
+		    unlink "Moje wideo" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/Moje wideo" ]; then
+	echo "$PWD/Moje wideo es un directorio - Eliminando"
+	rm -rf "$PWD/Moje wideo"
+    fi
+    echo 'Creando Enlace Simbolico de "Moje wideo"'
+    ln -sf "$Videos" "$PWD/Moje wideo" &> /dev/null
+fi
+#Moje wideo
+
+#Pulpit
+if [ "$(readlink -f "$PWD/Pulpit")" = "$Escritorio" ]; then
+    if [ -L "$PWD/Pulpit" ]; then
+        if [ -e "$PWD/Pulpit" ]; then
+		    echo "$PWD/Pulpit -> Ya esta arreglado"
+        else
+		    echo "$PWD/Pulpit -> Roto"
+		    unlink "Pulpit" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/Pulpit" ]; then
+	echo "$PWD/Pulpit es un directorio - Eliminando"
+	rm -rf "$PWD/Pulpit"
+    fi
+    echo 'Creando Enlace Simbolico de "Pulpit"'
+    ln -sf "$HOME/Escritorio" "$PWD/Pulpit" &> /dev/null
+fi
+#Pulpit
+
+#Zapisane gry
+if [ "$(readlink -f "$PWD/Zapisane gry")" = "$Partidas" ]; then
+    if [ -L "$PWD/Zapisane gry" ]; then
+        if [ -e "$PWD/Zapisane gry" ]; then
+		    echo "$PWD/Zapisane gry -> Ya esta arreglado"
+        else
+		    echo "$PWD/Zapisane gry -> Esta Roto"
+		    unlink "Zapisane gry" &> /dev/null
+        fi
+    fi
+else
+    if [ -d "$PWD/Zapisane gry" ]; then
+	echo "$PWD/Zapisane gry es un directorio - Eliminando"
+	rm -rf "$PWD/Zapisane gry"
+    fi
+    echo 'Creando Enlace Simbolico de "Partidas"'
+    ln -sf "$Partidas" "$PWD/Zapisane gry" &> /dev/null
+fi
+#Zapisane gry
+
+#Borrar los carpetas de destino
+unlink "Mis Documentos" &> /dev/null
+unlink "Mis imágenes" &> /dev/null
+unlink "Mi música" &> /dev/null
+unlink "Mis vídeos" &> /dev/null
+unlink "Escritorio" &> /dev/null
+unlink "My Documents" &> /dev/null
+unlink "My Pictures" &> /dev/null
+unlink "My Music" &> /dev/null
+unlink "My Videos" &> /dev/null
+unlink "Desktop" &> /dev/null
+rm -rf "Moja muzyka.winecfg"
+rm -rf "Moje Dokumenty.winecfg"
+rm -rf "Moje obrazy.winecfg"
+rm -rf "Moje wideo.winecfg"
+rm -rf "Pulpit.winecfg"
+rm -rf "Application Data"
+rm -rf "Local Settings"
+rm -rf "Cookies"
+rm -rf "Temp"
+rm -rf "AppData"
+rm -rf "Saved Games"
+
+#Enlazar Nuevas carpetas :
+ln -sf "$AppData" "$PWD/AppData" &> /dev/null
+ln -sf "$ApplicationData" "$PWD/Application Data" &> /dev/null
+ln -sf "$Cookies" "$PWD/Cookies" &> /dev/null
+ln -sf "$LocalSettings" "$PWD/Local Settings" &> /dev/null
+ln -sf "$Temp" "$PWD/Temp" &> /dev/null
+ln -sf "$Partidas" "$PWD/Zapisane gry" &> /dev/null
+}
+
+function AntiProtonENG(){
+    cd "$Proton37" &> /dev/null
+    rm -rf "$Proton37/AppData"
+    rm -rf "$Proton37/Application Data"
+    rm -rf "$Proton37/Cookies"
+    rm -rf "$Proton37/Desktop"
+    rm -rf "$Proton37/Local Settings"
+    rm -rf "$Proton37/My Documents"
+    rm -rf "$Proton37/My Music"
+    rm -rf "$Proton37/My Pictures"
+    rm -rf "$Proton37/My Videos"
+    rm -rf "$Proton37/Saved Games"
+    rm -rf "$Proton37/Temp"
+    ARREGLO=`ArregloEng`
+    unset Proton37
+}
+
+if [ -d "$HOME/.wine/drive_c/users/$USER" ]; then
+    cd "$HOME/.wine/drive_c/users/$USER"
+    ARREGLO=`ArregloEsp`
+fi
+
+#Los videojuegos dentro del Steam Nativo (+SteamPlay / Proton) hacerle el enlaces a aquellos 
+#Que se saben que tienen su propia version de wine Por Ejemplo :
+#Gorky 17, Septerra Core, Enclave, X-Application DataBlades, etc
+SteamNativo="~/.local/share/Steam/steamapps/common"
+
+#Enclave :
+if [ -d "$SteamNativo/Enclave/Wine/prefix/.config/drive_c/users/$USER" ]; then
+    cd "$SteamNativo/Enclave/Wine/prefix/.config/drive_c/users/$USER"
+    ARREGLO=`ArregloEng`
+fi
+
+#Gorky 17 :
+if [ -d "$SteamNativo/Gorky 17/Wine/prefix/.config/drive_c/users/$USER" ]; then
+    cd "$SteamNativo/Gorky 17/Wine/prefix/.config/drive_c/users/$USER"
+    ARREGLO=`ArregloPol`
+fi
+
+#Septerra Core
+if [ -d "$SteamNativo/Septerra Core/Wine/prefix/.config/drive_c/users/$USER" ]; then
+    cd "$SteamNativo/Septerra Core/Wine/prefix/.config/drive_c/users/$USER"
+    ARREGLO=`ArregloEng`
+fi
+
+#X-Blades -> Guarda las partdas en : "$SteamNativo/X-Blades/Wine/prefix/.config/drive_c/users/$USER/Local Settings/Application Data/XBlades"
+if [ -d "$SteamNativo/X-Blades/Wine/prefix/.config/drive_c/users/$USER" ]; then
+    cd "$SteamNativo/X-Blades/Wine/prefix/.config/drive_c/users/$USER"
+    ARREGLO=`ArregloEng`
+fi
+
+#SteamPlay / Proton :
+if [ -d "$Proton37" ]; then
+    #NOTAS : Los varios de siguientes juegos no guardan en la nube solo en local
+    #Para Proton los datos salvados van en "$HOME/.local/share/Steam/steamapps/compatdata/<ID_Steam>/pfx/drive_c/users/steamuser/"
+    Corregir=`AntiProtonENG`
+    
+    #Bejeweled 3 -> Local Settings/Application Data/PopCap Games/Bejeweled3/users
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/78000/pfx/drive_c/users/steamuser"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/78000/pfx/drive_c/users/$USER"
+    Corregir=`AntiProtonENG`
+    ln -s "$HOME/.local/share/Steam/steamapps/compatdata/78000/pfx/drive_c/users/$USER/Local Settings/Application Data/PopCap Games/Bejeweled3/users" "$HOME/.local/share/Steam/steamapps/common/Bejeweled 3/users"
+    Proton37="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/share/default_pfx/drive_c/users/steamuser"
+    
+    #Plantas Contra MuertosViventes - Edicion Juego del Año :
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/3590/pfx/drive_c/users/steamuser"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/3590/pfx/drive_c/users/$USER"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/share/default_pfx/drive_c/users/steamuser"
+    
+    #The Walking Dead :
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/207610/pfx/drive_c/users/steamuser"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/207610/pfx/drive_c/users/$USER"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/share/default_pfx/drive_c/users/steamuser"
+    
+    #Cubetractor
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/235720/pfx/drive_c/users/steamuser"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/235720/pfx/drive_c/users/$USER"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/share/default_pfx/drive_c/users/steamuser"
+    
+    #Castlevania : Lord Of Shadow - Mirror Of Fate HD -> 
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/282530/pfx/drive_c/users/steamuser"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/235720/pfx/drive_c/users/$USER"
+    Corregir=`AntiProtonENG`    
+    Proton37="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/share/default_pfx/drive_c/users/steamuser"
+    
+    #Street Racing Syndicate [Requiere reparar MPEG-1 para poder jugar]
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/292410/pfx/drive_c/users/steamuser"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/292410/pfx/drive_c/users/$USER"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/share/default_pfx/drive_c/users/steamuser"
+    
+    #Kholat : 
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/343710/pfx/drive_c/users/steamuser"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/343710/pfx/drive_c/users/$USER"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/share/default_pfx/drive_c/users/steamuser"
+
+    #Eternal Senia : 
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/351640/pfx/drive_c/users/steamuser"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/351640/pfx/drive_c/users/$USER"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/share/default_pfx/drive_c/users/steamuser"    
+    
+    #Turbo Pug DX :
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/513780/pfx/drive_c/users/steamuser"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/513780/pfx/drive_c/users/$USER"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/share/default_pfx/drive_c/users/steamuser"  
+    
+    #Friday the 13th: Killer Puzzle
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/795100/pfx/drive_c/users/steamuser"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/795100/pfx/drive_c/users/$USER"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/share/default_pfx/drive_c/users/steamuser"  
+    
+    #Modern Combat 5
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/921060/pfx/drive_c/users/steamuser"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/921060/pfx/drive_c/users/$USER"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/share/default_pfx/drive_c/users/steamuser"  
+    
+    #Braveland Heroes
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/931650/pfx/drive_c/users/steamuser"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/compatdata/931650/pfx/drive_c/users/$USER"
+    Corregir=`AntiProtonENG`
+    Proton37="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/share/default_pfx/drive_c/users/steamuser"  
+    
+    #En caso de que la carpeta principal del prefijo predeterminado de Proton 3.7 no exista, entonces sera creada.
+    else
+    mkdir -p "$Proton37"  
+#Final de la condicion para Proton :
+fi
+
+#PlayOnLinux :
+Unidad="default"
+if [ -d "$PrefijoPOL/$Unidad/drive_c/users/$USER" ]; then
+    cd "$PrefijoPOL/$Unidad/drive_c/users/$USER"
+    ARREGLO=`ArregloEsp`
+fi
+
+Unidad="UltraISO"
+#PlayOnLinux : UltraISO
+if [ -d "$PrefijoPOL/$Unidad/drive_c/users/$USER" ]; then
+    cd "$PrefijoPOL/$Unidad/drive_c/users/$USER"
+    ARREGLO=`ArregloEsp`
+fi
+
+Unidad="MSN_Messenger_7.0.0820"
+#PlayOnLinux : MSN Messenger 7.0.0820 , Guarda los datos en : "$PrefijoPOL/MSN_Messenger_7.0.0820/drive_c/users/$USER/Application Data/Microsoft/MSN Messenger"
+if [ -d "$PrefijoPOL/$Unidad/drive_c/users/$USER" ]; then
+    cd "$PrefijoPOL/$Unidad/drive_c/users/$USER"
+    ARREGLO=`ArregloEsp`
+fi
+
+#PlayOnLinux : Blade The Edge Of Darkness
+Unidad="Blade_Edge_of_darkness"
+if [ -d "$PrefijoPOL/$Unidad/drive_c/users/$USER" ]; then
+    cd "$PrefijoPOL/$Unidad/drive_c/users/$USER"
+    ARREGLO=`ArregloEsp`
+fi
+
+#PlayOnLinux : InternationalRagnarokOnline
+Unidad="InternationalRagnarokOnline"
+if [ -d "$PrefijoPOL/$Unidad/drive_c/users/$USER" ]; then
+    cd "$PrefijoPOL/$Unidad/drive_c/users/$USER"
+    ARREGLO=`ArregloEsp`
+fi
+
+#PlayOnLinux : Inukaze 16 Bpp
+Unidad="Inukaze_16Bpp"
+if [ -d "$PrefijoPOL/$Unidad/drive_c/users/$USER" ]; then
+    cd "$PrefijoPOL/$Unidad/drive_c/users/$USER"
+    ARREGLO=`ArregloEsp`
+fi
+
+#PlayOnLinux : Inukaze Evoland
+Unidad="Inukaze_Evoland"
+if [ -d "$PrefijoPOL/$Unidad/drive_c/users/$USER" ]; then
+    cd "$PrefijoPOL/$Unidad/drive_c/users/$USER"
+    ARREGLO=`ArregloEsp`
+fi
+
+#PlayOnLinux : SafeCracker El Desafio Definitivo
+Unidad="SafeCracker"
+if [ -d "$PrefijoPOL/$Unidad/drive_c/users/$USER" ]; then
+    cd "$PrefijoPOL/$Unidad/drive_c/users/$USER"
+    ARREGLO=`ArregloEsp`
+fi
+
+#PlayOnLinux : SecretRO
+Unidad="SecretRO"
+if [ -d "$PrefijoPOL/$Unidad/drive_c/users/$USER" ]; then
+    cd "$PrefijoPOL/$Unidad/drive_c/users/$USER"
+    ARREGLO=`ArregloEsp`
+fi
+
+#PlayOnLinux : SimCity3K
+Unidad="SimCity3K"
+if [ -d "$PrefijoPOL/$Unidad/drive_c/users/$USER" ]; then
+    cd "$PrefijoPOL/$Unidad/drive_c/users/$USER"
+    ARREGLO=`ArregloEsp`
+fi
+
+#PlayOnLinux : SteamPuro
+Unidad="SteamPuro"
+if [ -d "$PrefijoPOL/$Unidad/drive_c/users/$USER" ]; then
+    cd "$PrefijoPOL/$Unidad/drive_c/users/$USER"
+    ARREGLO=`ArregloEsp`
+fi
+
+#PlayOnLinux : WinHex
+Unidad="WinHex"
+if [ -d "$PrefijoPOL/$Unidad/drive_c/users/$USER" ]; then
+    cd "$PrefijoPOL/$Unidad/drive_c/users/$USER"
+    ARREGLO=`ArregloEsp`
+fi
+
+#-------------------------Steam------------------------------------
+
+Unidad="Steam"
+#PlayOnLinux : Steam para Windows
+if [ -d "$PrefijoPOL/$Unidad/drive_c/users/$USER" ]; then
+    cd "$PrefijoPOL/$Unidad/drive_c/users/$USER"
+    ARREGLO=`ArregloEng`
+    ARREGLO=`ArregloEsp`
+fi
+
+#PlayOnLinux : X-Blades en el Steam para Liñux
+if [ -d "$HOME/.local/share/Steam/steamapps/common/X-Blades/Wine/prefix/.config/drive_c/users/$USER" ]; then
+    cd "$HOME/.local/share/Steam/steamapps/common/X-Blades/Wine/prefix/.config/drive_c/users/$USER"
+    ARREGLO=`ArregloEng`
+fi

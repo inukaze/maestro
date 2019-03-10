@@ -1,0 +1,646 @@
+#!/bin/bash
+# 
+# Author	:	Inukaze ( From Venezuela )
+# Site		:	http://https://goo.gl/ij6WqW
+# E-Mail	:	bloginukaze@gmail.com
+# License	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+# Este Script es para Solucionar problemas de Directx
+# Para el Software que esta Intentado Ejecutar
+# Como NATIVO de un SISTEMA QUE NO ES WINDOWS
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+RUTA_POSIXWINE="$RUTA/wine"
+RUTA_DEL_SOFTWARE="$RUTA"/wine/data/drive_c/Nintendo64
+RUTASYSTEM32="$RUTA"/wine/data/drive_c/windows/system32
+ARREGLOS="$RUTA"/arreglos
+VERSION_WINE=1.7.5
+tvid=$(lspci -v -s `lspci | awk '/VGA/{print $1}'` | sed -n '/Memory.*, prefetchable/s/.*\[size=\([^]]\+\)M\]/\1/p')
+chmod a+o+x -R "$RUTA"
+cd "$RUTA"
+
+# Obtener el nombre del nucleo del sistema
+Arquitectura=$(uname -m)
+Nucleo=$(uname -s)
+
+if		[ "$Nucleo" = "Darwin" ]; then
+		    Nucleo=mac
+	if	[ "$Arquitectura" = "i386" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+			fi
+	elif	[ "$Arquitectura" = "i486" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+			fi	
+	elif	[ "$Arquitectura" = "i586" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+			fi
+	elif	[ "$Arquitectura" = "i686" ]; then		
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+			fi
+	elif	[ "$Arquitectura" = "x86_64" ]; then
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				else
+				echo -e "\n Arquitectura del Sistema : No soportada\n"
+			fi
+	fi
+		
+elif		[ "$Nucleo" = "Linux" ]; then
+		Nucleo=linux
+	if	[ "$Arquitectura" = "i386" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+			fi
+	elif	[ "$Arquitectura" = "i486" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+			fi	
+	elif	[ "$Arquitectura" = "i586" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+			fi
+	elif	[ "$Arquitectura" = "i686" ]; then		
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+			fi
+	elif	[ "$Arquitectura" = "x86_64" ]; then
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				else
+				echo -e "\n Arquitectura del Sistema : No soportada\n"
+			fi
+	fi
+elif		[ "$Nucleo" = "FreeBSD" ]; then
+		Nucleo=freebsd
+	if	[ "$Arquitectura" = "i386" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+			fi
+	elif	[ "$Arquitectura" = "i486" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+			fi	
+	elif	[ "$Arquitectura" = "i586" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+			fi
+	elif	[ "$Arquitectura" = "i686" ]; then		
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+			fi
+	elif	[ "$Arquitectura" = "x86_64" ]; then
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-"$Arquitectura".tar.bz2
+				else
+				echo -e "\n Arquitectura del Sistema : No soportada\n"
+			fi
+	fi
+else
+		echo -e "\nSistema Operativo : NO SOPORTADO\n"
+		exit 1
+fi
+
+# Determinando la arquitectura de la maquina
+cd "$RUTA"
+Arquitectura=$(uname -m)
+
+if	       [ "$Arquitectura" = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+	elif	[ "$Arquitectura" = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+	elif	[ "$Arquitectura" = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+	elif	[ "$Arquitectura" = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+	elif [ "$Arquitectura" = "x86" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export	WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export	WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export	WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export	WINEPREFIX="$PWD/wine/data"
+			export	WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="64 Bits"
+         elif [ "$Arquitectura" = "x86_64" ]; then
+			PATH="$PWD/wine/$Nucleo/x86_64/bin:$PATH"
+			export	WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export	WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export	WINEDLLPATH="$PWD/wine/$Nucleo/x86_64/lib"
+			export	WINEPREFIX="$PWD/wine/data"
+			export	WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="64 Bits"
+	elif [ "$Arquitectura" = "amd64" ]; then
+			PATH="$PWD/wine/$Nucleo/x86_64/bin:$PATH"
+			export	WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export	WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export	WINEDLLPATH="$PWD/wine/$Nucleo/x86_64/lib"
+			export	WINEPREFIX="$PWD/wine/data"
+			export	WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="64 Bits"
+	else
+		echo "Arquitectura NO SOPORTADA"
+		exit 1
+fi 
+
+# Borrar Toda Configuracion Previa WINE:
+rm -rf "$RUTA/wine/data/drive_c/users"
+rm -rf "$RUTA/wine/data/drive_c/windows"
+rm -rf "$RUTA/wine/data/Program Files (x86)"
+rm -rf "$RUTA/wine/data/drive_c/Archivos de programa"
+rm -rf "$RUTA/wine/data/drive_c/Program Files (x86)"
+rm -rf "$RUTA/wine/data/drive_c/Program Files"
+rm -rf "$RUTA/wine/data/system.reg"
+rm -rf "$RUTA/wine/data/user.reg"
+rm -rf "$RUTA/wine/data/userdef.reg"
+rm -rf "$RUTA/wine/data/dosdevices"
+rm -rf "$RUTA/wine/data/.update-timestamp"
+rm -rf "$RUTA/wine/.DS_Store"
+rm -rf "$RUTA/wine/linux/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/bin/.DS_Store"
+rm -rf "$RUTA/wine/freebsd/.DS_Store"
+rm -rf "$RUTA/wine/freebsd/x86/.DS_Store"
+rm -rf "$RUTA/wine/freebsd/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/freebsd/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/freebsd/x86_64/bin/.DS_Store"
+rm -rf "$RUTA"/wine/data/cachedmetrics.\:0
+# Borrar Toda Configuracion Previa WINE:
+
+# Muestra en la terminal La arquitectura &
+# La version especifica de Wine usada
+Version_De_Wine=$(wine --version)
+echo ""
+echo ""
+echo "Corriendo '$Version_De_Wine' en '$Nucleo' ( Maquina de '"$Arquitectura"' )"
+echo ""
+echo ""
+
+
+cd "$ARREGLOS/windows/system32"
+mkdir -p "$RUTASYSTEM32"
+cp -rf *.* "$RUTASYSTEM32"
+
+cd "$ARREGLOS"
+echo 'REGEDIT4
+
+[HKEY_CURRENT_USER\Software\Wine\DllOverrides]
+"*amstream"="native"
+"*d3d8"="builtin"
+"*d3d9"="builtin"
+"*d3dim"="native"
+"*d3drm"="native"
+"*d3dx8"="native"
+"*d3dx9_24"="native"
+"*d3dx9_25"="native"
+"*d3dx9_26"="native"
+"*d3dx9_27"="native"
+"*d3dx9_28"="native"
+"*d3dx9_29"="native"
+"*d3dx9_30"="native"
+"*d3dx9_31"="native"
+"*d3dx9_32"="native"
+"*d3dx9_33"="native"
+"*d3dx9_34"="native"
+"*d3dx9_35"="native"
+"*d3dx9_36"="native"
+"*d3dx9_37"="native"
+"*d3dx9_38"="native"
+"*d3dx9_39"="native"
+"*d3dx9_40"="native"
+"*d3dx9_41"="native"
+"*d3dx9_42"="native"
+"*d3dx9_43"="native"
+"*d3dxof"="native"
+"*dciman32"="native"
+"*ddrawex"="native"
+"*devenum"="native"
+"*dmband"="native"
+"*dmcompos"="native"
+"*dmime"="native"
+"*dmloader"="native"
+"*dmscript"="native"
+"*dmstyle"="native"
+"*dmsynth"="native"
+"*dmusic"="native"
+"*dmusic32"="native"
+"*dnsapi"="native"
+"*dplay"="native"
+"*dplayx"="native"
+"*dpnaddr"="native"
+"*dpnet"="native"
+"*dpnhpast"="native"
+"*dpnlobby"="native"
+"*dsound"="builtin"
+"*dswave"="native"
+"*dxdiag.exe"="native"
+"*dxdiagn"="native"
+"*jscript"="native,builtin"
+"*msdmo"="native"
+"*msvcrt"="native,builtin"
+"*qcap"="native"
+"*quartz"="native"
+"*streamci"="native"
+"*windowscodecs"="native"
+"*winegstreamer"="native"
+"amstream.dll"="native,builtin"
+"dplay.dll"="native,builtin"
+"dplaysvr.exe"="native,builtin"
+"dplayx.dll"="native,builtin"
+"dpmodemx.dll"="native,builtin"
+"dpnaddr.dll"="native,builtin"
+"dpnet.dll"="native,builtin"
+"dpnhpast.dll"="native,builtin"
+"dpnlobby.dll"="native,builtin"
+"dpnmodem.dll"="native,builtin"
+"dpnsvr.exe"="native,builtin"
+"dpvacm.dll"="native,builtin"
+"dpvoice.dll"="native,builtin"
+"dpvvox.dll"="native,builtin"
+"dpwsockx.dll"="native,builtin"
+"l3codecx.ax"="native,builtin"
+"msvcp60"="native,builtin"
+"qsvg"="native,builtin"
+"qt5svg"="native,builtin"
+"quartz.dll"="native,builtin"
+"riched20"="native,builtin"
+"toolhelp"="native,builtin"' >> "Biblioteclas.reg"
+
+echo "Registrar Bibliotecas" 
+regedit -s Biblioteclas.reg
+rm -rf Biblioteclas.reg
+
+echo 'REGEDIT4
+
+[HKEY_CURRENT_USER\Control Panel\Desktop]
+"FontSmoothing"="2"
+"FontSmoothingType"=dword:00000002
+"FontSmoothingGamma"=dword:00000578
+"FontSmoothingOrientation"=dword:00000001' >> "Fuentes.reg"
+
+echo "Registrar Fuentes"
+regedit -s Fuentes.reg
+rm -rf Fuentes.reg
+
+echo 'REGEDIT4
+
+[HKEY_CURRENT_USER\Software\Wine\DirectSound]
+"DefaultBitsPerSample"="16"
+"DefaultSampleRate"="48000"
+"HardwareAcceleration"="Emulation"
+"HelBuflen"="524288"
+"SndQueueMax"="32"' >> Sonido.reg
+
+echo "Registrar Sonido"
+regedit -s Sonido.reg
+rm -rf Sonido.reg
+
+let "mvid"=$tvid/2
+echo 'REGEDIT4
+
+[HKEY_CURRENT_USER\Software\Wine\Direct3D]
+"DirectDrawRenderer"="opengl"
+"Nonpower2Mode"="repack"
+"OffscreenRenderingMode"="opengl"
+"PixelShaderMode"="enable"
+"RenderTargetLockMode"="auto"
+"StrictDrawOrdering"="disable"
+"UseGLSL"="disabled"
+"VertexShaderMode"="hardware"
+echo '"VideoMemorySize"'='"'"$mvid"'"' >> video.reg
+
+[HKEY_CURRENT_USER\Software\Wine\X11 Driver]
+"GrabFullscreen"="N"' >> Video.reg
+
+echo "Registrar Video"
+regedit -s Video.reg
+rm -rf Video.reg
+
+echo 'REGEDIT4
+
+[HKEY_CURRENT_USER\Software\N64 Emulation]
+
+[HKEY_CURRENT_USER\Software\N64 Emulation\DLL]
+
+[HKEY_CURRENT_USER\Software\N64 Emulation\DLL\RSP 1.6]
+
+[HKEY_CURRENT_USER\Software\N64 Emulation\Project64k core 1.4]
+"RecentDir1"="C:\\Nintendo64\\Roms\\"
+"Rom Directory"="C:\\Nintendo64\\Roms\\"
+"Use Default Rom Dir"=dword:00000001
+
+[HKEY_CURRENT_USER\Software\N64 Emulation\Project64k core 1.4             \Dll]
+"Audio Dll"="Jabo_Dsound.dll"
+"Controller Dll"="NRage_Input_V2.dll"
+"Graphics Dll"="Jabo_Direct3D8.dll"
+
+[HKEY_CURRENT_USER\Software\N64 Emulation\Project64k core 1.4             \Page Setup]
+"Rom Browser Sort Field"=hex(1):
+
+[HKEY_CURRENT_USER\Software\JaboSoft]
+
+[HKEY_CURRENT_USER\Software\JaboSoft\Project64 DLL]
+
+[HKEY_CURRENT_USER\Software\JaboSoft\Project64 DLL\DirectInput7 1.6]
+"di.DeadZone(0)"=dword:000009c4
+"di.DeadZone(1)"=dword:000009c4
+"di.DeadZone(2)"=dword:000009c4
+"di.DeadZone(3)"=dword:000009c4
+"di.DeviceGUID(0)"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"di.DeviceGUID(1)"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"di.DeviceGUID(2)"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"di.DeviceGUID(3)"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"JoyEnable(0)"=dword:00000001
+"JoyEnable(1)"=dword:00000001
+"JoyEnable(2)"=dword:00000001
+"JoyEnable(3)"=dword:00000001
+"PluginType(0)"=dword:00000002
+"PluginType(1)"=dword:00000002
+"PluginType(2)"=dword:00000002
+"PluginType(3)"=dword:00000002
+"Range(0)"=dword:00000064
+"Range(1)"=dword:00000064
+"Range(2)"=dword:00000064
+"Range(3)"=dword:00000064
+
+[HKEY_CURRENT_USER\Software\JaboSoft\Project64 DLL\DirectInput7 1.6\Keys 0]
+"A"=dword:0000002d
+"AnalogDown"=dword:000000d0
+"AnalogLeft"=dword:000000cb
+"AnalogRight"=dword:000000cd
+"AnalogUp"=dword:000000c8
+"B"=dword:0000002e
+"C_Down"=dword:000000cf
+"C_Left"=dword:000000d3
+"C_Right"=dword:000000d1
+"C_Up"=dword:000000c7
+"DigitalDown"=dword:00000050
+"DigitalLeft"=dword:0000004b
+"DigitalRight"=dword:0000004d
+"DigitalUp"=dword:00000048
+"L"=dword:0000001e
+"R"=dword:0000001f
+"Start"=dword:0000001c
+"Z"=dword:0000002c
+
+[HKEY_CURRENT_USER\Software\JaboSoft\Project64 DLL\DirectInput7 1.6.1]
+"di.DeadZone(0)"=dword:000009c4
+"di.DeadZone(1)"=dword:000009c4
+"di.DeadZone(2)"=dword:000009c4
+"di.DeadZone(3)"=dword:000009c4
+"di.DeviceGUID(0)"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"di.DeviceGUID(1)"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"di.DeviceGUID(2)"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"di.DeviceGUID(3)"=hex:00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+"JoyEnable(0)"=dword:00000001
+"JoyEnable(1)"=dword:00000001
+"JoyEnable(2)"=dword:00000001
+"JoyEnable(3)"=dword:00000001
+"PluginType(0)"=dword:00000002
+"PluginType(1)"=dword:00000002
+"PluginType(2)"=dword:00000002
+"PluginType(3)"=dword:00000002
+"Range(0)"=dword:00000064
+"Range(1)"=dword:00000064
+"Range(2)"=dword:00000064
+"Range(3)"=dword:00000064
+
+[HKEY_CURRENT_USER\Software\JaboSoft\Project64 DLL\DirectInput7 1.6.1\Keys 0]
+"A"=dword:0000002d
+"AnalogDown"=dword:000000d0
+"AnalogLeft"=dword:000000cb
+"AnalogRight"=dword:000000cd
+"AnalogUp"=dword:000000c8
+"B"=dword:0000002e
+"C_Down"=dword:000000cf
+"C_Left"=dword:000000d3
+"C_Right"=dword:000000d1
+"C_Up"=dword:000000c7
+"DigitalDown"=dword:00000025
+"DigitalLeft"=dword:00000024
+"DigitalRight"=dword:00000026
+"DigitalUp"=dword:00000017
+"L"=dword:0000001e
+"R"=dword:0000001f
+"Start"=dword:0000001c
+"Z"=dword:0000002c 
+
+[HKEY_CURRENT_USER\Software\RICEVIDEO\Version610]
+"AccurateTextureMapping"=dword:00000001
+"ColorQuality"=dword:00000000
+"DirectXAnisotropyValue"=dword:00000000
+"DirectXAntiAliasingValue"=dword:00000000
+"DirectXCombiner"=dword:00000001
+"DirectXDepthBufferSetting"=dword:00000000
+"DirectXDevice"=dword:00000000
+"DirectXMaxAnisotropy"=dword:00000010
+"DirectXMaxFSAA"=dword:00000008
+"DisplayOnscreenFPS"=dword:00000000
+"DisplayTooltip"=dword:00000000
+"DoubleSizeForSmallTxtrBuf"=dword:00000000
+"DumpTexturesToFiles"=dword:00000000
+"EnableFog"=dword:00000001
+"EnableHacks"=dword:00000001
+"EnableSSE"=dword:00000001
+"EnableVertexShader"=dword:00000000
+"FastTextureLoading"=dword:00000000
+"ForceSoftwareClipper"=dword:00000001
+"ForceSoftwareTnL"=dword:00000001
+"ForceTextureFilter"=dword:00000000
+"FPSColor"=dword:ffffffff
+"FrameBufferSetting"=dword:00000000
+"FrameBufferType"=dword:00000001
+"FrameBufferWriteBackControl"=dword:00000000
+"FullScreenFrequency"=dword:00000000
+"FullTMEMEmulation"=dword:00000000
+"FulScreenHeight"=dword:00000360
+"FulScreenWidth"=dword:00000480
+"HideAdvancedOptions"=dword:00000001
+"InN64Resolution"=dword:00000000
+"LoadHiResTextures"=dword:00000000
+"NormalAlphaBlender"=dword:00000000
+"OpenGLDepthBufferSetting"=dword:00000010
+"OpenGLRenderSetting"=dword:00000000
+"OpenGLVertexClipper"=dword:00000000
+"OverlapAutoWriteBack"=dword:00000000
+"RenderEngine"=dword:00000000
+"RenderToTexture"=dword:00000000
+"SaveVRAM"=dword:00000000
+"ScreenUpdateSetting"=dword:00000002
+"SkipFrame"=dword:00000000
+"SmallTextureOnly"=dword:00000000
+"TexRectOnly"=dword:00000000
+"TextureEnhancement"=dword:00000000
+"TextureEnhancementControl"=dword:00000000
+"TextureQuality"=dword:00000000
+"WinFrameMode"=dword:00000000
+"WinModeHeight"=dword:00000258
+"WinModeWidth"=dword:00000320' >> Nintendo64k.reg
+
+echo "Registrar Project64k"
+regedit -s Nintendo64k.reg
+rm -rf Nintendo64k.reg
+
+# Detectar el Directorio "Escritorio"
+# Dentro del usuario actual
+
+cd $HOME
+
+if [ -e Desktop ]; then cd Desktop; DirectorioEscritorio="$HOME/Desktop"; fi
+if [ -e Escritorio ]; then cd Escritorio; DirectorioEscritorio="$HOME/Escritorio"; fi
+
+if [ ! -e "$DirectorioEscritorio" ]; then
+	mkdir -p "$DirectorioEscritorio"
+	cd "$DirectorioEscritorio"
+fi
+
+if [ -e $DirectorioEscritorio ]; then
+	cd "$DirectorioEscritorio"
+fi
+
+
+# Escribir Los Archivos de "Enlace(s)"
+# Necesarios dentro de la Carpeta "$HOME/$DirectorioEscritorio/Wine"
+
+# Primero Borrar cualquier archivo Anterior
+# De Escritorio , para Evitar Conflictos y no crear archivos innecesarios.
+
+
+# PANTALLA COMPLETA :
+EMULADOR="Project64k"
+if [ -f "$EMULADOR.desktop" ]; then rm -rf "$EMULADOR.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/Lanzar-$EMULADOR
+Name=$EMULADOR
+Icon=$RUTA/.$EMULADOR.png
+Path="'"'$RUTA'"'"
+StartupNotify=true
+X-KDE-SubstituteUID=false" >> "$EMULADOR.desktop"
+chmod a+o+x "$EMULADOR.desktop"
+
+EMULADOR="Mupen64k"
+if [ -f "$EMULADOR.desktop" ]; then rm -rf "$EMULADOR.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/Lanzar-$EMULADOR
+Name=$EMULADOR
+Icon=$RUTA/.$EMULADOR.png
+Path="'"'$RUTA'"'"
+StartupNotify=true
+X-KDE-SubstituteUID=false" >> "$EMULADOR.desktop"
+chmod a+o+x "$EMULADOR.desktop"
+
+cd "$RUTA"

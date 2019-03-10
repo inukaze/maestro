@@ -1,0 +1,405 @@
+#!/bin/bash
+# 
+# Autor	:	Inukaze ( Venezuela )
+# Sitio		:	http://https://goo.gl/ij6WqW
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+TITULO="Claw"
+XMessage=$(whereis xmessage | grep bin | awk '{print $2}' | sed 's/^[/usr/bin/ \t]*//')
+
+if [ $XMessage = xmessage ]; then
+	echo 
+	echo 'Mostrar el Mensaje en el Sistema Grafico -> "Se Esta Configurando El Software"'
+	echo
+	xmessage -nearmouse -timeout 5 "Se Esta Configurando El Software" -buttons OK &
+else
+	echo
+	echo "xmessage - NO! ESTA INSTALADO"
+	echo
+	echo "Se esta Configurando el Software"
+fi
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+RUTA_POSIXWINE="$RUTA/wine"
+RUTA_DEL_SOFTWARE="$RUTA/wine/data/drive_c/Juegos/Inukaze/$TITULO"
+ARREGLOS="$RUTA/arreglos"
+ICONO="$RUTA_DEL_SOFTWARE/.Claw.png"
+VERSION_WINE=1.5.17
+
+# Obtener el nombre del nucleo del sistema
+cd "$RUTA"
+Arquitectura=$(uname -m)
+Nucleo=$(uname -s)
+
+if		[ "$Nucleo" = "Darwin" ]; then
+		    Nucleo=mac
+	if	[ $Arquitectura = "i386" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+			fi
+	elif	[ $Arquitectura = "i486" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+			fi	
+	elif	[ $Arquitectura = "i586" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+			fi
+	elif	[ $Arquitectura = "i686" ]; then		
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+			fi
+	elif	[ $Arquitectura = "x86_64" ]; then
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				else
+				echo -e "\n Arquitectura del Sistema : No soportada\n"
+				exit 1
+			fi
+	fi
+		
+elif		[ "$Nucleo" = "Linux" ]; then
+		Nucleo="linux"
+	if	[ $Arquitectura = "i386" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+			fi
+	elif	[ $Arquitectura = "i486" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+			fi	
+	elif	[ $Arquitectura = "i586" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+			fi
+	elif	[ $Arquitectura = "i686" ]; then		
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+			fi
+	elif	[ $Arquitectura = "x86_64" ]; then
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				else
+				echo -e "\n Arquitectura del Sistema : No soportada\n"
+				exit 1
+			fi
+	fi
+elif		[ "$Nucleo" = "FreeBSD" ]; then
+		Nucleo=freebsd
+	if	[ $Arquitectura = "i386" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+			fi
+	elif	[ $Arquitectura = "i486" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+			fi	
+	elif	[ $Arquitectura = "i586" ]; then
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+			fi
+	elif	[ $Arquitectura = "i686" ]; then		
+		   Arquitectura="x86"
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+			fi
+	elif	[ $Arquitectura = "x86_64" ]; then
+		cd "$RUTA_POSIXWINE"
+			if test -f wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				then
+				tar xfvj wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+				else
+				echo -e "\n Arquitectura del Sistema : No soportada\n"
+				exit 1
+			fi
+	fi
+else
+		echo -e "\nSistema Operativo : NO SOPORTADO\n"
+		exit 1
+fi
+
+# Determinando la arquitectura de la maquina
+cd "$RUTA"
+Arquitectura=$(uname -m)
+
+if	       [ $Arquitectura = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+         elif [ $Arquitectura = "x86_64" ]; then
+			PATH="$PWD/wine/$Nucleo/x86_64/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86_64/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="64 Bits"
+	else
+		echo "Arquitectura NO SOPORTADA"
+fi 
+
+# Borrar Toda Configuracion Previa WINE:
+rm -rf "$RUTA/wine/data/drive_c/users"
+rm -rf "$RUTA/wine/data/drive_c/windows"
+rm -rf "$RUTA/wine/data/drive_c/Program Files/"
+rm -rf "$RUTA/wine/data/Program Files (x86)"
+rm -rf "$RUTA/wine/data/drive_c/Archivos de programa"
+rm -rf "$RUTA/wine/data/drive_c/Program Files (x86)"
+rm -rf "$RUTA/wine/data/system.reg"
+rm -rf "$RUTA/wine/data/user.reg"
+rm -rf "$RUTA/wine/data/userdef.reg"
+rm -rf "$RUTA/wine/data/dosdevices"
+rm -rf "$RUTA/wine/data/.update-timestamp"
+rm -rf "$RUTA/wine/.DS_Store"
+rm -rf "$RUTA/wine/linux/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/bin/.DS_Store"
+rm -rf "$RUTA/wine/data/winetricks.log"
+rm -rf "$RUTA"/wine/data/cachedmetrics.\:0
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if	 [ $Arquitectura = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+elif	[ $Arquitectura = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+elif	[ $Arquitectura = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+elif	[ $Arquitectura = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+elif [ $Arquitectura = "x86_64" ]; then
+			PATH="$PWD/wine/$Nucleo/x86_64/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="64 Bits"
+	# 7 - Finalizada la instacion y Configuracion de los arreglos.
+else
+		echo "Arquitectura NO SOPORTADA"
+		exit 1
+fi 
+# Determinando la arquitectura de la maquina
+
+Version_De_Wine=$(wine --version)
+echo ""
+echo ""
+echo "Corriendo '$Version_De_Wine' en '$Nucleo' ( Maquina de '$Arquitectura' )"
+echo ""
+echo ""
+
+cd "$ARREGLOS"
+`regedit -s "$Nucleo"_video.reg`
+`regedit -s "$Nucleo"_sonido.reg`
+`regedit -s  software.reg`
+cd "$RUTA"
+
+tvid=$(lspci -v -s `lspci | awk '/VGA/{print $1}'` | sed -n '/Memory.*, prefetchable/s/.*\[size=\([^]]\+\)M\]/\1/p')
+let "mvid"=$tvid/2
+
+echo ""
+echo ""
+echo "Se ha establecido la configuracion 3D"
+echo "Para "$TITULO""
+echo ""
+echo ""
+echo 'El Juego usara "'"$mvid MB"'" de Video'
+echo ""
+echo ""
+
+# Detectar el Directorio "Escritorio"
+# Dentro del usuario actual
+
+cd $HOME
+
+if [ -e Desktop ]; then cd Desktop; DirectorioEscritorio=$HOME/Desktop; fi
+if [ -e Escritorio ]; then cd Escritorio; DirectorioEscritorio=$HOME/Escritorio; fi
+
+cd $DirectorioEscritorio
+
+# Escribir Los Archivos de "Enlace(s)"
+# Necesarios dentro de la Carpeta "$HOME/$DirectorioEscritorio/$TITULO"
+
+# Primero Borrar cualquier archivo Anterior
+# De Escritorio , para Evitar Conflictos y no crear archivos innecesarios.
+
+if [ -f "$TITULO.desktop" ]; then rm -rf "$TITULO.desktop"; fi
+
+#Crear Enlaces en la Carpeta "$DirectorioEscritorio/$TITULO"
+#Del Software que configura este Script.
+
+#1 - $TITULO
+touch "$TITULO.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "$TITULO.desktop"
+echo "" >> "$TITULO.desktop"
+echo '[Desktop Entry]' >> "$TITULO.desktop"
+echo "Version=1.0" >> "$TITULO.desktop"
+echo "Type=Application" >> "$TITULO.desktop"
+echo "Terminal=false" >> "$TITULO.desktop"
+echo 'Exec=sh "'$RUTA'"/.Lanzar'"$TITULO"'' >> "$TITULO.desktop"
+echo "Name=$TITULO" >> "$TITULO.desktop"
+echo "Icon=$ICONO" >> "$TITULO.desktop"
+
+# Marcar como de Confianza (Dar Permiso de Ejecucion):
+chmod a+x "$TITULO.desktop"
+
+# -- Enlaces de Modo Ventana --
+# Escribir Los Archivos de "Enlace(s)"
+
+if [ -f "$TITULO (Modo Ventana).desktop" ]; then rm -rf "$TITULO (Modo Ventana).desktop"; fi
+
+#Crear Enlaces en la Carpeta "$DirectorioEscritorio/$TITULO"
+#Del Software que configura este Script.
+
+#1 - $TITULO
+touch "$TITULO (Modo Ventana).desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "$TITULO (Modo Ventana).desktop"
+echo "" >> "$TITULO (Modo Ventana).desktop"
+echo '[Desktop Entry]' >> "$TITULO (Modo Ventana).desktop"
+echo "Version=1.0" >> "$TITULO (Modo Ventana).desktop"
+echo "Type=Application" >> "$TITULO (Modo Ventana).desktop"
+echo "Terminal=false" >> "$TITULO (Modo Ventana).desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_Lanzar'"$TITULO"'' >> "$TITULO (Modo Ventana).desktop"
+echo "Name=$TITULO (Modo Ventana)" >> "$TITULO (Modo Ventana).desktop"
+echo "Icon=$ICONO" >> "$TITULO (Modo Ventana).desktop"
+
+# Marcar como de Confianza (Dar Permiso de Ejecucion):
+chmod a+x "$TITULO (Modo Ventana).desktop"
+chmod a+o+x -R "$RUTA"
+
+if [ $XMessage = xmessage ]; then
+	echo
+	echo 'Mostrar el Mensaje en el Sistema Grafico -> "Se Esta Configurando El Software"'
+	echo
+	xmessage -nearmouse -timeout 5 "Se Ha Configurado Exitosamente" -buttons OK &
+else
+	echo
+	echo "xmessage - NO! ESTA INSTALADO"
+	echo
+	echo "Se Ha Configurado Exitosamente"
+	echo
+fi

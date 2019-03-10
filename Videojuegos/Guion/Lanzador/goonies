@@ -1,0 +1,66 @@
+#!/bin/bash
+Nombre="goonies"
+Ruta_Actual="$PWD" &> /dev/null
+sleep 6
+
+function Re_solucion(){
+# Solucion de Resolucion
+echo `xrandr --current | grep current | awk '{print $8}'` >> /tmp/ancho
+echo `xrandr --current | grep current | awk '{print $10}'` >> /tmp/alto
+cat /tmp/alto | sed -i 's/,//g' /tmp/alto
+ANCHO=$(cat /tmp/ancho)
+ALTO=$(cat /tmp/alto)
+rm /tmp/ancho /tmp/alto
+echo "$ANCHO"'x'"$ALTO" >> /tmp/Resolucion
+ResolucionEnPantallaCompleta=$(cat /tmp/Resolucion)
+rm /tmp/Resolucion
+# Solucion de Resolucion
+}
+
+# Obtener la Arquitectura
+Arquitectura=$(uname -m)
+case "$Arquitectura" in
+	x86)    Arquitectura="x32"						;;
+	i?86)   Arquitectura="x32"						;;
+	amd64)  Arquitectura="x64"						;;
+	x86_64) Arquitectura="x64"						;;
+	* ) echo    "Tu Arquitectura '$Arquitectura' -> NO ESTA SOPORTADA."	;;
+esac
+
+echo '
+Autor ----------------> Inukaze ( Venezuela )
+Sitio ----------------> https://goo.gl/ij6WqW
+Correo-E -------------> bloginukaze@gmail.com
+Licensia -------------> GPL 2
+
+******* Inicio : Acerca de este Script ********
+				  
+  Yo intento escribir scripts compatibles con
+   Sistemas operativos Unix & POSIX , y otros
+   Sistemas operativos que soporten bash
+
+  Este archivo es un simple lanzador 
+   Detectara la arquitectura del Sistema
+   Operativo en uso e intentara iniciar.
+
+******** Fin : Acerca de este Script **********
+
+	  Iniciando ---> '$Nombre'
+'
+
+if [ "$Arquitectura" = "x32" ]; then
+	export LD_LIBRARY_PATH="./.libs32"
+	Ejecutable=".$Nombre.$Arquitectura"
+fi
+
+if [ "$Arquitectura" = "x64" ]; then
+	export LD_LIBRARY_PATH="./.libs64"
+	Ejecutable=".$Nombre.$Arquitectura"
+fi
+
+	export Arquitecturas
+	for Arquitecturas in $Arquitectura; do
+		test -x ./$Ejecutable || continue
+		exec ./$Ejecutable "$@"
+	done
+	

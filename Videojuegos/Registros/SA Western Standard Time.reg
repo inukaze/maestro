@@ -1,0 +1,618 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\Time Zones]
+"@": REG_SZ
+@="Eastern Standard Time"
+
+[HKEY_LOCAL_MACHINE\Time Zones\Afghanistan Standard Time]
+"Std"="Afghanistan Standard Time"
+"Dlt"="Afghanistan Daylight Time"
+"Display"="(GMT+04:30) Kabul"
+"TZI"=hex:\
+      f2,fe,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Alaskan Standard Time]
+"Std"="Alaskan Standard Time"
+"Dlt"="Alaskan Daylight Time"
+"Display"="(GMT-09:00) Alaska"
+"TZI"=hex:\
+      1c,02,00,00,00,00,00,00,c4,ff,ff,ff,00,00,0b,00,00,00,01,00,02,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,02,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Arab Standard Time]
+"Std"="Arab Standard Time"
+"Dlt"="Arab Daylight Time"
+"Display"="(GMT+03:00) Kuwait, Riyadh"
+"TZI"=hex:\
+      4c,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Arabian Standard Time]
+"Std"="Arabian Standard Time"
+"Dlt"="Arabian Daylight Time"
+"Display"="(GMT+04:00) Abu Dhabi, Muscat"
+"TZI"=hex:\
+      10,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Arabic Standard Time]
+"Std"="Arabic Standard Time"
+"Dlt"="Arabic Daylight Time"
+"Display"="(GMT+03:00) Baghdad"
+"TZI"=hex:\
+      4c,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,01,00,04,00,00,00,00,\
+      00,00,00,00,00,04,00,00,00,01,00,03,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Atlantic Standard Time]
+"Std"="Atlantic Standard Time"
+"Dlt"="Atlantic Daylight Time"
+"Display"="(GMT-04:00) Atlantic Time (Canada)"
+"TZI"=hex:\
+      f0,00,00,00,00,00,00,00,c4,ff,ff,ff,00,00,0b,00,00,00,01,00,02,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,02,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\AUS Central Standard Time]
+"Std"="AUS Central Standard Time"
+"Dlt"="AUS Central Daylight Time"
+"Display"="(GMT+09:30) Darwin"
+"TZI"=hex:\
+      c6,fd,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\AUS Eastern Standard Time]
+"Std"="AUS Eastern Standard Time"
+"Dlt"="AUS Eastern Daylight Time"
+"Display"="(GMT+10:00) Canberra, Melbourne, Sydney"
+"TZI"=hex:\
+      a8,fd,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,03,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,0a,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Azores Standard Time]
+"Std"="Azores Standard Time"
+"Dlt"="Azores Daylight Time"
+"Display"="(GMT-01:00) Azores"
+"TZI"=hex:\
+      3c,00,00,00,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Canada Central Standard Time]
+"Std"="Canada Central Standard Time"
+"Dlt"="Canada Central Daylight Time"
+"Display"="(GMT-06:00) Saskatchewan"
+"TZI"=hex:\
+      68,01,00,00,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Cape Verde Standard Time]
+"Std"="Cape Verde Standard Time"
+"Dlt"="Cape Verde Daylight Time"
+"Display"="(GMT-01:00) Cape Verde Is."
+"TZI"=hex:\
+      3c,00,00,00,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Caucasus Standard Time]
+"Std"="Caucasus Standard Time"
+"Dlt"="Caucasus Daylight Time"
+"Display"="(GMT+04:00) Baku, Tbilisi, Yerevan"
+"TZI"=hex:\
+      10,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Cen. Australia Standard Time]
+"Std"="Cen. Australia Standard Time"
+"Dlt"="Cen. Australia Daylight Time"
+"Display"="(GMT+09:30) Adelaide"
+"TZI"=hex:\
+      c6,fd,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,03,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,0a,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Central America Standard Time]
+"Std"="Central America Standard Time"
+"Dlt"="Central America Daylight Time"
+"Display"="(GMT-06:00) Central America"
+"TZI"=hex:\
+      68,01,00,00,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Central Asia Standard Time]
+"Std"="Central Asia Standard Time"
+"Dlt"="Central Asia Daylight Time"
+"Display"="(GMT+06:00) Astana, Dhaka"
+"TZI"=hex:\
+      98,fe,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Central Europe Standard Time]
+"Std"="Central Europe Standard Time"
+"Dlt"="Central Europe Daylight Time"
+"Display"="(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague"
+"TZI"=hex:\
+      c4,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Central European Standard Time]
+"Std"="Central European Standard Time"
+"Dlt"="Central European Daylight Time"
+"Display"="(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb"
+"TZI"=hex:\
+      c4,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Central Pacific Standard Time]
+"Std"="Central Pacific Standard Time"
+"Dlt"="Central Pacific Daylight Time"
+"Display"="(GMT+11:00) Magadan, Solomon Is., New Caledonia"
+"TZI"=hex:\
+      6c,fd,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Central Standard Time]
+"Std"="Central Standard Time"
+"Dlt"="Central Daylight Time"
+"Display"="(GMT-06:00) Central Time (US & Canada)"
+"TZI"=hex:\
+      68,01,00,00,00,00,00,00,c4,ff,ff,ff,00,00,0b,00,00,00,01,00,02,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,02,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\China Standard Time]
+"Std"="China Standard Time"
+"Dlt"="China Daylight Time"
+"Display"="(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi"
+"TZI"=hex:\
+      20,fe,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Dateline Standard Time]
+"Std"="Dateline Standard Time"
+"Dlt"="Dateline Daylight Time"
+"Display"="(GMT-12:00) International Date Line West"
+"TZI"=hex:\
+      d0,02,00,00,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\E. Africa Standard Time]
+"Std"="E. Africa Standard Time"
+"Dlt"="E. Africa Daylight Time"
+"Display"="(GMT+03:00) Nairobi"
+"TZI"=hex:\
+      4c,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\E. Australia Standard Time]
+"Std"="E. Australia Standard Time"
+"Dlt"="E. Australia Daylight Time"
+"Display"="(GMT+10:00) Brisbane"
+"TZI"=hex:\
+      a8,fd,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\E. Europe Standard Time]
+"Std"="E. Europe Standard Time"
+"Dlt"="E. Europe Daylight Time"
+"Display"="(GMT+02:00) Bucharest"
+"TZI"=hex:\
+      88,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,01,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\E. South America Standard Time]
+"Std"="E. South America Standard Time"
+"Dlt"="E. South America Daylight Time"
+"Display"="(GMT-03:00) Brasilia"
+"TZI"=hex:\
+      b4,00,00,00,00,00,00,00,c4,ff,ff,ff,00,00,02,00,00,00,02,00,02,00,00,00,00,\
+      00,00,00,00,00,0a,00,00,00,03,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Eastern Standard Time]
+"Std"="Eastern Standard Time"
+"Dlt"="Eastern Daylight Time"
+"Display"="(GMT-05:00) Eastern Time (US & Canada)"
+"TZI"=hex:\
+            2c,01,00,00,45,00,61,00,73,00,74,00,65,00,72,00,6e,00,20,00,53,00,74,00,61,\
+      00,6e,00,64,00,61,00,72,00,64,00,20,00,54,00,69,00,6d,00,65,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,0b,00,00,00,01,\
+      00,02,00,00,00,00,00,00,00,00,00,00,00,45,00,61,00,73,00,74,00,65,00,72,00,\
+      6e,00,20,00,44,00,61,00,79,00,6c,00,69,00,67,00,68,00,74,00,20,00,54,00,69,\
+      00,6d,00,65,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,03,00,00,00,02,00,02,00,00,00,00,00,00,00,c4,ff,ff,ff
+
+[HKEY_LOCAL_MACHINE\Time Zones\Egypt Standard Time]
+"Std"="Egypt Standard Time"
+"Dlt"="Egypt Daylight Time"
+"Display"="(GMT+02:00) Cairo"
+"TZI"=hex:\
+      88,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,09,00,03,00,05,00,02,00,00,00,00,\
+      00,00,00,00,00,05,00,05,00,01,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Ekaterinburg Standard Time]
+"Std"="Ekaterinburg Standard Time"
+"Dlt"="Ekaterinburg Daylight Time"
+"Display"="(GMT+05:00) Ekaterinburg"
+"TZI"=hex:\
+      d4,fe,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Fiji Standard Time]
+"Std"="Fiji Standard Time"
+"Dlt"="Fiji Daylight Time"
+"Display"="(GMT+12:00) Fiji, Kamchatka, Marshall Is."
+"TZI"=hex:\
+      30,fd,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\FLE Standard Time]
+"Std"="FLE Standard Time"
+"Dlt"="FLE Daylight Time"
+"Display"="(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius"
+"TZI"=hex:\
+      88,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,04,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,03,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\GMT Standard Time]
+"Std"="GMT Standard Time"
+"Dlt"="GMT Daylight Time"
+"Display"="(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London"
+"TZI"=hex:\
+      00,00,00,00,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,02,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,01,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Greenland Standard Time]
+"Std"="Greenland Standard Time"
+"Dlt"="Greenland Daylight Time"
+"Display"="(GMT-03:00) Greenland"
+"TZI"=hex:\
+      b4,00,00,00,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,02,00,00,00,00,\
+      00,00,00,00,00,04,00,00,00,01,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Greenwich Standard Time]
+"Std"="Greenwich Standard Time"
+"Dlt"="Greenwich Daylight Time"
+"Display"="(GMT) Casablanca, Monrovia"
+"TZI"=hex:\
+      00,00,00,00,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\GTB Standard Time]
+"Std"="GTB Standard Time"
+"Dlt"="GTB Daylight Time"
+"Display"="(GMT+02:00) Athens, Istanbul, Minsk"
+"TZI"=hex:\
+      88,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Hawaiian Standard Time]
+"Std"="Hawaiian Standard Time"
+"Dlt"="Hawaiian Daylight Time"
+"Display"="(GMT-10:00) Hawaii"
+"TZI"=hex:\
+      58,02,00,00,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\India Standard Time]
+"Std"="India Standard Time"
+"Dlt"="India Daylight Time"
+"Display"="(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi"
+"TZI"=hex:\
+      b6,fe,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Iran Standard Time]
+"Std"="Iran Standard Time"
+"Dlt"="Iran Daylight Time"
+"Display"="(GMT+03:30) Tehran"
+"TZI"=hex:\
+      2e,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,09,00,02,00,04,00,02,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,01,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Jerusalem Standard Time]
+"Std"="Jerusalem Standard Time"
+"Dlt"="Jerusalem Daylight Time"
+"Display"="(GMT+02:00) Jerusalem"
+"TZI"=hex:\
+      88,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Korea Standard Time]
+"Std"="Korea Standard Time"
+"Dlt"="Korea Daylight Time"
+"Display"="(GMT+09:00) Seoul"
+"TZI"=hex:\
+      e4,fd,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Malay Peninsula Standard Time]
+"Std"="Malay Peninsula Standard Time"
+"Dlt"="Malay Peninsula Daylight Time"
+"Display"="(GMT+08:00) Kuala Lumpur, Singapore"
+"TZI"=hex:\
+      20,fe,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Mexico Standard Time]
+"Std"="Mexico Standard Time"
+"Dlt"="Mexico Daylight Time"
+"Display"="(GMT-06:00) Guadalajara, Mexico City, Monterrey"
+"TZI"=hex:\
+      68,01,00,00,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,02,00,00,00,00,\
+      00,00,00,00,00,04,00,00,00,01,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Mexico Standard Time 2]
+"Std"="Mexico Standard Time 2"
+"Dlt"="Mexico Daylight Time 2"
+"Display"="(GMT-07:00) Chihuahua, La Paz, Mazatlan"
+"TZI"=hex:\
+      a4,01,00,00,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,02,00,00,00,00,\
+      00,00,00,00,00,04,00,00,00,01,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Mid-Atlantic Standard Time]
+"Std"="Mid-Atlantic Standard Time"
+"Dlt"="Mid-Atlantic Daylight Time"
+"Display"="(GMT-02:00) Mid-Atlantic"
+"TZI"=hex:\
+      78,00,00,00,00,00,00,00,c4,ff,ff,ff,00,00,09,00,00,00,05,00,02,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Mountain Standard Time]
+"Std"="Mountain Standard Time"
+"Dlt"="Mountain Daylight Time"
+"Display"="(GMT-07:00) Mountain Time (US & Canada)"
+"TZI"=hex:\
+      a4,01,00,00,00,00,00,00,c4,ff,ff,ff,00,00,0b,00,00,00,01,00,02,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,02,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Myanmar Standard Time]
+"Std"="Myanmar Standard Time"
+"Dlt"="Myanmar Daylight Time"
+"Display"="(GMT+06:30) Rangoon"
+"TZI"=hex:\
+      7a,fe,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\N. Central Asia Standard Time]
+"Std"="N. Central Asia Standard Time"
+"Dlt"="N. Central Asia Daylight Time"
+"Display"="(GMT+06:00) Almaty, Novosibirsk"
+"TZI"=hex:\
+      98,fe,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Nepal Standard Time]
+"Std"="Nepal Standard Time"
+"Dlt"="Nepal Daylight Time"
+"Display"="(GMT+05:45) Kathmandu"
+"TZI"=hex:\
+      a7,fe,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\New Zealand Standard Time]
+"Std"="New Zealand Standard Time"
+"Dlt"="New Zealand Daylight Time"
+"Display"="(GMT+12:00) Auckland, Wellington"
+"TZI"=hex:\
+      30,fd,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,04,00,00,00,01,00,03,00,00,00,00,\
+      00,00,00,00,00,09,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Newfoundland Standard Time]
+"Std"="Newfoundland Standard Time"
+"Dlt"="Newfoundland Daylight Time"
+"Display"="(GMT-03:30) Newfoundland"
+"TZI"=hex:\
+      d2,00,00,00,00,00,00,00,c4,ff,ff,ff,00,00,0b,00,00,00,01,00,02,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,02,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\North Asia East Standard Time]
+"Std"="North Asia East Standard Time"
+"Dlt"="North Asia East Daylight Time"
+"Display"="(GMT+08:00) Irkutsk, Ulaan Bataar"
+"TZI"=hex:\
+      20,fe,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\North Asia Standard Time]
+"Std"="North Asia Standard Time"
+"Dlt"="North Asia Daylight Time"
+"Display"="(GMT+07:00) Krasnoyarsk"
+"TZI"=hex:\
+      5c,fe,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Pacific SA Standard Time]
+"Std"="Pacific SA Standard Time"
+"Dlt"="Pacific SA Daylight Time"
+"Display"="(GMT-04:00) Santiago"
+"TZI"=hex:\
+      f0,00,00,00,00,00,00,00,c4,ff,ff,ff,00,00,03,00,06,00,02,00,00,00,00,00,00,\
+      00,00,00,00,00,0a,00,06,00,02,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Pacific Standard Time]
+"Std"="Pacific Standard Time"
+"Dlt"="Pacific Daylight Time"
+"Display"="(GMT-08:00) Pacific Time (US & Canada)"
+"TZI"=hex:\
+      e0,01,00,00,00,00,00,00,c4,ff,ff,ff,00,00,0b,00,00,00,01,00,02,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,02,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Pacific Standard Time (Mexico)]
+"Std"="Pacific Daylight Time (Mexico)"
+"Dlt"="Pacific Standard Time (Mexico)"
+"Display"="(GMT-08:00) Tijuana, Baja California"
+"TZI"=hex:\
+      e0,01,00,00,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,02,00,00,00,00,\
+      00,00,00,00,00,04,00,00,00,01,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Romance Standard Time]
+"Std"="Romance Standard Time"
+"Dlt"="Romance Daylight Time"
+"Display"="(GMT+01:00) Brussels, Copenhagen, Madrid, Paris"
+"TZI"=hex:\
+      c4,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Russian Standard Time]
+"Std"="Russian Standard Time"
+"Dlt"="Russian Daylight Time"
+"Display"="(GMT+03:00) Moscow, St. Petersburg, Volgograd"
+"TZI"=hex:\
+      4c,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\SA Eastern Standard Time]
+"Std"="SA Eastern Standard Time"
+"Dlt"="SA Eastern Daylight Time"
+"Display"="(GMT-03:00) Buenos Aires, Georgetown"
+"TZI"=hex:\
+      b4,00,00,00,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\SA Pacific Standard Time]
+"Std"="SA Pacific Standard Time"
+"Dlt"="SA Pacific Daylight Time"
+"Display"="(GMT-05:00) Bogota, Lima, Quito"
+"TZI"=hex:\
+      2c,01,00,00,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\SA Western Standard Time]
+"Std"="SA Western Standard Time"
+"Dlt"="SA Western Daylight Time"
+"Display"="(GMT-04:00) Caracas, La Paz"
+"TZI"=hex:\
+      f0,00,00,00,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Samoa Standard Time]
+"Std"="Samoa Standard Time"
+"Dlt"="Samoa Daylight Time"
+"Display"="(GMT-11:00) Midway Island, Samoa"
+"TZI"=hex:\
+      94,02,00,00,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\SE Asia Standard Time]
+"Std"="SE Asia Standard Time"
+"Dlt"="SE Asia Daylight Time"
+"Display"="(GMT+07:00) Bangkok, Hanoi, Jakarta"
+"TZI"=hex:\
+      5c,fe,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\South Africa Standard Time]
+"Std"="South Africa Standard Time"
+"Dlt"="South Africa Daylight Time"
+"Display"="(GMT+02:00) Harare, Pretoria"
+"TZI"=hex:\
+      88,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Sri Lanka Standard Time]
+"Std"="Sri Lanka Standard Time"
+"Dlt"="Sri Lanka Daylight Time"
+"Display"="(GMT+06:00) Sri Jayawardenepura"
+"TZI"=hex:\
+      98,fe,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Taipei Standard Time]
+"Std"="Taipei Standard Time"
+"Dlt"="Taipei Daylight Time"
+"Display"="(GMT+08:00) Taipei"
+"TZI"=hex:\
+      20,fe,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Tasmania Standard Time]
+"Std"="Tasmania Standard Time"
+"Dlt"="Tasmania Daylight Time"
+"Display"="(GMT+10:00) Hobart"
+"TZI"=hex:\
+      a8,fd,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,03,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,0a,00,00,00,01,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Tokyo Standard Time]
+"Std"="Tokyo Standard Time"
+"Dlt"="Tokyo Daylight Time"
+"Display"="(GMT+09:00) Osaka, Sapporo, Tokyo"
+"TZI"=hex:\
+      e4,fd,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Tonga Standard Time]
+"Std"="Tonga Standard Time"
+"Dlt"="Tonga Daylight Time"
+"Display"="(GMT+13:00) Nuku'alofa"
+"TZI"=hex:\
+      f4,fc,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\US Eastern Standard Time]
+"Std"="US Eastern Standard Time"
+"Dlt"="US Eastern Daylight Time"
+"Display"="(GMT-05:00) Indiana (East)"
+"TZI"=hex:\
+      2c,01,00,00,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\US Mountain Standard Time]
+"Std"="US Mountain Standard Time"
+"Dlt"="US Mountain Daylight Time"
+"Display"="(GMT-07:00) Arizona"
+"TZI"=hex:\
+      a4,01,00,00,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Vladivostok Standard Time]
+"Std"="Vladivostok Standard Time"
+"Dlt"="Vladivostok Daylight Time"
+"Display"="(GMT+10:00) Vladivostok"
+"TZI"=hex:\
+      a8,fd,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\W. Australia Standard Time]
+"Std"="W. Australia Standard Time"
+"Dlt"="W. Australia Daylight Time"
+"Display"="(GMT+08:00) Perth"
+"TZI"=hex:\
+      20,fe,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,03,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,0a,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\W. Central Africa Standard Time]
+"Std"="W. Central Africa Standard Time"
+"Dlt"="W. Central Africa Daylight Time"
+"Display"="(GMT+01:00) West Central Africa"
+"TZI"=hex:\
+      c4,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\W. Europe Standard Time]
+"Std"="W. Europe Standard Time"
+"Dlt"="W. Europe Daylight Time"
+"Display"="(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna"
+"TZI"=hex:\
+      c4,ff,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,02,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\West Asia Standard Time]
+"Std"="West Asia Standard Time"
+"Dlt"="West Asia Daylight Time"
+"Display"="(GMT+05:00) Islamabad, Karachi, Tashkent"
+"TZI"=hex:\
+      d4,fe,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\West Pacific Standard Time]
+"Std"="West Pacific Standard Time"
+"Dlt"="West Pacific Daylight Time"
+"Display"="(GMT+10:00) Guam, Port Moresby"
+"TZI"=hex:\
+      a8,fd,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,00,00,00,00,00,00,00,00,00,00,00,\
+      00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Time Zones\Yakutsk Standard Time]
+"Std"="Yakutsk Standard Time"
+"Dlt"="Yakutsk Daylight Time"
+"Display"="(GMT+09:00) Yakutsk"
+"TZI"=hex:\
+      e4,fd,ff,ff,00,00,00,00,c4,ff,ff,ff,00,00,0a,00,00,00,05,00,03,00,00,00,00,\
+      00,00,00,00,00,03,00,00,00,05,00,02,00,00,00,00,00,00,00

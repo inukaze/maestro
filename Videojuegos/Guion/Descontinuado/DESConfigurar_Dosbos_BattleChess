@@ -1,0 +1,140 @@
+#!/bin/bash
+# 
+# Autor         :       Inukaze ( Venezuela )
+# Sitio         :       http://https://goo.gl/ij6WqW
+# Correo-E      :       bloginukaze@gmail.com
+# Licencia      :       GPL 2
+#
+# Acerca de este Script :       
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones del
+# Emulador conocido como "DOSBox"
+#
+# Este Generara el archivo de configuracion
+# Para el Abandonware en especifico
+# Para Evitar Errores.
+#
+# Aqui comienza :
+Titulo="BattleChess"
+Ruta_Actual="$PWD" &> /dev/null
+
+if [ -f ".$Titulo.desktop" ]; then rm -rf ".$Titulo.desktop"; fi
+
+cd $HOME
+
+if [ -e Desktop ]; then cd Desktop; DirectorioEscritorio="$HOME/Desktop"; fi
+if [ -e Escritorio ]; then cd Escritorio; DirectorioEscritorio="$HOME/Escritorio"; fi
+
+if [ -e $DirectorioEscritorio ]; then
+	cd "$DirectorioEscritorio"
+fi
+
+
+# Borrar Archivos si ya existen
+
+if [ -f "$Titulo.desktop" ]; then rm -rf "$Titulo.desktop"; fi
+
+if test -f $HOME/.local/share/applications/"$Titulo".desktop
+	then
+		rm -rf $HOME/.local/share/applications/"$Titulo".desktop
+fi
+
+# Detectar si esta en uso un Dock , Detectar si tiene el Enlace/Icono
+# para Borrarlo , y dejar la configuracion limpia.
+#
+# Docks : Compatibles : Cairo-Dock , Wbar , SimDock , Plank
+
+CairoDock=`ps -A | grep cairo-dock | awk '{print $4}' | head -1`
+if [ "$CairoDock" = "cairo-dock" ]; then
+	VersionDelCairoDock=$(cat "$HOME/.config/cairo-dock/current_theme/cairo-dock.conf" | head -n 1)
+	Contenedor="$HOME/.config/cairo-dock/current_theme/launchers/01container.desktop"
+	IconoParaElContenedor="$HOME/.config/cairo-dock/current_theme/launchers/01$Titulo.desktop"
+
+	if test -f "$Contenedor"
+		then
+			if test -f "$IconoParaElContenedor"
+				then
+				rm "$IconoParaElContenedor"
+				`dbus-send --session --dest=org.cairodock.CairoDock /org/cairodock/CairoDock org.cairodock.CairoDock.Reboot`
+			fi
+	fi
+fi
+
+Docky=`ps -A | grep docky | awk '{print $4}' | head -1`
+if [ "$Docky" = "docky" ];
+then
+	if test -d "$HOME/.config/docky/dock1/launchers" 
+		then
+		if test -f "$HOME/.config/docky/dock1/launchers/$Titulo.dockitem"
+			then
+			rm "$HOME/.config/docky/dock1/launchers/$Titulo.dockitem"
+			killall -9 docky ; docky &
+		fi
+	fi
+fi
+
+Plank=`ps -A | grep plank | awk '{print $4}' | head -1`
+if [ "$Plank" = "plank" ];
+then
+	if test -d "$HOME/.config/plank/dock1/launchers" 
+		then
+		if test -f "$HOME/.config/plank/dock1/launchers/$Titulo.dockitem"
+			then
+			rm "$HOME/.config/plank/dock1/launchers/$Titulo.dockitem"
+		fi
+	fi
+fi
+
+WBar=`ps -A | grep wbar | awk '{print $4}' | head -1`
+if [ "$WBar" = "wbar" ];
+then
+if test -f "$HOME/.wbar" 
+	then
+		if grep "i: '$Ruta_Actual/.$Titulo.png'" "$HOME/.wbar" ; then echo ; else
+		echo "" >> "$HOME/.wbar"
+		echo "i: $Ruta_Actual/.$Titulo.png" >> "$HOME/.wbar" ; fi
+	 
+		if grep "c: '$Ruta_Actual/Iniciar'" "$HOME/.wbar" ; then echo ; else
+		echo "c: $Ruta_Actual/Iniciar" >> "$HOME/.wbar"; fi
+	
+		if grep "t: $Titulo" "$HOME/.wbar" ; then echo ; else
+		echo "t: $Titulo" >> "$HOME/.wbar" ; fi	
+
+
+		# Borrar todo lo que contenga : bchess BatlleChess
+		
+		# Usando sed
+		sed '/\(bchess\|'$Titulo'\)/d' -i wbar
+	
+		# Usando perl
+	#	perl -00 -ne 'chop; $_ = "\n$_" if $. > 1; print unless /bchess/' wbar
+		
+		# Reiniciar Wbar
+		killall wbar ; wbar & 
+		fi
+fi
+
+SimDock=`ps -A | grep simdock | awk '{print $4}' | head -1`
+if [ "$SimDock" = "simdock" ];
+then
+if test -f "$HOME/.SimDock/launchers.xml" 
+	then
+		if grep -q "</Program>" "$HOME/.SimDock/launchers.xml" ; then
+			rm -rf "$HOME/.SimDock/launchers.tmp.xml"
+		
+		#Falta borrar la linea en blanco que deja :
+		
+			perl desconfiguralo.pl launchers.xml.old >> launchers.xml.1
+			#head -n -2  "$HOME/.SimDock/launchers.xml" >> "$HOME/.SimDock/launchers.tmp.xml" ; mv "$HOME/.SimDock/launchers.tmp.xml" "$HOME/.SimDock/launchers.xml"
+			#perl -00 -ne 'chop; $_ = "\n$_" if $. > 1; print unless /^$/' launchers.tmp.xml >> launchers.xml
+			
+			head -n -2 launchers.xml.1 >> launchers.xml.2
+			echo '</Program>' >> launchers.xml.2
+			
+		fi
+		
+	killall simdock ; simdock & 
+	fi
+fi

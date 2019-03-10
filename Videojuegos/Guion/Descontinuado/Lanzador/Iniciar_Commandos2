@@ -1,0 +1,249 @@
+#!/bin/bash
+# 
+# Autor	:	Inukaze ( From Venezuela )
+# Sitio		:	http://https://goo.gl/ij6WqW
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+# Este Script es para Solucionar problemas de Directx
+# Para el Software que esta Intentado Ejecutar
+# Como NATIVO de un SISTEMA QUE NO ES WINDOWS
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+RUTA_DEL_SOFTWARE="$RUTA"/wine/data/drive_c/software
+
+# Obtener el nombre del nucleo del sistema
+Nucleo=$(uname -s)
+
+if		[ $Nucleo = "Darwin" ]; then
+		Nucleo=mac
+elif		[ $Nucleo = "Linux" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "FreeBSD" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "OpenSolaris" ]; then
+		Nucleo=linux
+else
+		echo "Sistema Operativo NO SOPORTADO"
+fi
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if	       [ $Arquitectura = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+         elif [ $Arquitectura = "x86_64" ]; then
+			PATH="$PWD/wine/$Nucleo/x86_64/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="64 Bits"
+	else
+		echo "Arquitectura NO SOPORTADA"
+fi
+
+# Muestra en la terminal La arquitectura &
+# La version especifica de Wine usada
+Version_De_Wine=$(wine --version)
+echo ""
+echo ""
+echo "Corriendo '$Version_De_Wine' en '$Nucleo' ( Maquina de '$Arquitectura' )"
+echo ""
+echo ""
+
+# Solucion de Resolucion - Parte 1
+echo `xrandr --current | grep current | awk '{print $8}'` >> RES1
+echo `xrandr --current | grep current | awk '{print $10}'` >> RES2
+cat RES2 | sed -i 's/,//g' RES2
+P1RES=$(cat RES1)
+P2RES=$(cat RES2)
+rm RES1 RES2
+echo "$P1RES"'x'"$P2RES" >> RES
+Resolucion=$(cat RES)
+rm RES
+# Solucion de Resolucion - Parte 1
+
+COMPIZ=$(ps -A|grep compiz|awk '{print $4}')
+MATE=$(ps -A|grep mate-session|awk '{print $4}')
+KDE=$(ps -A|grep plasma-desktop|awk '{print $4}')
+XFCE=$(ps -A|grep xfce-session|awk '{print $4}')
+XFWM4=$(ps -A|grep xfwm4|awk '{print $4}')
+LXDE=$(ps -A|grep lxsession|awk '{print $4}')
+OPENBOX=$(ps -A|grep openbox|awk '{print $4}')
+GNOME=$(ps -A|grep gnome-session|awk '{print $4}')
+METACITY=$(ps -A|grep metacity|awk '{print $4}')
+
+if [ "$COMPIZ" = "compiz" ]; then
+	echo "Detectado : Compiz"
+	echo "Sera Reemplazado por Otro Gestor de Ventanas"
+	cd "$HOME"
+	touch compiz.tmp
+	chmod a+o+rw+x "compiz.tmp"
+	echo "compiz --keep-desktop-hints --sync --replace &" >> "compiz.tmp"
+
+	if [ "$MATE" = "mate-session" ]; then
+		echo "Entorno de Escritorio : MATE"
+		echo 'Se Utilizara "marco" para Gestionar Ventanas'
+		#killall -9 mate-panel &
+		killall -9 python &
+		marco --composite --replace &	
+		#mate-panel --replace &
+	fi
+
+	if [ "$KDE" = "plasma-desktop" ]; then
+		echo "Entorno de Escritorio : KDE4"
+		echo 'Se Utilizara "kwin" para Gestionar Ventanas'
+		kwin --replace &
+	fi
+
+	if [ "$LXDE" = "lxsession" ]; then
+		echo "Entorno de Escritorio : LXDE"
+		echo 'Se Utilizara "openbox" para Gestionar Ventanas'
+		openbox --replace &
+	fi
+
+	if [ "$XFCE" = "xfce-session" ]; then
+		echo "Entorno de Escritorio : XFCE"
+		echo 'Se Utilizara "xfwm4" para Gestionar Ventanas'
+		xfwm4 --replace &
+	fi
+
+	if [ "$GNOME" = "gnome-session" ]; then
+		echo "Entorno de Escritorio : GNOME"
+		echo 'Se Utilizara "metacity" para Gestionar Ventanas'
+		metacity --composite --replace &
+	fi
+fi
+
+#wine D:/SETUP.EXE
+# Ejecutando Programa / Software / Juego
+export SDL_MOUSE_RELATIVE=1
+export SDL_VIDEO_X11_DGAMOUSE=1
+cd "$RUTA"/arreglos
+
+# Extraer la cantidad de MB de video
+tvid=$(lspci -v -s `lspci | awk '/VGA/{print $1}'` | sed -n '/Memory.*, prefetchable/s/.*\[size=\([^]]\+\)M\]/\1/p')
+
+## Dividir los MB de video totales
+# Depende del Juego usado en Wine
+# Siempre dividir por un Numero PAR 
+# Para evitar errores
+# utiliza ; 2 , 4 , 8 , 16 , 32 .
+
+let "mvid"=$tvid/2
+echo 'REGEDIT4' >> video.reg
+echo '' >> video.reg
+echo '[HKEY_CURRENT_USER\Software\Wine\Direct3D]' >> video.reg
+echo '"VideoMemorySize"'='"'"$mvid"'"' >> video.reg
+cd "$RUTA"/arreglos
+regedit -s software.reg
+regedit -s video.reg && rm -rf video.reg
+regedit -s "$Nucleo"_video.reg
+regedit -s "$Nucleo"_sonido.reg
+
+PULSE=$(ps -A|grep pulse|awk '{print $4}')
+PULSEAUDIO=$(ps -A|grep pulseaudio|awk '{print $4}')
+
+if [ "$PULSE" = "pulse" ]; then
+	`pulse --kill --cleanup-shm` &
+	`pulse --kill --cleanup-shm` &
+fi
+if [ "$PULSEAUDIO" = "pulseaudio" ]; then
+	`pulseaudio --kill --cleanup-shm` &
+	`pulseaudio --kill --cleanup-shm` &
+fi
+
+echo ""
+echo "Informacion :"
+echo "Arquitectura -> `uname -m` ($Arquitectura) "
+echo "DEBUG -> $WINEDEBUG "
+echo "Prefijo  -> $WINEPREFIX"
+echo "Cargador -> $WINELOADER"
+echo "Servidor -> $WINESERVER"
+echo ""
+#echo "$RUTA"
+#echo "RUTA -> $RUTA_DEL_SOFTWARE"
+#echo "Archivos Aqui :"
+#ls
+#echo ""
+#man wine
+
+cd "$RUTA_DEL_SOFTWARE"
+echo ""
+echo "Ejecutando el Software" 
+echo "" ; `xrandr -s 640x480` ; killall -9 unclutter
+#echo "Commandos 2 : Men Of Courage - Prueba de Videos" ; `wine mplay32`
+echo "Commandos 2 : Men Of Courage" ; `wine comm2_1.20.exe`
+echo ""
+echo "Finalizando el Software"  ; `xrandr -s $RES`
+echo ""
+
+cd "$HOME"
+
+	if [ -f "compiz.tmp" ]; then
+		rm -rf "video.reg" &
+		chmod a+x "compiz.tmp" &
+		sh "compiz.tmp" &
+		rm -rf "compiz.tmp" &
+	fi
+	
+	if [ "$MATE" = "mate-session" ]; then
+		`killall -9 cairo-dock` &
+		`cairo-dock -c` &
+		`guake` &
+	fi
+	
+	# Solucion de Resolucion - Parte 2
+		`xrandr -s $Resolucion`
+	# Solucion de Resolucion - Parte 2
+
+killall -9 comm2.exe comm2_1.00.exe comm2_1.20.exe Iniciar wineserver services.exe winedevice.exe explorer.exe plugplay.exe

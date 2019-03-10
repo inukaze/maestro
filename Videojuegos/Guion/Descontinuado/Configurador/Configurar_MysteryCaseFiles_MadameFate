@@ -1,0 +1,366 @@
+#!/bin/bash
+# 
+# Autor	:	Inukaze ( From Venezuela )
+# Sitio		:	http://https://goo.gl/ij6WqW
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+# Este Script es para Solucionar problemas de Directx
+# Para el Software que esta Intentado Ejecutar
+# Como NATIVO de un SISTEMA QUE NO ES WINDOWS
+
+xmessage -nearmouse -timeout 5 "Se Esta Configurando El Software" -buttons OK &
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+RUTA_C="$RUTA/wine/data/drive_c"
+ARREGLOS="$RUTA/arreglos"
+TITULO="Mystery Case Files - Madame Fate"
+ICONO=".mcfmf.png"
+
+if 	[ -d "$RUTA" ]; then
+	rm -rf "$RUTA/wine/data/drive_c/users"
+	rm -rf "$RUTA/wine/data/drive_c/windows"
+	rm -rf "$RUTA/wine/data/Program Files (x86)"
+	rm -rf "$RUTA/wine/data/drive_c/Archivos de programa"
+	rm -rf "$RUTA/wine/data/drive_c/Program Files (x86)"
+	rm -rf "$RUTA/wine/data/drive_c/Program Files"
+	rm -rf "$RUTA/wine/data/system.reg"
+	rm -rf "$RUTA/wine/data/user.reg"
+	rm -rf "$RUTA/wine/data/userdef.reg"
+	rm -rf "$RUTA/wine/data/dosdevices"
+	rm -rf "$RUTA/wine/data/.update-timestamp"
+	rm -rf "$RUTA/wine/.DS_Store"
+	rm -rf "$RUTA/wine/linux/.DS_Store"
+	rm -rf "$RUTA/wine/linux/x86/.DS_Store"
+	rm -rf "$RUTA/wine/linux/x86_64/.DS_Store"
+	rm -rf "$RUTA/wine/linux/x86/bin/.DS_Store"
+	rm -rf "$RUTA/wine/linux/x86_64/bin/.DS_Store"
+	rm -rf "$RUTA/wine/mac/.DS_Store"
+	rm -rf "$RUTA/wine/mac/x86/.DS_Store"
+	rm -rf "$RUTA/wine/mac/x86_64/.DS_Store"
+	rm -rf "$RUTA/wine/mac/x86/bin/.DS_Store"
+	rm -rf "$RUTA/wine/mac/x86_64/bin/.DS_Store"
+	rm -rf "$RUTA"/wine/data/cachedmetrics.\:0
+else
+	echo "   . . . No se borro Configuracion Previa de WINE . . ."
+fi
+
+# Obtener el nombre del nucleo del sistema
+Nucleo=$(uname -s)
+
+if		[ $Nucleo = "Darwin" ]; then
+		Nucleo=mac
+elif		[ $Nucleo = "Linux" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "FreeBSD" ]; then
+		Nucleo=linux
+else
+		echo "Sistema Operativo NO SOPORTADO"
+fi
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if	       [ $Arquitectura = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+         elif [ $Arquitectura = "x86_64" ]; then
+			PATH="$PWD/wine/$Nucleo/x86_64/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="64 Bits"
+	else
+		echo "Arquitectura NO SOPORTADA"
+fi
+
+# necesita el Gecko de Wine para funcionar
+# correctamente , esta contenida la version
+# La Version de 32 Bits Unicamente (Falta la de 64) 
+# "$RUTA"/arreglos/windows/system32/gecko
+# Tambien son requeridas ciertas claves de Registro
+# Desconocidas por el Momento para el Correcto
+# Funcionamiento de "Launch.exe"
+
+# Copiar los archivos nativos (arreglos)
+# a las carpetas de Wine
+#GECKO_A_Mano#mkdir -p "$RUTA_C/windows/system32/gecko/plugin"
+#GECKO_A_Mano#mkdir -p "$RUTA_C/windows/system32/gecko/1.4/wine_gecko/components"
+#GECKO_A_Mano#mkdir -p "$RUTA_C/windows/system32/gecko/1.4/wine_gecko/dictionaries"
+#GECKO_A_Mano#mkdir -p "$RUTA_C/windows/system32/gecko/1.4/wine_gecko/hyphenation"
+#GECKO_A_Mano#mkdir -p "$RUTA_C/windows/system32/spool/drivers/w32x86/3/"
+
+#GECKO_A_Mano#cd "$ARREGLOS/windows/system32/gecko/plugin"
+#GECKO_A_Mano#cp *.* "$RUTA_C/windows/system32/gecko/plugin"
+
+#GECKO_A_Mano#cd "$ARREGLOS/windows/system32/gecko/1.4/wine_gecko/components"
+#GECKO_A_Mano#cp *.* "$RUTA_C/windows/system32/gecko/1.4/wine_gecko/components"
+
+#GECKO_A_Mano#cd "$ARREGLOS/windows/system32/gecko/1.4/wine_gecko/dictionaries"
+#GECKO_A_Mano#cp *.* "$RUTA_C/windows/system32/gecko/1.4/wine_gecko/dictionaries"
+
+#GECKO_A_Mano#cd "$ARREGLOS/windows/system32/gecko/1.4/wine_gecko/hyphenation"
+#GECKO_A_Mano#cp *.* "$RUTA_C/windows/system32/gecko/1.4/wine_gecko/hyphenation"
+
+cd "$ARREGLOS/windows/system32"
+cp *.* "$RUTA_C/windows/system32"
+
+
+# Muestra en la terminal La arquitectura &
+# La version especifica de Wine usada
+Version_De_Wine=$(wine --version)
+echo ""
+echo ""
+echo "Corriendo '$Version_De_Wine' en '$Nucleo' ( Maquina de '$Arquitectura' )"
+echo ""
+echo ""
+
+regedit "$ARREGLOS/Gecko.reg"
+
+# Agregar Manualmente el Registro de las
+# Bibliotecas DirectX Nativas de Windows
+# Al Registro de WINE para su correcto Funcionamiento
+# Agregar valores de DirectX & DirectPlay al Registro
+
+# Registrar las Librerias con RegSvr32
+regsvr32 clbcatq.dll
+regsvr32 jscript.dll
+regsvr32 MSCTF.dll
+regsvr32 MSIMTF.dll
+regsvr32 msvbvm60.dll
+regsvr32 rpcrt4.dll
+regsvr32 swprv.dll
+regsvr32 wintrust.dll
+regsvr32 shimgvw.dll
+regsvr32 wshext.dll
+
+
+# - Esto es DirectX 9.X? (Nativo de Windows XP SP 3)
+echo "REGEDIT4" >> arreglos.reg
+echo "" >> arreglos.reg
+echo "[HKEY_CURRENT_USER\Software\Wine\DllOverrides]" >> arreglos.reg
+echo '"activeds.dll"="native"' >> arreglos.reg
+echo '"adsldpc.dll"="native"' >> arreglos.reg
+echo '"advapi32.dll"="native"' >> arreglos.reg
+echo '"apphelp.dll"="native"' >> arreglos.reg
+echo '"comctl32.dll"="native"' >> arreglos.reg
+echo '"comdlg32.dll"="native"' >> arreglos.reg
+echo '"comdlg32.dll"="native"' >> arreglos.reg
+echo '"comdlg32.ocx"="native"' >> arreglos.reg
+echo '"comres.dll"="native"' >> arreglos.reg
+echo '"credssp.dll"="native"' >> arreglos.reg
+echo '"crypt32.dll"="native"' >> arreglos.reg
+echo '"cryptdll.dll"="native"' >> arreglos.reg
+echo '"dirapi.dll"="native"' >> arreglos.reg
+echo '"dsound.dll"="native"' >> arreglos.reg
+echo '"gdi32.dll"="native"' >> arreglos.reg
+echo '"iertutil.dll"="native"' >> arreglos.reg
+echo '"imagehlp.dll"="native"' >> arreglos.reg
+echo '"iml32.dll"="native"' >> arreglos.reg
+echo '"imm32.dll"="native"' >> arreglos.reg
+echo '"inetmib1.dll"="native"' >> arreglos.reg
+echo '"iphlpapi.dll"="native"' >> arreglos.reg
+echo '"kernel32.dll"="native"' >> arreglos.reg
+echo '"ksuser.dll"="native"' >> arreglos.reg
+echo '"midimap.dll"="native"' >> arreglos.reg
+echo '"mlang.dat"="native"' >> arreglos.reg
+echo '"mlang.dll"="native"' >> arreglos.reg
+echo '"mprapi.dll"="native"' >> arreglos.reg
+echo '"msacm32.dll"="native"' >> arreglos.reg
+echo '"msacm32.drv"="native"' >> arreglos.reg
+echo '"msasn1.dll"="native"' >> arreglos.reg
+echo '"MSCTFIME.IME"="native"' >> arreglos.reg
+echo '"msls31.dll"="native"' >> arreglos.reg
+echo '"msv1_0.dll"="native"' >> arreglos.reg
+echo '"msvcrt.dll"="native"' >> arreglos.reg
+echo '"msxml.dll"="native"' >> arreglos.reg
+echo '"msxml2.dll"="native"' >> arreglos.reg
+echo '"msxml3.dll"="native"' >> arreglos.reg
+echo '"msxml4.dll"="native"' >> arreglos.reg
+echo '"msxml6.dll"="native"' >> arreglos.reg
+echo '"netapi32.dll"="native"' >> arreglos.reg
+echo '"normaliz.dll"="native"' >> arreglos.reg
+echo '"ntdll.dll"="native"' >> arreglos.reg
+echo '"Odyssey.dll"="native"' >> arreglos.reg
+echo '"ole32.dll"="native"' >> arreglos.reg
+echo '"oleaut32.dll"="native"' >> arreglos.reg
+echo '"oledlg.dll"="native"' >> arreglos.reg
+echo '"proj.dll"="native"' >> arreglos.reg
+echo '"psapi.dll"="native"' >> arreglos.reg
+echo '"rasapi32.dll"="native"' >> arreglos.reg
+echo '"rasman.dll"="native"' >> arreglos.reg
+echo '"rtutils.dll"="native"' >> arreglos.reg
+echo '"samlib.dll"="native"' >> arreglos.reg
+echo '"schannel.dll"="native"' >> arreglos.reg
+echo '"secur32.dll"="native"' >> arreglos.reg
+echo '"sensapi.dll"="native"' >> arreglos.reg
+echo '"setupapi.dll"="native"' >> arreglos.reg
+echo '"shell32.dll"="native"' >> arreglos.reg
+echo '"shlwapi.dll"="native"' >> arreglos.reg
+echo '"snmpapi.dll"="native"' >> arreglos.reg
+echo '"tapi32.dll"="native"' >> arreglos.reg
+echo '"urlmon.dll"="native"' >> arreglos.reg
+echo '"user32.dll"="native"' >> arreglos.reg
+echo '"userenv.dll"="native"' >> arreglos.reg
+echo '"uxtheme.dll"="native"' >> arreglos.reg
+echo '"version.dll"="native"' >> arreglos.reg
+echo '"wdmaud.drv"="native"' >> arreglos.reg
+echo '"windowscodecs.dll"="native"' >> arreglos.reg
+echo '"wininet.dll"="native"' >> arreglos.reg
+echo '"winspool.exe"="native"' >> arreglos.reg
+echo '"wldap32.dll"="native"' >> arreglos.reg
+echo '"ws2_32.dll"="native"' >> arreglos.reg
+echo '"ws2help.dll"="native"' >> arreglos.reg
+echo '"wsock32.dll"="native"' >> arreglos.reg
+echo '"xpsp2res.dll"="native"' >> arreglos.reg
+
+
+echo '' >> arreglos.reg
+echo ""
+echo "Se ha Registrado Bibliotecas exitosamente"
+echo ""
+exec `wine regedit -s arreglos.reg` && `rm -rf arreglos.reg`
+
+tvid=$(lspci -v -s `lspci | awk '/VGA/{print $1}'` | sed -n '/Memory.*, prefetchable/s/.*\[size=\([^]]\+\)M\]/\1/p')
+let "mvid"=$tvid/2
+
+echo ""
+echo ""
+echo "Se ha establecido la configuracion 3D"
+echo "Para '"$TITULO"' , utilizando la mitad"
+echo "de la memoria de video disponible"
+echo ""
+echo ""
+echo 'El Juego usara "'"$mvid MB"'" de Video'
+echo ""
+echo ""
+
+# Registrar las Bibliotecas y Borrar Arquitecturaivos de Registro
+echo "Escribiendo Configuraciones pertinentes"
+echo "De '"$TITULO"' en el Sistema de WINE"
+echo ""
+exec `wine regedit -s "$RUTA"/arreglos/DirectX.reg`
+
+# Agregar al registro la informacion del juego :
+cd "$RUTA"/arreglos
+wine regedit -S "$Nucleo"_sonido.reg
+wine regedit -S "$Nucleo"_video.reg
+wine regedit -S software.reg
+
+echo "Se ha escrito la configuracion del Juego correctamente"
+
+# Detectar el Directorio "Escritorio"
+# Dentro del usuario actual
+
+cd $HOME
+
+if [ -e Desktop ]; then cd Desktop; DirectorioEscritorio=$HOME/Desktop; fi
+if [ -e Escritorio ]; then cd Escritorio; DirectorioEscritorio=$HOME/Escritorio; fi
+
+if [ ! -e $DirectorioEscritorio/Wine ]; then
+mkdir -p $DirectorioEscritorio/Wine
+cd $DirectorioEscritorio/Wine
+fi
+
+if [ -e $DirectorioEscritorio/Wine ]; then
+cd $DirectorioEscritorio/Wine
+fi
+
+# Escribir Los Archivos de "Enlace(s)"
+# Necesarios dentro de la Carpeta "$HOME/$DirectorioEscritorio/Wine"
+
+# Primero Borrar cualquier archivo Anterior
+# De Escritorio , para Evitar Conflictos y no crear archivos innecesarios.
+
+if [ -f "$TITULO".desktop ]; then rm -rf "$TITULO".desktop; fi
+if [ -f "$TITULO (Modo Ventana)".desktop ]; then rm -rf "$TITULO (Modo Ventana)".desktop; fi
+
+#Crear Enlaces en la Carpeta "$DirectorioEscritorio/Wine"
+#Del Software que configura este Script.
+
+touch "$TITULO.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "$TITULO.desktop"
+echo "" >> "$TITULO.desktop"
+echo '[Desktop Entry]' >> "$TITULO.desktop"
+echo "Version=1.0" >> "$TITULO.desktop"
+echo "Type=Application" >> "$TITULO.desktop"
+echo "Terminal=false" >> "$TITULO.desktop"
+echo 'Exec=sh "'$RUTA'"/.Lanzar' >> "$TITULO.desktop"
+echo "Name=$TITULO" >> "$TITULO.desktop"
+echo "Icon=$RUTA/$ICONO" >> "$TITULO.desktop"
+
+touch "$TITULO (Modo Ventana).desktop"
+echo "#!/usr/bin/env xdg-open"  >> "$TITULO (Modo Ventana).desktop"
+echo "" >> "$TITULO (Modo Ventana).desktop"
+echo '[Desktop Entry]' >> "$TITULO (Modo Ventana).desktop"
+echo "Version=1.0" >> "$TITULO (Modo Ventana).desktop"
+echo "Type=Application" >> "$TITULO (Modo Ventana).desktop"
+echo "Terminal=false" >> "$TITULO (Modo Ventana).desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_Lanzar' >> "$TITULO (Modo Ventana).desktop"
+echo "Name=$TITULO (Modo Ventana)" >> "$TITULO (Modo Ventana).desktop"
+echo "Icon=$RUTA/$ICONO" >> "$TITULO (Modo Ventana).desktop"
+
+# Dar Permisos de Ejecucion
+chmod a+x "$TITULO.desktop"
+chmod a+x "$TITULO (Modo Ventana).desktop"
+
+if [ $XMessage = xmessage ]; then
+	echo
+	echo 'Mostrar el Mensaje en el Sistema Grafico -> "Se Esta Configurando El Software"'
+	echo
+	xmessage -nearmouse -timeout 3 "Se Ha Configurado Exitosamente" -buttons OK &
+else
+	echo
+	echo "xmessage - NO! ESTA INSTALADO"
+	echo
+	echo "Se Ha Configurado Exitosamente"
+fi

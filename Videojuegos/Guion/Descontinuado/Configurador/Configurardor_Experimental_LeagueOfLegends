@@ -1,0 +1,344 @@
+#!/bin/bash
+# 
+# Autor	:	Inukaze ( Venezuela )
+# Sitio		:	http://https://goo.gl/ij6WqW
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+xmessage -nearmouse -timeout 5 "Se Esta Configurando El Software" -buttons OK &
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+cd "$RUTA"
+RUTA_C="$RUTA/wine/data/drive_c"
+RUTASYSTEM32="$RUTA/wine/data/drive_c/windows/system32"
+ARREGLOS="$RUTA/arreglos"
+# Obtener el nombre del nucleo del sistema
+Nucleo=$(uname -s)
+
+if		[ $Nucleo = "Darwin" ]; then
+		Nucleo=mac
+elif		[ $Nucleo = "Linux" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "FreeBSD" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "SunOS" ]; then
+		Nucleo=linux
+else
+		echo "Sistema Operativo NO SOPORTADO"
+fi
+
+# Borrar Toda Configuracion Previa WINE:
+rm -rf "$RUTA/wine/data/drive_c/users"
+rm -rf "$RUTA/wine/data/drive_c/windows"
+rm -rf "$RUTA/wine/data/drive_c/Program Files/"
+rm -rf "$RUTA/wine/data/Program Files (x86)"
+rm -rf "$RUTA/wine/data/drive_c/Archivos de programa"
+rm -rf "$RUTA/wine/data/drive_c/Program Files (x86)"
+rm -rf "$RUTA/wine/data/system.reg"
+rm -rf "$RUTA/wine/data/user.reg"
+rm -rf "$RUTA/wine/data/userdef.reg"
+rm -rf "$RUTA/wine/data/dosdevices"
+rm -rf "$RUTA/wine/data/.update-timestamp"
+rm -rf "$RUTA/wine/.DS_Store"
+rm -rf "$RUTA/wine/linux/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/bin/.DS_Store"
+rm -rf "$RUTA/wine/data/winetricks.log"
+rm -rf "$RUTA"/wine/data/cachedmetrics.\:0
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if	 [ $Arquitectura = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+elif	[ $Arquitectura = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+elif	[ $Arquitectura = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+elif	[ $Arquitectura = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+elif [ $Arquitectura = "x86_64" ]; then
+			# Corriendo 'wine-1.5.0' en 'linux' ( Maquina de '64 Bits' )
+			PATH="$PWD/wine/$Nucleo/x86_64/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="64 Bits"
+			# Instalar arreglos manuales en 64 Bits
+			mkdir -p "$RUTA/wine/data/drive_c/windows/syswow64"
+			RUTASYSTEM64="$RUTA/wine/data/drive_c/windows/syswow64"
+			cp -rf *.* "$RUTASYSTEM64"
+	# 7 - Finalizada la instacion y Configuracion de los arreglos.
+else
+		echo "Arquitectura NO SOPORTADA"
+fi 
+
+
+# Instalar Arreglos ->
+
+	# Instalar Arreglos >
+	# 1 - Crear Directorios Necesarios
+	mkdir -p "$HOME/.cache/winetricks/physx"
+#	mkdir -p "$HOME/.cache/winetricks/ie6" 		# 32 Bits
+#	mkdir -p "$HOME/.cache/winetricks/ie8" 		# 64 Bits
+	mkdir -p "$HOME/.cache/winetricks/riched30"
+	mkdir -p "$HOME/.cache/winetricks/msls31"
+	mkdir -p "$HOME/.cache/winetricks/pngfilt"
+	mkdir -p "$HOME/.cache/winetricks/vcrun2005"
+	mkdir -p "$HOME/.cache/winetricks/win2ksp4"
+	mkdir -p "$HOME/.cache/winetricks/directx9"
+	mkdir -p "$HOME/.cache/winetricks/corefonts"
+	mkdir -p "$HOME/.cache/winetricks/adobeair"
+	mkdir -p "$HOME/.cache/winetricks/msxml3/"
+	
+	# 2 - En caso de que si existen arreglos Copiados
+	#     Borrarlos todos para asegurar una copia Limpia.
+	rm -rf "$HOME/.cache/winetricks/physxPhysX_9.10.0129_SystemSoftware.exe"
+#	rm -rf "$HOME/.cache/winetricks/ie6/msie60.exe" # 32 Bits
+#	rm -rf "$HOME/.cache/winetricks/ie8/IE8-WindowsXP-x86-ENU.exe" # 64 Bits
+#	rm -rf "$HOME/.cache/winetricks/ie8/winetest.cat" # 64 Bits
+	rm -rf "$HOME/.cache/winetricks/riched30/InstMsiA.exe"
+	rm -rf "$HOME/.cache/winetricks/msls31/InstMsiW.exe"
+	rm -rf "$HOME/.cache/winetricks/pngfilt"
+	rm -rf "$HOME/.cache/winetricks/vcrun2005/vcredist_x86.exe"
+	rm -rf "$HOME/.cache/winetricks/win2ksp4/W2KSP4_EN.EXE"
+	rm -rf "$HOME/.cache/winetricks/directx9/directx_feb2010_redist.exe"
+	rm -rf "$HOME/.cache/winetricks/directx9/directx_Jun2010_redist.exe"
+	rm -rf "$HOME/.cache/winetricks/corefonts/webdin32.exe"
+	rm -rf "$HOME/.cache/winetricks/corefonts/verdan32.exe"
+	rm -rf "$HOME/.cache/winetricks/corefonts/trebuc32.exe"
+	rm -rf "$HOME/.cache/winetricks/corefonts/times32.exe"
+	rm -rf "$HOME/.cache/winetricks/corefonts/impact32.exe"
+	rm -rf "$HOME/.cache/winetricks/corefonts/georgi32.exe"
+	rm -rf "$HOME/.cache/winetricks/corefonts/courie32.exe"
+	rm -rf "$HOME/.cache/winetricks/corefonts/comic32.exe"
+	rm -rf "$HOME/.cache/winetricks/corefonts/arialb32.exe"
+	rm -rf "$HOME/.cache/winetricks/corefonts/arial32.exe"
+	rm -rf "$HOME/.cache/winetricks/adobeair/AdobeAIRInstaller.exe"
+	rm -rf "$HOME/.cache/winetricks/msxml3/msxml3.msi"
+
+	# 3 - Copiar Todos los archivos necesarios para los arreglos
+	cp "$ARREGLOS/PhysX_9.10.0129_SystemSoftware.exe" "$HOME/.cache/winetricks/physx"
+#	cp "$ARREGLOS/msie60.exe" "$HOME/.cache/winetricks/ie6" # 32 Bits
+#	cp "$ARREGLOS/IE8-WindowsXP-x86-ENU.exe" "$HOME/.cache/winetricks/ie8" # 64 Bits
+#	cp "$ARREGLOS/winetest.cat" "$HOME/.cache/winetricks/ie8" # 64 Bits
+	cp "$ARREGLOS/InstMsiA.exe" "$HOME/.cache/winetricks/riched30/InstMsiA.exe"
+	cp "$ARREGLOS/msxml3.msi" "$HOME/.cache/winetricks/msxml3"
+	cp "$ARREGLOS/InstMsiW.exe" "$HOME/.cache/winetricks/msls31"
+	cp "$ARREGLOS/IE5.01sp4-KB871260-Windows2000sp4-x86-ENU.exe" "$HOME/.cache/winetricks/pngfilt"
+	cp "$ARREGLOS/vcredist_x86.EXE" "$HOME/.cache/winetricks/vcrun2005"
+	cp "$ARREGLOS/W2KSP4_EN.EXE" "$HOME/.cache/winetricks/win2ksp4"
+	cp "$ARREGLOS/directx_feb2010_redist.exe" "$HOME/.cache/winetricks/directx9"
+	cp "$ARREGLOS/directx_Jun2010_redist.exe" "$HOME/.cache/winetricks/directx9"
+	cp "$ARREGLOS/webdin32.exe" "$HOME/.cache/winetricks/corefonts"
+	cp "$ARREGLOS/verdan32.exe" "$HOME/.cache/winetricks/corefonts"
+	cp "$ARREGLOS/trebuc32.exe" "$HOME/.cache/winetricks/corefonts"
+	cp "$ARREGLOS/times32.exe"  "$HOME/.cache/winetricks/corefonts"
+	cp "$ARREGLOS/impact32.exe" "$HOME/.cache/winetricks/corefonts"
+	cp "$ARREGLOS/georgi32.exe" "$HOME/.cache/winetricks/corefonts"
+	cp "$ARREGLOS/courie32.exe" "$HOME/.cache/winetricks/corefonts"
+	cp "$ARREGLOS/comic32.exe"  "$HOME/.cache/winetricks/corefonts"
+	cp "$ARREGLOS/arialb32.exe" "$HOME/.cache/winetricks/corefonts"
+	cp "$ARREGLOS/arial32.exe"  "$HOME/.cache/winetricks/corefonts"
+	cp "$ARREGLOS/AdobeAIRInstaller.exe" "$HOME/.cache/winetricks/adobeair"
+
+	# 4 - Instalar todos los arreglos
+	winetricks physx
+#	winetricks ie6 # 32 Bits
+#	winetricks ie8 # 64 Bits
+	winetricks riched30 
+	winetricks msxml3
+	winetricks vcrun2005
+	winetricks wininet
+	winetricks d3dx9
+	winetricks corefonts
+	winetricks adobeair
+
+	# 5 - Una vez Instalado todo borrar los archivos y directorios utilizados
+	rm -rf "$HOME/.cache/winetricks/physx"
+#	rm -rf "$HOME/.cache/winetricks/ie6" # 32 Bits
+#	rm -rf "$HOME/.cache/winetricks/ie8" # 64 Bits
+	rm -rf "$HOME/.cache/winetricks/msls31"
+	rm -rf "$HOME/.cache/winetricks/msxml3	"
+	rm -rf "$HOME/.cache/winetricks/pngfilt"
+	rm -rf "$HOME/.cache/winetricks/vcrun2005"
+	rm -rf "$HOME/.cache/winetricks/win2ksp4"
+	rm -rf "$HOME/.cache/winetricks/directx9"
+	rm -rf "$HOME/.cache/winetricks/corefonts"
+	rm -rf "$HOME/.cache/winetricks/adobeair"
+	rm -rf "$HOME/.cache/winetricks/msxml3"
+	rm -rf "$HOME/.cache/winetricks/riched30"
+	
+	# 6 - Instalar Arreglos Manuales
+	cd "$RUTA"/arreglos/windows/system32
+	cp -rf *.* "$RUTASYSTEM32"
+	regsvr32 eax.dll
+	echo "REGEDIT4" >> vidfix.reg
+	echo "" >> vidfix.reg
+	echo "[HKEY_CURRENT_USER\Software\Wine\DllOverrides]" >> vidfix.reg
+	echo '"advapi32.dll"="native,builtin"' >> vidfix.reg
+	echo '"dmdlgs.dll"="native,builtin"' >> vidfix.reg
+	echo '"dsauth.dll"="native,builtin"' >> vidfix.reg
+	echo '"dsound.dll"="native,builtin"' >> vidfix.reg
+	echo '"dmconfig.dll"="native,builtin"' >> vidfix.reg
+	echo '"dmintf.dll"="native,builtin"' >> vidfix.reg
+	echo '"dmserver.dll"="native,builtin"' >> vidfix.reg
+	echo '"dmutil.dll"="native,builtin"' >> vidfix.reg
+	echo '"dsound3d.dll"="native,builtin"' >> vidfix.reg
+	echo '"dsdmo.dll"="native,builtin"' >> vidfix.reg
+	echo '"dswave.dll"="native,builtin"' >> vidfix.reg
+	echo '"dmscript.dll"="native,builtin"' >> vidfix.reg
+	echo '"dmloader.dll"="native,builtin"' >> vidfix.reg
+	echo '"dmband.dll"="native,builtin"' >> vidfix.reg
+	echo '"dmcompos.dll"="native,builtin"' >> vidfix.reg
+	echo '"dmime.dll"="native,builtin"' >> vidfix.reg
+	echo '"dmstyle.dll"="native,builtin"' >> vidfix.reg
+	echo '"dmsynth.dll"="native,builtin"' >> vidfix.reg
+	echo '"dmusic.dll"="native,builtin"' >> vidfix.reg
+	echo '"dxtmsft.dll"="native,builtin"' >> vidfix.reg
+	echo '"dxtmsft3.dll"="native,builtin"' >> vidfix.reg
+	echo '"GdiPlus.dll"="native,builtin"' >> vidfix.reg
+	echo '"wldap32.dlll"="native,builtin"' >> vidfix.reg
+	regedit -s vidfix.reg && rm -rf vidfix.reg
+	# 7 - Finalizada la instacion y Configuracion de los arreglos.
+
+# Muestra en la terminal La arquitectura &
+# La version especifica de Wine usada
+Version_De_Wine=$(wine --version)
+echo ""
+echo ""
+echo "Corriendo '$Version_De_Wine' en '$Nucleo' ( Maquina de '$Arquitectura' )"
+echo ""
+echo ""
+
+
+ARREGLOS="$RUTA/arreglos"
+`wine regedit -s "$RUTA"/arreglos/"$Nucleo"_video.reg`
+`wine regedit -s "$RUTA"/arreglos/"$Nucleo"_sonido.reg`
+
+
+tvid=$(lspci -v -s `lspci | awk '/VGA/{print $1}'` | sed -n '/Memory.*, prefetchable/s/.*\[size=\([^]]\+\)M\]/\1/p')
+let "mvid"=$tvid/2
+
+echo ""
+echo ""
+echo "Se ha establecido la configuracion 3D"
+echo "Para "League Of Legends""
+echo ""
+echo ""
+echo 'El Juego usara "'"$tvid MB"'" de Video'
+echo ""
+echo ""
+
+# Detectar el Directorio "Escritorio"
+# Dentro del usuario actual
+
+cd $HOME
+
+if [ -e Desktop ]; then cd Desktop; DirectorioEscritorio=$HOME/Desktop; fi
+if [ -e Escritorio ]; then cd Escritorio; DirectorioEscritorio=$HOME/Escritorio; fi
+
+cd $DirectorioEscritorio
+
+# Escribir Los Archivos de "Enlace(s)"
+# Necesarios dentro de la Carpeta "$HOME/$DirectorioEscritorio/League_Of_Legends"
+
+# Primero Borrar cualquier archivo Anterior
+# De Escritorio , para Evitar Conflictos y no crear archivos innecesarios.
+
+if [ -f "League Of Legends.desktop" ]; then rm -rf "League Of Legends.desktop"; fi
+
+#Crear Enlaces en la Carpeta "$DirectorioEscritorio/League_Of_Legends"
+#Del Software que configura este Script.
+
+#1 - League_Of_Legends
+touch "League Of Legends.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "League Of Legends.desktop"
+echo "" >> "League Of Legends.desktop"
+echo '[Desktop Entry]' >> "League Of Legends.desktop"
+echo "Version=1.0" >> "League Of Legends.desktop"
+echo "Type=Application" >> "League Of Legends.desktop"
+echo "Terminal=false" >> "League Of Legends.desktop"
+echo 'Exec=sh "'$RUTA'"/.LanzarLeague_Of_Legends' >> "League Of Legends.desktop"
+echo "Name=League Of Legends" >> "League Of Legends.desktop"
+echo "Icon=$RUTA/.League_Of_Legends.png" >> "League Of Legends.desktop"
+
+# Marcar como de Confianza (Dar Permiso de Ejecucion):
+chmod a+x "League Of Legends.desktop"
+
+# -- Enlaces de Modo Ventana --
+# Escribir Los Archivos de "Enlace(s)"
+
+if [ -f "Modo Ventana - League Of Legends.desktop" ]; then rm -rf "Modo Ventana - League Of Legends.desktop"; fi
+
+#Crear Enlaces en la Carpeta "$DirectorioEscritorio/League_Of_Legends"
+#Del Software que configura este Script.
+
+#1 - League_Of_Legends
+touch "Modo Ventana - League Of Legends.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Modo Ventana - League Of Legends.desktop"
+echo "" >> "Modo Ventana - League Of Legends.desktop"
+echo '[Desktop Entry]' >> "Modo Ventana - League Of Legends.desktop"
+echo "Version=1.0" >> "Modo Ventana - League Of Legends.desktop"
+echo "Type=Application" >> "Modo Ventana - League Of Legends.desktop"
+echo "Terminal=false" >> "Modo Ventana - League Of Legends.desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_LanzarLeague_Of_Legends' >> "Modo Ventana - League Of Legends.desktop"
+echo "Name=Modo Ventana - League_Of_Legends" >> "Modo Ventana - League Of Legends.desktop"
+echo "Icon=$RUTA/.League_Of_Legends.png" >> "Modo Ventana - League Of Legends.desktop"
+
+# Marcar como de Confianza (Dar Permiso de Ejecucion):
+chmod a+x "Modo Ventana - League Of Legends.desktop"
+
+xmessage -nearmouse -timeout 5 "Se Ha Configurado Exitosamente" -buttons OK &

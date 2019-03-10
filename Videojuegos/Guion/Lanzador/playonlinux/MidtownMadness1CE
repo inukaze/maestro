@@ -1,0 +1,74 @@
+#!/usr/bin/env playonlinux-bash
+[ "$PLAYONLINUX" = "" ] && exit 0
+source "$PLAYONLINUX/lib/sources"
+
+# Inukaze -> http://https://goo.gl/ij6WqW
+# Obtener el Nombre del Nucleo
+Nucleo=$(uname -s)
+case "$Nucleo" in
+	Linux)		Nucleo="linux"						;;
+	FreeBSD)	Nucleo="freebsd"					;;
+	GNU/kFreeBSD)	Nucleo="freebsd"					;;
+	* ) echo "Tu Sistema Operativo -> NO ESTA SOPORTADO"			;;
+esac
+
+# Obtener la ARQUITECTURA
+ARQUITECTURA=$(uname -m)
+case "$ARQUITECTURA" in
+	x86)    ARQUITECTURA="x86"						;;
+	i?86)   ARQUITECTURA="x86"						;;
+	amd64)  ARQUITECTURA="amd64"						;;
+	x86_64) ARQUITECTURA="amd64"						;;
+	* ) echo    "Tú Arquitectura : '$ARQUITECTURA' : -> IT NOT SUPPORTED."	;;
+esac
+
+# Comprobrar que (No/)Existen los archivos y rutas, antes de proceder
+if test -d "$HOME/.PlayOnLinux/wineprefix/InukazeMidtownMadness"
+	then
+	echo
+			if test -f "$HOME/.PlayOnLinux/wineprefix/InukazeMidtownMadness/drive_c/Inukaze/Videojuegos/Abandonware/Windows/MidtownMadness1ChicagoEdition/midtown.exe"
+			then
+				echo "Encontrado ejecutable de Midtown Madness 1 Chicago Edition en el prefijo de Inukaze"
+			fi		
+	else
+		echo "Midtown Madness no esta instalado en el Prefijo de Inukaze"
+		xmessage -timeout 3 "Midtown Madness no esta instalado en el Prefijo de Inukaze"
+		exit 1
+fi
+
+if test -f "$HOME/.PlayOnLinux/wineprefix/InukazeMidtownMadness/playonlinux.cfg"
+	then
+	# Obtener la version de WINE y su arquitectura del Prefijo Steam dentro de PlayOnLinux ;
+	VERSION_WINE=$(cat "$HOME/.PlayOnLinux/wineprefix/InukazeMidtownMadness/playonlinux.cfg" | grep VERSION= | sed 's/VERSION=//g')
+	ARQUITECTURA_WINE=$(cat "$HOME/.PlayOnLinux/wineprefix/InukazeMidtownMadness/playonlinux.cfg" | grep ARCH= | sed 's/ARCH=//g')
+	else
+		echo "Steam no esta instalado en el Prefijo Predeterminado"
+		xmessage -timeout 3 "Steam no esta instalado en el Prefijo Predeterminado"
+		exit 1
+fi
+
+cd "$HOME/.PlayOnLinux//wineprefix/InukazeMidtownMadness/drive_c/./Inukaze/Videojuegos/Abandonware/Windows/MidtownMadness1ChicagoEdition"
+
+# Configurar Variables de Entornos, Rutas e Iniciar Steam para Windows :
+PATH="$HOME/.PlayOnLinux/wine/$ARQUITECTURA-$ARQUITECTURA_WINE/$VERSION_WINE/bin:$PATH"
+export WINESERVER="$HOME/.PlayOnLinux/wine/$Nucleo-$ARQUITECTURA_WINE/$VERSION_WINE/bin/wineserver"
+export WINELOADER="$HOME/.PlayOnLinux/wine/$Nucleo-$ARQUITECTURA_WINE/$VERSION_WINE/bin/wine"
+export WINEDLLPATH="$HOME/.PlayOnLinux/wine/$Nucleo-$ARQUITECTURA_WINE/$VERSION_WINE/lib"
+export WINEPREFIX="$HOME/.PlayOnLinux/wineprefix/InukazeMidtownMadness"
+export WINEDEBUG=-all
+exec xinit "$HOME/.PlayOnLinux/wine/$Nucleo-$ARQUITECTURA_WINE/$VERSION_WINE/bin/wine" "midtown.exe" -- :1 vt6 -ac -depth 16 &
+
+# Esperar que "Midtown Madness" Inicie
+until pids=$(pidof midtown.exe)
+do   
+    sleep 1
+done
+
+# Cuando "midtown.exe" haya sido iniciado
+# Cambiar la resolucion de la tty6 en 640x480
+
+for pid in $pids
+do        
+    DISPLAY=:1 /usr/bin/xrandr -s 640x480
+done
+

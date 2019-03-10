@@ -1,0 +1,141 @@
+#!/bin/sh
+
+# Detectar si existen los directorios (Enlaces Simbolicos)
+# Deben estar en "$HOME/.local/share/mupen64plus/"
+# Deben ser : debugger , hires_texture , roms , save , screenshot , texture_dump
+
+# Explico :
+
+# debugger - Este directorio almacenar informacion de "debug"
+# El Emulador debe ser compilado con esta opcion explicitamente
+
+# hires_texture - Carga Texturas Externas para el juego Emulado
+# Se debe tener directorio con el mismo "NOMBRE INTERNO" del juego
+# Por Ejemplo : ZELDA MAJORA'S MASK , PAPER MARIO , SUPER MARIO 64 , Mario Kart 64
+
+# roms - Aqui deben estar los juegos para el emulador que se va a utilizar
+# En Formatos Soportados como : n64 , v64 , z64
+
+# save - Aqui se almacenan los juegos salvados tantos los de Cartucho
+# como los de Memoria (Controller Pak) , y Estados Salvados.
+
+# screenshot - Aqui se almacenan las Capturas de Pantalla hechas
+# al Presionar la Tecla F12
+
+# texture_dump - Aqui se almacenan las Texturas usadas por juegos
+# Actualmente solo el Complemento "Rice" soporta el "Enable Texture Dumping"
+# Que Al Ser activado , extraera las texturas usadas por el juego.
+
+# De Momento , no tengo ninguna Utilidad que permita configurar
+# Comodamente Los Controles del Emulador , para cada juego.
+
+# Detectar Directorios :
+cd "$HOME/.local/share/mupen64plus/"
+if [ -x debugger ]; then
+	echo ""
+	echo 'Detectado Directorio "debugger"'
+else
+	echo 'Debes crear el Directorio o hacer un Enlace Simbolico'
+	echo 'hacia la carpeta contenedora de la informacion de Debug'
+	echo ""
+fi
+
+if [ -x roms ]; then
+	echo 'Detectado Directorio "roms"'
+else
+	echo ""
+	echo 'Debes Crear El Direcotio ó'
+	echo 'hacer un Enlace Simbolico'
+	echo 'hacia la carpeta contenedora de Juegos'
+	echo 'de formatos Soportados como : n64 , v64 , z64'
+	echo ""
+exit 1
+fi
+
+if [ -x save ]; then
+	echo 'Detectado Directorio "save"'
+else
+	echo ""
+	echo 'Debes Crear El Direcotio ó'
+	echo 'hacer un Enlace Simbolico'
+	echo 'hacia la carpeta contenedora de Juegos Salvados'
+	echo ""
+exit 1
+fi
+
+if [ -x screenshot ]; then
+	echo 'Detectado Directorio "screenshot"'
+else
+	echo ""
+	echo 'Debes Crear El Direcotio ó'
+	echo 'hacer un Enlace Simbolico'
+	echo 'Para Capturar Pantalla'
+	echo ""
+fi
+
+if [ -x texture_dump ]; then
+	echo ""
+	echo 'Detectado Directorio "texture_dump"'
+	echo 'Se pueden extraer texturas de los juegos'
+	echo ""
+else
+	echo ""
+	echo 'Debes Crear El Direcotio ó'
+	echo 'hacer un Enlace Simbolico'
+	echo ""
+fi
+
+if [ -x hires_texture ]; then
+	echo ""
+	echo 'Detectado Directorio "hires_texture"'
+	echo 'Se pueden utilizar Texturas Externas'
+	echo ""
+else
+	echo ""
+	echo 'Debes Crear El Directorio ó'
+	echo 'hacer un EnlaceSimbolico'
+	echo "Para usar las Texturas Externas"
+	echo ""
+fi
+
+# Hacer Copia De Seguridad de la Configuracion
+# Actual de Mupen64Plus , Luego Copiar y Renombrar
+# Archivo de Configuracion Especifico para Juego Deseado
+
+#CONFIG01=`echo "$@" | sed 's/^[home//'$USERNAME'//.local//share//mupen64plus//roms//\t]*//'`
+
+CONFIG01="$( basename "$@" )"
+CONFIG02=`echo "$CONFIG01" | sed 's/[*.*].*//'`
+CONFIG03=$CONFIG02.cfg
+JUEGO="$( basename "$@" )"
+
+# Visualizar que contienen las variables
+# En el Entorno Grafico X11 :
+#xmessage -timeout 3 "$JUEGO"
+#xmessage -timeout 3 "$CONFIG01"
+#xmessage -timeout 3 "$CONFIG02"
+#xmessage -timeout 3 "$CONFIG03"
+
+cd "$HOME/.config/mupen64plus"
+if [ -e mupen64plus.cfg ]; then
+	cp -rf mupen64plus.cfg mupen64plus_ORIGINAL.cfg
+	cp -rf "$HOME/.config/mupen64plus/cfg/$CONFIG03" "$HOME/.config/mupen64plus/mupen64plus.cfg"
+	if [ -e mupen64plus_ORIGINAL.cfg ] || [ -e mupen64plus.cfg ]; then
+	echo "Configuracion Cargada con Exito"
+	fi
+fi
+
+# Iniciar el Emulador con la Configuracion
+# Pre-Establecida para el Juego :
+cd "$HOME/.local/share/mupen64plus/roms/"
+SDL_MOUSE_RELATIVE=0 SDL_VIDEO_X11_DGAMOUSE=0 SDL_GL_SWAP_CONTROL=1 mupen64plus "$JUEGO"
+clear
+	
+# Restaurar Configuracion Original
+echo ""
+cd "$HOME/.config/mupen64plus"
+	if [ -e mupen64plus_ORIGINAL.cfg ] || [ -e mupen64plus.cfg ]; then
+	rm -rf "mupen64plus.cfg"
+	mv "mupen64plus_ORIGINAL.cfg" "mupen64plus.cfg"
+	echo "Configuracion Original Restaurada"
+fi

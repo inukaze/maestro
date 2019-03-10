@@ -1,0 +1,1007 @@
+#!/bin/sh
+    #
+    # Author : Inukaze 
+    # Site : http://https://goo.gl/ij6WqW
+    # Date : 5/9/2011 ( Five / Octuber / 2011 )
+    # Source of this fix : http://teamouralis.es/viewtopic.php?f=78&t=6325
+    #
+    # This script is for Repair "UTF-8" / "Windows Encoded" Filenames 
+    # Special Characters , specialy used in Spanish Lang
+    #
+    # Distributed under the terms of GNU GPL version 2 or later
+    #
+    # Install in ~/.gnome2/nautilus-scripts or ~/Nautilus/scripts
+    # You need to be running Nautilus 1.0.3+ to use scripts.
+    
+    # When a directory is selected, go there. Otherwise go to current
+    # directory. and repair filenames in the current folder.
+
+    # Repair Special Thanks to "Swiss" user
+    # From Site : "http://stackoverflow.com/questions/7693188/bash-rename-part-of-filenames"
+    # To help to fix this Script 
+
+DIR=""$( cd -P "$( dirname "$" )" && pwd )""
+cd "$DIR"
+
+# Start Convert ISO_8859-1 TO UTF-8
+                        spanish_iso=`locale -m | grep ISO_8859-1,GL`
+                        if [ $spanish_iso = ISO_8859-1,GL ] ; then      
+                                if [ -e /usr/bin/convmv ]
+                                        then
+                                                # Repair Filenames Spanish from ISO-8859-1 to UTF-8 :
+                                                exec find . -name '?' | xargs convmv -r --notest -f cp850 -t UTF-8 .
+                                        else
+                                                xmessage 'You need install first "convmv" for correcly filename fix'            
+                                fi
+                        else
+                        xmessage 'You need install first Spanish Language Support'
+                        fi
+# End Convert ISO_8859-1 TO UTF-8
+
+spanish=`locale -a | grep es_ES.utf8`
+if [ $spanish = es_ES.utf8 ] ; then
+# Special Characters Filenames Fix
+# Based on Info from : 
+# http://es.tldp.org/COMO-INSFLUG/COMOs/Bash-Prog-Intro-COMO/Bash-Prog-Intro-COMO-12.html
+# http://manpages.ubuntu.com/manpages/natty/es/man7/iso_8859-1.7.html
+
+#Start - DECIMAL Values Name Fix
+expresion='&#00160;'
+sustituto=' '
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+expresion='&#00161;'
+sustituto='隆'
+                
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+expresion='&#00162;'
+sustituto='垄'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+expresion='&#00163;'
+sustituto='拢'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00164;'
+sustituto='陇'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00165;'
+sustituto='楼'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00166;'
+sustituto='娄'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00167;'
+sustituto='搂'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00168;'
+sustituto='篓'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00169;'
+sustituto='漏'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00170;'
+sustituto='陋'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00171;'
+sustituto='芦'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+expresion='&#00172;'
+sustituto='卢'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00173;'
+sustituto='  '
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00174;'
+sustituto='庐'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00175;'
+sustituto='炉'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00176;'
+sustituto='掳'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+expresion='&#00177;'
+sustituto='卤'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00178;'
+sustituto='虏'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+expresion='&#00179;'
+sustituto='鲁'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00180;'
+sustituto='麓'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00181;'
+sustituto='碌'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00182;'
+sustituto='露'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00183;'
+sustituto='路'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00184;'
+sustituto='赂'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+expresion='&#00185;'
+sustituto='鹿'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00186;'
+sustituto='潞'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00187;'
+sustituto='禄'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00188;'
+sustituto='录'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00189;'
+sustituto='陆'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00190;'
+sustituto='戮'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00191;'
+sustituto='驴'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00192;'
+sustituto='脌'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00193;'
+sustituto='脕'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00194;'
+sustituto='脗'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+
+expresion='&#00195;'
+sustituto='脙'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00196;'
+sustituto='脛'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00197;'
+sustituto='脜'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00198;'
+sustituto='脝'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00199;'
+sustituto='脟'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+expresion='&#00200;'
+sustituto='脠'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00201;'
+sustituto='脡'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00202;'
+sustituto='脢'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00203;'
+sustituto='脣'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00204;'
+sustituto='脤'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00205;'
+sustituto='脥'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00206;'
+sustituto='脦'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00207;'
+sustituto='脧'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00208;'
+sustituto='脨'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00209;'
+sustituto='脩'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00210;'
+sustituto='脪'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00211;'
+sustituto='脫'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00212;'
+sustituto='脭'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00213;'
+sustituto='脮'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00214;'
+sustituto='脰'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00215;'
+sustituto='脳'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00216;'
+sustituto='脴'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00217;'
+sustituto='脵'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00218;'
+sustituto='脷'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00219;'
+sustituto='脹'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00220;'
+sustituto='脺'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00221;'
+sustituto='脻'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00222;'
+sustituto='脼'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00223;'
+sustituto='脽'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00224;'
+sustituto='脿'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00225;'
+sustituto='谩'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00226;'
+sustituto='芒'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00227;'
+sustituto='茫'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00228;'
+sustituto='盲'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00229;'
+sustituto='氓'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00230;'
+sustituto='忙'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00231;'
+sustituto='莽'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+expresion='&#00232;'
+sustituto='猫'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00233;'
+sustituto='茅'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00234;'
+sustituto='锚'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00235;'
+sustituto='毛'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00236;'
+sustituto='矛'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00237;'
+sustituto='铆'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00238;'
+sustituto='卯'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00239;'
+sustituto='茂'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00240;'
+sustituto='冒'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00241;'
+sustituto='帽'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00242;'
+sustituto='貌'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+
+expresion='&#00243;'
+sustituto='贸'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+
+expresion='&#00244;'
+sustituto='么'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00245;'
+sustituto='玫'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00246;'
+sustituto='枚'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00247;'
+sustituto='梅'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00248;'
+sustituto='酶'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00249;'
+sustituto='霉'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00250;'
+sustituto='煤'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00251;'
+sustituto='没'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00252;'
+sustituto='眉'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00253;'
+sustituto='媒'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00254;'
+sustituto='镁'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+
+expresion='&#00255;'
+sustituto='每'
+                find . -maxdepth 1 -name "*${expresion}*" -print0 | while read -d $'\0' file
+                do
+                    orig="$file"
+                    dest=$(echo "$file" | sed -e "s/${expresion}/${sustituto}/")
+                    mv "$orig" "$dest"
+                done
+
+#End - DECIMAL Values Name Fix
+
+else
+        xmessage 'You need install first Spanish Language Support'
+fi

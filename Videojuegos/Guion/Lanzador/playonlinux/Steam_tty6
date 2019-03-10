@@ -1,0 +1,85 @@
+#!/usr/bin/env playonlinux-bash
+[ "$PLAYONLINUX" = "" ] && exit 0
+source "$PLAYONLINUX/lib/sources"
+
+# Notas para que esto funcione debes 
+# 1 - Iniciar sesion (o hacer que durante el arranque se autoinicie la session de tu usuario) en la tty6
+# 2 - Tener configurado el archivo "/etc/X11/Xwrapper.config" con el contenido :
+#     allowed_users=anybody
+
+# Inukaze -> http://https://goo.gl/ij6WqW
+# Obtener el Nombre del Nucleo
+Nucleo=$(uname -s)
+case "$Nucleo" in
+	Linux)		Nucleo="linux"						;;
+	FreeBSD)	Nucleo="freebsd"					;;
+	GNU/kFreeBSD)	Nucleo="freebsd"	c				;;
+	* ) echo "Tu Sistema Operativo -> NO ESTA SOPORTADO"			;;
+esac
+
+# Obtener la ARQUITECTURA
+ARQUITECTURA=$(uname -m)
+case "$ARQUITECTURA" in
+	x86)    ARQUITECTURA="x86"						;;
+	i?86)   ARQUITECTURA="x86"						;;
+	amd64)  ARQUITECTURA="amd64"						;;
+	x86_64) ARQUITECTURA="amd64"						;;
+	* ) echo    "Tú Arquitectura : '$ARQUITECTURA' : -> IT NOT SUPPORTED."	;;
+esac
+
+# Comprobrar que (No/)Existen los archivos y rutas, antes de proceder
+if test -d "$HOME/.PlayOnLinux/wineprefix/Steam"
+	then
+	echo
+			if test -f "$HOME/.PlayOnLinux//wineprefix/Steam/drive_c/./Program Files/Steam/Steam.exe"
+			then
+				echo "Encontrado ejecutable de Steam en el prefijo de Inukaze"
+			fi		
+	else
+		echo "Steam no esta instalado en el Prefijo de Inukaze"
+		xmessage -timeout 3 "Steam no esta instalado en el Prefijo de Inukaze"
+		exit 1
+fi
+
+if test -f "$HOME/.PlayOnLinux/wineprefix/Steam/playonlinux.cfg"
+	then
+	# Obtener la version de WINE y su arquitectura del Prefijo Steam dentro de PlayOnLinux ;
+	VERSION_WINE=$(cat "$HOME/.PlayOnLinux/wineprefix/Steam/playonlinux.cfg" | grep VERSION= | sed 's/VERSION=//g')
+	ARQUITECTURA_WINE=$(cat "$HOME/.PlayOnLinux/wineprefix/Steam/playonlinux.cfg" | grep ARCH= | sed 's/ARCH=//g')
+	else
+		echo "Steam no esta instalado en el Prefijo Predeterminado"
+		xmessage -timeout 3 "Steam no esta instalado en el Prefijo Predeterminado"
+		exit 1
+fi
+
+cd "$HOME/.PlayOnLinux//wineprefix/Steam/drive_c/./Program Files/Steam"
+
+# Configurar Variables de Entornos, Rutas e Iniciar Steam para Windows :
+PATH="$HOME/.PlayOnLinux/wine/$ARQUITECTURA-$ARQUITECTURA_WINE/$VERSION_WINE/bin:$PATH"
+export WINESERVER="$HOME/.PlayOnLinux/wine/$Nucleo-$ARQUITECTURA_WINE/$VERSION_WINE/bin/wineserver"
+export WINELOADER="$HOME/.PlayOnLinux/wine/$Nucleo-$ARQUITECTURA_WINE/$VERSION_WINE/bin/wine"
+export WINEDLLPATH="$HOME/.PlayOnLinux/wine/$Nucleo-$ARQUITECTURA_WINE/$VERSION_WINE/lib"
+export WINEPREFIX="$HOME/.PlayOnLinux/wineprefix/Steam"
+export WINEDEBUG="-all"
+exec xinit "$HOME/.PlayOnLinux/wine/$Nucleo-$ARQUITECTURA_WINE/$VERSION_WINE/bin/wine" "Steam.exe" "-no-dwrite -no-cef-sandbox" -- :1 vt6 -ac &
+
+# Esperar que "Steam" Inicie
+until pids=$(pidof Steam.exe)
+do   
+    sleep 1
+done
+
+# Cuando "Steam" haya sido iniciado
+# Cambiar la resolucion de la tty6 en 800x600
+
+for pid in $pids
+do        
+    DISPLAY=:1 /usr/bin/xrandr -s 800x600 -r 51
+done
+
+# NOTA agregar funcion
+# Para guardar la resolucion actual y esperar que se ejecute algun videojuego especifico
+# Esperar 7 segundos y cambiar la resolucion a la nativa minima recomendada del juego
+# Deus Ex -> 640x480
+# Plants Vs Zombies -> 800x600 (xrandr -s 800x600 -r 51)
+# Cuando finalice ese proceso en especifico, restaurar la resolucion

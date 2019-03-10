@@ -1,0 +1,141 @@
+#!/bin/sh
+#!/bin/bash
+#
+# Autor	:	Inukaze ( Venezuela )
+# Sitio		:	http://inukaze.wordpResolucions.com
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:
+#
+# Es para cambiar con mayor comodidad tu
+# Tema de Escritorio , me refiero a cambiar :
+#
+# Motor(es) / Controles / Botones
+# Cursores
+# Iconos
+# Fuentes
+# Papel Tapiz / Fondo de Pantalla
+#
+# Primero que nada guardando un respaldo
+# de tu tema actual en uso , en caso de que
+# no te guste , puedas restaurarlo comodamente
+#
+#
+
+# Detectar Escritorio en uso :
+DIR=(pwd)
+
+MATE=$(ps -A		        |	grep mate-session		|	awk '{print $4}')
+
+
+XFCE=$(ps -A			|	grep xfce-session		|	awk '{print $4}')
+XFCE4=$(ps -A			|	grep xfce4-session		|	awk '{print $4}')
+xfconf_query=$(whereis -B "/usr/sbin" "/usr/local/sbin" "/sbin" "/usr/bin" "/usr/local/bin" "/bin" -b xfconf-query | grep -i "xfconf-query" | cut -d " " -f02)
+
+# Guardar la Resolución En caso de querer Aplicar
+# un Fondo de Pantalla para para la resolución Actual
+# en caso de tener varios
+
+# Guardar - Resolución :
+echo `xrandr --current | grep current | awk '{print $8}'` >> Resolucion1
+echo `xrandr --current | grep current | awk '{print $10}'` >> Resolucion2
+cat Resolucion2 | sed -i 's/,//g' Resolucion2
+P1Resolucion=$(cat Resolucion1)
+P2Resolucion=$(cat Resolucion2)
+rm Resolucion1 Resolucion2
+echo "$P1Resolucion"'x'"$P2Resolucion" >> Resolucion
+Resolucion=$(cat Resolucion)
+rm Resolucion
+# Guardar - Resolución .
+
+
+
+if [ "$XFCE" = "xfce-session" ]; then
+# Si se detecta xfce-session en ejecucion
+# Primero determinar si "xfconf-query"
+# esta instalado
+#
+# Intentar guardar las variables actuales
+# de :
+#
+# Motor(es) / Controles / Botones / Tema GTK
+# Gestor de Ventanas : Si es Xfwm/4 , detectar el tema en uso.
+# Cursores
+# Iconos
+# Fuentes
+# Papel Tapiz / Fondo de Pantalla
+# Panel(es)
+
+
+# Averiguar :
+
+	# Motor(es) / Controles / Botones / Tema GTK
+	# Canal : xfsettings ; Propiedad 1 : /Net/ThemeName
+	xfconf-query -c xsettings -p /Net/ThemeName -l -v	
+
+# Gestor de Ventanas :
+	# Tema : Xfwm(4)
+	xfconf-query -c xfwm4 -p /general/theme -l -v
+
+
+# Cursores :	
+	# Tema de Cursor(es)
+	xfconf-query -c xsettings -p /Gtk/CursorThemeName -l -v
+	
+	# Tamaño de (el/los) Cursor(es)
+	xfconf-query -c xsettings -p /Gtk/CursorThemeSize -l -v
+
+# Iconos :
+	# Tema de Iconos Actual :
+	xfconf-query -c xsettings -p /Net/IconThemeName -l -v
+
+# Fuente :
+	# Nonbre de la Fuente + Tamaño de la Fuente
+	xfconf-query -c xsettings -p /Gtk/FontName -l -v
+
+# Papel Tapiz / Fondo de Pantalla
+	xfconf-query -c xfce4-desktop -p /backdrop/screen{0,1,2,3,4,5,6,7,8,9}/monitor{0,1,2,3,4,5,6,7,8,9}/image-path -l -v
+
+# Panel(es)
+# Todos del 1 al 9 
+#
+# $ xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9} -l -v
+
+	#1 - Opacidad del Panel :
+	# Canal : Panel ; Propiedad 1 : /panels/panel-1/background-alpha
+	xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/background-alpha
+
+	#2 - Estilo del Fondo del Panel
+	# Canal : Panel ; Propiedad 2 : /panels/panel-1/background-style
+	xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/background-style
+
+	#3 - Opacidad al tener el puntero del raton en el panel
+	# Canal : Panel ; Propiedad 3 : /panels/panel-1/enter-opacity
+	xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/enter-opacity
+
+	#4 - Opacidad al no tener el puntero del raton en el panel
+	# Canal : Panel ; Propiedad 4 : /panels/panel-?/leave-opacity
+	xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/leave-opacity
+	
+	#5 - longitud de [el/los] panel[es] 
+	# Canal : Panel ; Propiedad 5 : (/panels/panel-?/length)
+	xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/length
+	
+	#6 - Complementos "ids" ??? 
+	# Canal : Panel ; Propiedad 6 : (/panels/panel-?/plugin-ids)
+	xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/plugin-ids
+
+	#7 - Posicion de [el/los] panel[es]
+	# Canal : Panel ; Propiedad 7 : (/panels/panel-?/position)
+	xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/position
+
+	#8 - Bloqueado en su posicion
+	# Canal : Panel ; Propiedad 8 : (/panels/panel-?/position-locked)
+	xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/position-locked
+
+	#9 - Tamaños : 
+	# Canal : Panel ; Propiedad 9 : (/panels/panel-?/size)
+	xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/size -l -v
+
+fi

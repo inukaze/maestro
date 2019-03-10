@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+echo '
+Autor ----------------> Inukaze ( Venezuela )
+Sitio ----------------> https://goo.gl/ij6WqW
+Correo-E -------------> bloginukaze@gmail.com
+Licencia -------------> GPL 2
+
+******* Inicio : Acerca de este Script ********
+
+ Este Mini-Script es para poder Instalar
+ La ultima version disponible de Firefox ESR
+ en el idioma Español
+
+******** Fin : Acerca de este Script **********'
+# Mis Ideotas XD para este Script : 
+#
+# 1 - Crear Interfaces de Usuario, una para la terminal con "Dialog" y otra con "Zenity"
+# Usar parte del codigo de mi instalador grafico de ZezeniaOnline, Obviamente usando una funcion para detectar si
+# se ejecuta desde una terminal (preferir dialog) y en caso de que no, preferir la version de Zenity
+# en caso de que zenity no este instalado, mostrar un mensaje con "xmessage" acerca de las dependencias
+# que deben ser instaladas antes de usar este script
+#
+# 2 - Que el usuario decida si instalar en /opt/Navegador/Firefox/$Version o Reemplazar al de sistema
+# o en su defecto, que eliga en donde instalar el Navegador Manualmente dentro de su carpeta de usuario
+#
+# Voy a crear una funcion para detectar cada uno de los archivos que usa firefox, para que sean borrados
+# Si por ejemplo es a nivel de sistema, hacer los ajustes pertinentes.
+# Si por el contrario es en /opt, crear las entradas del Menú especificando la version
+# Tambien colocando el Enlace directo a "Perfiles"
+#
+# 3 - Que el usuario decida la Region de Español :
+# Argentina, Chile, España, Mexico
+#
+
+# Obtener el Nombre del Nucleo
+Nucleo=$(uname -s)
+case "$Nucleo" in
+	Linux)		Nucleo="linux"						;;
+	* ) echo "Tu Sistema Operativo -> NO ESTA SOPORTADO"			;;
+esac
+
+# Obtener la Arquitectura
+Arquitectura=$(uname -m)
+case "$Arquitectura" in
+	x86)    Arquitectura="i686"						;;
+	i?86)   Arquitectura="i686"						;;
+	amd64)  Arquitectura="x86_64"						;;
+	x86_64) Arquitectura="x86_64"						;;
+	* ) echo    "Tú Arquitectura : '$Arquitectura' : -> IT NOT SUPPORTED."	;;
+esac
+
+#1 = Determinar Ultima Version de Firefox ESR:
+UltimaVersion_ESR=$(curl -s https://ftp.mozilla.org/pub/firefox/releases/ | grep -Po ">[0-9][0-9].[0-9].[0-9]esr/<" | tail -1 | grep -Po "[0-9][0-9].[0-9].[0-9]esr")
+
+function Regiones()
+{
+Argentina=$(curl -s https://ftp.mozilla.org/pub/firefox/releases/$UltimaVersion_ESR/$Nucleo-$Arquitectura/| grep -Po ">es-AR/<" | grep -Po es-AR)
+Chile=$(curl -s https://ftp.mozilla.org/pub/firefox/releases/$UltimaVersion_ESR/$Nucleo-$Arquitectura/| grep -Po ">es-CL/<" | grep -Po es-CL)
+Espana=$(curl -s https://ftp.mozilla.org/pub/firefox/releases/$UltimaVersion_ESR/$Nucleo-$Arquitectura/| grep -Po ">es-ES/<" | grep -Po es-ES)
+Mexico=(curl -s https://ftp.mozilla.org/pub/firefox/releases/$UltimaVersion_ESR/$Nucleo-$Arquitectura/| grep -Po ">es-MX/<" | grep -Po es-MX)
+
+}
+
+#2 = Descargar esa version usando "wget -c <Localizador Uniforme de Recurso>"
+wget -c "https://ftp.mozilla.org/pub/firefox/releases/$UltimaVersion_ESR/$Nucleo-$Arquitectura/es-$Region/firefox-$UltimaVersion.tar.bz2"
+
+#3 = Crear Enlaces para el Menu y Actualizar menues :

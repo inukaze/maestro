@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+LC_ALL="ja_JP.UTF-8"
+export LC_ALL="ja_JP.UTF-8"
+VERSION="1.7.11"
+export VERSION="1.7.11"
+PATH="$HOME/.PlayOnLinux/wine/linux-x86/"$VERSION"/bin:$PATH"
+export PATH="$HOME/.PlayOnLinux/wine/linux-x86/"$VERSION"/bin:$PATH"
+WINESERVER="$HOME/.PlayOnLinux/wine/linux-x86/"$VERSION"/bin/wineserver"
+export WINESERVER="$HOME/.PlayOnLinux/wine/linux-x86/"$VERSION"/bin/wineserver"
+WINELOADER="$HOME/.PlayOnLinux/wine/linux-x86/"$VERSION"/bin/wine"
+export WINELOADER="$HOME/.PlayOnLinux/wine/linux-x86/"$VERSION"/bin/wine"
+WINEDLLPATH="$HOME/.PlayOnLinux/wine/linux-x86/"$VERSION"/lib"
+export WINEDLLPATH="$HOME/.PlayOnLinux/wine/linux-x86/"$VERSION"/lib"
+WINEPREFIX="$HOME/.PlayOnLinux/wineprefix/ReWrite"
+export WINEPREFIX="$HOME/.PlayOnLinux/wineprefix/ReWrite"
+WINEDEBUG=fps
+cd "$WINEPREFIX/drive_c/RewriteTE_Ver200"
+LC_ALL="ja_JP.UTF-8" wineboot
+LC_ALL="ja_JP.UTF-8" winecfg
+LC_ALL="ja_JP.UTF-8" wine StartData/SetMovie.exe #Seleciona -> MCI , y has clic en el boton izquierdo de la ventana
+LC_ALL="ja_JP.UTF-8" wine StartData/Start.exe

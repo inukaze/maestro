@@ -1,0 +1,251 @@
+#!/usr/bin/env bash
+# 
+# Autor	:	Inukaze ( From Venezuela )
+# Sitio		:	http://https://goo.gl/ij6WqW
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+# Este Script es para Solucionar problemas de Directx
+# Para el Software que esta Intentado Ejecutar
+# Como NATIVO de un SISTEMA QUE NO ES WINDOWS
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+RUTA_DEL_SOFTWARE="$RUTA"/wine/data/drive_c/software
+
+# Obtener el nombre del nucleo del sistema
+Nucleo=$(uname -s)
+
+if		[ $Nucleo = "Darwin" ]; then
+		Nucleo=mac
+elif		[ $Nucleo = "Linux" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "FreeBSD" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "OpenSolaris" ]; then
+		Nucleo=linux
+else
+		echo "Sistema Operativo NO SOPORTADO"
+fi
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if	       [ $Arquitectura = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+         elif [ $Arquitectura = "x86_64" ]; then
+			PATH="$PWD/wine/$Nucleo/x86_64/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86_64/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="64 Bits"
+	else
+		echo "Arquitectura NO SOPORTADA"
+fi
+# Determinando la arquitectura de la maquina
+
+# Muestra en la terminal La arquitectura &
+# La version especifica de Wine usada
+Version_De_Wine=$(wine --version)
+echo ""
+echo ""
+echo "Corriendo '$Version_De_Wine' en '$Nucleo' ( Maquina de '$Arquitectura' )"
+echo ""
+echo ""
+
+# Borrar Toda Configuracion Previa WINE:
+rm -rf "$RUTA/wine/data/drive_c/users"
+rm -rf "$RUTA/wine/data/drive_c/windows"
+rm -rf "$RUTA/wine/data/Program Files (x86)"
+rm -rf "$RUTA/wine/data/drive_c/Archivos de programa"
+rm -rf "$RUTA/wine/data/drive_c/Program Files (x86)"
+rm -rf "$RUTA/wine/data/drive_c/Program Files"
+rm -rf "$RUTA/wine/data/system.reg"
+rm -rf "$RUTA/wine/data/user.reg"
+rm -rf "$RUTA/wine/data/userdef.reg"
+rm -rf "$RUTA/wine/data/dosdevices"
+rm -rf "$RUTA/wine/data/.update-timestamp"
+rm -rf "$RUTA/wine/.DS_Store"
+rm -rf "$RUTA/wine/linux/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/bin/.DS_Store"
+rm -rf "$RUTA"/wine/data/cachedmetrics.\:0
+
+
+# Agregar ValoResolucion de Registro :
+mkdir -p "$RUTA"/wine/data/drive_c/windows/AppPatch
+cp "$RUTA"/arreglos/windows/system32/AcGenral.dll "$RUTA"/wine/data/drive_c/windows/AppPatch/
+regedit -s "$RUTA"/arreglos/software.reg
+
+# Copiar Archivos de DirectX (Son nativos de Windows XP)
+mkdir -p "$RUTA"/wine/data/drive_c/windows/system32
+cd "$RUTA"/arreglos/windows/system32
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/eax.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dmband.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dmime.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dmloader.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dmstyle.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dmsynth.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dmusic.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dinput.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dinput8.dll
+cp -rf *.* "$RUTA"/wine/data/drive_c/windows/system32
+
+# Agregar valoResolucion de DirectX al Registro
+echo "REGEDIT4" >> arreglos.reg
+echo "" >> arreglos.reg
+echo "[HKEY_CURRENT_USER\Software\Wine\DllOverrides]" >> arreglos.reg
+echo '"AcGenral.dll"="native"' >> arreglos.reg
+echo '"EZ3206.dll"="native"' >> arreglos.reg
+echo '"gdi32.dll"="native"' >> arreglos.reg
+echo '"glu32.dll"="native"' >> arreglos.reg
+echo '"midimap.dll"="native"' >> arreglos.reg
+echo '"msacm32.dll"="native"' >> arreglos.reg
+echo '"msacm32.drv"="native"' >> arreglos.reg
+echo '"opengl32.dll"="native"' >> arreglos.reg
+echo '"wdmaud.drv"="native"' >> arreglos.reg
+echo '"winmm.dll"="native"' >> arreglos.reg
+echo '"dmband"="native"' >> arreglos.reg
+echo '"dmime"="native"' >> arreglos.reg
+echo '"dmloader"="native"' >> arreglos.reg
+echo '"dmstyle"="native"' >> arreglos.reg
+echo '"dmsynth"="native"' >> arreglos.reg
+echo '"dmusic"="native"' >> arreglos.reg
+echo '"dinput.dll"="native"' >> arreglos.reg
+echo '"dinput8.dll"="native"' >> arreglos.reg
+echo '"d3dim.dll"="native"' >> arreglos.reg
+echo '"eax.dll"="native"' >> arreglos.reg
+##################################################
+regedit -s arreglos.reg
+rm arreglos.reg
+echo ""
+
+echo "Instalando Des/Codificador de Videos:"
+regsvr32 tm20dec.ax
+
+wine regedit -s "$RUTA"/arreglos/DirectX.reg
+wine regedit -s "$RUTA"/arreglos/"$Nucleo"_video.reg
+wine regedit -s "$RUTA"/arreglos/"$Nucleo"_sonido.reg
+
+# Detectar el Directorio "Escritorio"
+# Dentro del usuario actual
+
+cd $HOME
+if [ -e Desktop ]; then cd Desktop; DirectorioEscritorio=$HOME/Desktop; fi
+if [ -e Escritorio ]; then cd Escritorio; DirectorioEscritorio=$HOME/Escritorio; fi
+
+if [ ! -e $DirectorioEscritorio/Wine ]; then
+mkdir -p $DirectorioEscritorio/Wine
+cd $DirectorioEscritorio/Wine
+fi
+
+if [ -e $DirectorioEscritorio/Wine ]; then
+cd $DirectorioEscritorio/Wine
+fi
+
+# Escribir Los Archivos de "Enlace(s)"
+# Necesarios dentro de la Carpeta "$HOME/$DirectorioEscritorio/Wine"
+
+# Primero Borrar cualquier archivo Anterior
+# De Escritorio , para Evitar Conflictos y no crear archivos innecesarios.
+
+if [ -f "Final Fantasy 7.desktop" ]; then rm -rf "Final Fantasy 7.desktop"; fi
+touch "Final Fantasy 7.desktop"
+echo "#!/usr/bin/env xdg-open"  >> "Final Fantasy 7.desktop"
+echo "" >> "Final Fantasy 7.desktop"
+echo '[Desktop Entry]' >> "Final Fantasy 7.desktop"
+echo "Version=1.0" >> "Final Fantasy 7.desktop"
+echo "Type=Application" >> "Final Fantasy 7.desktop"
+echo "Terminal=false" >> "Final Fantasy 7.desktop"
+echo 'Exec=sh "'$RUTA'"/.Lanzar' >> "Final Fantasy 7.desktop"
+echo "Name=Final Fantasy 7" >> "Final Fantasy 7.desktop"
+echo "Icon=$RUTA/.ff7_002.png" >> "Final Fantasy 7.desktop"
+echo "Path=$RUTA" >> "Final Fantasy 7.desktop"
+echo "StartupNotify=true" >> "Final Fantasy 7.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Final Fantasy 7.desktop"
+
+if [ -f "Final Fantasy 7 - Configurador.desktop" ]; then rm -rf "Final Fantasy 7 - Configurador.desktop"; fi
+touch "Final Fantasy 7 - Configurador.desktop"
+echo "#!/usr/bin/env xdg-open"  >> "Final Fantasy 7 - Configurador.desktop"
+echo "" >> "Final Fantasy 7 - Configurador.desktop"
+echo '[Desktop Entry]' >> "Final Fantasy 7 - Configurador.desktop"
+echo "Version=1.0" >> "Final Fantasy 7 - Configurador.desktop"
+echo "Type=Application" >> "Final Fantasy 7 - Configurador.desktop"
+echo "Terminal=false" >> "Final Fantasy 7 - Configurador.desktop"
+echo 'Exec=sh "'$RUTA'"/.Lff7config' >> "Final Fantasy 7 - Configurador.desktop"
+echo "Name=Final Fantasy 7 - Configurador" >> "Final Fantasy 7 - Configurador.desktop"
+echo "Icon=$RUTA/.ff7config.png" >> "Final Fantasy 7 - Configurador.desktop"
+echo "Path=$RUTA" >> "Final Fantasy 7 - Configurador.desktop"
+echo "StartupNotify=true" >> "Final Fantasy 7 - Configurador.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Final Fantasy 7 - Configurador.desktop"
+
+# Marcar como de Confianza (Dar Permiso de Ejecucion):
+chmod a+x "Final Fantasy 7.desktop"
+chmod a+x "Final Fantasy 7 - Configurador.desktop"
+
+#xmessage -timeout 3 "Se Ha Configurado Exitosamente"

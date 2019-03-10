@@ -1,0 +1,53 @@
+#!/bin/sh
+
+# La Funcion de este Script es encontrar el directorio
+# Real donde se encuentra el programa
+
+# La Version Original es de :
+# 17 de Febrero del 2000 - Sam Lantinga, Loki Entertainment Software
+
+# Esta Version Ha sido Traducida por
+# Inukaze De Venezuela
+# Sitio : http://https://goo.gl/ij6WqW
+
+Encontrar_Ruta()
+{
+	ruta_completa="`echo $1 | grep /`"
+    if [ "$ruta_completa" = "" ]; then
+        oIFS="$IFS"
+        IFS=:
+        for path in $PATH
+        do if [ -x "$path/$1" ]; then
+               if [ "$path" = "" ]; then
+                   path="."
+               fi
+               ruta_completa="$path/$1"
+               break
+           fi
+        done
+        IFS="$oIFS"
+    fi
+    if [ "$ruta_completa" = "" ]; then
+        ruta_completa="$1"
+    fi
+
+    if [ -L "$ruta_completa" ]; then
+        ruta_completa=`ls -l "$ruta_completa" |sed -e 's/.* -> //' |sed -e 's/\*//'`
+    fi
+    dirname $ruta_completa
+}
+
+if [ "${RUTA_DEL_SOFTWARE}" = "" ]; then
+    RUTA_DEL_SOFTWARE="`Encontrar_Ruta $0`"
+fi
+
+LD_LIBRARY_PATH=.:${RUTA_DEL_SOFTWARE}:${LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH
+
+if [ -x "${RUTA_DEL_SOFTWARE}/.IniciarOpenSetup" ]
+then
+	cd "${RUTA_DEL_SOFTWARE}/"
+	exec "./.IniciarOpenSetup" $*
+fi
+echo "No Puedo ejecutar este Software. Esta bien escrito el Script de Inicio?"
+exit 1

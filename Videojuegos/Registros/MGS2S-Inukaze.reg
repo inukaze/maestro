@@ -1,0 +1,34 @@
+REGEDIT4
+
+[HKEY_CURRENT_USER\Software\KONAMI\MGS2S]
+"InstallDir"="C:\\Program Files\\KONAMI\\MetalGearSolid2 Substance"
+"SrcDrive"="Z:\\media\\inukaze\\MGS2"
+
+[HKEY_LOCAL_MACHINE\Software\KONAMI\MetalGearSolid2 Substance\1.00.000]
+
+; Inukaze arreglos para wine
+; Para poder iniciar el juego :
+[HKEY_CURRENT_USER\Software\Wine\DllOverrides]
+"*devenum"="native"
+"*dmband"="native"
+"*dmcompos"="native"
+"*dmime"="native"
+"*dmloader"="native"
+"*dmscript"="native"
+"*dmstyle"="native"
+"*dmsynth"="native"
+"*dmusic"="native"
+"*dmusic32"="native"
+"*dswave"="native"
+"*streamci"="native"
+"*quartz"="native"
+"*dsdmo"="native"
+"*dsound"="native"
+"*msdmo"="native"
+"*msadp32.acm"="native"
+
+; En caso de usar alguna herramienta como redshift
+; Establecer esta propiedad para que no desactive
+; el enrojecimiento de la pantalla del programa.
+[HKEY_CURRENT_USER\Software\Wine\X11 Driver]
+"UseXVidMode"="N"

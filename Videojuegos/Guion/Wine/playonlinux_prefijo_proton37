@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+PATH="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/bin:$PATH"
+export WINESERVER="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/bin/wineserver"
+export WINELOADER="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/bin/wine"
+export WINEDLLPATH="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/lib"
+export WINEPREFIX="$HOME/.local/share/Steam/steamapps/common/Proton 3.7/dist/share/default_pfx"
+export WINEDEBUG=fps
+export WINEARCH=win32
+cd "$HOME/"
+winecfg

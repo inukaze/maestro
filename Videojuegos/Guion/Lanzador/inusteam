@@ -1,0 +1,342 @@
+#!/usr/bin/env bash
+
+echo '
+Autor ----------------> Inukaze ( Venezuela )
+Sitio ----------------> https://goo.gl/ij6WqW
+Correo-E -------------> bloginukaze@gmail.com
+Licencia -------------> GPL 2
+
+******* Inicio : Acerca de este Script ********
+
+ Este Mini-Script es para poder iniciar Steam
+ Para Windows, desde un Navegador Web Nativo
+ para Liñux.
+  
+ La idea y la funcion es para facilitar la 
+ Instalación de varios Videojuegos que no
+ poseen una version nativa para Liñux
+  
+ Iniciando el Steam que tengas en el prefijo
+ "Steam" dentro de "PlayOnLinux" e iniciando
+ y encolando la descarga de (los) titulo(s)
+ que hayas hecho clic en el navegador
+
+******** Fin : Acerca de este Script **********
+'
+
+# Obtener el Nombre del Nucleo
+Nucleo=$(uname -s)
+case "$Nucleo" in
+	Linux)		Nucleo="linux"						;;
+	FreeBSD)	Nucleo="freebsd"					;;
+	GNU/kFreeBSD)	Nucleo="freebsd"					;;
+	* ) echo "Tu Sistema Operativo -> NO ESTA SOPORTADO"			;;
+esac
+
+        # Correcion para Steam para que me deje de dar errores como :
+        # Could not find required OpenGL entry point :
+        # 'glColorMaskIndexedEXT'
+        # 'GLGetError'!
+        # 'glUseProgramStages'!
+        #
+        export PATH="/media/Compartido/Videojuegos/Gestor/Linux/Steam/Slackware64/home/bin/":$PATH
+        export GAME_DEBUGGER="hl2debug"
+	hl2debug
+
+# Obtener la ARQUITECTURA
+ARQUITECTURA=$(uname -m)
+case "$ARQUITECTURA" in
+	x86)    ARQUITECTURA="x86"						;;
+	i?86)   ARQUITECTURA="x86"						;;
+	amd64)  ARQUITECTURA="amd64"						;;
+	x86_64) ARQUITECTURA="amd64"						;;
+	* ) echo    "Tú Arquitectura : '$ARQUITECTURA' : -> IT NOT SUPPORTED."	;;
+esac
+
+# Comprobrar que (No/)Existen los archivos y rutas, antes de proceder
+if test -d "$HOME/.PlayOnLinux/wineprefix/Steam"
+	then
+	echo
+			if test -f "$HOME/.PlayOnLinux/wineprefix/Steam/drive_c/Program Files/Steam/steam.exe"
+			then
+				echo "Encontrado ejecutable de Steam en el prefijo predeterminado"
+			fi
+			
+			if test -d "$HOME/.PlayOnLinux/wineprefix/Steam/drive_c/Program Files/Steam/steamapps/common"
+			then
+				echo "Encontrada Carpeta Comun de Steam" ; echo
+			fi
+	else
+		echo "Steam no esta instalado en el Prefijo Predeterminado"
+		xmessage -timeout 3 "Steam no esta instalado en el Prefijo Predeterminado"
+		exit 1
+fi
+
+if test -f "$HOME/.PlayOnLinux/wineprefix/Steam/playonlinux.cfg"
+	then
+	# Obtener la version de WINE y su arquitectura del Prefijo Steam dentro de PlayOnLinux ;
+	VERSION_WINE=$(cat "$HOME/.PlayOnLinux/wineprefix/Steam/playonlinux.cfg" | grep VERSION= | sed 's/VERSION=//g')
+	ARQUITECTURA_WINE=$(cat "$HOME/.PlayOnLinux/wineprefix/Steam/playonlinux.cfg" | grep ARCH= | sed 's/ARCH=//g')
+	else
+		echo "Steam no esta instalado en el Prefijo Predeterminado"
+		xmessage -timeout 3 "Steam no esta instalado en el Prefijo Predeterminado"
+		exit 1
+fi
+
+function SteamWINePol(){
+# Configurar Variables de Entornos, Rutas e Iniciar Steam para Windows :
+PATH="$HOME/.PlayOnLinux/wine/$ARQUITECTURA-$ARQUITECTURA_WINE/$VERSION_WINE/bin:$PATH"
+export WINESERVER="$HOME/.PlayOnLinux/wine/$Nucleo-$ARQUITECTURA_WINE/$VERSION_WINE/bin/wineserver"
+export WINELOADER="$HOME/.PlayOnLinux/wine/$Nucleo-$ARQUITECTURA_WINE/$VERSION_WINE/bin/wine"
+export WINEDLLPATH="$HOME/.PlayOnLinux/wine/$Nucleo-$ARQUITECTURA_WINE/$VERSION_WINE/lib"
+export WINEPREFIX="$HOME/.PlayOnLinux/wineprefix/Steam"
+export WINEDEBUG=-all
+cd "$HOME/.PlayOnLinux//wineprefix/Steam/drive_c/./Program Files/Steam"
+}
+
+function PlayOnLinux() {
+/usr/share/playonlinux/playonlinux --run "Steam" %u "$@"
+}
+
+# Todos estos juegos han sido probados con Wine Estable (Verifica http://www.winehq.com)
+# Lista de Videojuegos segun su IDentificador de APPlicacion en STEAM :
+STEAMID=( 
+#Explicación de Formato : 
+#    prt    = Protocolo
+#   <fun>   = Funcion
+#   <idv>   = Identificador de Videojuego
+#   GBD	    = Gigas Descargados
+#   GBO	    = Gigas Ocupados
+#
+#Formato :
+#"prt://<fun>/<idv>"		# Nombre del videojuego							|- Notas
+"steam://run/204360"		# Castle Crashers(TM)							|- PERFECTO!
+"steam://run/205230"		# Hell Yeah! Wrath of the Dead Rabbit					|- PERFECTO!
+"steam://run/205950"		# Jet Set Radio								|- PERFECTO! / Probablemente necesites intercambiar el nombre de ambos ejecutables
+"steam://run/215100"		# Ragnarok Online							|- PERFECTO!
+"steam://run/222900"		# Dead Island: Epidemic							|- PERFECTO! / La Pagina de la tienda ya no existe
+"steam://run/224220"		# Pressure								|- PERFECTO!
+"steam://run/235720"		# Cubetractor								|- PERFECTO!
+"steam://run/253900"		# Knights and Merchants							|- PERFECTO!
+"steam://run/254060"		# KnightShift								|- PERFECTO!
+"steam://run/254100"		# World War II: Panzer Claws						|- PERFECTO!
+"steam://run/258200"		# Talisman: Prologue							|- PERFECTO!
+"steam://install/260410"	# Get Off My Lawn							|- PERFECTO! / Tiene SteamLogros
+"steam://run/260410/"		# Get Off My Lawn							|- PERFECTO! / Tiene SteamLogros
+"steam://run/263540"		# Villagers and Heroes (2GB DD)						|- PERFECTO! / Prefiero Ryzom"
+"steam://run/267920"		# Gun Metal								|- PERFECTO!
+"steam://run/267980"		# Hostile Waters: Antaeus Rising					|- PERFECTO!
+"steam://run/271640"		# Humanity Asset							|- PERFECTO!
+"steam://run/278490"		# Aveyond 3-2: Gates of Night						|- PERFECTO!
+"steam://run/283330"		# Desert Thunder							|- PERFECTO!
+"steam://run/283410"		# CT Special Forces: Fire for Effect					|- PERFECTO!
+"steam://run/284950"		# Pixel Puzzles: Japan							|- PERFECTO!
+"steam://run/285840"		# Enemy Mind								|- PERFECTO!
+"steam://run/292380"		# Racer 8								|- PERFECTO!
+"steam://run/292390"		# Realms Of The Hauting							|- PERFECTO! / Es emulado a traves de DOSBox
+"steam://run/296910"		# 8BitBoy TM								|- PERFECTO!
+"steam://run/307350"		# Nux									|- PERFECTO!
+"steam://run/310450"		# Steam & Steel : Episode 1						|- PERFECTO!
+"steam://run/311480"		# Vertical Drop Heroes HD						|- PERFECTO!
+"steam://run/315330"		# All Guns-On-Deck							|- PERFECTO!
+"steam://run/315430"		# Polarity								|- PERFECTO!
+"steam://run/323630"		# Ubinota								|- PERFECTO!
+"steam://run/329110"		# Gems of War - Puzzle RPG						|- PERFECTO!
+"steam://run/330000"		# Kingdoms CCG"								|- PERFECTO! / REQUIERE CONEXION A INTERNET
+"steam://run/331710"		# Why So Evil								|- PERFECTO!
+"steam://run/335240"		# Transformice								|- PERFECTO! / Tiene SteamLogros
+"steam://run/340540"		# TDP4Team Battle							|- PERFECTO! / INSTALA "ADOBE AIR" | SI ES NECESARIO ACTUALIZARLO / REQUIERE UNA BUENA CONEXION A INTERNET / Prefiero TeeWorlds
+"steam://run/343360"		# Particula								|- PERFECTO!
+"steam://run/344130"		# Cataegis : The White Wind						|- PERFECTO!
+"steam://run/347560"		# Terra Incognita ~ Chapter One: The Descendant				|- PERFECTO!
+"steam://run/351470"		# Sometimes: Success Requires Sacrifice					|- PERFECTO!
+"steam://run/356370"		# Soccer Manager 2015							|- PERFECTO! / PARECE QUE TE LLEVARA A LA ULTIMA VERSION DISPONIBLE DEL JUEGO
+"steam://run/3590"		# Plants -VS- Zombies GOTY						|- PERFECTO!
+"steam://run/363970"		# Clicker Heroes							|- PERFECTO!
+"steam://run/37400"		# Time Gentlemen, Please!						|-
+"steam://run/37420"		# Ben There, Dan That!							|- 
+"steam://run/385200"		# Absconding Zatwor							|- PERFECTO!
+"steam://run/386640"		# Affected Zone Tactics							|- PERFECTO! / PARECE QUE TENGO HARDWARE INSUFICENTE - GLITCHES, AL CONFIGURARLO T DESACTIVAR VORTEX y SUAVISADO SE VE CORRECTAMENTE ; PERO ME SIGUE FLUYENDO MUY LENTO / PREFIERO : ARMA TACTICS
+"steam://run/392950"		# Lost Lands: A Hidden Object Adventure					|- PERFECTO!
+"steam://run/395170"		# DISTRAINT / Deluxe Edition						|- PERFECTO!
+"steam://run/395980"		# Break Into Zatwor							|- PERFECTO!
+"steam://run/416450"		# Emporea Realms of War and Magic					|- PERFECTO!
+"steam://run/428430"		# Endorlight								|- PERFECTO!
+"steam://run/429680"		# Spellweaver								|- PERFECTO! / En mi pc es extremadamente lento porque tengo solo 128MB de GPU
+"steam://run/435030"		# Lost Lands: Mahjong							|- PERFECTO! / Es el mismo juego que Lost Lands A Hidden Object Adventure pero en lugar encontrar objetos la mecanica es jugar Mahjong
+"steam://run/436160"		# The Panic Room							|- PERFECTO! / REQUIERE MINIMO : Flash Player 19 (Puedes instalar el FlashPlayer NPAPI para Firefox para poder jugar)
+"steam://run/438040"		# Shakes and Fidget							|- PERFECTO!
+"steam://run/447880"		# Beast Blaster								|- PERFECTO!
+"steam://run/463060"		# Clover Tale								|- PERFECTO!
+"steam://run/4720"		# Condemned: Criminal Origins						|- PERFECTO!
+"steam://run/510630"		# Soccer Manager 2017							|- FUNCIONA
+"steam://run/517320"		# GunGirl2								|- PERFECTO!
+"steam://run/531200"		# Beneath The Cherry Trees"						|- PERFECTO! / NO ME GUSTAN LAS NOVELAS VISUALES
+"steam://run/545240"		# Lost_Sector_Online_Europe"						|- AUN NO DISPONIBLE | AUN NO HA SIDO PROBADO TODAVIA
+"steam://run/553030"		# Tiles & Tales								|- FUNCIONA
+"steam://run/579010"		# goalunited PRO : football manager for experts				|- PERFECTO!
+"steam://run/600750"		# Star Trek Timelines"							|- #NO DISPONIBLE POR AHORA	|- AUN NO DISPONIBLE | AUN NO HA SIDO PROBADO TODAVIA
+"steam://run/6850"		# Hitman 2: Silent Assassin						|- PERFECTO!
+"steam://run/7510"		# X-Blades								|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+"steam://run/7520"		# Two Worls II								|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+"steam://run/99910"		# Puzzle Pirates							|- PERFECTO!
+"steam://install/15700"		# Oddworld Abe's Oddysey						|- PERFECTO!
+"steam://run/15700/"		# Oddworld Abe's Oddysey						|- PERFECTO!
+"steam://run/446270"		# UnnyWorld								|- Pantalla Negra Completamente. No se escucha absolutamente nada
+"steam://install/38400"		# Fallout								|- PERFECTO!
+"steam://run/38400"		# Fallout								|- PERFECTO!
+"steam://run/3910"		# Sid Meier's Civilization® III Complete				|- PERFECTO!
+"steam://run/6910"		# Deus Ex GOTY Edition							|- PERFECTO!
+"steam://run/563560"		# Alien Swarm: Reactive Drop						|- PERFECTO!
+"steam://run/601510"		# Yu-Gi-Oh! Duel Links (Req : 64 Bits)					|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+"steam://install/209670"	# Cortex Command (65.3 MBD)						|- PERFECTO!
+"steam://run/209670/"		# Cortex Command (107 MBO)						|- PERFECTO!
+"steam://run/467380"		# Khimera: Destroy All Monster Girls					|- NO Captura el Teclado a la primera. se debe minimizar, hacer clic secundario mover la ventana a una area visible del escritorio, hacer clic primario, luego presionar A para activarlo
+"steam://run/513780"		# Turbo Pug DX								|- PERFECTO!
+"steam://install/13250"		# Unreal Gold								|- PERFECTO!
+"steam://run/13250"		# Unreal Gold								|- PERFECTO!
+"steam://run/436180"		# Raiders of the Broken Planet						|- 
+"steam://install/611500"	# Quake Champions							|- ¿?
+"steam://run/611500"		# Quake Champions							|- ¿?
+"steam://run/845070"		# The Awesome Adventures of Captain Spirit				|-
+"steam://install/769920"	# Odysseus Kosmos and his Robot Quest					|-
+"steam://run/769920/"		# Odysseus Kosmos and his Robot Quest					|-
+"steam://install/222880"	# Insurgency								|-
+"steam://run/222880"		# Insurgency								|-
+"steam://install/696370"	# BROKE PROTOCOL: Online City RPG					|-
+"steam://run/696370"		# BROKE PROTOCOL: Online City RPG					|-
+"steam://install/304390"	# For Honor : Starter Edition						|-
+"steam://run/304390"		# For Honor : Starter Edition						|-
+"steam://install/3302"		# Bejeweled 2 Deluxe Demo						|-
+"steam://run/3302"		# Bejeweled 2 Deluxe Demo						|-
+"steam://run/305070"		# Fist Of Awesome							|- 
+#################################################################################################################################################################################################################################################################################
+#################################################################################################################################################################################################################################################################################
+#################################################################################################################################################################################################################################################################################
+# Otros :
+#"steam://run/253920"		# Gorky 17								|- Usa su propia version de Wine"
+#"steam://run/253940"		# Septerra Core								|- Usa su propia version de Wine"
+"steam://run/253980"		# Enclave								|- Usa su propia version de Wine"
+"steam://run/48000"		# LIMBO									|- Ya esta Portado a Liñux" / La version con Wine podria requerir arreglos.
+
+#################################################################################################################################################################################################################################################################################
+#################################################################################################################################################################################################################################################################################
+#################################################################################################################################################################################################################################################################################
+#################################################################################################################################################################################################################################################################################
+#"steam://run/102700"		# Alliance of Valiant Arms (4.4 GBD / 10GBO)				|- USA UN LANZADOR y NO INICIA | Finaliza Abruptamente"
+#"steam://run/17580"		# Dystopia (MOD : Half-Life 2)						|- AUN NO HA SIDO PROBADO TODAVIA"
+#"steam://run/200710"		# TorchLight II								|- Ya esta Portado a Liñux"
+#"steam://run/206210"		# Gotham City Impostors Free to Play					|- AUN NO HA SIDO PROBADO TODAVIA"
+#"steam://run/206500"		# AirMech								|- No me detecta el Pixel Shader correctamente"
+#"steam://run/208090"		# Loadout								|- AUN NO HA SIDO PROBADO TODAVIA"
+#"steam://run/218310"		# Frontline Tactics							|- PARTIDA PERFECTO! / FALLA AL SALIR"
+#"steam://run/22000"		# World Of Goo								|- PERFECTO! / Ya esta Portado a Liñux"
+#"steam://run/224220"		# Pressure								|- NO INCIIA -> Finaliza abruptamente"
+#"steam://run/238910"		# Bionic Dues								|- Ya portado a Liñux"
+#"steam://run/251450"		# Heroes of Havoc Idle Adventures					|- TENGO INSUFICENTE HARDWARE / TEXTO ILEGIBLE"
+#"steam://run/253490"		# CABAL Online (5GB DD)							|- EL ACTUALIZADOR COMPLETA y luego falla . ejecuta CabalMain.exe directamente mientras el actualizador esta abierto para que este pueda empezar a descargar el resto de los archivos"
+#"steam://run/254000"		# East India Company Gold						|- PERFECTO! / La Pagina de la tienda ya no existe"
+#"steam://run/254020"		# Commander : Conquest Of the Americas Gold				|- La Pagina de la tienda ya no existe"
+#"steam://run/254040"		# Pirates Of Black Cove Gold						|- PERFECTO! / La Pagina de la tienda ya no existe"
+#"steam://run/259280"		# Earth 2150 : The Moon Project						|- La Pagina de la tienda ya no existe"
+#"steam://run/259300"		# Earth 2150 : Lost Souls						|- La Pagina de la tienda ya no existe"
+#"steam://run/259320"		# Heli Heroes								|- Menú Invisible"
+#"steam://run/259360"		# Chicken Shoot 2							|- La Pagina de la tienda ya no existe"
+#"steam://run/267940"		# Glacier 3: The Meltdown						|- NO FUNCIONA CORRECTAMENTE"
+#"steam://run/273110"		# CounterStrike Nexon: Zombies						|- AUN NO HA SIDO PROBADO TODAVIA"
+#"steam://run/278460"		# SkyBorn								|- Ya esta Portado a Liñux"
+#"steam://run/292410"		# Street Racing Syndicate						|- No inicia, al parecer un problema con el codec mpeg-1"
+#"steam://run/305260"		# Battle Islands							|- Hecho en Unity ; No cumplo los requisitos todo se ve Rosado"
+#"steam://run/307070"		# Memories of a Vagabond						|- GAME.EXE Finaliza Abruptamente al iniciar"
+#"steam://run/319570"		# Heroes of SoulCraft : Arcade MOBA					|- DIALOGO : ERROR CRITICO CON LOS DISPOSITIVOS DE ENTRADA AL INTENTAR INICIAR"
+#"steam://run/331470"		# Everlasting Summer							|- Ya esta Portado a Liñux"
+#"steam://run/334030"		# Epic Arena								|- FUNCIONA BIEN HASTA QUE SE USAN CIERTAS CARTAS Y ENTONCES FINALIZA ABRUPTAMNTE"
+#"steam://run/336510"		# Anno Online								|- JAMAS CONECTA! Liñux : Requiere como Minimo el PepperFlash de Google Chrome (32 Bits) en /opt/google/chrome/PepperFlash (Archivos : manifest.json y libpepflashplayer.so) | Windows : PERFECTO! -> Requiere FLASH PLAYER NPAPI (Firefox) - FUNCIONA -> Debes cambiar en las opciones el Plugin de Google Chrome por Plugin Adobe Flash Player"
+#"steam://run/34270"		# SEGA MegaDrive & Genesis Classics					|- PERFECTO! / La Pagina de la tienda ya no existe"
+#"steam://run/354640		# The Settlers Online							|- PERFECTO! Liñux : Requiere como Minimo el PepperFlash de Google Chrome (32 Bits) en /opt/google/chrome/PepperFlash (Archivos : manifest.json y libpepflashplayer.so) | Windows : PERFECTO! -> Requiere FLASH PLAYER NPAPI (Firefox) - FUNCIONA -> Debes cambiar en las opciones el Plugin de Google Chrome por Plugin Adobe Flash Player"
+#"steam://run/382240"		# Blood Of Old (OLD VERSION)						|- La Pagina de la tienda ya no existe"
+#"steam://run/384030"		# Florensia (1.1GBD / 7GB GBO)						|- JAMAS CONECTA"
+#"steam://run/38740"		# EDGE									|- Ya esta Portado a Liñux"
+#"steam://run/389570"		# Mitos.is : The Game							|- Pantalla en Blanco"
+#"steam://run/395520"		# Missing Translation							|- Funciona pero no se si el juego se deba ver asi realmente | el ejecutable no finaliza correctamente debes matar manualmente nw.exe"
+#"steam://run/396420"		# The Spookening							|- NO INICIA"
+#"steam://run/407120"		# Soccer Manager 2016							|- NO INICIA"
+#"steam://run/410380"		# HEX Shards of Fate							|- Fatal ERROR in gc : GetThreadContext failed ; Terminacion Abrupta - Al colocar carta"
+#"steam://run/414490"		# Crashnauts								|- AUN NO DISPONIBLE | AUN NO HA SIDO PROBADO TODAVIA"
+#"steam://run/415270"		# Star Crusade CCG							|- Fatal ERROR in gc : GetThreadContext failed ; Terminacion Abrupta - Al colocar carta"
+#"steam://run/426560"		# Full_Tilt_Poker - FALTA BOTON JUGAR EN WEB				|- AUN NO DISPONIBLE | AUN NO HA SIDO PROBADO TODAVIA"
+#"steam://run/436150"		# Governor Of Poker 3							|- Pantalla Negra Completamente - Se escucha pero no se ve"
+#"steam://run/437900"		# Party Jousting							|- NO INICIA"
+#"steam://run/438600"		# Soccer_Manager							|- BIEN! / PARECE QUE TE LLEVARA A LA ULTIMA VERSION DISPONIBLE DEL JUEGO / Muestra un Dialogo de Error al Finalizar su ejecucion"
+#"steam://run/455020"		# Jackpot Poker by PokerStars						|- NO INCIA / Finaliza abruptamente"
+#"steam://run/466910"		# Worm.is : The Game							|- NO INICIA - Pantalla en Blanco"
+#"steam://run/47410"		# Stronghold Kingdoms							|- Al finalizar las actualizaciones, se abre otra ventana de actualizador indefinidamente"
+#"steam://run/486160"		# Berserk The Cataclysm							|- INICIA / NO REGISTRA / AUN NO PROBADO"
+#"steam://run/497640"		# Trick & Treat								|- NO FUNCIONA! Correctamente"
+#"steam://run/502550"		# Strike.is : The Game							|- NO INICIA - Pantalla en Blanco"
+#"steam://run/516510"		# Orake 2D MMORPG							|- NO INCIIA | INSTALA : Crystalshire Runtimes"
+#"steam://run/528740"		# Operation New Earth							|- NO INICIA"
+#"steam://run/531190"		# HEBEREKE!: March! Red Army Girls' Brigade				|- Game.exe Error de Finalizacion Abrupta"
+#"steam://run/562010"		# Tanki Online								|- MI GPU parace no procesar bien las graficas."
+#"steam://run/578310"		# BRAIN / OUT								|- Ya esta Portado a Liñux"
+#"steam://run/600410"		# HERO-E								|- Los controles no funcionan"
+#"steam://run/6370"		# Bloodline Champions							|- NO INICIA"
+#"steam://run/91200"		# Anomaly: Warzone Earth						|- Ya esta Portado a Liñux"
+#"steam://run/99900"		# Spiral Knights							|- Se puede ejecutar mediante el JAVA Nativo"
+#"steam://run/350810"		# Pixel Puzzles 2: Anime						|- El Teclado no responde -> No se puede iniciar el juego. En mi Hardware va extremadamente lento.
+#"steam://run/351030"		# Pixel Puzzles Ultimate						|- NO INICIA! -> Pantalla en negro
+#"steam://run/285010"		# Pixel Puzzles : UndeadZ						|- El Teclado no responde durante la partida : posiblemente requiera el arreglo de DINPUT.DLL y/o DINPUT8.DLL
+#"steam://run/236150"		# Starpoint Gemini 2							|- NO PROBADO! 
+#"steam://install/236150"	# Starpoint Gemini 2							|- NO PROBADO!
+#"steam://run/290730"		# My Lands: Black Gem Hunting						|- No se puede poner pantalla completa
+#"steam://run/393930"		# RoShamBo Arena"							|- NO INICIA
+#"steam://run/424780"		# Imperia Online							|- NO INICIA
+#"steam://run/452230"		# Spellstone								|- Al Salir indica un error
+#"steam://run/482920"		# Hero Zero								|- No se puede poner pantalla completa, tiene una version en Facebook
+#"steam://run/506140"		# Shop Heroes								|- Las fuentes no se ven correctamente
+#"steam://run/510660"		# Big Bang Empire							|- PERFECTO! / No se puede colocar en Pantalla Completa
+#"steam://run/542480"		# Therian Saga								|- Indica que no detecta SilverLight, Al parecer no hay textos si no detecta SilverLight y quien sabe que otras caracteristicas
+#"steam://run/573770"		# RED									|- Game.exe Tiende a cerrarse al avanzar de Fase
+#"steam://run/218640"		# Lucius								|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/454600"		# Age of Cavemen"							|- NO PROBADO! - PARECE QUE TENGO HARDWARE INSUFICIENTE | PANTALLA EN NEGRO PERO SE ESCUCHA
+#"steam://run/356310"		# METAL SLUG DEFENSE"							|- NO TENGO SUFICIENTE HARDWARE REQUIERE OPENGL 3.0 y MI OPENGL ES 2.1.2
+#"steam://run/312450"		# Order of Battle World War II"						|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'( / GLITCHES / USA "MONO"
+#"steam://run/562540"		# Cabals Card Blitz"							|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'( / GLITCHES!
+#"steam://run/345390"		# King's Quest								|- NO INICIA CON NINGUN WINE, PROBADO HASTA WINE 2.19 / 2.19-STAGING
+#"steam://run/319180"		# Platypus II								|- AUN NO FUNCIONA!
+#"steam://run/446150"		# GUNS'UP								|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/534820"		# Heroes Evolved							|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/57690"		# Tropico 4: Steam Special Edition					|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/267960"		# Hyper Fighters							|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/274900"		# Murder Miners								|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/279640"		# The Troma Project							|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/283350"		# Eurofighter Typhoon							|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/286440"		# Rover Rescue								|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/293180"		# Overcast - Walden and the Werewolf					|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/306350"		# Slipstream 5000							|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/321150"		# Melissa K. and the Heart of Gold C.E					|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/344040"		# Voxelized								|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/359800"		# Copa : Petrobras de Marcas						|- NO INICIA / gMotor 2 Error: "Error opening core shaders MAS file CORESHADERS.MAS | SOLUCION COPIA EL ARCHIVO DESDE "steamapps/common/Copa Petrobras de Marcas/Gamedata/Shared/coreshaders.mas" hacia "steamapps/common/Copa Petrobras de Marcas" e inicia el juego
+#"steam://run/382490"		# Relic Hunters Zero							|- PERFECTO! / Ya portado a Liñux
+#"steam://run/410560"		# Trinium Wars								|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/42500"		# DogFighter								|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/649900"		# Mini Guns								|- PANTALLA NEGRA, SOLO SE ESCUCHA, NADA HACE.
+#"steam://run/314450"		# Star Saviors								|- NO INICIA
+#"steam://run/265590"		# The Red Solstice							|- NO INICIA Falla la instalacion de Dependencias, ademas al parecer no cumplo los requisitos.
+#"steam://install/270550"	# Yet Another Zombie Defense						|- No termina de instalar la segunda dependencia / No Inicia
+#"steam://run/270550"		# Yet Another Zombie Defense						|- No termina de instalar la segunda dependencia / No Inicia
+#"steam://install/439190"	# Stories: The Path of Destinies					|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/439190"		# Stories: The Path of Destinies					|- NO CUMPLO LOS REQUISITOS O NO FUNCIONA :'(
+#"steam://run/921060"		# Modern Combat 5							|- NO INICIA
+#"steam://run/931650"		# Braveland Heroes							|- NO INICIA
+)
+
+# 1 ) En caso de que el parametro posea algun IDENTIFICADOR PARA STEAM de la lista
+# Iniciar el Steam Nativo para Windows desde PlayOnLinux :
+    if [[ "${STEAMID[@]}" =~ "$@" ]]; then
+           $(PlayOnLinux -no-dwrite -no-cef-sandbox "$@")
+    else
+# 2 ) En caso de que el parametro no pase ningun IDentificador de la lista
+# Iniciar el Steam Nativo para Liñux :
+           $(steam "$@")
+    fi

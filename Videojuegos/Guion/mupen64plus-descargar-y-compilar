@@ -1,0 +1,150 @@
+#!/usr/bin/env bash
+
+mkdir -p /tmp/src/mupen64plus
+cd /tmp/src/mupen64plus
+CARPETA="/tmp/src/mupen64plus"
+git clone https://github.com/mupen64plus/mupen64plus-core
+git clone https://github.com/mupen64plus/mupen64plus-video-rice
+git clone https://github.com/mupen64plus/mupen64plus-rsp-cxd4
+git clone https://github.com/mupen64plus/mupen64plus-input-sdl
+git clone https://github.com/mupen64plus/mupen64plus-audio-sdl
+git clone https://github.com/mupen64plus/mupen64plus-video-z64
+git clone https://github.com/mupen64plus/mupen64plus-ui-console
+git clone https://github.com/mupen64plus/mupen64plus-video-glide64mk2
+git clone https://github.com/mupen64plus/mupen64plus-rsp-hle
+git clone https://github.com/mupen64plus/mupen64plus-video-glide64
+git clone https://github.com/mupen64plus/mupen64plus-video-arachnoid
+git clone https://github.com/mupen64plus/mupen64plus-rsp-z64
+git clone https://github.com/mupen64plus/mupen64plus-ui-python
+git clone https://github.com/mupen64plus/mupen64plus-rom
+
+# Exporting Paths for each part : you must install "cpuid" on your distro, to use "native" flag.
+# Exportando las "Rutas" para cada parte
+# Necesitaras tener instalada en tu distro la herramienta "cpuid"
+# Para poder utilizar las "banderas" (flags) de optimizacion correspondientes a tu procesador.
+
+
+# Optimizaciones
+export {C,CXX}FLAGS='-O3 -march=native -mtune=native'
+export OPTFLAGS='-O3 -march=native -mtune=native'
+
+# Cosas :
+export DEBUG=1 # Simbolos de depuracion
+export V=1 # Salida Verbosa
+export PIC=1 # Codigo de Posicion Independiente 
+export HLEVIDEO=1 # RSP Z64 & CXD4 : Mover emulacion de tareas graficas al complemento de video HLE
+
+# Para el Nucleo :
+export TARGETDIR="/media/Compartido/Videojuegos/Emuladores/Nintendo64/mupen64plus"
+export PREFIX="$TARGETDIR"
+export SHAREDIR="$TARGETDIR/share/"
+export LIBDIR="$TARGETDIR/lib/"
+export INCDIR="$TARGETDIR/include/"
+
+# Para Los Complementos :
+export PREFIX="$TARGETDIR"
+export LIBDIR="$TARGETDIR/lib/"
+export PLUGINDIR="$TARGETDIR/plugin/"
+
+
+# Para la Interfaz de Consola :
+export COREDIR="$TARGETDIR/lib/"
+export APIDIR="$TARGETDIR/include/"
+export BINDIR="$TARGETDIR"
+export MANDIR="$TARGETDIR/share/"
+export APPSDIR="$TARGETDIR"
+export ICONSDIR="$TARGETDIR/share/icons/"
+
+#001 El Nucleo :
+cd "$CARPETA"
+cd mupen64plus-core/projects/unix
+make clean
+make  all
+make install
+
+#002 Complemento RSP - HLE :
+cd "$CARPETA"
+cd mupen64plus-rsp-hle/project/unix
+make clean
+make all
+make install
+
+#003 Complemento RSP - z64 :
+cd "$CARPETA"
+cd mupen64plus-rsp-z64/project/unix
+make clean
+make all
+make install
+
+#004 Complemento RSP - cxd4
+cd "$CARPETA"
+cd mupen64plus-rsp-cxd4/project/unix
+make clean
+make all
+make install
+
+#005 Complemento de Audio - SDL
+cd "$CARPETA"
+cd mupen64plus-audio-sdl/projects/unix
+make clean
+make all
+make install
+
+#006 Complemento de Entrada - SDL
+cd "$CARPETA"
+cd mupen64plus-input-sdl/projects/unix
+make clean
+make all
+make install
+
+#007 Complemento de Video - Arachnoid
+cd "$CARPETA"
+cd mupen64plus-video-arachnoid/projects/unix
+make clean
+make all
+make install
+
+#008 Complemento de Video - Glide64
+cd "$CARPETA"
+cd mupen64plus-video-glide64/projects/unix
+make clean
+make all
+make install
+cd ../../..
+
+#009 Complemento de Video - Glide64mk2
+cd "$CARPETA"
+cd mupen64plus-video-glide64mk2/projects/unix
+make clean
+make all
+make install
+
+#010 Complemento de Video - Rice
+cd "$CARPETA"
+cd mupen64plus-video-rice/projects/unix
+make clean
+make all
+make install
+
+#011 Complemento de Video - z64
+cd "$CARPETA"
+cd mupen64plus-video-z64/projects/unix
+make clean
+make all
+make install
+
+#012 Consola de Interfaz :
+cd "$CARPETA"
+cd mupen64plus-ui-console/projects/unix/
+make clean
+make all
+make install
+
+#013 Interfaz Python :
+cd "$CARPETA"
+cd mupen64plus-ui-python
+sudo python setup.py install
+
+# Crear / Actualizar los enlaces necesarios para ser utilizados con la rutina
+# y el enlazador "ld.so" del sistema
+sudo ldconfig

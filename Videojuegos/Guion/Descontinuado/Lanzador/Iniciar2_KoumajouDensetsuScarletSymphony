@@ -1,0 +1,248 @@
+#!/bin/bash
+# 
+# Autor	:	Inukaze ( Venezuela )
+# Sitio		:	http://inukaze.wordpResolucions.com
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+
+# Obtener el nombre del nucleo del sistema
+Nucleo=$(uname -s)
+
+if		[ $Nucleo = "Darwin" ]; then
+		Nucleo=mac
+elif		[ $Nucleo = "Linux" ]; then
+		Nucleo=linux
+else
+		echo "Sistema Operativo NO SOPORTADO"
+fi
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if	       [ $Arquitectura = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+         elif [ $Arquitectura = "x86_64" ]; then
+			export WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="64 Bits"
+	else
+		echo "Arquitectura NO SOPORTADA"
+fi
+
+# Muestra en la terminal La arquitectura &" >> "$RUTA"/Iniciar
+# La version especifica de Wine usada" >> "$RUTA"/Iniciar
+wver=$(wine --version)
+echo ""
+echo ""
+echo "Corriendo $wver en $Nucleo ( Maquina de $Arquitectura )"
+echo ""
+echo ""
+
+# Matar a PulseAudio si esta en ejecucion
+#~½¬{paeudua=`ps -A		|	grep pulseaudio		|	awk '{print $4}'`
+#~½¬{if [ $paeudua = "pulseaudio" ]; then
+#~½¬{	killall -9 pulseaudio
+#~½¬{	echo `ps -A		|	grep pulseaudio		|	awk '{print $1}'` >> ID1
+#~½¬{	PID1=$(cat ID1)
+#~½¬{	rm -rf ID1
+#~½¬{	kill -s TERM $PID1
+#~½¬{	echo "PulseAudio Terminado"
+#~½¬{else
+#~½¬{	echo "PulseAudio no se esta ejecutando"
+#~½¬{fi
+
+# Guardar la Resolucion Actual :
+echo `xrandr --current | grep current | awk '{print $8}'` >> Resolucion1
+echo `xrandr --current | grep current | awk '{print $10}'` >> Resolucion2
+cat Resolucion2 | sed -i 's/,//g' Resolucion2
+P1Resolucion=$(cat Resolucion1)
+P2Resolucion=$(cat Resolucion2)
+rm Resolucion1 Resolucion2
+echo "$P1Resolucion"'x'"$P2Resolucion" >> Resolucion
+Resolucion=$(cat Resolucion)
+rm Resolucion
+# Resolucion Actual Guardada.
+
+# Detectar dentro del del Arquitecturaivo de configuracion
+# del Juego esta defino usar "Pantalla Completa"
+# o no. Si se usa a Pantalla Completa bajar
+# La Resolucion a 640x480 , Iniciar el software
+# Luego de finalizar , Resoluciontaurar la Resolucion
+clear && Resolucionet
+
+cd "$RUTA"/wine/data/drive_c/software
+if [ -f config.ini ]; then
+	echo "Detectado Arquitecturaivo de Configuracion"
+else
+	echo "Debes configurar el juego primero"
+fi
+
+idioma=$(cat -A "$RUTA"/wine/data/drive_c/software/config.ini | grep Language=  | sed 's/^[Language= \t]*//')
+dificultad=$(cat -A "$RUTA"/wine/data/drive_c/software/config.ini | grep Difficulty=  | sed 's/^[Difficulty= \t]*//')
+mdv=$(cat -A "$RUTA"/wine/data/drive_c/software/config.ini | grep FullScreen=  | sed 's/^[FullScreen= \t]*//')
+vsync=$(cat -A "$RUTA"/wine/data/drive_c/software/config.ini | grep vsync=  | sed 's/^[vsync= \t]*//')
+graficos=$(cat -A "$RUTA"/wine/data/drive_c/software/config.ini | grep Draw=  | sed 's/^[Draw= \t]*//')
+tvid=$(lspci -v -s `lspci | awk '/VGA/{print $1}'` | sed -n '/Memory.*, prefetchable/s/.*\[size=\([^]]\+\)M\]/\1/p')
+CEUJA=$(ps -A		|	grep compiz		|	awk '{print $4}')
+let "mvid"="$tvid"/2
+
+#############################################################################
+
+if [ "$graficos" = "0^M$" ]; then
+echo ""
+echo "Utilizando el CPU para la generacion de graficos"
+fi
+
+if [ "$graficos" = "1^M$" ]; then
+echo ""
+echo "Utilizando la tarjeta de video"
+echo "Para la generacion de Graficos"
+echo "Activo el Filtro BiLinear"
+echo ""
+fi
+
+#############################################################################
+
+if [ "$vsync" = "0^M$" ]; then
+echo "Vsync Desactivado"
+fi
+
+if [ "$vsync" = "1^M$" ]; then
+echo ""
+echo "Vsync Activo"
+echo "Si notas que el juego fluye lento ó extraño prueba a desactivarlo"
+echo "en la herramienta de configuracion del juego."
+echo ""
+fi
+
+#############################################################################
+
+if [ "$idioma" = "0^M$" ]; then
+echo "Idioma : Japonés"
+fi
+
+if [ "$idioma" = "1^M$" ]; then
+echo "Idioma : Ingles"
+fi
+
+if [ "$idioma" = "2^M$" ]; then
+echo "Idioma : Frances"
+fi
+
+#############################################################################
+
+if [ "$dificultad" = "0^M$" ]; then
+echo "Dificultad : Normal"
+fi
+
+if [ "$dificultad" = "1^M$" ]; then
+echo "Dificultad : Facil"
+fi
+
+if [ "$dificultad" = "2^M$" ]; then
+echo "Dificultad : Dificil"
+fi
+
+#############################################################################
+
+if [ "$mdv" = "0^M$" ]; then
+echo "REGEDIT4" >> "$RUTA"/video.reg
+echo "[HKEY_CURRENT_USER\Software\Wine\Direct3D]" >> "$RUTA"/video.reg
+echo '"DirectDrawRenderer"="opengl"' >> "$RUTA"/video.reg
+echo '"OffscreenRenderingMode"="fbo"' >> "$RUTA"/video.reg
+echo '"VideoMemorySize"'='"'"$mvid"'"' >> "$RUTA"/video.reg
+wine regedit -s "$RUTA"/video.reg
+rm "$RUTA"/video.reg
+	echo ""
+	echo "Detectado Modo Ventana"
+	echo ""
+	echo "Usado OpenGL para Motor Grafico"
+	echo 'Intentado usar "FrameBufferObjetcs"'
+	echo 'en caso de que la tarjeta de video lo soporte'
+	echo ""
+	wine "Koumajou.exe"	
+fi
+#############################################################################
+if [ "$mdv" = "1^M$" ]; then
+	echo "Modo Pantalla Completa"
+	echo ""
+		if [ "$CEUJA" = "compiz" ]; then
+		echo ""
+		echo "Detectado Compiz en ejecucion"
+		echo "El Juego se ejecutara en la Resolucion"
+		echo "640x480 para su correcto funcionamiento"
+		echo "Se cambia del Motor OpenGL a GDI"
+		echo "Tu Resolucion actual $Resolucion sera Restaurada"
+		echo "al Finalizar"
+			echo "REGEDIT4" >> "$RUTA"/video.reg
+			echo "[HKEY_CURRENT_USER\Software\Wine\Direct3D]" >> "$RUTA"/video.reg
+			echo '"DirectDrawRenderer"="gdi"' >> "$RUTA"/video.reg
+			echo '"OffscreenRenderingMode"="backbuffer"' >> "$RUTA"/video.reg
+			echo '"VideoMemorySize"'='"'"$mvid"'"' >> "$RUTA"/video.reg
+			wine regedit -s "$RUTA"/video.reg
+			rm "$RUTA"/video.reg
+		fi
+	echo "El Juego se ejecutara en la Resolucion"
+	echo "640x480 para su correcto funcionamiento"
+	echo "Tu Resolucion actual $Resolucion sera Restaurada al Finalizar"
+	`xrandr -s 640x480`
+	killall -9 unclutter
+	export SDL_MOUSE_RELATIVE=0
+	export SDL_VIDEO_X11_DGAMOUSE=0
+	wine "Koumajou.exe"
+	unclutter &
+	`xrandr -s $Resolucion`
+	echo ""
+fi

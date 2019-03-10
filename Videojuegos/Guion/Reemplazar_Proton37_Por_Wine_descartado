@@ -1,0 +1,3426 @@
+#!/usr/bin/env bash
+
+echo '
+Autor ----------------> Inukaze ( Venezuela )
+Sitio ----------------> https://goo.gl/ij6WqW
+Correo-E -------------> bloginukaze@gmail.com
+Licencia -------------> GPL 2
+
+******* Inicio : Acerca de este Script ********
+
+ Este Mini-Script es para poder iniciar clonar
+ La carpeta de "Proton 3.7" en la sub-carpeta
+ "Proton 3.7.original".
+ 
+ La cual sera utiliza luego de borrar el
+ contenido de la carpeta "Proton 3.7" y sera
+ reemplazado por la version de Wine de 32 Bits
+ que se encuentre dentro de la carpeta de
+ PlayOnLinux.
+ 
+ ---------------------------------------------
+ 
+ NOTA -> Proton 3.7-8 tiene una carpeta con 
+ librerias que aparentemente son 32 Bits pero
+ proton al parecer su prefijo predeterminado
+ es solo de 64 bits
+
+ NOTA -> Bejeweled3 de Proton al borrar el 
+ prefijo sigue leyendo datos de alguna parte.
+ Acabo de pensar que probablemente no sea del
+ prefijo dentro de compdata, si no otro.
+
+******** Fin : Acerca de este Script **********'
+
+WINEVPOL="1.9.21"
+ARQ="x86"
+ORIGEN="$HOME/.local/share/Steam/steamapps/common/Proton 3.7"
+DESTINO="$HOME/.local/share/Steam/steamapps/common/Proton 3.7.original"
+
+#Comprobar cada uno de los directorios y archivos en la carpeta de origen
+if [ -d "$ORIGEN" ]; then
+
+	#Comprobar que la ruta de destino NO! existe
+	if [ ! -d "$DESTINO" ]; then
+		mkdir -p "$DESTINO"
+		mkdir -p "$DESTINO/__pycache__"
+		mkdir -p "$DESTINO/dist/bin"
+		mkdir -p "$DESTINO/dist/lib/wine/dxvk"
+		mkdir -p "$DESTINO/dist/lib/wine/fakedlls"
+		mkdir -p "$DESTINO/dist/lib64/wine/dxvk"
+		mkdir -p "$DESTINO/dist/lib64/wine/fakedlls"
+		mkdir -p "$DESTINO/dist/share/wine/gecko"
+		mkdir -p "$DESTINO/dist/share/wine/fonts"
+		mkdir -p "$DESTINO/dist/share/default_pfx"
+		mkdir -p "$DESTINO/dist/share/applications"
+		else
+	        echo "Ya existen la carpeta de destino"
+	fi
+
+#Comprobar los archivos del directorio raiz
+"$ORIGEN"/dist.lock
+"$ORIGEN"/filelock.py
+"$ORIGEN"/LICENSE
+"$ORIGEN"/proton
+"$ORIGEN"/proton_3.7_tracked_files
+"$ORIGEN"/proton_dist.tar.gz
+"$ORIGEN"/toolmanifest.vdf
+"$ORIGEN"/user_settings.sample.py
+"$ORIGEN"/version
+
+#Comprobar que existen las carpetas necesarias en el directorio raiz
+if [ -d "$ORIGEN/__pycache__" ]; then
+    #Comprobar que existen los archivos que van dentro de esa carpeta
+	"$ORIGEN"/filelock.cpython-34.pyc
+	"$ORIGEN"/filelock.cpython-35.pyc
+fi
+
+RUTAORIGINAL="$ORIGEN/dist"  
+RUTAFINAL="$DESTINO/dist/"
+if [ -d "$RUTAORIGINAL" ]; then
+	
+	    #Carpeta "bin" dentro de "dist"
+	    RUTAORIGINAL="$ORIGEN/dist/bin"  
+	    RUTAFINAL="$RUTAFINAL"
+	if [ -d "$RUTAORIGINAL"	]; then
+	    #Comprobar sumas de integridad en "dist/bin" :
+	    archivo="wine"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "66b6ec5864a2ab58d0301da5b907cecc" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL/dist/bin/"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	    archivo="wine64"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "a85d97c86dbc7a4314f58f0a6e586f7a" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	    archivo="wine64-preloader"
+	    if [ -x "$ORIGEN/dist/bin/wine64-preloader" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "a0c54a2f87845723e0483ab07ef458d3" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	    archivo="wine-preloader"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "14a212a59afec54cd487428ade2825ab" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	    if [ -x "$ORIGEN/dist/bin/wineserver" ]; then
+		if [ "$(md5sum "$ORIGEN/dist/bin/wineserver" | awk '{print $1}')" = "461dc14b045e473bdb15fbd57f694dd6" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo"
+		fi
+	    fi
+ 
+	#Comprobar las sumas de integridad en "dist/lib" :
+	RUTAORIGINAL="$ORIGEN/dist/lib"  
+	RUTAFINAL="$DESTINO/dist/lib/"
+	if [ -d "$RUTA" ]; then
+
+	    archivo="libopenal.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "a9dec5e9f7b805d6e62e6b3f61b175bd" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+			
+		fi
+	    fi
+
+	    archivo="libopenal.so.1"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "0eb995a6b8c8e8c28c4a834f6eefee5c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	    archivo="libopenal.so.1.18.2"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "0eb995a6b8c8e8c28c4a834f6eefee5c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	    archivo="libwine.so.1"
+	    if [ -x "$RUTAORIGNAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "3145d97ed731bf675aa484d48aa025c5" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	    archivo="libwine.so.1.0"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "33145d97ed731bf675aa484d48aa025c5" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+  
+	#Comprobar las sumas de integridad en "dist/lib/wine" :	
+	RUTAORIGINAL="$ORIGEN/dist/lib/wine"  
+	RUTAFINAL="$DESTINO/dist/lib/wine/"
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="acledit.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "68d251016696f75c46897ca25a450ef1" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="aclui.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "62cd0f8ebbc8c73e6f35d57a2f4681e6" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="activeds.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "4334e542b4ec6eee850b635f0f2a7458" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="actxprxy.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "512e00ce0ec8885c92eccf1db9a1bb56" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="adsldpc.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "114bb9912105ab299332c427fcc79d4c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="adsldp.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "2fd73ea67404dc57704d136ab6352a9f" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="advapi32.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "3648fc885ae917d7217dad51d539d497" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="advpack.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "40efb6937f69dd3ad587fddea8e5050a" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="amd_ags_x64.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "e60e70bcffcac70f634caa052200afb4" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="amstream.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "0d65744fc6afc6de5b79353f51fc9996" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-appmodel-identity-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "d6bc870b38468356733d682794a5b94e" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-appmodel-runtime-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "275a8b6fc7857bef96a3a79c8ef49835" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-appmodel-runtime-l1-1-2.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "3c11f970861e6316995454b3afb9f6ea" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-apiquery-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "55f1f9a4934b812572c9a29775789214" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-appcompat-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "9dfdc7220aae5458fd3e6a657882c0a9" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-appinit-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "baa9420a64bb8820de24984ce1099da1" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-atoms-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "9033b0ea1398c3f617015c57feaf8fe7" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-bem-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "74c699278996fcc7f6c0b5e130164a81" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-com-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "9382ccb08c1f70821136763072412470" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-com-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "46622e4eb4d2ee33f604839f23f0e2cf" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-com-private-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "4ea80bfa4486bfc25a774d04333f6681" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-console-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "3dc4bd23c20999c056a3f2c25becbdd7" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-console-l2-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "46813a402718330e11745d11495a9817" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-crt-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "c5d9c02e103ee0355900edc44c8daa4b" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-crt-l2-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "22ba958c0b51a981fef504f31dd8ab0c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-datetime-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "cfeef4c385e1d4d75f187397c8ba2583" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-datetime-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "217c4681a0d3aacb7450b4fee8dd874d" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-debug-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "a0599c6f4d721211c8a784351e56a359" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-debug-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "ba67b76be6cd017e565c22473173e8cb" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-delayload-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "8229ced98ea05c07458f111afbbbc213" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-delayload-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "678a19fc345ef62440af2472202fe0be" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-errorhandling-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "26a9ba2b44eb52daba4ca44ce4d7bf7d" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-errorhandling-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "e2cc013d510b939c907cab8a248fa2ce" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-errorhandling-l1-1-2.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "0969262561f48a7f88d01e1c30c7a89d" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-errorhandling-l1-1-3.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "5bd4857fa34bf2fbe80c97d6714b1c5c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-fibers-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "85acacda2efba59152a05ac3d82d384c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-fibers-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "53495088ab2af2c68cfb9cfc7c2c7183" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-file-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "f65107f7481b4b94e4f2399b3723df46" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-file-l1-2-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "f7f2b7a52a0e3418754622475ef9da73" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-file-l1-2-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "3271f75b514d138fed4b0219bf5718e2" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-file-l1-2-2.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "818760cc49fd6c9ff28e3dbd57ee6126" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-file-l2-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "59cc8cff1c5aec9b54c0905cea0e6be6" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-file-l2-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "422f1ef6d1ef660a26be8a5588b21e5f" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-file-l2-1-2.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "a3c7939806d03865d459c443dfa85bf4" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-handle-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "6dfba5e3823a74b8d054a9a57122ac54" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-heap-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "9c224b58c3e7bbef48e4e7b595fd91b1" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-heap-l1-2-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "c3f1d1f4b8264a28fbb76c6a10efec7d" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-heap-l2-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "445fa8bb6e8e8975ec0c18ebc62a6d04" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-heap-obsolete-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "0ee17adf44f00d62a0c0ce25358392e1" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-interlocked-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "09531b1dfb2d12474559f5f10d9c1ca1" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-interlocked-l1-2-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "dc9690831504e33904fd42f53d4be666" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-io-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "d2b36f897596c67bd3fde6b5137a80e3" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-io-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "a6b1debfc9906f9c552b8efb5ab87810" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-job-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "c82d51dbc7342e9d28255d1fdca3b61b" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-job-l2-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "ecb7367314ce50f7c8cdbd3dc6bad004" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-kernel32-legacy-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "f3059febcbaea8668b36bec687b4da07" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-kernel32-legacy-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "d0e284d475844cf6af8c5929eaa91110" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-kernel32-private-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "82b689a24de12cb334b76aea7673d77f" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-largeinteger-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "74e4023f0cf9015bd240ab34514abfd0" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-libraryloader-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "653096b58c72fbcb9b3f39b0096fae0f" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-libraryloader-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "0daa4aabb4dc7da890ae57c57d30254c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-libraryloader-l1-2-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "0dde124c44e4dca88ec8b0908892b63b" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-libraryloader-l1-2-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "83e34e6b3ed5a77d26f515e63a7ece7a" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-libraryloader-l1-2-2.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "4b9a0c68194f1ad19d1a291168394149" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-localization-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "a510d82d264c6e38231041e442a39d49" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-localization-l1-2-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "48e74ed89de9fd784992290f076b8295" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-localization-l1-2-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "530379393d45c5757958f41e07c6d4c5" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-localization-l2-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "fddcf47ad6c412758fd30affcc7461ed" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-localization-obsolete-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "14b21d807cb931ef518bd78d8b043e5f" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-localization-obsolete-l1-2-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "5194bf565540e8df13d19b4572e903d0" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-localization-obsolete-l1-3-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "fef9b151d8286ca0b562d8db9f8f3442" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-localization-private-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "f92df894dc2e97ef0e15fb9afe40cec6" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-localregistry-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "935f72f4837aabe18b53ebceb020642d" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-memory-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "bea3e27db5375eedb9fe1fb30ed8ad90" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-memory-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "1d1432aadc6e71c6fed26a973df999e2" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-memory-l1-1-2.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "e0ad0139e3ad924217abeea6e5b88b4b" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-misc-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "9f1959b93170f623e8c420ee182dcd1b" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-namedpipe-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "7863a68d64256c6a4e8d64448e79cb57" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-namedpipe-l1-2-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "ca22570626e7ce4790e9cb0fab679ede" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-namespace-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "4b6eb36377f50b4dedd1308af7061b8b" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-normalization-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "e051dfc3090335255f01719001af0a49" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-path-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "31ce15e5b95d970a9d909fefc9d149b5" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-privateprofile-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "56cea3f585f4a910f186cec2a8170acb" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-processenvironment-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "c4d83644dff9cbc3cb7f3ad9151c8485" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-processenvironment-l1-2-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "c205de080ccc3115c5376334c3b3b725" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-processthreads-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "3615cf0ac8a50e2fb88e1db70fecec24" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-processthreads-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "9597d507270181c5e3cd3fd426f4c10d" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-processthreads-l1-1-2.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "dd36e0b1ad3c652a1d6c4d7a51bd0ada" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-processtopology-obsolete-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "3a18f7cf11a01cb23cd00e0c2fd42a6b" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-profile-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "3fac7bfb4f0bbcc97b52a29e6d0851f0" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-psapi-ansi-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "ce9a4c3b17f24521d69dc751f2da0375" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-psapi-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "eaf6b8e31da639f193016f5f6cd263fc" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-psapi-obsolete-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "8962f13430baed705d2273ce49ed691a" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-quirks-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "0c2d36164af926170101962cf0a7febf" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-realtime-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "2dc49a403c47b90abdfb82eadff43516" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-registry-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "7ad150f55e0045f45334761507fd25d4" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-registry-l2-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "fa0555acb5d02b47e14e6aba75bee78f" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-registryuserspecific-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "1b7298845235e80bf38fd2a9fdba0b54" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-rtlsupport-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "1c5a3a22fdb577f5bc822b9a0c9c6c73" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-rtlsupport-l1-2-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "05396f48615c0f61e69cade5dbe34ea6" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-shlwapi-legacy-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "a11bb60b8fd198f7981aeefb67bf4a0d" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-shlwapi-obsolete-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "5af4579defa576fbd7b2cbc850edd473" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-shlwapi-obsolete-l1-2-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "3a5c49f8dfde23c69cf88e4cc0e0941e" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-shutdown-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "c2a80cf14ee9a8446e3d8d01ab296db7" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-sidebyside-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "dc2a26ed2bdcd4158ffb731f596b87f0" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-stringansi-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "e790b9be1c2d6e608e5648873478cc28" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-string-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "cbb371eb5ca9644d1721dd6ac9e63782" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-string-l2-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "abca2c9a91a01b84c8843e4de489e52f" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-string-obsolete-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "3ba3f20285cf869dd667b1878eebb814" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-synch-ansi-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "4bfe4fb9922fe28bebe69cef5ca3374d" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-synch-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "8ca2eec30790582397804927c7f1c8a4" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-synch-l1-2-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "2b8636e63ac242a1931d66e8659d230e" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-synch-l1-2-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "6522aea878622245c522bf0bae453fd4" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-sysinfo-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "142736657d4586f90add6f31870b5b76" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-sysinfo-l1-2-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "7c13c86831894b8a5e49cf89ba283ae4" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-sysinfo-l1-2-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "6a90ca4cab44d7c5c2234cdfcb611de7" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-threadpool-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "d2025425c7dd8fe6d328c550762857c8" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-threadpool-l1-2-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "c6c628345e7160acc1694dea090e26ca" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-threadpool-legacy-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "62078d2328c29b0a8bafe4cdd07be32a" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-threadpool-private-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "9b711ca9f22ab4b8b959646cc14d0890" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-timezone-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "156569355a4b00cc2fc2c7d03fe77054" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-toolhelp-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "2655dae4c0bcdae844de2ef95cd84d34" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-url-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "68073c051b18f0bbf90bd773eef64e51" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-util-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "024597bca672f7f4dba74466a200e410" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-versionansi-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "81ef5d845ed5c57b8fe7755f67ce4324" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-version-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "2d698a37a09e666c79f0f122d5bb17d3" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-version-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "411c179b38db51922889b0a217bb1f54" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-version-private-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "259428c9a29e5436071282f8ca6cfec0" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-windowserrorreporting-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "0887eeff4409dba95aea7fb37445cb27" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-winrt-error-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "d6a9fa40e7073f3e39a6799c6b186320" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-winrt-error-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "515eb42303a7640b628d4d83427a4978" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-winrt-errorprivate-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "7cdaa4cc1afbbc4cd56717626074588d" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-winrt-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "a15e8a595e4d33c497f30645710e3157" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-winrt-registration-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "21791ac54eaf678c9389c121ea18f516" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-winrt-roparameterizediid-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "59675148f7657c8c5c89be44e8883052" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-winrt-string-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "17b53350c70bbe6f66e9789c6742cf22" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-wow64-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "289194dc35e248df9e9a8364c5ae7db3" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-wow64-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "a2d87e51358ba07bc053baf5e78494f8" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-xstate-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "cb33cc6845c9e78884b9cd9428d471e5" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-core-xstate-l2-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "5b7ca0a8663cbb7f082fd99e74ffa8c9" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-crt-conio-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "6b029f92427ddd89cd8030ccc78c0ec9" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-crt-convert-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "082216b3f9ab228218690ff01060e232" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-crt-environment-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "fd5ae4dd9262da956b502de22aef2523" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-crt-filesystem-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "154b518447bf68fc57667ba2c77881a9" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-crt-heap-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "2a16af8e14058fa2c55b4f1a2a7888d6" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-crt-locale-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "ed6ce752a9722fd083648d67ee5580bc" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-crt-math-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "7c87dca1b51ec5aec93be5bedfc302f0" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-crt-multibyte-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "7ecaa2d59faef7a83a9e0c184fad04cf" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-crt-private-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "45ec8a3bb6724826794c0385c4676a39" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-crt-process-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "04293491842b2e8a9c63b35a76a0b28a" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-crt-runtime-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "0346c19e636f2c4866b0ab9d637d5d94" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-crt-stdio-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "74b1d2ec65d07b8ef068723b8594cc25" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-crt-string-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "7f02327a8153bb459d5b556cf2f1de8a" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-crt-time-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "ddd079de95f083a8c7523392f43000b2" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-crt-utility-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "f9406ae6b807c7b2819a69a297d3c365" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-devices-config-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "1b988eddc766732a7fd1d00a9fe5f58b" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-devices-query-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "7c0e5b373e3e8e92cf767978639fab19" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-downlevel-advapi32-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "dfa2aa77711e7447be71cbcdb72fdaae" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-downlevel-advapi32-l2-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "e57308e0177899770d4f1fb6f74e0e38" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-downlevel-normaliz-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "82a834e2eeddceac87e6e7267fb552a3" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-downlevel-ole32-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "071fc578e3c38a0490a18f3dd95de311" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-downlevel-shell32-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "36699fbb3710116b68ccd848fa5a5294" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-downlevel-shlwapi-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "65d8a3eea872e1ced8f577344e2233ca" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-downlevel-shlwapi-l2-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "c1eed7f915bb3278dd8b9da812e40de3" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-downlevel-user32-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "f815a52e3470777728124e5610242f91" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-downlevel-version-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "9f29925c903f835a36309b58136d0fe7" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-dx-d3dkmt-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "b7d551301065a7ae8b6ae6651c57a8dd" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-eventing-classicprovider-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "36e641eeec905b82973cd28f11f40776" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-eventing-consumer-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "a337d2c0f9c2e7229f7e11008db89fd2" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-eventing-controller-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "e8c02f98e76a0474cc9f2517dcde1478" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-eventing-legacy-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "f328bf3c22fe6e2f500274c4ab16c109" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-eventing-provider-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "ac867349cade4fcf05d20c685eb6c116" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-eventlog-legacy-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "10ea370502b36adac10daba32cdd213b" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-gdi-dpiinfo-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "639bfe1f98841ef78f66c165cb4eb0cf" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-mm-joystick-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "df5ed027d6b128331826e0ac6758f1cc" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-mm-misc-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "60a6268c207e9263cc90ddb3114a54fc" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-mm-mme-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "0acc99a2b5a2e04e7774298001d4f046" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-mm-time-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "6c4219d23cb4b370b4ad850775e342d4" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-ntuser-dc-access-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "5bda27eeaa6e2d91410d0bfeaf646961" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-ntuser-rectangle-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "d4b067e26ba8704d4ecf9721ab499d7a" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-perf-legacy-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "a1cc3b87e4163e31a8b37afd612b8b0c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-power-base-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "3eb8a0dc30ac9ed6bfbf74787160e424" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-power-setting-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "f354f3ea8f52307d179f547b02001cde" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-rtcore-ntuser-draw-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "d6b2a74d423b605949f4db65aec17acb" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-rtcore-ntuser-private-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "f0a1fca58f54cd69b4b6ed634497c9ab" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-rtcore-ntuser-private-l1-1-4.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "8d47712b63c863145eb03956650b9271" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-rtcore-ntuser-window-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "10311b9f9962cf37255909d2ca59db9e" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-rtcore-ntuser-winevent-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "cf73c4835bd8b35abc1422c4186905ce" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-rtcore-ntuser-wmpointer-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "6b8f309a3d72fe330cc91c9765e71cde" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-rtcore-ntuser-wmpointer-l1-1-3.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "b6124adae7695beb523fb2177ce84929" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-security-activedirectoryclient-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "f7eb3b3177768d4fa2a0b7db9cbc9604" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-security-audit-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "527823d3541b0bcb0e5df6a0a580df2c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-security-base-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "d6dd31fe277a3f7dd5ac77361667ee8b" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-security-base-l1-2-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "e7cd0887b852c147a0bfdc29344b319c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-security-base-private-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "9e023ea005c2c30e4504a8819bdc9966" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-security-credentials-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "4f952cbd454adbb0749679387547749e" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-security-grouppolicy-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "927df819c9acfabaf7cde7ec99406dfe" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-security-lsalookup-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "b61df08b00a4139b6ae3e67a216c1a7f" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-security-lsalookup-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "014a52a13536edfaf909ea7d11999031" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-security-lsalookup-l2-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "84afe0b78095dd644a36a0d43e7cca1c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-security-lsalookup-l2-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "221b04dde02ca1f9a86e921ba982e363" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-security-lsapolicy-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "3708e452a5ae0109c9177f35e291c105" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-security-provider-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "5611ba5239977df596cd1966431bf10c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-security-sddl-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "3e2774ea5bde8f50e5ed4c45aacb33d3" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-security-systemfunctions-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "d3db761cd6b9c2ada12eb5bc5ef18f3f" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-service-core-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "48b9cda96ea32dcf1c4aad66762b77ae" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-service-core-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "77d922706643d9f30f4e680acc4830dd" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-service-management-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "db6f4c6651695230c49136ef10a5875c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-service-management-l2-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "a12717239cb7bd79f14cc54b1f3dbaa2" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-service-private-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "2277d2f5210ceb8567183d65a9ba4771" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-service-winsvc-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "a2ae615920f2664d56cace206d021309" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-service-winsvc-l1-2-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "c00035ba1992c18e0fc23f9d58f4637c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-shcore-obsolete-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "ccdfbc308baa289e357241076810a18c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-shcore-scaling-l1-1-1.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "053e56144406bae7ae167ea5f026ddff" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-shcore-stream-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "a219c1e043c791dded27aec3611a747c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-shcore-thread-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "75ef411728a768dcbc4d3390c21dfd8c" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-shell-shellcom-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "9a059d2dec9da72503cc66eb5f492f2d" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="api-ms-win-shell-shellfolders-l1-1-0.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "48cd3ee9c83bf0b9b65c4a15d3ee8aa0" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="apphelp.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "34f525211fce7a78d59d87e73d95779e" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="appwiz.cpl.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "0652b1f7a81ce1808c035491a0f65f7f" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="arp.exe.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "2f41d781fb856dd5d3c4ec8e833ecdf7" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="aspnet_regiis.exe.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "44505f43ec7017127b002e727cdceb68" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="atl100.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "bda902e3801f6b33a72cb1d549245e20" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="atl110.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "58ad5c8c1cf69d68966710f8f37e2442" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="atl80.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "318d2af88d791a22c3a2de4e686db99d" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="atl90.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "f97d502cc64f9a670dc41c8c824b3119" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="atl.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "6c695b6e7fdc0ba25dc31f519d08f711" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="attrib.exe.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "0c190f0f6428c7fd8254f68512f55b79" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="authz.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "4440062ce66905c5e63bffb006532864" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+	    
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="avicap32.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "a12673f91c7954800c28fbfc4e325870" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="avifil32.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "75bed8f1e0121808040f4f16c74a9722" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="avifile.dll16.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "bfeae5c87346094c945a5de359e880d5" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+
+	if [ -d "$RUTAORIGINAL" ]; then
+	    archivo="avrt.dll.so"
+	    if [ -x "$RUTAORIGINAL/$archivo" ]; then
+		if [ "$(md5sum "$RUTAORIGINAL/$archivo" | awk '{print $1}')" = "acc20cb6b3464a6b458fba39316545dd" ]; then
+			echo "Suma correcta"
+			cp -n "$RUTAORIGINAL/$archivo" "$RUTAFINAL"
+		else
+			echo -e "Suma Incorrecta -> Debes corregir este archivo : \n $RUTAORIGINAL/$archivo \n" 
+		fi
+	    fi
+##################################################################################################################################
+1eef59c9c49db8fb19575a4476e9d869  bcrypt.dll.so
+10a67b37a305c67ccafabaf4bc9556a2  bluetoothapis.dll.so
+6d815f49bbb18e71199c3f2ce9b9d616  browseui.dll.so
+a546d25bd518ac474e8b99102a96b78f  bthprops.cpl.so
+a6dad496fa4b50a732df85629c869f74  cabarc.exe.so
+796b31e963516fb476a258d4cfd9fda3  cabinet.dll.so
+566045dcecca28f0cb63ad7469c593ae  cacls.exe.so
+9ab611436927dd7de6d0c12760bf014f  capi2032.dll.so
+ee0076de9c2826fc9f80d10546739bf8  cards.dll.so
+055a1fa9a51a8ce3186ab188bee8ca92  cdosys.dll.so
+04087ab9f85bb6f2dcd63f70cba64949  cfgmgr32.dll.so
+047b659a781e42f9f84d8697557d0e1d  clock.exe.so
+06418d3c4be82735dd8fcf98b487925e  clusapi.dll.so
+d1fbeaeff6a8bd1017163705123a96b9  cmd.exe.so
+f92e3151d1e5a8f17c5ebea01e7e0f0e  combase.dll.so
+72955f00a1d7c1c24bf179010bc1d49c  comcat.dll.so
+a08472dfc8af2f5e263eae705b4cbc40  comctl32.dll.so
+ef68568ed33679db0ca88099d0357db3  comdlg32.dll.so
+eb6b2c6038c05b26bb2caefa2717aadf  commdlg.dll16.so
+d9ad4d72d390fcffe42d3e33e78a9264  comm.drv16.so
+e0f8bd21b5e5e04e1e415dea507107a4  compobj.dll16.so
+fced87fed41953ea16b01187ac3e2c11  compstui.dll.so
+08c94c4fa86d626420f1b997cb24d9ef  comsvcs.dll.so
+f0235893c827f6ab9c2a862558014978  concrt140.dll.so
+2f98d2060c36b63d7382ef01e9135a17  conhost.exe.so
+0c3290aa1a158854eddc6b6ffb3fe794  connect.dll.so
+1c323bf9e5eab4b7668ce8bd43be4839  control.exe.so
+fc5b9380bb56a886ffe9bc14798cb317  credui.dll.so
+aba06f4beb224d05d32b7a638d53ddff  crtdll.dll.so
+6fd1c6b25315da6af969b37725bdf3ea  crypt32.dll.so
+ec0d068d48339ed579d6f297214d5f65  cryptdlg.dll.so
+23f67cb50d1b76d58d2c57cc90a82ac3  cryptdll.dll.so
+14954e68696bcae7cf6f8728cb6bffda  cryptext.dll.so
+1e1f1c41406155359da1bcedf08a72a8  cryptnet.dll.so
+2f28f7bfa8fa92a4a645f62a770c062e  cryptui.dll.so
+98a54ca28f5cbe951503eb3a5dc2d89d  cscript.exe.so
+612b9299312fa7693db6b8f16845866a  ctapi32.dll.so
+048735a67f2c0359ba5aea82fe320dd8  ctl3d32.dll.so
+0416e0db5d16b8a7158dae80f31a8e4f  ctl3d.dll16.so
+22b931fb67d465afedfea75594d8ffe9  ctl3dv2.dll16.so
+f324a4d1d700f5077146ebb1d30e72cf  d2d1.dll.so
+1818e5fc5029b29bb7918e25dd5c9126  d3d10_1.dll.so
+174f94f49eaaa6d2695bcdcef6054ae6  d3d10core.dll.so
+d340c90a63eef364332b62530c556471  d3d10.dll.so
+849aa595065417c245174b40ebc6a930  d3d11.dll.so
+bb87660d6003c7df5b5bdc4120886585  d3d12.dll.so
+23a6da0004b5dc8ae79eba602249e276  d3d8.dll.so
+3bdad5536cb021d9d630cd65db66d2c0  d3d9.dll.so
+7e48ef989290ef1adb7c5c4f9c074a33  d3dcompiler_33.dll.so
+93ae849dafc984927e547d1fdb1045d7  d3dcompiler_34.dll.so
+dbcee1a0a9f907762b01658678d007dc  d3dcompiler_35.dll.so
+8574b6fd7b50d517676cb0ae85c221e0  d3dcompiler_36.dll.so
+333c500a06d805edf8d1a7864024c754  d3dcompiler_37.dll.so
+9a8f1a8051043851a5b089ca2f82f7a5  d3dcompiler_38.dll.so
+f594837db81ed5798424d5e325434f2b  d3dcompiler_39.dll.so
+6310ff5fc5c1beeb40563ada68a97cb1  d3dcompiler_40.dll.so
+f018d11531faaad1bf33c9eead4d3d49  d3dcompiler_41.dll.so
+d1db42e75e34e8359d3e3a717c82e3b8  d3dcompiler_42.dll.so
+cb4b2110c30bbdee7be4f403bb116c6d  d3dcompiler_43.dll.so
+1853de1c5d844cd32c851f5c4a9b36d4  d3dcompiler_46.dll.so
+9d91bb319a9ee3f298e4f74a562690d3  d3dcompiler_47.dll.so
+279e9fdfee8fe0de5c3bcee68583e200  d3dim.dll.so
+7a405f3590c3643589055cc3d2178eb9  d3drm.dll.so
+8bcbf290f0dbb42782bae65551565a11  d3dx10_33.dll.so
+21b9b8f0eba59b91537c58e9f65de699  d3dx10_34.dll.so
+d766acf75a8f896c3fe565c13e9b897e  d3dx10_35.dll.so
+d40242073b018c61018a024ccf9278d9  d3dx10_36.dll.so
+128a4355afa53ec5d6884d897eddc072  d3dx10_37.dll.so
+24c66784a5e7613cc6ea0f153d86749d  d3dx10_38.dll.so
+10179faebbaeba91e2bb756db0277083  d3dx10_39.dll.so
+4c834cdf5b77f133c6d846c4bd39cd06  d3dx10_40.dll.so
+25bda0e7a7c9b4f4e1e3830a85fa9d40  d3dx10_41.dll.so
+00f327550e956cd3da34c34d0ff12026  d3dx10_42.dll.so
+bdeb40fdb5b86beb28bf921a982eaa86  d3dx10_43.dll.so
+d5a3a2a5e3015ca04c48acf968fa3fd9  d3dx11_42.dll.so
+e1344ade8b9453ecd0855527f46624cf  d3dx11_43.dll.so
+96d7018fc0a786944633b67f39429249  d3dx9_24.dll.so
+e64dc8b36d981170ae4af83a7fde4a6b  d3dx9_25.dll.so
+3ce976a4527de2766c16e29813e28cdb  d3dx9_26.dll.so
+f8dbe3ff031807adb71a0a5c788188cb  d3dx9_27.dll.so
+a67f93a0025483f88e1595cc3e81a61e  d3dx9_28.dll.so
+955cd7093a9a679f2ae0c77c0c739230  d3dx9_29.dll.so
+eb8022fa7754fae2fc9d1dbb0d87cb37  d3dx9_30.dll.so
+964637bb62cb4f0c7247ebad55058a9a  d3dx9_31.dll.so
+8d163b0575a52606efb53b831fc2e42f  d3dx9_32.dll.so
+e0691f75c61b4f086151dd2b99631d84  d3dx9_33.dll.so
+4931f3af388214ff96760581dcd824f1  d3dx9_34.dll.so
+776002cd5def856f70c39e73b4e69ad8  d3dx9_35.dll.so
+37c29c809639abc96758392faf889e82  d3dx9_36.dll.so
+eccb57266556fff2d63592bb2bd500ea  d3dx9_37.dll.so
+7588d12db2230cc06ea6eaf3d4809426  d3dx9_38.dll.so
+86b25d6b4a53e7284250ed5863422179  d3dx9_39.dll.so
+488e6911cc8986c4f9603573c864be66  d3dx9_40.dll.so
+e2de7171477b14b2c6cad8db342be62c  d3dx9_41.dll.so
+b362fec6aa90b00c555689a80f9079dd  d3dx9_42.dll.so
+20690ab6fdb4e67ceb85cb4e385c8d88  d3dx9_43.dll.so
+de0aeedc59d72d139d4f938d4cc401b6  d3dxof.dll.so
+897282a9717d5f883da61219cb666bf3  davclnt.dll.so
+3fb576ffbcd850861396e71393eb222a  dbgeng.dll.so
+0c381f2a087879b14dd5e7b45ebe0de0  dbghelp.dll.so
+3b16307bae232dd2a89322c72475cd30  dciman32.dll.so
+7e59a7502363e466b4e8b5ccb27ec2bd  ddeml.dll16.so
+f152152e716b15f81fe460bfa0f56737  ddraw.dll.so
+2dddb14e4d2ceb5cfa136608a745f82b  ddrawex.dll.so
+8371d763c2ec06fe9c1c7d698a730b8d  devenum.dll.so
+0e6152bc2ec4e38ffdf390e2a645d885  dhcpcsvc.dll.so
+b85c5d5ea44dd95f1cf24763d08adef7  dhtmled.ocx.so
+8eb295b82b14287637a1357ffab5d793  difxapi.dll.so
+42bd4863429269949f92bb157b57fa3e  dinput8.dll.so
+17bbdfd563c52c46d168c45ff65d06dc  dinput.dll.so
+29f221822f0e7119b2e48d949a1b2501  dispdib.dll16.so
+0b7a3f80d53b228234cdbd1af756f0a1  dispex.dll.so
+b961251f9042d560462c8c28f5421356  display.drv16.so
+0c4d215c62a72f0177a151c90cff594f  dmband.dll.so
+a0e7ead323bd517b0af9dcb11bf7dfd7  dmcompos.dll.so
+b1b6834af35b856921c650b9e8f6aed2  dmime.dll.so
+8feddd7815bf506431c7aa1676fa12d6  dmloader.dll.so
+115a285c6395ebad72b9bf1ee944f7b0  dmscript.dll.so
+0a32178dd18c5e3918e15e248a7862b4  dmstyle.dll.so
+f15a67c6f58252d7ebfc9dda21b06d61  dmsynth.dll.so
+df586d2f5a46e4ba07c8f93b9daa6ae1  dmusic32.dll.so
+46d1cb0225da6208629cc0dc7e2719a5  dmusic.dll.so
+1a8f4e401943d741840e5e75b8d50538  dnsapi.dll.so
+8d29bd242c271bca14aa8c34d8f58819  dplay.dll.so
+dec274cbdc72ad7b585440dca67182df  dplayx.dll.so
+c77480261b7429c6879de9aab6dc386b  dpnaddr.dll.so
+ca90860854df4bf3015789e60b053450  dpnet.dll.so
+ffb2bd37bf92b9222667437350a6e7d5  dpnhpast.dll.so
+9c5dc7b288f8880fd415b94ac6957152  dpnlobby.dll.so
+07d89639759c3410c97be4eb6e73c67c  dpnsvr.exe.so
+062309e426a2be169b4e2fd09c7a85fc  dpvoice.dll.so
+1292454051fc0ad15cce0d57106c4587  dpwsockx.dll.so
+8475c492d2387cb7c8751e5e72f733e7  drmclien.dll.so
+34215dd1a359ad0eb8b322986dda244e  dsound.dll.so
+dd00e7bd1cb6cd106b1b1d6b892fea0d  dsquery.dll.so
+ee26835e94aab3924ed53bd702ac99d3  dssenh.dll.so
+1caca1c72e71ca7437994c3d69a32ed1  dswave.dll.so
+487aa7ef9b8046298edb68837cd97995  dwmapi.dll.so
+1f8ec42c2a7bdcebebff3e7b6bdca75e  dwrite.dll.so
+e68a28a05076a56c70efdf04401f5a26  dx8vb.dll.so
+25235bfb603b48c45a1227d5d97244f5  dxdiag.exe.so
+0a4ef664f93cce472c3346396f59fd6d  dxdiagn.dll.so
+9912ad8fbfce04319ce76d337a5e351a  dxgi.dll.so
+337a88712a297e49170410558e6521a4  dxva2.dll.so
+e6fd6526f9377b1215c4fff0a1f94ae9  eject.exe.so
+f7a665e52633c6517acbc8259c71d118  esent.dll.so
+cabdbb941552d2976b392111e3a0dd6f  evr.dll.so
+8ece5edb297ade89643883a478a89b93  expand.exe.so
+3cd95487ef9f3e42178b59b01408b108  explorer.exe.so
+fb48d106457172ae093ba4a29ac4119f  explorerframe.dll.so
+3eb63ae59f30aa947a8152c23756dea7  ext-ms-win-authz-context-l1-1-0.dll.so
+2efae2cb074b796342385a5ee0252cb4  ext-ms-win-domainjoin-netjoin-l1-1-0.dll.so
+b9d8f50773444b31d85b11e016e554a0  ext-ms-win-dwmapi-ext-l1-1-0.dll.so
+8ee0155b7f3294d38cbc7ccef2505435  ext-ms-win-gdi-dc-create-l1-1-1.dll.so
+cb3801acded0b65d6146b4529cf94b02  ext-ms-win-gdi-dc-l1-2-0.dll.so
+17c0355fabda89a4214673605b680e89  ext-ms-win-gdi-devcaps-l1-1-0.dll.so
+8360b0fd9686550c8590d5c0dc6906cd  ext-ms-win-gdi-draw-l1-1-1.dll.so
+74c9bd51e19f47c3f320b01af64ef73d  ext-ms-win-gdi-render-l1-1-0.dll.so
+e9f3e81aae0fda356dc28992022fb675  ext-ms-win-kernel32-package-current-l1-1-0.dll.so
+3828d6243bea4a9e3eec8ccc0abe71f1  ext-ms-win-kernel32-package-l1-1-1.dll.so
+5b17f6b805896744cdf621c5432c1e41  ext-ms-win-ntuser-draw-l1-1-0.dll.so
+560ed38b17a519df2f1f5194dde3d831  ext-ms-win-ntuser-gui-l1-3-0.dll.so
+ff3d20da9fabe4a6cbe9495b4d8be3f7  ext-ms-win-ntuser-keyboard-l1-3-0.dll.so
+13106f70199bd0cc3f9f9651997cad37  ext-ms-win-ntuser-message-l1-1-1.dll.so
+2643861f45c4a36ad9ce3cf5eb2047fe  ext-ms-win-ntuser-misc-l1-5-1.dll.so
+fa661d524fe827256a6cddee61e51ffd  ext-ms-win-ntuser-mouse-l1-1-0.dll.so
+63dbc4e0be72ebd4e6cdf9d53c67a100  ext-ms-win-ntuser-private-l1-1-1.dll.so
+ecc08477761cc8080221e78a53b49a67  ext-ms-win-ntuser-private-l1-3-1.dll.so
+0124a10669b3dcc866dfec2717e802b5  ext-ms-win-ntuser-rectangle-ext-l1-1-0.dll.so
+f42fc10e9e54ccb8e8a484816d367b9a  ext-ms-win-ntuser-uicontext-ext-l1-1-0.dll.so
+a0d71d45d1ee2eea2648c713050604ed  ext-ms-win-ntuser-windowclass-l1-1-1.dll.so
+e97f333051cfab00178d68ef6766de83  ext-ms-win-ntuser-window-l1-1-1.dll.so
+96bdca7c962ed33af97c5c669a2d1e62  ext-ms-win-ntuser-window-l1-1-4.dll.so
+86d98baf6bf6218763a934912e1cd554  ext-ms-win-oleacc-l1-1-0.dll.so
+a2d0f397b34e470e290ac78a65c412ca  ext-ms-win-ras-rasapi32-l1-1-0.dll.so
+d8feedd1dc65c3e86494eb1925ac640a  ext-ms-win-rtcore-gdi-devcaps-l1-1-0.dll.so
+903157bc5100c9b010410f7dce5f27ec  ext-ms-win-rtcore-gdi-object-l1-1-0.dll.so
+9ca9127f991aba53bb11c89ce86c7c16  ext-ms-win-rtcore-gdi-rgn-l1-1-0.dll.so
+8864a71f73fcbed33dfebe37aec74fb5  ext-ms-win-rtcore-ntuser-cursor-l1-1-0.dll.so
+68efaee2aca8e32ed97c21079731ec04  ext-ms-win-rtcore-ntuser-dc-access-l1-1-0.dll.so
+e430c2be7f6141ac8662792785cf48f6  ext-ms-win-rtcore-ntuser-dpi-l1-1-0.dll.so
+008540f7029a6ec8ac9e68119556e83f  ext-ms-win-rtcore-ntuser-dpi-l1-2-0.dll.so
+d604e6821fdfecdd3e3d49bee239d25c  ext-ms-win-rtcore-ntuser-rawinput-l1-1-0.dll.so
+90b551d8989291a7aa2d7d3e0d4a9f67  ext-ms-win-rtcore-ntuser-syscolors-l1-1-0.dll.so
+1caec02743009c68c58558b38ef78437  ext-ms-win-rtcore-ntuser-sysparams-l1-1-0.dll.so
+c99eef52377cbf5d11f090f670d2c05b  ext-ms-win-security-credui-l1-1-0.dll.so
+28d86a521fde8c814eb7efa23b9f2621  ext-ms-win-security-cryptui-l1-1-0.dll.so
+1b2ff3cb906c8df95fcea7c27a0d5584  extrac32.exe.so
+1cb4b6ef1fafd570392a8c1ccc12ce2c  faultrep.dll.so
+e982522ed8253466bfcf2993879b712f  findstr.exe.so
+c85573891a0e9952df21d18c4176cc61  fltlib.dll.so
+329ca961c9ddfb2dfad0b5385d9b2684  fltmgr.sys.so
+99ff56aca728408e7fe76dc4483c228d  fntcache.dll.so
+7b7a3869876d9b4ab88ced17e83f804f  fontsub.dll.so
+b22a74e6141a3b3c59df97745548cbdf  fsutil.exe.so
+e5276667ce1dca71f65e5d2628af6c88  fusion.dll.so
+faff6eb272732159658dfcbd7665851c  fwpuclnt.dll.so
+03a99c034df1c89a9d497796fc3549f4  gameux.dll.so
+5b1ebc09a28daccfe48d024f56fb4744  gdi32.dll.so
+d7314eb519fc17f56c10cbde5f37e03a  gdi.exe16.so
+7c276dbd616ea87c7cae1218f6eebeb4  gdiplus.dll.so
+b8126b72e531bc4e89fdfefb242a87e7  glu32.dll.so
+6e3674f2173e50ffba3fd3233466acaa  gphoto2.ds.so
+1f79a08e12c22f571fa51bfda92daab1  gpkcsp.dll.so
+b34fae44d87fb35d4d96075c4d450c85  hal.dll.so
+061a112a72daf358e1856352b11da684  hhctrl.ocx.so
+f16e110e22366f94a355278d5e64df6c  hh.exe.so
+ca81340d6b21a371567126de5cbdfddc  hidclass.sys.so
+7c1b852c3aab3d9c256ad9fbde768388  hid.dll.so
+cea351cbd200bc5883d0e82ce23eefc1  hlink.dll.so
+b64223877b9087185123282a80095fe9  hnetcfg.dll.so
+67f1750a15b31a356c94a3940abb9af2  hostname.exe.so
+b13cc9ae5742fda948c0f119c7616f3c  httpapi.dll.so
+957ab6a92eb750c244aa8e38e00b67ee  icacls.exe.so
+4a29d437b3c9423064983c17b8d21e97  iccvid.dll.so
+e5e902d10a914b28b3e726771903e54d  icinfo.exe.so
+5a43a68b9e0dd3a9e1200e6aa86bfbd9  icmp.dll.so
+9fe3e729e59f454ee18f189e89e9945a  ieframe.dll.so
+7a4a928d82e77b5ddadd893e89d70850  ieproxy.dll.so
+44a87587af11f83ab504a15940e856c2  iexplore.exe.so
+909cc3273790ff1bed5ef0332a0a7136  ifsmgr.vxd.so
+c3d1605053b15ef72db45bba3ef4ae3e  imaadp32.acm.so
+f8d1dda7172929bc762c2479b000b51a  imagehlp.dll.so
+566c22ab6d614dab11552f02251b0ea8  imm32.dll.so
+5bf7af03785605e2481aeac8719ab184  imm.dll16.so
+a70505d97680650889507ffb44d6eabd  inetcomm.dll.so
+0a10b2fef305fa45512c538c3aa20409  inetcpl.cpl.so
+86722265db8fc0ef8471a8b95d073dc0  inetmib1.dll.so
+985cf22eb73069d57ebeeb5c7ee25f2c  infosoft.dll.so
+cc4337befbb5733a3f4d1f2fe02216ea  initpki.dll.so
+0353935ca52a93c5f4e3d067470d9cd3  inkobj.dll.so
+f39089ae3f5f01a8abddd5f1dd99bc25  inseng.dll.so
+0049f33e9593e402ca1be0ca7a5cc916  ipconfig.exe.so
+46e78adbbac9eedbcb41689dd0712b3d  iphlpapi.dll.so
+a63531db1eadf4b3b877712330180b3a  iprop.dll.so
+7fa33ca6141639ebb005c44e7224fc9a  irprops.cpl.so
+56bed07678ceefed8bd44afad1c9c392  itircl.dll.so
+29b0217be64e8a20beee2718f91c771a  itss.dll.so
+6610d7225849cc92e4f16ff4a656b24c  joy.cpl.so
+b85c4e59e90df71489044da08c70e74d  jscript.dll.so
+0f1d117e1948b35fc419896cfb0e3205  jsproxy.dll.so
+8debed400d33365c3b12affbee31cb2b  kerberos.dll.so
+b3a2c1978e5f9a2ad0a9dcd5afe91dba  kernel32.dll.so
+b44f4420beba7ba31c3674fb7bb3eae1  kernelbase.dll.so
+8b0e22773e4d56a8f8e0553e094342da  keyboard.drv16.so
+6ee5edf98d405c82077d3edb37aeef70  krnl386.exe16.so
+e8c5be04f26da7a6fa206409a6e3ec69  ksuser.dll.so
+837638a51dc3847e9f0ba9fcce1a76c7  ktmw32.dll.so
+b43ae1dbba1f7d89bad1b580f1733cf9  l3codeca.acm.so
+b58f5246c9f08873554b8de216f80124  loadperf.dll.so
+e7ad7788c4127eb32483287d8785e9f2  localspl.dll.so
+e2ca1b5f45a0678895cb15db003e48db  localui.dll.so
+90c9d9e620a1f5c4fa2c2b1ce3a0428d  lodctr.exe.so
+18fe6febdfb7e66be938d44446ac6955  lsteamclient.dll.so
+301f887762e8d493e463a1c2b8b45892  lz32.dll.so
+3d076e658f53c65aa0d41c6e35220d99  lzexpand.dll16.so
+8b7f6bdd9c13f7089a8cbee9b7c38b7a  mapi32.dll.so
+bc26e1812d236dae8bf8055de0bae267  mapistub.dll.so
+990b81016f4107ea48d57bcff6e48e00  mciavi32.dll.so
+b0a77a71bbbeaaa362fdbf419cda5ea4  mcicda.dll.so
+08d94af1a8691aa9ddfe32a226304337  mciqtz32.dll.so
+c1b538666f3959996cb973dfa35527b1  mciseq.dll.so
+3f4b42e374b878d09e5999dec430d3a8  mciwave.dll.so
+fbc67af506c09d7fbc0564cde8d4dc62  mf3216.dll.so
+ce8550b65f67e794e0f5df578b84a31e  mf.dll.so
+ddc4663bfad57e679e33e6cd86b0a1d9  mfplat.dll.so
+a175e611604a15c697571338a3230a9a  mfreadwrite.dll.so
+d5d547c6a69b70e83f4786239f6baeb7  mgmtapi.dll.so
+fe065b0928820776b4edd3f400c55a4a  midimap.dll.so
+7485fedd490df2df7e415ba7937b416d  mlang.dll.so
+e109fa8aa6439a7830dbf7e95745c603  mmcndmgr.dll.so
+9a4b1ded52324dc61e1c3dfa5e13fefc  mmdevapi.dll.so
+37986df74605a148d34638393eecf700  mmdevldr.vxd.so
+457f3bb44b970416902d56c2d58e4e4d  mmsystem.dll16.so
+34a09eda161db09083a31e4a2e381390  mofcomp.exe.so
+40f96135dc1a150de30c850b98c42738  monodebg.vxd.so
+73b8e55775b05571163bc461faed8580  mountmgr.sys.so
+171fa21324a4e50cd2ddb6016b3109f1  mouse.drv16.so
+1f8cb51c120cbb483b603a7fc4368b8b  mprapi.dll.so
+9dd553dfa977c9c992f1805fa6f4b9ee  mpr.dll.so
+503e6256e8a8a34cc1bb4aee8be32404  msacm32.dll.so
+cfffdb1b416058ddcbd48ad97d25884a  msacm32.drv.so
+b61d697ca532c72962e9bc399a290050  msacm.dll16.so
+ccbbac6034e6692eedb22c24000a8b81  msadp32.acm.so
+3b4018562d405f914d3e52e09e1b3bd7  msasn1.dll.so
+179dddf7c9aeab575681ee3c9d2bb17c  mscat32.dll.so
+907c04fafe6dba789012327333e981bc  mscms.dll.so
+c7dc15675709a356497ec4be0b4cde04  mscoree.dll.so
+c6406aa2d1024b52040cc4339f2ef240  msctf.dll.so
+bb056339905039012fa275a055613201  msctfp.dll.so
+c3a4d18d2a460948340f45a710d0a1ae  msdaps.dll.so
+2385b3375f9420a98aa465b7ffc33eff  msdelta.dll.so
+b36724825708c7fc6520a44e3cf39f9f  msdmo.dll.so
+4d274896013e2175a76464e91944d874  msdrm.dll.so
+a9af9d0b06c745534f7e3846b5a2330b  msftedit.dll.so
+6876e4e209ba4ec0a26fe905285b6b96  msg711.acm.so
+ed40d7bad5eb32eeb88e9f42bdf4077d  msgsm32.acm.so
+92ca7fde06c96b6bd9f3859ef81a8062  mshta.exe.so
+6b193196905746d7abc5ff993f5f4b65  mshtml.dll.so
+d35427c9db8b31b8997c15ae062efb70  mshtml.tlb.so
+9d8f10c20453e01782fcd2e9e93a1a4b  msident.dll.so
+f203cacf7274f9e8856c5865c807d30b  msi.dll.so
+7673916499fa1e615a53e4231be13526  msiexec.exe.so
+68a2910b091765a4fa718ffbb7befaae  msimg32.dll.so
+22fff3fe9b35b30fdcfda8531da0ae4d  msimsg.dll.so
+91443b97d12c902c22bdbb1ab6af305d  msimtf.dll.so
+568ca6769b3ece8f573e85ebd748ff66  msinfo32.exe.so
+3309e4ab46f56c546c34e0d39ca0daef  msisip.dll.so
+8e642cd5945aa63d80a6c9ac1df2a536  msisys.ocx.so
+0883515b379d83123e556c0bad1fb164  msls31.dll.so
+5acef09822fb5c180e64f14d9204f634  msnet32.dll.so
+9357857acb6140622c5977421c994d55  mspatcha.dll.so
+a75db492b7662e985e45f8c0f0ec8984  msports.dll.so
+3acff77b0fe9012e4c8934826d6d1751  msrle32.dll.so
+49533cb97bbfb5cf88e4239dcfebe3ec  msscript.ocx.so
+8110cbbf80f6a47cce9c0e3521771305  mssign32.dll.so
+6538e4e0dde1b419050d0968556ca4a1  mssip32.dll.so
+1d9b3bee871544c98462b1e6cbd9e325  mstask.dll.so
+00d6ab60d8a7a1d0305c4a3f47659f54  msvcirt.dll.so
+72990f3b1876f1f4576acaefc9674465  msvcm80.dll.so
+ea31616cbfe3b6bd2a0e476fb482eeec  msvcm90.dll.so
+30ff377563e9db15c700beca9ae2eede  msvcp100.dll.so
+2cb115cd720e8357229a226fc5132d7a  msvcp110.dll.so
+03446f8c5b13e95b6224cbd989cb4837  msvcp120_app.dll.so
+6ad03d55c2ab458fcc9d6f3e0dbcd9f5  msvcp120.dll.so
+358babe6d3934c55cfb4e2f936cd6f6e  msvcp140.dll.so
+0af9f27142f639f78ccfde2869302de9  msvcp60.dll.so
+10d91b0c0329fd9c9b239f35a2a20ef7  msvcp70.dll.so
+91aa8ec2b6ccc7b2ea840041360f1d8e  msvcp71.dll.so
+873ced3a3625035819d3b64b27633538  msvcp80.dll.so
+616f1243432a1e2efd287e2deeb18956  msvcp90.dll.so
+5902ea7433b5fb79f77787e5499ad06a  msvcr100.dll.so
+341c4cac01b6057d109aaced0bc5dd79  msvcr110.dll.so
+daaaa8bbf06f6413a7903dca938fc75a  msvcr120_app.dll.so
+9d970f27772d101c2906d8c2d0699e91  msvcr120.dll.so
+40dc9df0f10b8086a99157c3d0622da5  msvcr70.dll.so
+b2a44028b3e1676758f984521b9d07da  msvcr71.dll.so
+33844b01040fcc4bf7c0a1943463bdbb  msvcr80.dll.so
+7021d05c1bd58b2bd5f64814ce994b88  msvcr90.dll.so
+7f9099d4605384dfe01e31a6a30c9abe  msvcrt20.dll.so
+08daa70e9d6f5f14582a5deddc0a3e37  msvcrt40.dll.so
+c6675c5630c29f581ba1e551aaaabb89  msvcrtd.dll.so
+beabfc89d14c9263c22c89c1770fad13  msvcrt.dll.so
+283c623ae1469ab02812905d067a5850  msvfw32.dll.so
+4fcb78e0a9399e5d4a9a43b2132e8b6e  msvidc32.dll.so
+c32d1e19fd9baf335612fc345d14fccc  msvideo.dll16.so
+b886f78126bcc1cf1df926d47d87512a  mswsock.dll.so
+302089c070da0084944c30fab8870236  msxml2.dll.so
+4d0adae7b6762824b9797ebd5e6cf65c  msxml3.dll.so
+30dd7f5a141b01d246f3e2589cc540e2  msxml4.dll.so
+e2f1717e11d166a410b8661034d965b8  msxml6.dll.so
+dc30051293f9cdf6e1efadde00adf071  msxml.dll.so
+062c5be8c9223a4263f87f7fdfd47a04  mtxdm.dll.so
+3bc118d2049c32c3746f616bec015afc  ncrypt.dll.so
+8ac544eca60107a6050553b5fc09c4f2  nddeapi.dll.so
+0761c45de7701cc5d0079f598e6d166d  ndis.sys.so
+c932102de9ca6fbdc622b2de79ad6f8f  netapi32.dll.so
+10e5f3f59132764d29cf3e2cad233883  netcfgx.dll.so
+a7ffbf14407092ce0d3bc41cdb58095b  net.exe.so
+fbb2a316c0c18dde9290cbb6fef3d795  netprofm.dll.so
+bf4509b6427b6968d950f35c27c223dc  netsh.exe.so
+45adf4532fb3d09ee68d41f2c7e1cfac  netstat.exe.so
+4f0077e4995a5a5d7751a9019900e5a1  newdev.dll.so
+c9d9df9ba182cafa85a3f41e2edf120b  ngen.exe.so
+0b94d6bdaadad0730b65748786d65037  ninput.dll.so
+ee730e5618fcf6297197d3f6e7128bb0  normaliz.dll.so
+37b9f3d6fda950b56b976616179913f0  notepad.exe.so
+5c2cd6574ed6d024e905914fa3230953  npmshtml.dll.so
+e6e697821826955272b0a161727cf8cd  npptools.dll.so
+7a7ab09c6fbef2a9df66d6828b7a4db2  ntdll.dll.so
+280476c3426e3cfb88287b96885d75c8  ntdsapi.dll.so
+76758d39da006a952a50d18f21f9e312  ntoskrnl.exe.so
+a1e5c36797363536d1a69d7020a75890  ntprint.dll.so
+50538a9f85cf662c76e68c13ffa606f6  objsel.dll.so
+8b28cd243d7bce6401f91c400bb580de  odbc32.dll.so
+6fd0b09d5ec4115bc5b8a3bf24dd8b9a  odbccp32.dll.so
+8ff57a322e19beac665c324c8d6ffdf2  odbccu32.dll.so
+a5876e39e65be56e85b3dff309dc17b7  ole2conv.dll16.so
+7f0a7edf8e9dbf61cbef3ea5e5802d59  ole2disp.dll16.so
+2724782052e6ec0bc848a303ef1d4b12  ole2.dll16.so
+4589fd135c7f03227b68610fa4fc4310  ole2nls.dll16.so
+d8abaff07a8548cb5fa7aa3491287418  ole2prox.dll16.so
+763248428b84e329579066e8f039e3bc  ole2thk.dll16.so
+58cc00abab7fb57ede84bd020fb7ad79  ole32.dll.so
+32db377cf2a58cfe375be8ba23387b0f  oleacc.dll.so
+458442af4b4c3890ba62eb5c36a3a2ac  oleaut32.dll.so
+0838c162ba723325ef5b9c5c8f789528  olecli32.dll.so
+a5193fdc836c01169266b13b4a4bef4c  olecli.dll16.so
+104a8e28e70642653fea7684cec7d244  oledb32.dll.so
+7441d1b18addb74e0e775db3111bd8b1  oledlg.dll.so
+0aaa9710113c9d4074cd4059c5ebae61  olepro32.dll.so
+f1a2839b9b556c8b17579492ed56e275  olesvr32.dll.so
+145c06aa227165e74866dbca4b1608e3  olesvr.dll16.so
+f66bcb2743c6596ba4960e8aa945bb2f  olethk32.dll.so
+16f8445b622502f5f87284ba49744c86  oleview.exe.so
+83d0237151cac186b99fc9f39e6f4d0b  openal32.dll.so
+821e9022a822042415c8ac6d805b14e2  opengl32.dll.so
+eee2c019adc84dae6e3ea10812f57646  packager.dll.so
+ceecf53d391c6812473b6bd1ecf56f62  pdh.dll.so
+c209c54fed0d775f38b25dce397d69c2  photometadatahandler.dll.so
+48bfde84211f680c374473e282aeb911  pidgen.dll.so
+f5a66bb938e667449558fc66b85f72c3  ping.exe.so
+518ae7c9d2c19b6d790a2f55f8a2e454  plugplay.exe.so
+1596cc82df9daf61004daf27a9e75e4d  powershell.exe.so
+ba88f29de644b1f97d9766445e497e74  powrprof.dll.so
+52792e7088a62b28a13b77a6f59720bf  presentationfontcache.exe.so
+27082e34528467e9ecd50481e4854c9c  printui.dll.so
+e71dc074a87fbbdd2fc8b46a8484d895  prntvpt.dll.so
+ac054f2bedc2a6faca9fd8cd2053309e  progman.exe.so
+c0205c35a4027852609866e7e1f267cb  propsys.dll.so
+d2f076cc1203d47e1b0b7a0089f2a5ba  psapi.dll.so
+69221b056a82467fb1fc6fc294d2ec72  pstorec.dll.so
+b2438449c639b250b3c0d281944d7f06  qcap.dll.so
+7b56b571df98ad60ce7cf1eab9a978a6  qedit.dll.so
+93e0076ac07b9c793fb7fcca1d8d20ba  qmgr.dll.so
+3d8f16dd77cbcb0b9c5bea25799bd705  qmgrprxy.dll.so
+84df0f8028bca58c6059f56b1dca9fd7  quartz.dll.so
+611922051f59afc6343c3ba25fb63826  query.dll.so
+aee13fd925ce8b72fc331917100a1658  rasapi16.dll16.so
+0c7bbb74b0f5ad00178d5c89c64aca5f  rasapi32.dll.so
+6d5e624c3fad84dd2e506f935fdb7872  rasdlg.dll.so
+1d19a50077fe650b96637760c01f324d  regapi.dll.so
+f0697a2ef69006fa26e07c28d5c5fb00  regasm.exe.so
+0490fd12b94aeab80cfb662e6fa4c00c  regedit.exe.so
+c0dcd0682ea736986586860613637a60  reg.exe.so
+06410dc3685b95fe86c5112fda702d29  regsvcs.exe.so
+4f3b1707034116bbf3ffc3263329695e  regsvr32.exe.so
+d4dd9da20f7de79155318ae35d433986  resutils.dll.so
+c6e6f38b188d88789bd25573fedc524a  riched20.dll.so
+0b1adbf87d00191998dd3a1a4a8c2e84  riched32.dll.so
+3a309b8d2d96d6d84b6d520721344fc0  rpcrt4.dll.so
+3295ecfd954bd2f9abc6d2c87e4d0354  rpcss.exe.so
+585ddfa8116ffa40b8707db1b7a194dc  rsabase.dll.so
+f1664acb371dc8d7b90d2777b2d0b22e  rsaenh.dll.so
+47f6fc6ff2e42ccb854c1e46175b8569  rstrtmgr.dll.so
+bba2592dd2967c68c1cd0d892154325d  rtutils.dll.so
+20cce1c855a99de9f2e99bd0ade05f90  rundll32.exe.so
+c1d77f10923fde3dcdc46b7b51816e90  rundll.exe16.so
+0573f258b224060d844ddd9bb7a20390  samlib.dll.so
+205ff790d5f08c6d01b89c2fcb03cdaf  sane.ds.so
+899df8921070d485ac8c0eecf1f502f3  sapi.dll.so
+ac168f1c662be07fce745442abadc23d  sas.dll.so
+f54ac51a28a072235f667b9d9e967952  scarddlg.dll.so
+b552c5b2b79a312871a67f2eb2da4aff  sccbase.dll.so
+b34b8dd7b76eb634f563320d5f0325ab  sc.exe.so
+a510e60f2ab01bccc0a9e56aa644e5a6  schannel.dll.so
+81de7d44dc18085d90aef7b6c53156c3  schedsvc.dll.so
+1fc3d53e318ee05f126cdd7c7fdab32e  schtasks.exe.so
+a45161857349b6dce7f9f991d1e48fbe  scrobj.dll.so
+6791a79614f924d160efb9209060f8a8  scrrun.dll.so
+dffd1852944a22a8e25f50f4972087b0  scsiport.sys.so
+f806874966c526e94180423758330dc4  sdbinst.exe.so
+4ef70fc8b687fca013905db5b8e9feb0  secedit.exe.so
+ffbfc7a6d8708242754e133dd465395f  secur32.dll.so
+7d02aab5335df81e1c91b6ec53dd5b7c  security.dll.so
+71c729dddd1a9d993b93c2ec578bffaf  sensapi.dll.so
+3ce562697ccb37c69ed301abaa895d3b  serialui.dll.so
+376361398c234973e2453642ed3cb333  servicemodelreg.exe.so
+ec9cb0f5fb234a5d194ff0b859559a03  services.exe.so
+e7556360789c8d4bdba0264d5382f49b  setupapi.dll.so
+cc2896c854c35a82891d529d98f26ddf  setupx.dll16.so
+fad767fc759ab63daf8fd9c14d245f38  sfc.dll.so
+958ba4143fedae8a9219afe819d9a1fc  sfc_os.dll.so
+9f9befd57968999121732f19e7179c0f  shcore.dll.so
+bb7f908027c0cce726b416ee85d33526  shdoclc.dll.so
+af961396cc477c1a8b7507d12cee7043  shdocvw.dll.so
+a69b5aadc48bf4ce4ef1c6915ceaa495  shell32.dll.so
+4dba31a07ec2d7f1183f09b926aed90c  shell.dll16.so
+fa1af9edff5c6b24f84381cb399d8020  shfolder.dll.so
+fe87416b5fce9e99b49c0cdd218b9fac  shlwapi.dll.so
+bcd7c03118c59de5103f19e5c61033fa  shutdown.exe.so
+066ee92f200f7bd596aff0944d91566e  slbcsp.dll.so
+8e61a59bb1c23af2e3ff7409657bb90f  slc.dll.so
+7f7a89a4403f1d6fb6678062a89c274e  snmpapi.dll.so
+02795e037aaa3bd68aa6d4e92f8ce103  softpub.dll.so
+4783472bfe81a2ec0ea5c2c3438acc28  sound.drv16.so
+375b7a6db69eaed8ae46a8d8c58be904  spoolss.dll.so
+568ca516db7332b4c62f86d0ccb02154  spoolsv.exe.so
+fe2f9bfbec7bf9e45966507ff546c79e  srclient.dll.so
+86fc0148d8db08f3804c1b2867a2b045  sspicli.dll.so
+6012493b40963a741d981997c2dca70e  start.exe.so
+829a221cc4ff17e92f83c37f07051459  stdole2.tlb.so
+3878e218f4c5a770e6989de0d6421f18  stdole32.tlb.so
+c18f8e8b75d32b0d62628c334d510137  sti.dll.so
+d73ea23996d884a6ca3486b20da951f4  storage.dll16.so
+dbb2db76d9dde4f3cae82e8e7ed3b53f  stress.dll16.so
+44b6318039052a1ad4859663835bb154  strmdll.dll.so
+e4971c632f5c16f51a2d17166509d38e  subst.exe.so
+c8e8b01cea1604bc7703df2fadf33888  svchost.exe.so
+9450b523ab7a8bed10cb4d1ab6119365  svrapi.dll.so
+3088ff32f2d3003a06f40aabdd6b687f  sxs.dll.so
+c09fd5971f889584cd12c96660f6a054  system.drv16.so
+f7eba4ddae06bc1a4110d079dd1b20ce  systeminfo.exe.so
+369dd60eed7f7afad5a2ee16a362a6ac  t2embed.dll.so
+855e62f1857235bdfccab9de858dd218  tapi32.dll.so
+027f258e8d6c6588b3910ea3d94f2a36  taskkill.exe.so
+e4e3c1f13a7e4e0c91ec431cbfaa10e4  tasklist.exe.so
+f9b50ea3cc77bbec7eae0df95b69d915  taskmgr.exe.so
+cdf8311cc38443ad078e6b7f6248ff93  taskschd.dll.so
+55d8a03775b078a1b2a3f289a06389b0  tdh.dll.so
+61b03e6afa8d45cd05d5a7faa00b622d  tdi.sys.so
+c64bbf7b0f51f596bce00dad539ba475  termsv.exe.so
+1311f2793eeb82f219b5a73411fc04ba  toolhelp.dll16.so
+94ac3c7b942d90b0a70c6805f3a25e33  traffic.dll.so
+ff265524c2d6476628437281dfd9e4e5  twain_32.dll.so
+be11507d3864dd8b540caca460f454cc  twain.dll16.so
+fd41b6f1b9d3601761a00dcd9bcfea50  typelib.dll16.so
+2d9de14dc643fd24ab0daba3a88d273b  ucrtbase.dll.so
+71ee3d7bc056035b4054797dc41c6c9c  uiautomationcore.dll.so
+9d5d0dd1f7ea80cd2330bd95917b781e  uiribbon.dll.so
+99d4dc19d47b8c923ce3a1f5c8093214  unicows.dll.so
+97e2a99e142a8b00a86f9a02a249a13c  uninstaller.exe.so
+7ce29efbe2a5e1ef39939087d6ffdd29  unlodctr.exe.so
+e10faefbb4e9cc01886e8036537983aa  updspapi.dll.so
+fbd38c036644843593b63f1024db3994  url.dll.so
+5913c214082ffab3fe0518ac8cdd35d7  urlmon.dll.so
+679fdeaa5d058c7777a1272a5f6ff99b  usbd.sys.so
+b38f1e2c5ce6152b2708069a182bb8f1  user32.dll.so
+79ccefe6aee85792d1ae1c73edc8050d  userenv.dll.so
+c26bea69daec45e870979730d52f0857  user.exe16.so
+81fd6cb3cefa7bd5ce51784603050f59  usp10.dll.so
+3d324eb6523366efd216072614d546d1  uxtheme.dll.so
+6492bb2cfec520dc8c009edbe32d16c1  vbscript.dll.so
+20f80f7a51b1564514f8e6f18e149a8e  vcomp100.dll.so
+847b1ad2b137f315631024fb070c8c26  vcomp110.dll.so
+3c71098309b8bd901bbdd9f0955092b1  vcomp120.dll.so
+adfcd3578748f7c89b709422df321ca0  vcomp140.dll.so
+27719b1d7c25ac1265d5122cc2c9a943  vcomp90.dll.so
+88f7b02037b51d7830b65eb47894853c  vcomp.dll.so
+c1af0366d0bf47fda749b1f472166693  vcruntime140.dll.so
+baad555851594f711202eaee1ca08d8b  vdhcp.vxd.so
+a9c3f1373e3744313217f318bc6e14dd  vdmdbg.dll.so
+8911d777b5b76934d069ea6818472aa9  ver.dll16.so
+915dbf975799130c7c3ebdcc1921490b  version.dll.so
+5bf4d29fc23df50f2325ba49166175ef  view.exe.so
+e7c0327fd52c77cf66fe54a1d17b6b8e  virtdisk.dll.so
+b0e2ac77f343176270de1ce625062248  vmm.vxd.so
+3a9d314284dbe511e674345f63e8e5c2  vnbt.vxd.so
+336df19ca5f64f4d440e33a19e49f8c4  vnetbios.vxd.so
+2f36822e8f8d14e1cbc2635236b42392  vrclient.dll.so
+6ba8ef8dbb2b871354e9ada05f0aadcd  vssapi.dll.so
+e044d5ccc7bd438862a3c10d2a46a943  vtdapi.vxd.so
+69d934bd7b2517ca73a8b2447f61e73b  vulkan-1.dll.so
+7c7fc190e49f55960b75b538ad898b0c  vwin32.vxd.so
+c573e41cf12ac30f5eae3c4dfe00cc44  w32skrnl.dll.so
+eb496f0c5532e612d3b7bf34827bea59  w32sys.dll16.so
+17941329c733b09111f171c272cb9159  wbemdisp.dll.so
+e850339d0f6367193f21386dc9ce93db  wbemprox.dll.so
+b3ed1703428f2dcbd28914c8594bd550  wdscore.dll.so
+b20120803455045433249e8d344856f5  webservices.dll.so
+a8090bba7ccdb191c67bbf7065cc3c88  wer.dll.so
+25cc903dabeba2e6670b1e33a13f5baf  wevtapi.dll.so
+3692e5f76f484a1140917398d037dd3d  wevtutil.exe.so
+fe221c78d73a72a73cbe429c126a5856  wiaservc.dll.so
+ee2999de40b02bee879ed825da4f23de  wimgapi.dll.so
+735974ef983ca7e7716fe65816e70479  win32s16.dll16.so
+3d4d62fb8010169c4be1b7316ea00406  win87em.dll16.so
+145b658fefa0eb6ed137201961eba160  winaspi.dll16.so
+c87fadebb91ce711fdf2926592f88b0c  windebug.dll16.so
+f346138f02deeced55f8923724795f7b  windowscodecs.dll.so
+ba09147ebb0defbf67f21fafa2f03bf2  windowscodecsext.dll.so
+90de44ff1e1289e700a2ac3add682c9f  winealsa.drv.so
+c03bc1f4a6df0b315206c9e604c7f226  wineboot.exe.so
+5f7096e4a324351e6e05c6d400ea4972  winebrowser.exe.so
+9a165422a0af6ad03f252d67807efea0  winebus.sys.so
+3eab8a90772c4624798efeae8fea621d  winecfg.exe.so
+665248d437ecb96baccf89caa1ac4c24  wineconsole.exe.so
+c328629815b0bb1cdba2564cfa077e70  wined3d.dll.so
+b8ba3c4a7d08266b5e54bc3efa264e4c  winedbg.exe.so
+3fc5565e47c8fb49794181a782624371  winedevice.exe.so
+38e76d87a2026de3eeea5d32bdc2c42b  winefile.exe.so
+16d7fd87ede38f53dda10ad8f3e5e48c  winehid.sys.so
+2d0d04a14e2957aed57af1299b17bdc9  winejoystick.drv.so
+9c12c12a472bf59b5975e9d1c48390c5  winemapi.dll.so
+579a357155100c369c9afdb8472ce838  winemine.exe.so
+2e6cca8a919ccc95f21e649430e5ec14  winemsibuilder.exe.so
+9c99752fdbf2c1fe638853590880850d  winepath.exe.so
+52c3ac4b610df9b6e414ea6970f251c1  wineps16.drv16.so
+e18d839e6f3c1dc5cfe1cbc4a52872a1  wineps.drv.so
+54fe09e0020eef2a8d4aa2450e85cd8f  winepulse.drv.so
+f7d68d20c19a94166d28619f3035a208  winevdm.exe.so
+6253827c405f49c740d908c11211e213  winevulkan.dll.so
+6e0144ef79f6ae7b582fa737adbb6d01  winex11.drv.so
+6ac879447bd222c10d49d73759af2ac4  wing32.dll.so
+6749bd70f3dfd264bc56ddb3d36cc878  wing.dll16.so
+762a13a2a650dadb5630a437ed6d9bbe  winhelp.exe16.so
+a87d24f30f3b96be41c3d06dd6aa6127  winhlp32.exe.so
+459696bcdbd795859183b583c6918863  winhttp.dll.so
+a0ec0f3831fcf84d52befaf7e7bf4382  wininet.dll.so
+fbe2b6c8ac2c1493f252f2c78d2c8fb1  winmm.dll.so
+1b4e0f793eb7c1accff16615aaba58c1  winnls32.dll.so
+8f75dc4fea1adfea5535ae51368e38ca  winnls.dll16.so
+6d4ceb502fee7f2728c1419592f76d79  winoldap.mod16.so
+b85c380993a059c61f45e5b65b08773b  winscard.dll.so
+4c380a162606a92630825d11d80123e1  winsock.dll16.so
+9f0462b112d55ea9b34420eb2735b35b  winspool.drv.so
+30d798bd09570302979f57766671b4e5  winsta.dll.so
+5f7860ac9e220f0ec548aa9a66d53c0d  wintab32.dll.so
+abbedae5e3370ac71d1aac940e0541da  wintab.dll16.so
+2165cd0bce0185770e1a1420fdbe41a0  wintrust.dll.so
+d6a6ed6a96ddd33a996f750254d7aadf  winusb.dll.so
+f38bdc287c498074e5e8913f35823356  winver.exe.so
+825034b041c069a6fb6b053ff5586fb3  wlanapi.dll.so
+9edad66db7f24be961abba149ab5af09  wldap32.dll.so
+956bd52cb308bbc0edb6b146f095ece0  wmasf.dll.so
+ba7386f1cf1b010314c0bcd0cdb11ec0  wmic.exe.so
+91cb39cbc8e2f635e11ebbd0f9a02def  wmi.dll.so
+6260c1af5dcbc9fc3f8242109766109c  wmiutils.dll.so
+90c44d3f19f2cead77a70574621b01f6  wmp.dll.so
+a9cd214ec9564f92752bd256222ca8a3  wmphoto.dll.so
+39f3e9c36f77db6fce000fd47114f42f  wmplayer.exe.so
+9cf50eed87de9711d621947b12c871c4  wmvcore.dll.so
+704d342835984a4415b8a958a0cf6dbe  wnaspi32.dll.so
+2046a0227090cd430a0e7878f50c0c21  wordpad.exe.so
+e058aafa542136fe2e7b3e00d439a0a2  wow32.dll.so
+c799c754591e9c06f91120a533fb9837  wpcap.dll.so
+c6d5b674d2cd0148cacb2798065d7195  wpc.dll.so
+13ac8c8e2a11e5f9e6bd5177e46facf1  write.exe.so
+b43a3934cc04188272ecb5de87dd04e2  ws2_32.dll.so
+091baada450e0990e79e71adeb25cbcf  wscript.exe.so
+8a9b9d898da4fc9aea079f1d246f4f50  wsdapi.dll.so
+998bf621835ef9d84b4a931eb99742e7  wshom.ocx.so
+4845f24f92427eced0885f3455300ad7  wsnmp32.dll.so
+0c583341e64074b7aa63d0b6f2be6147  wsock32.dll.so
+26f391c3ee4a73012846d65bc48c5b8f  wtsapi32.dll.so
+3e11cafea06b43ce596a50b4620980e9  wuapi.dll.so
+4c40042ccff7fbafe9ef941e6a1c4ab0  wuaueng.dll.so
+49e9bac39a1bd85b9ffdbbff5cca4a85  wusa.exe.so
+b341b1eb617000ad82f54584d47831b1  x3daudio1_0.dll.so
+5e2f8bd7b319352d8280561e0d2fd64a  x3daudio1_1.dll.so
+236171aaa71d3b050f0eebede6ba2f62  x3daudio1_2.dll.so
+7ba230e159c3d152af7337b2cbd8f514  x3daudio1_3.dll.so
+9a899eee8c56417a7b6f8595f5d57e3a  x3daudio1_4.dll.so
+80eac35021abd924715ae2c37b42882b  x3daudio1_5.dll.so
+ad9d4906e190d861ce7bf707e5d96193  x3daudio1_6.dll.so
+e1efac0f233e75e4c9c06e89f2e263e7  x3daudio1_7.dll.so
+b007c1bf72cc0c78eeac7d88f671d62d  xapofx1_1.dll.so
+61272911517378262447c8ffa17ff391  xapofx1_2.dll.so
+e9bd0b749a9c2161a142906a7012bcf3  xapofx1_3.dll.so
+5dc66afcdb3bbef815f846791e7dd9f8  xapofx1_4.dll.so
+54863edf4922aa6bb2aee7e24c58bf75  xapofx1_5.dll.so
+962dd330516a7556934a4d600c6fa17d  xaudio2_0.dll.so
+6bdf801a1619934bffb79b6960853f2c  xaudio2_1.dll.so
+68766798fd0c43f87b9494b645ade512  xaudio2_2.dll.so
+ae56b0d91dd779566ea6ab7da74d8154  xaudio2_3.dll.so
+1230bc2ebf69f052461d841b1bd4ccc3  xaudio2_4.dll.so
+33e146337a9c0db7869c473c76650015  xaudio2_5.dll.so
+0f519d279743c95db3be2f3b8bb1e234  xaudio2_6.dll.so
+de19e04105a7140fe34fa4f5c3ed83c3  xaudio2_7.dll.so
+03148140e096925e4ee915233358fe33  xaudio2_8.dll.so
+e4c27900313706ede58bc07ef4e58304  xaudio2_9.dll.so
+9ca4a34f479586545357af79f00a37bf  xcopy.exe.so
+64295173cec1d65e34dc78af172ee27a  xinput1_1.dll.so
+c02bb847c8caa7bdb6d883010f40d241  xinput1_2.dll.so
+9942c1804393d0b3853df8f50b4dfdbb  xinput1_3.dll.so
+639b72d0e30cda0871dad164b0d5b648  xinput1_4.dll.so
+d069e6bb8b49369e5105bea3949c2a87  xinput9_1_0.dll.so
+71335d841a176e064344a9b704b8ca22  xmllite.dll.so
+42ff0fe6fbf166892c9da4ebcf9b6e76  xolehlp.dll.so
+95ba48fb9a8edf677e105f9085fcfa84  xpsprint.dll.so
+e3e51dbb1a42e731c828094861713f63  xpssvcs.dll.so	
+	
+##################################################################################################################################	
+	
+	if [ -d "$ORIGEN/dist"/lib64	]; then
+	if [ -d "$ORIGEN/dist"/share	]; then
+	if [ -d "$ORIGEN/dist"/version	]; then
+fi

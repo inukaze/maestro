@@ -1,0 +1,259 @@
+
+
+#!/bin/bash
+
+# Script to Try Install Enlightenment Desktop 18
+# In Any Linux Distro.
+
+
+if [ ! -d /opt/Desktops/Enlightenment ]; then
+sudo mkdir -p /opt/Desktops/Enlightenment
+sudo mkdir -p /opt/Desktops/EnlightenmentSRC
+sudo mkdir -p /opt/Desktops/Enlightenment/bin
+sudo mkdir -p /opt/Desktops/Enlightenment/lib
+fi
+
+cd "$EnlightenmentSrc_dir"
+
+#URL
+relaseurl="http://download.enlightenment.org/releases"
+liburl="http://download.enlightenment.org/rel/libs/efl"
+bindurl="http://download.enlightenment.org/rel/bindings"
+appurl="http://download.enlightenment.org/rel/apps/enlightenment"
+
+# First
+EFL="efl-1.10.1.tar.gz"
+evas_generic_loaders="evas_generic_loaders-1.10.0.tar.gz"
+emotion_generic_players="emotion_generic_players-1.10.0.tar.gz"
+elementary="elementary-1.10.1.tar.gz"
+
+# Second
+enlightement="enlightenment-0.18.8.tar.gz"
+python_efl="python-efl-1.10.0.tar.gz"
+expedite="expedite-1.7.9.tar.gz"
+enventor="enventor-0.2.0.tar.gz"
+terminology="terminology-0.6.1.tar.gz"
+econnman="econnman-1.1.tar.gz"
+
+# Folders :
+EFL_dir=$(ls "$EFL" | sed 's/(stdin)= //;s/ *.tar.gz//')
+enlightenment_dir=$(ls "$enlightement" | sed 's/(stdin)= //;s/ *.tar.gz//')
+evas_generic_loaders_dir=$(ls "$evas_generic_loaders" | sed 's/(stdin)= //;s/ *.tar.gz//')
+emotion_generic_players_dir=$(ls "$emotion_generic_players" | sed 's/(stdin)= //;s/ *.tar.gz//')
+elementary_dir=$(ls "$elementary" | sed 's/(stdin)= //;s/ *.tar.gz//')
+python_efl_dir=$(ls "$python_efl" | sed 's/(stdin)= //;s/ *.tar.gz//')
+expedite_dir=$(ls "$expedite" | sed 's/(stdin)= //;s/ *.tar.gz//')
+enventor_dir=$(ls "$enventor" | sed 's/(stdin)= //;s/ *.tar.gz//')
+terminology_dir=$(ls "$terminology" | sed 's/(stdin)= //;s/ *.tar.gz//')
+econnman_dir=$(ls "$econnman" | sed 's/(stdin)= //;s/ *.tar.gz//')
+EnlightenmentSrc_dir="/opt/Desktops/EnlightenmentSRC"
+
+
+# Need Administratives Permissions :
+
+if [ $(whoami) = "root" ]
+        then
+                echo ""
+        else
+                echo "Necesitas ejecutar este Script"
+                echo "Con Permisos de Root"
+        exit 1
+fi
+echo /opt/Desktops/Enlightenment/lib > /etc/ld.so.conf.d/enlightenment.conf
+
+export PATH=/opt/Desktops/Enlightenment/bin:$PATH
+export LDFLAGS="-Wl,-rpath,/opt/Desktops/Enlightenment/lib"
+export PATH=/opt/Desktops/Enlightenment/bin:/opt/Desktops/Enlightenment/sbin:$PATH
+export PKG_CONFIG_PATH=/opt/Desktops/Enlightenment/lib/pkgconfig:$PKG_CONFIG_PATH
+export XDG_CONFIG_DIRS=/etc/xdg:/opt/Desktops/Enlightenment/etc/xdg:$XDG_CONFIG_DIRS
+export XDG_DATA_DIRS=/usr/share/:/usr/local/share:$HOME/.local/share:/opt/Desktops/Enlightenment/share:$XDG_DATA_DIRS
+
+if [ -f $EFL ]; then
+        tar xfvz $EFL
+                cd $EFL_dir
+                        ./autogen.sh --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                        ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                        make
+                        sudo make install
+                cd "$EnlightenmentSrc_dir"
+        else
+                wget $liburl/$EFL
+                tar xfvz $EFL
+                        cd $EFL_dir
+                        ./autogen.sh --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                        ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                                make
+                                sudo make install
+                cd "$EnlightenmentSrc_dir"
+fi
+
+cd "$EnlightenmentSrc_dir"
+if [ -f $evas_generic_loaders ]; then
+        tar xfvz $evas_generic_loaders
+                cd $evas_generic_loaders
+                        ./autogen.sh --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                        ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                        make
+                        sudo make install
+                cd "$EnlightenmentSrc_dir"
+        else
+                wget "$liburl/evas_generic_loaders/$evas_generic_loaders"
+                tar xfvz $evas_generic_loaders
+                        cd $evas_generic_loaders_dir
+                        ./autogen.sh --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                        ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                                make
+                                sudo make install
+                cd "$EnlightenmentSrc_dir"
+fi
+
+cd "$EnlightenmentSrc_dir"
+if [ -f $emotion_generic_players ]; then
+        tar xfvz $emotion_generic_players
+        cd $emotion_generic_players_dir
+                        #sed -i '31s:AM_CONFIG_HEADER:AC_CONFIG_HEADERS:' configure.ac
+                        ./autogen.sh --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                        ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                        make
+                        sudo make install
+                cd "$EnlightenmentSrc_dir"
+        else
+                wget "$liburl/emotion_generic_players/$emotion_generic_players"
+                tar xfvz $emotion_generic_players
+                        cd $emotion_generic_players_dir
+                        ./autogen.sh --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                        ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                                make
+                                sudo make install
+                cd "$EnlightenmentSrc_dir"
+fi
+
+cd "$EnlightenmentSrc_dir"
+if [ -f $elementary ]; then
+        tar xfvz $elementary
+                cd $elementary_dir
+                        ./autogen.sh --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                        ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                        make
+                        sudo make install
+                cd "$EnlightenmentSrc_dir"
+        else
+                wget "$liburl/elementary/$elementary"
+                tar xfvz $elementary
+                        cd $elementary_dir
+                        ./autogen.sh --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                        ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                                make
+                                sudo make install
+                                cd "$EnlightenmentSrc_dir"
+fi
+
+cd "$EnlightenmentSrc_dir"
+if [ -f $enlightement ]; then
+        tar xfvz $enlightement
+                cd $enlightenment_dir
+                ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                make
+                sudo make install
+                cd "$EnlightenmentSrc_dir"
+                        else
+                        wget "$libapp/enlightement/$enlightement"
+                        tar xfvz $enlightement
+                        cd "$enlightenment_dir"
+                        ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                                make
+                                sudo make install
+                        cd "$EnlightenmentSrc_dir"
+fi
+
+cd "$EnlightenmentSrc_dir"
+if [ -f $python_efl ]; then
+        tar xfvz $python_efl
+                cd $python_efl_dir
+                ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                make
+                sudo make install
+                cd "$EnlightenmentSrc_dir"
+                        else
+                        wget "$bindurl/python/$python_efl"
+                        tar xfvz $python_efl
+                        cd "$python_efl_dir"
+                        ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                                make
+                                sudo make install
+                        cd "$EnlightenmentSrc_dir"
+fi
+
+cd "$EnlightenmentSrc_dir"
+if [ -f $expedite ]; then
+        tar xfvz $expedite
+                cd "$expedite_dir"
+                ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                make
+                sudo make install
+                cd "$EnlightenmentSrc_dir"
+                        else
+                        wget "$relaseurl/$expedite"
+                        tar xfvz $expedite
+                        cd "$expedite_dir"
+                        ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                                make
+                                sudo make install
+                        cd "$EnlightenmentSrc_dir"
+fi
+
+cd "$EnlightenmentSrc_dir"
+if [ -f $enventor ]; then
+        tar xfvz $enventor
+                cd $enventor_dir
+                ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                make
+                sudo make install
+                cd "$EnlightenmentSrc_dir"
+                        else
+                        wget "$appurl/enventor/$enventor"
+                        tar xfvz $enventor
+                        cd "$enventor_dir"
+                        ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                                make
+                                sudo make install
+                        cd "$EnlightenmentSrc_dir"
+fi
+
+cd "$EnlightenmentSrc_dir"
+if [ -f $terminology ]; then
+        tar xfvz $terminology
+                cd $terminology_dir
+                ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                make
+                sudo make install
+                cd "$EnlightenmentSrc_dir"
+                        else
+                        wget $appurl/terminology/$terminology
+                        tar xfvz $terminology
+                        cd "$terminology_dir"
+                        ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                                make
+                                sudo make install
+                        cd "$EnlightenmentSrc_dir"
+fi
+
+cd "$EnlightenmentSrc_dir"
+if [ -f $econnman ]; then
+        tar xfvz $econnman
+                cd $econnman_dir
+                ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                make
+                sudo make install
+                cd "$EnlightenmentSrc_dir"
+                        else
+                        wget $appurl/econnman/$econnman
+                        tar xfvz $econnman
+                        cd "$econnman_dir"
+                        ./configure --disable-dependency-tracking --prefix=/opt/Desktops/Enlightenment
+                                make
+                                sudo make install
+                        cd "$EnlightenmentSrc_dir"
+fi
+
+

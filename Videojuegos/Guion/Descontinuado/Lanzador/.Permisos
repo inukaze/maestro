@@ -1,0 +1,41 @@
+#!/bin/bash
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+echo ""
+echo ""
+if [ $(whoami) = "$USERNAME" ]
+then
+	kernel=$(uname -s)
+	if		[ $kernel = "Darwin" ]; then
+			ME=$USERNAME
+			sudo chown $ME:$ME -R $RUTA
+			sudo chmod a+o+rw+x -R $RUTA
+			echo "Now "' $ME '" its the owner"
+			echo "of the Path Folder : $RUTA"
+	elif		[ $kernel = "Linux" ]; then
+			ME=`echo $HOME | sed 's/home//' | sed 's/[//]//' | sed 's/[//]//'`
+			echo 
+			echo "If Possible you need put the current"
+			echo 'User Password "' $USERNAME '" to fix'
+			echo "Correctly the rights"
+			echo ""
+			echo "Trying to Change the owner"
+#			sudo chown $ME:$ME -R $RUTA
+			sudo chown $ME:users -R $RUTA
+			sudo chmod a+o+rw+x -R $RUTA
+			echo ""
+			echo 'Now The User "' $ME '" Is the owner of the Folder'
+			echo "And all sub-content of : $RUTA"
+	else
+			echo "Not Supported Operating System"
+	fi
+else
+echo ""
+echo "You can't change the owner"
+echo "Of the Path : $RUTA"
+echo ""
+echo 'You should try using "su" or "sudo" before this script name.'
+echo ""
+echo ""
+exit 1;
+fi
+

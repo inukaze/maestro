@@ -1,0 +1,793 @@
+#!/bin/sh
+
+# Variables
+
+# Solucion de Resolucion - Parte 1
+echo `xrandr --current | grep current | awk '{print $8}'` >> Resolucion1
+echo `xrandr --current | grep current | awk '{print $10}'` >> Resolucion2
+cat Resolucion2 | sed -i 's/,//g' Resolucion2
+
+# Resolucion X = Altura  & Resolucion Y = Anchura ; 
+ResolucionX=$(cat Resolucion1) ; ResolucionY=$(cat Resolucion2) ; rm Resolucion1 Resolucion2
+echo "$ResolucionX"'x'"$ResolucionY" >> Resolucion ; Resolucion=$(cat Resolucion) ; rm Resolucion
+xrandr -s 800x600
+# Solucion de Resolucion - Parte 1
+
+# Determinar los Mandos USB conectados
+# Determinar en que Orden estan siendo reconocidos por el Sistema
+# y Determinar el Nombre segun "jstest"
+
+if [ -c "/dev/input/js0" ]; then MANDO0=`jstest -v /dev/input/js0 | grep Joystick` ; fi
+if [ -c "/dev/input/js1" ]; then MANDO1=`jstest -v /dev/input/js1 | grep Joystick` ; fi
+if [ -c "/dev/input/js2" ]; then MANDO2=`jstest -v /dev/input/js2 | grep Joystick` ; fi
+if [ -c "/dev/input/js3" ]; then MANDO3=`jstest -v /dev/input/js3 | grep Joystick` ; fi
+if [ -c "/dev/input/js4" ]; then MANDO4=`jstest -v /dev/input/js4 | grep Joystick` ; fi
+if [ -c "/dev/input/js5" ]; then MANDO5=`jstest -v /dev/input/js5 | grep Joystick` ; fi
+if [ -c "/dev/input/js6" ]; then MANDO6=`jstest -v /dev/input/js6 | grep Joystick` ; fi
+if [ -c "/dev/input/js7" ]; then MANDO7=`jstest -v /dev/input/js7 | grep Joystick` ; fi
+if [ -c "/dev/input/js8" ]; then MANDO8=`jstest -v /dev/input/js8 | grep Joystick` ; fi
+if [ -c "/dev/input/js9" ]; then MANDO9=`jstest -v /dev/input/js9 | grep Joystick` ; fi
+
+if [ "$MANDO0" = "Joystick (USB Gamepad ) has 2 axes (X, Y)" ]; then
+	MANDO0=`jstest 		-v /dev/input/js0 | grep Joystick | awk '{print $2$3$4}'`
+	MANDO="Alfombra Generica"
+	elif [ "$MANDO1" = "Joystick (USB Gamepad ) has 2 axes (X, Y)" ]; then
+	MANDO1=`jstest 		-v /dev/input/js1 | grep Joystick | awk '{print $2$3$4}'`
+	MANDO1="Alfombra Generica"
+	elif [ "$MANDO2" = "Joystick (USB Gamepad ) has 2 axes (X, Y)" ]; then
+	MANDO2=`jstest 		-v /dev/input/js2 | grep Joystick | awk '{print $2$3$4}'`
+	MANDO2="Alfombra Generica"
+	elif [ "$MANDO3" = "Joystick (USB Gamepad ) has 2 axes (X, Y)" ]; then
+	MANDO3=`jstest 		-v /dev/input/js3 | grep Joystick | awk '{print $2$3$4}'`
+	MANDO3="Alfombra Generica"
+	elif [ "$MANDO4" = "Joystick (USB Gamepad ) has 2 axes (X, Y)" ]; then
+	MANDO4=`jstest 		-v /dev/input/js4 | grep Joystick | awk '{print $2$3$4}'`
+	MANDO4="Alfombra Generica"
+	elif [ "$MANDO5" = "Joystick (USB Gamepad ) has 2 axes (X, Y)" ]; then
+	MANDO5=`jstest 		-v /dev/input/js5 | grep Joystick | awk '{print $2$3$4}'`
+	MANDO5="Alfombra Generica"
+	elif [ "$MANDO6" = "Joystick (USB Gamepad ) has 2 axes (X, Y)" ]; then
+	MANDO6=`jstest 		-v /dev/input/js6 | grep Joystick | awk '{print $2$3$4}'`
+	MANDO6="Alfombra Generica"
+	elif [ "$MANDO7" = "Joystick (USB Gamepad ) has 2 axes (X, Y)" ]; then
+	MANDO7=`jstest 		-v /dev/input/js7 | grep Joystick | awk '{print $2$3$4}'`
+	MANDO7="Alfombra Generica"
+	elif [ "$MANDO8" = "Joystick (USB Gamepad ) has 2 axes (X, Y)" ]; then
+	MANDO8=`jstest		-v /dev/input/js8 | grep Joystick | awk '{print $2$3$4}'`
+	MANDO8="Alfombra Generica"
+	elif [ "$MANDO9" = "Joystick (USB Gamepad ) has 2 axes (X, Y)" ]; then
+	MANDO9=`jstest 		-v /dev/input/js9 | grep Joystick | awk '{print $2$3$4}'`
+	MANDO9="Alfombra Generica"
+	else
+	echo
+	echo "No se ha conectado el MANDO USB : "
+	echo "		Alfombra Generica	 		"
+	echo
+fi
+
+#DR#if [ "$MANDO0" = "Joystick (Dragon Rise Inc.) has 6 axes (X, Y, R, L, A, Z)" ]; then
+#DR#	MANDO0=`jstest 		-v /dev/input/js0 | grep Joystick | awk '{print $2$3}'`
+#DR#	elif [ "$MANDO1" = "Joystick (Dragon Rise Inc.) has 6 axes (X, Y, R, L, A, Z)" ]; then
+#DR#	MANDO1=`jstest 		-v /dev/input/js1 | grep Joystick | awk '{print $2$3}'`
+#DR#	elif [ "$MANDO2" = "Joystick (Dragon Rise Inc.) has 6 axes (X, Y, R, L, A, Z)" ]; then
+#DR#	MANDO2=`jstest 		-v /dev/input/js2 | grep Joystick | awk '{print $2$3}'`
+#DR#	elif [ "$MANDO3" = "Joystick (Dragon Rise Inc.) has 6 axes (X, Y, R, L, A, Z)" ]; then
+#DR#	MANDO3=`jstest 		-v /dev/input/js3 | grep Joystick | awk '{print $2$3}'`
+#DR#	elif [ "$MANDO4" = "Joystick (Dragon Rise Inc.) has 6 axes (X, Y, R, L, A, Z)" ]; then
+#DR#	MANDO4=`jstest 		-v /dev/input/js4 | grep Joystick | awk '{print $2$3}'`
+#DR#	elif [ "$MANDO5" = "Joystick (Dragon Rise Inc.) has 6 axes (X, Y, R, L, A, Z)" ]; then
+#DR#	MANDO5=`jstest 		-v /dev/input/js5 | grep Joystick | awk '{print $2$3}'`
+#DR#	elif [ "$MANDO6" = "Joystick (Dragon Rise Inc.) has 6 axes (X, Y, R, L, A, Z)" ]; then
+#DR#	MANDO6=`jstest 		-v /dev/input/js6 | grep Joystick | awk '{print $2$3}'`
+#DR#	elif [ "$MANDO7" = "Joystick (Dragon Rise Inc.) has 6 axes (X, Y, R, L, A, Z)" ]; then
+#DR#	MANDO7=`jstest 		-v /dev/input/js7 | grep Joystick | awk '{print $2$3}'`
+#DR#	elif [ "$MANDO8" = "Joystick (Dragon Rise Inc.) has 6 axes (X, Y, R, L, A, Z)" ]; then
+#DR#	MANDO8=`jstest 		-v /dev/input/js8 | grep Joystick | awk '{print $2$3}'`
+#DR#	elif [ "$MANDO9" = "Joystick (Dragon Rise Inc.) has 6 axes (X, Y, R, L, A, Z)" ]; then
+#DR#	MANDO9=`jstest 		-v /dev/input/js9 | grep Joystick | awk '{print $2$3}'`
+#DR#	else
+#DR#	echo
+#DR#	echo "No se ha conectado el MANDO USB : "
+#DR#	echo "Jetion JT-5552 / Dragon Rise Inc.	"
+#DR#	echo
+#DR#fi
+
+if [ "$MANDO0" = "Joystick (2-Axis,8-Button  ) has 2 axes (X, Y)" ]; then
+	MANDO0=`jstest 		-v /dev/input/js0 | grep Joystick | awk '{print $2$3}'`
+	MANDO0="MaxFire G-08XU"
+	elif [ "$MANDO1" = "Joystick (2-Axis,8-Button  ) has 2 axes (X, Y)" ]; then
+	MANDO1=`jstest 		-v /dev/input/js1 | grep Joystick | awk '{print $2$3}'`
+	MANDO1="MaxFire G-08XU"
+	elif [ "$MANDO2" = "Joystick (2-Axis,8-Button  ) has 2 axes (X, Y)" ]; then
+	MANDO2=`jstest 		-v /dev/input/js2 | grep Joystick | awk '{print $2$3}'`
+	MANDO2="MaxFire G-08XU"
+	elif [ "$MANDO3" = "Joystick (2-Axis,8-Button  ) has 2 axes (X, Y)" ]; then
+	MANDO3=`jstest 		-v /dev/input/js3 | grep Joystick | awk '{print $2$3}'`
+	MANDO3="MaxFire G-08XU"
+	elif [ "$MANDO4" = "Joystick (2-Axis,8-Button  ) has 2 axes (X, Y)" ]; then
+	MANDO4=`jstest 		-v /dev/input/js4 | grep Joystick | awk '{print $2$3}'`
+	MANDO4="MaxFire G-08XU"
+	elif [ "$MANDO5" = "Joystick (2-Axis,8-Button  ) has 2 axes (X, Y)" ]; then
+	MANDO5=`jstest 		-v /dev/input/js5 | grep Joystick | awk '{print $2$3}'`
+	MANDO5="MaxFire G-08XU"
+	elif [ "$MANDO6" = "Joystick (2-Axis,8-Button  ) has 2 axes (X, Y)" ]; then
+	MANDO6=`jstest 		-v /dev/input/js6 | grep Joystick | awk '{print $2$3}'`
+	MANDO6="MaxFire G-08XU"
+	elif [ "$MANDO7" = "Joystick (2-Axis,8-Button  ) has 2 axes (X, Y)" ]; then
+	MANDO7=`jstest 		-v /dev/input/js7 | grep Joystick | awk '{print $2$3}'`
+	MANDO7="MaxFire G-08XU"
+	elif [ "$MANDO8" = "Joystick (2-Axis,8-Button  ) has 2 axes (X, Y)" ]; then
+	MANDO8=`jstest 		-v /dev/input/js8 | grep Joystick | awk '{print $2$3}'`
+	MANDO8="MaxFire G-08XU"
+	elif [ "$MANDO9" = "Joystick (2-Axis,8-Button  ) has 2 axes (X, Y)" ]; then
+	MANDO9=`jstest 		-v /dev/input/js9 | grep Joystick | awk '{print $2$3}'`
+	MANDO9="MaxFire G-08XU"
+	else
+	echo
+	echo "No se ha conectado el MANDO USB : "
+	echo "			MaxFire G-08XU			"
+	echo
+fi
+
+# Obtener el Nombre del Juego
+NOMBRE="$( basename "$@" )"
+MEMORIA=`echo $NOMBRE | sed 's/[*.*].*//'`
+
+# Variables para PCSXR
+CONFIG_NOMB=`echo "$@" | sed 's/^[home//'$USERNAME'//.pcsxr//roms\t]*//'`
+CONFIG_NOMB=`echo "$NOMBRE" | sed 's/[*.*].*//'`
+CONFIG_DIRE=`echo "$CONFIG_NOMB" | sed 's/[*.*].*//' | sed 's/[CD$#-].*//'`
+CONFIG_EMUL=$CONFIG_NOMB.cfg
+CONFIG_GF2D=dfxvideo.cfg
+CONFIG_GF3D=gpuPeopsMesaGL.cfg
+CONFIG_CDRM=dfcdrom.cfg
+CONFIG_CRTL=dfinput.cfg
+CONFIG_AUDIO=dfsound.cfg
+
+# Nombre de Directorios de Configuracion segun el nombre de archivo ;
+#if [ "$CONFIG_DIRE" = "Grandia " ]; then CONFIG_DIRE="Grandia"; fi
+#if [ "$CONFIG_DIRE" = "Metal Gear Solid " ]; then CONFIG_DIRE="Metal Gear Solid"; fi
+#if [ "$CONFIG_DIRE" = "Final Fantasy 7 " ]; then CONFIG_DIRE="Final Fantasy 7"; fi
+#if [ "$CONFIG_DIRE" = "Final Fantasy 8 " ]; then CONFIG_DIRE="Final Fantasy 8"; fi
+#if [ "$CONFIG_DIRE" = "Final Fantasy 9 " ]; then CONFIG_DIRE="Final Fantasy 9"; fi
+#if [ "$CONFIG_DIRE" = "Valkyrie Profile " ]; then CONFIG_DIRE="Valkyrie Profile"; fi
+
+if [ "$CONFIG_NOMB" = "Bugs Bunny - Lost In Time" ]; then CONFIG_DIRE="Bugs Bunny - Lost In Time"; fi
+if [ "$CONFIG_NOMB" = "Chrono Cross - CD1" ]; then CONFIG_DIRE="Chrono Cross"; fi
+if [ "$CONFIG_NOMB" = "Chrono Cross - CD2" ]; then CONFIG_DIRE="Chrono Cross"; fi
+if [ "$CONFIG_NOMB" = "Grandia - CD1" ]; then CONFIG_DIRE="Grandia"; fi
+if [ "$CONFIG_NOMB" = "Grandia - CD2" ]; then CONFIG_DIRE="Grandia"; fi
+if [ "$CONFIG_NOMB" = "Final Fantasy 7 - CD1" ]; then CONFIG_DIRE="Final Fantasy 7"; fi
+if [ "$CONFIG_NOMB" = "Final Fantasy 7 - CD2" ]; then CONFIG_DIRE="Final Fantasy 7"; fi
+if [ "$CONFIG_NOMB" = "Final Fantasy 7 - CD3" ]; then CONFIG_DIRE="Final Fantasy 7"; fi
+if [ "$CONFIG_NOMB" = "Final Fantasy 8 - CD1" ]; then CONFIG_DIRE="Final Fantasy 8"; fi
+if [ "$CONFIG_NOMB" = "Final Fantasy 8 - CD2" ]; then CONFIG_DIRE="Final Fantasy 8"; fi
+if [ "$CONFIG_NOMB" = "Final Fantasy 8 - CD3" ]; then CONFIG_DIRE="Final Fantasy 8"; fi
+if [ "$CONFIG_NOMB" = "Final Fantasy 8 - CD4" ]; then CONFIG_DIRE="Final Fantasy 8"; fi
+if [ "$CONFIG_NOMB" = "Final Fantasy 9 - CD1" ]; then CONFIG_DIRE="Final Fantasy 9"; fi
+if [ "$CONFIG_NOMB" = "Final Fantasy 9 - CD2" ]; then CONFIG_DIRE="Final Fantasy 9"; fi
+if [ "$CONFIG_NOMB" = "Final Fantasy 9 - CD3" ]; then CONFIG_DIRE="Final Fantasy 9"; fi
+if [ "$CONFIG_NOMB" = "Final Fantasy 9 - CD4" ]; then CONFIG_DIRE="Final Fantasy 9"; fi
+if [ "$CONFIG_NOMB" = "Metal Gear Solid - CD1" ]; then CONFIG_DIRE="Metal Gear Solid"; fi
+if [ "$CONFIG_NOMB" = "Metal Gear Solid - CD2" ]; then CONFIG_DIRE="Metal Gear Solid"; fi
+if [ "$CONFIG_NOMB" = "Parasite Eve 1 - CD1" ]; then CONFIG_DIRE="Parasite Eve 1"; fi
+if [ "$CONFIG_NOMB" = "Parasite Eve 1 - CD2" ]; then CONFIG_DIRE="Parasite Eve 1"; fi
+if [ "$CONFIG_NOMB" = "Parasite Eve 2 - CD1" ]; then CONFIG_DIRE="Parasite Eve 2"; fi
+if [ "$CONFIG_NOMB" = "Parasite Eve 2 - CD2" ]; then CONFIG_DIRE="Parasite Eve 2"; fi
+if [ "$CONFIG_NOMB" = "Valkyrie Profile - CD1" ]; then CONFIG_DIRE="Valkyrie Profile"; fi
+if [ "$CONFIG_NOMB" = "Valkyrie Profile - CD2" ]; then CONFIG_DIRE="Valkyrie Profile"; fi
+
+if [ "$CONFIG_NOMB" = "Castlevania - Symphony Of The Night" ]; then
+	   CONFIG_DIRE="Castlevania - Symphony Of The Night"
+fi
+
+if [ "$CONFIG_NOMB" = "Castlevania - Chronicles" ]; then 
+	   CONFIG_DIRE="Castlevania - Chronicles"
+	   CONFIG_AUDIO="spuEternal.cfg"
+			cd "$HOME/.pcsxr/sstates"   
+			if [ -f SLUS-01384-SLUS01384.000 ]; then
+			rm -rf SLUS-01384-SLUS01384.000
+			touch SLUS-01384-SLUS01384.000
+			chmod 000 SLUS-01384-SLUS01384.000
+			fi
+
+			if [ -f SLUS-01384-SLUS01384.001 ]; then
+			rm -rf SLUS-01384-SLUS01384.001
+			touch SLUS-01384-SLUS01384.001
+			chmod 000 SLUS-01384-SLUS01384.001
+			fi
+
+			if [ -f SLUS-01384-SLUS01384.002 ]; then
+			rm -rf SLUS-01384-SLUS01384.002
+			touch SLUS-01384-SLUS01384.002
+			chmod 000 SLUS-01384-SLUS01384.002
+			fi
+
+			if [ -f SLUS-01384-SLUS01384.003 ]; then
+			rm -rf SLUS-01384-SLUS01384.003
+			touch SLUS-01384-SLUS01384.003
+			chmod 000 SLUS-01384-SLUS01384.003
+			fi
+
+			if [ -f SLUS-01384-SLUS01384.004 ]; then
+			rm -rf SLUS-01384-SLUS01384.004
+			touch SLUS-01384-SLUS01384.004
+			chmod 000 SLUS-01384-SLUS01384.004
+			fi
+
+			if [ -f SLUS-01384-SLUS01384.005 ]; then
+			rm -rf SLUS-01384-SLUS01384.005
+			touch SLUS-01384-SLUS01384.005
+			chmod 000 SLUS-01384-SLUS01384.005
+			fi
+
+			if [ -f SLUS-01384-SLUS01384.006 ]; then
+			rm -rf SLUS-01384-SLUS01384.006
+			touch SLUS-01384-SLUS01384.006
+			chmod 000 SLUS-01384-SLUS01384.006
+			fi
+
+			if [ -f SLUS-01384-SLUS01384.007 ]; then
+			rm -rf SLUS-01384-SLUS01384.007
+			touch SLUS-01384-SLUS01384.007
+			chmod 000 SLUS-01384-SLUS01384.007
+			fi
+
+			if [ -f SLUS-01384-SLUS01384.008 ]; then
+			rm -rf SLUS-01384-SLUS01384.008
+			touch SLUS-01384-SLUS01384.008
+			chmod 000 SLUS-01384-SLUS01384.008
+			fi
+
+			if [ -f SLUS-01384-SLUS01384.009 ]; then
+			rm -rf SLUS-01384-SLUS01384.009
+			touch SLUS-01384-SLUS01384.009
+			chmod 000 SLUS-01384-SLUS01384.009
+			fi
+
+			if [ -f SLUS-01384-SLUS01384.010 ]; then
+			rm -rf SLUS-01384-SLUS01384.010
+			touch SLUS-01384-SLUS01384.010
+			chmod 000 SLUS-01384-SLUS01384.010
+			fi
+fi
+
+
+
+#echo "$CONFIG_DIRE"
+#xrandr -s $Resolucion
+#exit 1
+
+
+
+
+
+
+
+# Iniciar con Mednafen
+# En Caso de que sea algun Nombre en Especifico :
+
+	# Entrar al directorio de los juegos 
+		cd "$HOME/.pcsxr/roms"
+
+	# Si el nombre es uno de los siguientes iniciar con mednafen :
+
+	# Castlevania - Chronicles
+	# Harry Potter Y La Piedra Filosofal
+
+	# Mednafen - Breath Of Fire 4.cue
+	# Mednafen - Megaman 8.cue
+	# Mednafen - Valkyrie Profile CD1.cue
+	# Mednafen - Valkyrie Profile CD2.cue
+	# Mednafen - Tekken 3.cue
+
+
+	if [ "$NOMBRE" = "Castlevania - Chronicles.cue" ]; then
+			# Debes crear la tarjeta de Memoria con el mismo Mednafen
+			# O con el ePSXe , la puedes nombrar como 
+			# Slot 1 = Castlevania - Chronicles.0.mcr
+			# Slot 2 = Castlevania - Chronicles.1.mcr
+
+		# Con GLVsync :
+		SDL_GL_SWAP_CONTROL=1 
+		__GL_SYNC_TO_VBLANK=0
+		mednafen "$@"
+
+		# Sin GLVsync :
+#		mednafen "$@"
+		# Terminar Script :
+		exit 1
+	fi
+
+	if [ "$NOMBRE" = "Harry Potter Y La Piedra Filosofal.cue" ]; then
+
+			# Debes crear la tarjeta de Memoria con el mismo Mednafen
+			# O con el ePSXe , la puedes nombrar como 
+			# Slot 1 = Harry Potter Y La Piedra Filosofal.0.mcr
+			# Slot 2 = Harry Potter Y La Piedra Filosofal.1.mcr
+
+		# Con GLVsync :
+#		SDL_GL_SWAP_CONTROL=1 mednafen "$@"
+		# Sin GLVsync :
+		mednafen "$@"
+
+
+		# Restaurar Resolucion Original :
+		xrandr -s $Resolucion
+
+		# Terminar Script :
+		exit 1
+	fi
+
+
+	if [ "$NOMBRE" = "Mednafen - Breath Of Fire 4.cue" ]; then
+		if [ ! -L "$HOME/.mednafen/sav/$MEMORIA.0.mcr" ] || [ ! -L "$HOME/.mednafen/sav/$MEMORIA.1.mcr" ]; then
+		echo ""
+		echo "Mednafen : No existe Tarjeta de Memoria para : $MEMORIA "
+			cd "$HOME/.pcsxr/memcards"
+				ln -s "$HOME/.pcsxr/memcards/$MEMORIA.0.mcr" "$HOME/.mednafen/sav/$MEMORIA.0.mcr"
+				ln -s "$HOME/.pcsxr/memcards/$MEMORIA.1.mcr" "$HOME/.mednafen/sav/$MEMORIA.1.mcr"
+			echo ""
+			echo "Mednafen : Creado enlace Simbolico a tarjeta de Memoria"
+			echo "Desde la carpeta de origen  : $HOME/.pcsxr/memcards/"
+			echo "Hacia la carpeta de destino : $HOME/.mednafen/sav/"
+			echo "Para el Juego : $MEMORIA "
+			echo ""
+		fi
+		# Con GLVsync :
+#		SDL_GL_SWAP_CONTROL=1 mednafen "$@"
+		# Sin GLVsync :
+		mednafen "$@"
+
+		# Restaurar Resolucion Original :
+		xrandr -s $Resolucion
+
+		# Terminar Script :
+		exit 1
+	fi
+
+
+	if [ "$NOMBRE" = "Mednafen - Breath Of Fire 4.cue" ]; then
+		if [ ! -L "$HOME/.mednafen/sav/$MEMORIA.0.mcr" ] || [ ! -L "$HOME/.mednafen/sav/$MEMORIA.1.mcr" ]; then
+		echo ""
+		echo "Mednafen : No existe Tarjeta de Memoria para : $MEMORIA "
+			cd "$HOME/.pcsxr/memcards"
+				ln -s "$HOME/.pcsxr/memcards/$MEMORIA.0.mcr" "$HOME/.mednafen/sav/$MEMORIA.0.mcr"
+				ln -s "$HOME/.pcsxr/memcards/$MEMORIA.1.mcr" "$HOME/.mednafen/sav/$MEMORIA.1.mcr"
+			echo ""
+			echo "Mednafen : Creado enlace Simbolico a tarjeta de Memoria"
+			echo "Desde la carpeta de origen  : $HOME/.pcsxr/memcards/"
+			echo "Hacia la carpeta de destino : $HOME/.mednafen/sav/"
+			echo "Para el Juego : $MEMORIA "
+			echo ""
+		fi
+		# Con GLVsync :
+#		SDL_GL_SWAP_CONTROL=1 mednafen "$@"
+		# Sin GLVsync :
+		mednafen "$@"
+
+		# Restaurar Resolucion Original :
+		xrandr -s $Resolucion
+
+		# Terminar Script :
+		exit 1
+	fi
+
+	if [ "$NOMBRE" = "Mednafen - Megaman 8.cue" ]; then
+		if [ ! -L "$HOME/.mednafen/sav/$MEMORIA.0.mcr" ] || [ ! -L "$HOME/.mednafen/sav/$MEMORIA.1.mcr" ]; then
+		echo ""
+		echo "Mednafen : No existe Tarjeta de Memoria para : $MEMORIA "
+			cd "$HOME/.pcsxr/memcards"
+				ln -s "$HOME/.pcsxr/memcards/$MEMORIA.0.mcr" "$HOME/.mednafen/sav/$MEMORIA.0.mcr"
+				ln -s "$HOME/.pcsxr/memcards/$MEMORIA.1.mcr" "$HOME/.mednafen/sav/$MEMORIA.1.mcr"
+			echo ""
+			echo "Mednafen : Creado enlace Simbolico a tarjeta de Memoria"
+			echo "Desde la carpeta de origen  : $HOME/.pcsxr/memcards/"
+			echo "Hacia la carpeta de destino : $HOME/.mednafen/sav/"
+			echo "Para el Juego : $MEMORIA "
+			echo ""
+		fi
+		# Con GLVsync :
+		SDL_GL_SWAP_CONTROL=1 mednafen "$@"
+		# Sin GLVsync :
+#		mednafen "$@"
+
+		# Restaurar Resolucion Original :
+		xrandr -s $Resolucion
+
+		# Terminar Script :
+		exit 1
+	fi
+
+	if [ "$NOMBRE" = "Valkyrie Profile - CD1.cue" ]; then
+		if [ ! -L "$HOME/.mednafen/sav/$MEMORIA.0.mcr" ] || [ ! -L "$HOME/.mednafen/sav/$MEMORIA.1.mcr" ]; then
+		echo ""
+		echo "Mednafen : No existe Tarjeta de Memoria para : $MEMORIA "
+			cd "$HOME/.pcsxr/memcards"
+				ln -s "$HOME/.pcsxr/memcards/$MEMORIA.0.mcr" "$HOME/.mednafen/sav/$MEMORIA.0.mcr"
+				ln -s "$HOME/.pcsxr/memcards/$MEMORIA.1.mcr" "$HOME/.mednafen/sav/$MEMORIA.1.mcr"
+			echo ""
+			echo "Mednafen : Creado enlace Simbolico a tarjeta de Memoria"
+			echo "Desde la carpeta de origen  : $HOME/.pcsxr/memcards/"
+			echo "Hacia la carpeta de destino : $HOME/.mednafen/sav/"
+			echo "Para el Juego : $MEMORIA "
+			echo ""
+		fi
+		# Con GLVsync :
+		SDL_GL_SWAP_CONTROL=1 mednafen "$@"
+		# Sin GLVsync :
+#		mednafen "$@"
+
+		# Restaurar Resolucion Original :
+		xrandr -s $Resolucion
+
+		# Terminar Script :
+		exit 1
+	fi
+
+	if [ "$NOMBRE" = "Valkyrie Profile - CD2.cue" ]; then
+		if [ ! -L "$HOME/.mednafen/sav/$MEMORIA.0.mcr" ] || [ ! -L "$HOME/.mednafen/sav/$MEMORIA.1.mcr" ]; then
+		echo ""
+		echo "Mednafen : No existe Tarjeta de Memoria para : $MEMORIA "
+			cd "$HOME/.pcsxr/memcards"
+				ln -s "$HOME/.pcsxr/memcards/$MEMORIA.0.mcr" "$HOME/.mednafen/sav/$MEMORIA.0.mcr"
+				ln -s "$HOME/.pcsxr/memcards/$MEMORIA.1.mcr" "$HOME/.mednafen/sav/$MEMORIA.1.mcr"
+			echo ""
+			echo "Mednafen : Creado enlace Simbolico a tarjeta de Memoria"
+			echo "Desde la carpeta de origen  : $HOME/.pcsxr/memcards/"
+			echo "Hacia la carpeta de destino : $HOME/.mednafen/sav/"
+			echo "Para el Juego : $MEMORIA "
+			echo ""
+		fi
+		# Con GLVsync :
+		SDL_GL_SWAP_CONTROL=1 mednafen "$@"
+		# Sin GLVsync :
+#		mednafen "$@"
+
+		# Restaurar Resolucion Original :
+		xrandr -s $Resolucion
+
+		# Terminar Script :
+		exit 1
+	fi
+
+	if [ "$NOMBRE" = "Tekken 3.cue" ]; then
+		if [ ! -L "$HOME/.mednafen/sav/$MEMORIA.0.mcr" ] || [ ! -L "$HOME/.mednafen/sav/$MEMORIA.1.mcr" ]; then
+		echo ""
+		echo "Mednafen : No existe Tarjeta de Memoria para : $MEMORIA "
+			cd "$HOME/.pcsxr/memcards"
+				ln -s "$HOME/.pcsxr/memcards/$MEMORIA.0.mcr" "$HOME/.mednafen/sav/$MEMORIA.0.mcr"
+				ln -s "$HOME/.pcsxr/memcards/$MEMORIA.1.mcr" "$HOME/.mednafen/sav/$MEMORIA.1.mcr"
+			echo ""
+			echo "Mednafen : Creado enlace Simbolico a tarjeta de Memoria"
+			echo "Desde la carpeta de origen  : $HOME/.pcsxr/memcards/"
+			echo "Hacia la carpeta de destino : $HOME/.mednafen/sav/"
+			echo "Para el Juego : $MEMORIA "
+			echo ""
+		fi
+
+		# Con GLVsync :
+		SDL_GL_SWAP_CONTROL=1 mednafen "$@"
+		# Sin GLVsync :
+#		mednafen "$@"
+
+		# Restaurar Resolucion Original :
+		xrandr -s $Resolucion
+
+		# Terminar Script :
+		exit 1
+	fi
+
+# Iniciar el Emulador PCSXR : Cuando no sea
+# Ninguno de los Nombres de Archivos que
+# se deben ejecutar de manera Exclusiva por Mednafen
+
+# Detectar si existen los directorios (Enlaces Simbolicos)
+# Deben estar en "$HOME/.pcsxr/"
+# Deben ser : bios , cfg , cheats , memcards , patches , roms , sstates
+
+# Explico :
+
+# bios - Este directorio contiene los archivos BIOS
+# Basic Input/Output System - Sistema Basico de Entrada/Salida
+
+# cfg - Carga una Configuracion Especifica para el juego Emulado
+# Se deben tener los nombres escritos Exactamente iguales para
+# poder cargar la configuracion correctamente , Por Ejemplo :
+#
+# Breah Of Fire 4.bin , Valkyrie Profile - CD 1.img , Valkyrie Profile - CD 2.mdf , Megaman 8.iso 
+# Breah Of Fire 4.cfg , Valkyrie Profile - CD 1.cfg , Valkyrie Profile - CD 2.cfg , Megaman 8.cfg
+
+# cheats - Aqui se almacenan los archivos que contengan los "Trucos"
+# Deben estar en formato de GameShark o del mismo Emulador PCSX
+
+# memcards - Aqui se almacenan las Capturas de Pantalla hechas
+# al Presionar la Tecla F12
+
+# patches - Aqui se almacenan parches para los juegos deben
+# ser nombrados segun su "ETIQUETA" normalmente dentro del
+# Disco Fisico ( Real ) o Virtual ( Archivo ) encontraras
+# archivos con Nombres como por ejemplo :
+#
+# SLES_005.24 (Castlevania SOT - EURopeo) - El Numero es la extension el ".24" 
+# slus_009.86.M3S (Galerians - USAmericano CD1) - con la Extension M3S Tambien deberia funcionar
+
+# roms - Aqui deben estar los juegos para el emulador que se va a utilizar
+# En Formatos Soportados como : bin , img , mdf , iso , ps1
+
+# sstates - Aqui se guardan los archivos de los estados salvados
+# si observas el contenido de este directorio veras archivos
+# como por ejemplo :
+#
+# MEGAMAN8-SLUS00453.010 : Titulo-Etiqueta.Numero de Estado Salvado
+# SLES02969-SLES02969 : Etiqueta-Etiqueta.Numero de Estado Salvado
+# SLES_03812-SLES03812 : NombreInterno-Etiqueta.Numero de Estado Salvado
+#
+# Estas son las variaciones que he visto , si futuramente veo otras
+# Las Agregare
+
+
+# Detectar Directorios :
+cd "$HOME/.pcsxr/"
+if [ -x bios ]; then
+	echo ""
+	echo 'Detectado Directorio "bios"'
+	echo ""
+else
+	echo ""
+	echo 'Debes crear el Directorio o hacer un EnlaceSimbolico'
+	echo 'Para el directorio contenedor de archivo(s) "bios" ' 
+	echo ""
+fi
+
+if [ -x cfg ]; then
+	echo ""
+	echo 'Detectado Directorio "cfg"'
+	echo ""
+else
+	echo ""
+	echo 'Debes Crear El Direcotio ó'
+	echo 'hacer un Enlace Simbolico'
+	echo 'Para el directorio que conteniene'
+	echo 'Lo(s) archivo(s) de configuracion especifica'
+	echo 'Segun el Titulo del Videojuego a Emular de PlayStation 1'
+	echo ""
+exit 1
+fi
+
+if [ -x cheats ]; then
+	echo ""
+	echo 'Detectado Directorio "cheats"'
+	echo ""
+else
+	echo ""
+	echo 'Debes Crear El Direcotio ó'
+	echo 'hacer un Enlace Simbolico'
+	echo 'hacia la carpeta contenedora de Trucos'
+	echo ""
+exit 1
+fi
+
+if [ -x memcards ]; then
+	echo ""
+	echo 'Detectado Directorio "memcards"'
+	echo ""
+else
+	echo ""
+	echo 'Debes Crear El Direcotio ó'
+	echo 'hacer un Enlace Simbolico'
+	echo 'Para Tarjetas de Memoria'
+	echo ""
+fi
+
+if [ -x patches ]; then
+	echo ""
+	echo 'Detectado Directorio "patches"'
+	echo 'Se pueden parchear los juegos'
+	echo ""
+else
+	echo ""
+	echo 'Debes Crear El Direcotio ó'
+	echo 'hacer un Enlace Simbolico'
+	echo 'Hacia la carpeta que contiene los "Parches" / "Patches"'
+	echo 'Ya sea para desbloquear una "Copia De Seguridad'
+	echo 'O para Traducir el algun Titulo en Especifico'
+fi
+
+if [ -x plugins ]; then
+	echo ""
+	echo 'Detectado Directorio "plugins"'
+	echo 'Se pueden utilizar Complementos Externos'
+	echo ""
+else
+	echo ""
+	echo 'Debes Crear El Directorio ó'
+	echo 'hacer un EnlaceSimbolico'
+	echo "Para usar Los Complementos Externos"
+	echo ""
+fi
+
+if [ -x roms ]; then
+	echo ""
+	echo 'Detectado Directorio "roms"'
+	echo ""
+else
+	echo ""
+	echo 'Debes Crear El Direcotio ó'
+	echo 'hacer un Enlace Simbolico'
+	echo 'hacia la carpeta contenedora de Juegos'
+	echo 'de formatos Soportados como : bin , img , mdf , iso , ps1'
+	echo ""
+exit 1
+fi
+
+if [ -x sstates ]; then
+	echo ""
+	echo 'Detectado Directorio "sstates"'
+	echo 'Se pueden utilizar Estados Salvados'
+	echo ""
+else
+	echo ""
+	echo 'Debes Crear El Directorio ó'
+	echo 'hacer un EnlaceSimbolico'
+	echo "Para usar Los Estados Salvados"
+	echo ""
+fi
+
+echo "MANDO 1 : $MANDO0"
+echo "MANDO 2 : $MANDO1"
+echo
+
+# Hacer Copia De Seguridad de la Configuracion
+# Actual de PCSXR , Luego Copiar y Renombrar
+# Archivo de Configuracion Especifico para Juego Deseado
+
+cd "$HOME/.pcsxr"
+if [ -e pcsxr.cfg ]; then
+	mv pcsxr.cfg pcsxr_original.cfg
+	cp $HOME/.pcsxr/cfg/"$CONFIG_DIRE"/"$CONFIG_EMUL" $HOME/.pcsxr/pcsxr.cfg
+
+	echo ""
+	echo " Iniciando la configuracion para : $CONFIG_NOMB"
+	echo " 		Utilizando el Emulador : PCSXR "
+	echo ""
+
+		cd $HOME/.pcsxr/plugins/
+		if [ -e "$CONFIG_GF2D" ]; then 
+			cp "$CONFIG_GF2D" "$CONFIG_GF2D".original
+			rm -rf "$CONFIG_GF2D"
+		fi
+
+		if [ -e "$CONFIG_GF3D" ]; then
+			cp "$CONFIG_GF3D" "$CONFIG_GF3D".original
+			rm -rf "$CONFIG_GF3D"
+		fi
+
+		if [ -e "$CONFIG_CDRM" ]; then
+			cp "$CONFIG_CDRM" "$CONFIG_CDRM".original
+			rm -rf "$CONFIG_CDRM"
+		fi
+
+		if [ -e "$CONFIG_CRTL" ]; then
+			cp "$CONFIG_CRTL" "$CONFIG_CRTL".original
+			rm -rf "$CONFIG_CRTL"
+		fi
+
+		if [ -e "$CONFIG_AUDIO" ]; then
+			cp "$CONFIG_AUDIO" "$CONFIG_AUDIO".original
+			rm -rf "$CONFIG_AUDIO"
+		fi
+
+# Detectar dentro del directorio con el
+# Nombre del Juego , contenga archivos de
+# Configuracion para : Graficos , MANDOes
+
+		cd $HOME/.pcsxr/cfg/"$CONFIG_DIRE"
+		if 		[ -f "$CONFIG_GF2D" ]; then 
+			echo ""
+			echo "Detectada Configuracion 2D para : $CONFIG_NOMB " 
+			echo ""
+				cp "$CONFIG_GF2D" "$HOME/.pcsxr/plugins/$CONFIG_GF2D"	
+		elif 	[ -f "$CONFIG_GF3D" ]; then
+			echo ""
+			echo "Detectada Configuracion 3D para : $CONFIG_NOMB "
+			echo ""
+				cp "$CONFIG_GF3D" "$HOME/.pcsxr/plugins/$CONFIG_GF3D"	
+		fi
+
+		if		[ -f "$CONFIG_AUDIO" ]; then
+			echo ""
+			echo "Detectada Configuracion de Sonido para : $CONFIG_NOMB "
+			echo ""
+				cp "$CONFIG_AUDIO" "$HOME/.pcsxr/plugins/$CONFIG_AUDIO"
+		fi
+
+		if		[ -f "$CONFIG_CDRM" ]; then
+			echo ""
+			echo "Detectada Configuracion de CD-ROM"
+			echo ""
+				cp "$CONFIG_CDRM" "$HOME/.pcsxr/plugins/$CONFIG_CDRM"	
+		fi
+
+	if		[ -f "$CONFIG_CRTL" ]; then
+			echo ""
+			echo "Detectada Configuracion de MANDO(S)"
+			echo ""
+			cp "$CONFIG_CRTL" "$HOME/.pcsxr/plugins/$CONFIG_CRTL"
+
+		if	[ "$MANDO0" = "MaxFire G-08XU" ]; then 
+				rm "$HOME/.pcsxr/plugins/$CONFIG_CRTL"
+				cp "MaxFire G-08XU_1.cfg" "$HOME/.pcsxr/plugins/$CONFIG_CRTL"
+		fi
+
+		if	[ "$MANDO1" = "MaxFire G-08XU" ]; then 
+				rm "$HOME/.pcsxr/plugins/$CONFIG_CRTL"
+				cp "MaxFire G-08XU_2.cfg" "$HOME/.pcsxr/plugins/$CONFIG_CRTL"
+		fi
+	fi
+
+# Restaurar la Configuracion Original del emulador
+# Tanto la del emulador , como la sus complementos :
+
+		if [ -e pcsxr_original.cfg ] || [ -e pcsxr.cfg ]; then
+			rm -rf pcsxr.cfg
+			mv "pcsxr_original.cfg" "pcsxr.cfg"
+			echo "Configuracion Cargada con Exito"
+		fi
+fi
+
+echo ""
+echo " Establecida La Configuracion para : $CONFIG_NOMB "
+echo ""
+
+# Iniciar el Emulador con la Configuracion
+# Pre-Establecida para el Juego :
+cd "$HOME/.pcsxr/roms/"
+
+# Con Vsync GL :
+#`SDL_GL_SWAP_CONTROL=1 SDL_AudioCVT_buf=64 pcsxr -nogui -slowboot -cdfile "$@"`
+
+# Sin Vsync GL & Arreglos para el Sonido:
+killall -9 pulseaudio
+SDL_AudioSpec_silence=1 SDL_AudioSpec_size=32 SDL_AudioCVT_buf=32 SDL_GL_SWAP_CONTROL=1 pcsxr -nogui -slowboot -cdfile "$@"
+clear
+	
+# Restaurar Configuracion Original
+echo ""
+echo "Restaurando Configuracion Original del Emulador"
+			cd "$HOME/.pcsxr"
+		if [ -f pcsxr_original.cfg ] || [ -e pcsxr.cfg ]; then
+			rm -rf "pcsxr.cfg"
+			mv "pcsxr_original.cfg" "pcsxr.cfg"
+		fi
+			cd "$HOME/.pcsxr/plugins"
+		if [ -f "$CONFIG_GF2D".original ]; then
+			rm -rf "$CONFIG_GF2D"
+			mv "$CONFIG_GF2D".original "$CONFIG_GF2D"
+		fi 
+		if [ -f "$CONFIG_GF3D".original ]; then
+			rm -rf "$CONFIG_GF3D"
+			mv "$CONFIG_GF3D".original "$CONFIG_GF3D"
+		fi
+		if [ -f "$CONFIG_AUDIO".original ]; then
+			rm -rf "$CONFIG_AUDIO"
+			mv "$CONFIG_AUDIO".original "$CONFIG_AUDIO"
+		fi
+		
+		if [ -f "$CONFIG_CDRM".original ]; then
+			rm -rf "$CONFIG_CDRM"
+			mv "$CONFIG_CDRM".original "$CONFIG_CDRM"	
+		fi 
+		if [ -f "$CONFIG_CRTL".original ]; then 
+			rm -rf "$CONFIG_CRTL"
+			mv "$CONFIG_CRTL".original "$CONFIG_CRTL"
+		fi
+	echo ""
+	echo "Configuraciones Originales Restauradas"
+	echo ""
+
+xrandr -s $Resolucion
+
+#echo CONFIG_NOMB : "$CONFIG_NOMB"
+#echo CONFIG_DIRE : "$CONFIG_DIRE"
+#echo CONFIG_AUDIO : "$CONFIG_AUDIO"

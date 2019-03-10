@@ -1,0 +1,825 @@
+#!/bin/sh
+#!/bin/bash
+# 
+# Autor	:	Inukaze ( Venezuela )
+# Sitio		:	http://inukaze.wordpResolucions.com
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+XMessage=$(whereis xmessage | grep bin | awk '{print $2}' | sed 's/^[/usr/bin/ \t]*//')
+
+if [ $XMessage = xmessage ]; then
+	echo 
+	echo 'Mostrar el Mensaje en el Sistema Grafico -> "Se Esta Configurando El Software"'
+	echo
+	xmessage -nearmouse -timeout 16 "Se Esta Configurando El Software" -buttons OK &
+	echo
+else
+	echo
+	echo "xmessage - NO! ESTA INSTALADO"
+	echo
+	echo "Se esta Configurando el Software"
+	echo
+fi
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+ARREGLOS="$RUTA"/arreglos
+
+# Obtener el nombre del nucleo del sistema
+Nucleo=$(uname -s)
+
+if		[ $Nucleo = "Darwin" ]; then
+		Nucleo=mac
+elif		[ $Nucleo = "Linux" ]; then
+		Nucleo=linux
+else
+		echo "Sistema Operativo NO SOPORTADO"
+fi
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if	       [ $Arquitectura = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+         elif [ $Arquitectura = "x86_64" ]; then
+			PATH="$PWD/wine/$Nucleo/x86_64/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86_64/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="64 Bits"
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dplaysvr.exe
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/DPLAYSVR.exe
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dplayx.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/DPLAYX.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpmodemx.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/DPMODEMX.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpnet.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/DPNET.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpnhpast.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/DPNHPAST.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpnlobby.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/DPNLOBBY.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpnsvr.exe
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/DPNSVR.exe
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpwsockx.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/DPWSOCKX.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dplaysvr.exe
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3d8.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3d8thk.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3d9.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dim.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dim700.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dpmesh.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dramp.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3drm.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_24.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_25.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_26.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_27.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_28.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_29.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_30.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_31.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_32.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_33.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_34.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_35.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_36.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/D3DX9_37.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dxof.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dciman32.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/ddrawex.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/devenum.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dinput.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dinput8.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dmband.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dmcompos.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dmime.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dmloader.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dmscript.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dmstyle.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dmsynth.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dmusic.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dnsapi.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dplay.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpnaddr.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpnmodem.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dsound.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dsound3d.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dswave.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dxdiagn.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/mscoree.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/msdmo.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/qcap.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/quartz.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/streamci.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpnhupnp.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpserial.dll
+			mkdir -p "$RUTA"/wine/data/drive_c/windows/syswow64
+			cd "$RUTA"/wine/data/drive_c/software/directx
+			cp -rf *.* "$RUTA"/wine/data/drive_c/windows/syswow64
+	else
+		echo "Arquitectura NO SOPORTADA"
+fi 
+
+# Borrar Toda Configuracion Previa WINE:
+rm -rf "$RUTA/wine/data/drive_c/users"
+rm -rf "$RUTA/wine/data/drive_c/windows"
+rm -rf "$RUTA/wine/data/Program Files (x86)"
+rm -rf "$RUTA/wine/data/drive_c/Archivos de programa"
+rm -rf "$RUTA/wine/data/drive_c/Program Files (x86)"
+rm -rf "$RUTA/wine/data/drive_c/Program Files"
+rm -rf "$RUTA/wine/data/system.reg"
+rm -rf "$RUTA/wine/data/user.reg"
+rm -rf "$RUTA/wine/data/userdef.reg"
+rm -rf "$RUTA/wine/data/dosdevices"
+rm -rf "$RUTA/wine/data/.update-timestamp"
+rm -rf "$RUTA/wine/.DS_Store"
+rm -rf "$RUTA/wine/linux/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/bin/.DS_Store"
+rm -rf "$RUTA"/wine/data/cachedmetrics.\:0
+# Borrar Toda Configuracion Previa WINE:
+
+# Instalar las fuentes del Juego :
+cd "$RUTA"
+mkdir -p wine/data/drive_c/windows/Fonts
+cd "$RUTA"/arreglos/fuentes
+cp -rf *.* "$RUTA"/wine/data/drive_c/windows/Fonts
+# Instalar las fuentes del Juego :
+
+# Eliminar Archivos existentes de DirectPlay
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dplaysvr.exe
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/DPLAYSVR.exe
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dplayx.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/DPLAYX.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dpmodemx.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/DPMODEMX.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dpnet.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/DPNET.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dpnhpast.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/DPNHPAST.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dpnlobby.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/DPNLOBBY.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dpnsvr.exe
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/DPNSVR.exe
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dpwsockx.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/DPWSOCKX.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dpnhupnp.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dpserial.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dplay.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dpnaddr.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dpnmodem.dll
+# Eliminar Archivos existentes de DirectPlay
+
+# Eliminar Archivos existentes de DirectX
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dciman32.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/ddrawex.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dsound.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/dsound3d.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/quartz.dll
+# Eliminar Archivos existentes de DirectX
+
+# Copiar Archivos de DirectX & DirectPlay (Son nativos de Windows XP)
+mkdir -p "$RUTA"/wine/data/drive_c/windows/system32
+cd "$RUTA"/arreglos/windows/system32/
+cp -rf *.* "$RUTA"/wine/data/drive_c/windows/system32
+# Copiar Archivos de DirectX & DirectPlay (Son nativos de Windows XP)
+
+## Biblioteca Excluida Debido A
+## A que produce un error interno de Wine :
+#EIDW#regsvr32 mscoree.dll 
+#
+#(parte de mshtml, usar Gecko en otros Softwares)
+#es para las aplicaciones con HTML Embebido / Empotrado
+
+# Registrar Bibliotecas (Archivos Dlls)
+cd "$RUTA"/wine/data/drive_c/windows/system32/
+
+# Windows XP :
+regsvr32 dpvacm.dll
+regsvr32 dpvoice.dll
+regsvr32 dpvvox.dll
+
+# Sistema XP :
+regsvr32 avifil32.dll
+regsvr32 clbcatq.dll
+regsvr32 ddraw.dll
+regsvr32 ddrawex.dll
+regsvr32 devenum.dll
+regsvr32 dinput.dll
+regsvr32 dinput8.dll
+regsvr32 dmband.dll
+regsvr32 dmcompos.dll
+regsvr32 dmime.dll
+regsvr32 dmloader.dll
+regsvr32 dmscript.dll
+regsvr32 dmstyle.dll
+regsvr32 dmsynth.dll
+regsvr32 dmusic.dll
+regsvr32 dsdmo.dll
+regsvr32 dsdmoprp.dll
+regsvr32 dsound.dll
+regsvr32 dswave.dll
+regsvr32 dxdiagn.dll
+regsvr32 hnetcfg.dll
+regsvr32 iac25_32.ax
+regsvr32 ir41_32.ax
+regsvr32 ir50_32.dll
+regsvr32 msctf.dll
+regsvr32 ole32.dll
+regsvr32 oleaut32.dll
+regsvr32 rpcrt4.dll
+regsvr32 rsaenh.dll
+regsvr32 shell32.dll
+regsvr32 wintrust.dll
+
+# Registrar Librerias de DirectPlay :
+# Debe ser el de Windows 98 : De lo Contrario las partidas 
+# Intranet / Internet , NO FUNCIONARAN!!!
+regsvr32 dplayx.dll
+regsvr32 dpnet.dll
+regsvr32 dpnhpast.dll
+regsvr32 dpnmodem.dll
+
+# Agregar valoResolucion de DirectX & DirectPlay al Registro
+# - Estos son de DirectPlay
+echo "REGEDIT4" >> dp.reg
+echo "" >> dp.reg
+echo "[HKEY_CURRENT_USER\Software\Wine\DllOverrides]" >> dp.reg
+# Windows 98
+echo '"dplayx"="native,builtin"' >> dp.reg
+echo '"dpmodemx"="native,builtin"' >> dp.reg
+echo '"dpnet"="native,builtin"' >> dp.reg
+echo '"dpnhpast"="native,builtin"' >> dp.reg
+echo '"dpnlobby"="native,builtin"' >> dp.reg
+echo '"dpwsockx"="native,builtin"' >> dp.reg
+echo '"dnsapi"="native,builtin"' >> dp.reg
+echo '"dplay"="native,builtin"' >> dp.reg
+echo '"dpnaddr"="native,builtin"' >> dp.reg
+echo '"dpnmodem"="native,builtin"' >> dp.reg
+echo '"dpnsvr.exe"="native,builtin"' >> dp.reg
+echo '"dplaysvr.exe"="native,builtin"' >> dp.reg
+
+# Windows XP :
+echo '"dpserial.dll"="native,builtin"' >> dp.reg
+echo '"dpvacm.dll"="native,builtin"' >> dp.reg
+echo '"dpvoice.dll"="native,builtin"' >> dp.reg
+echo '"dpvvox.dll"="native,builtin"' >> dp.reg
+echo '"dpwsock.dll"="native,builtin"' >> dp.reg
+
+# Indeo Codecs :
+echo '"gm.dls"="native,builtin"' >> dp.reg
+echo '"streamci"="native,builtin"' >> dp.reg
+echo '"quartz"="native,builtin"' >> dp.reg
+echo '"iac25_32.ax"="native,builtin"' >> dp.reg
+echo '"ir32_32.dll"="native,builtin"' >> dp.reg
+echo '"ir41_32.ax"="native,builtin"' >> dp.reg
+echo '"ir50_32.dll"="native,builtin"' >> dp.reg
+echo '"msaud32.acm"="native,builtin"' >> dp.reg
+echo '"msrle32.dll"="native,builtin"' >> dp.reg
+echo '"msvidc32.dll"="native,builtin"' >> dp.reg
+echo '"midimap.dll"="native,builtin"' >> dp.reg
+
+# Sistema :
+echo '"advapi32.dll"="native,builtin"' >> dp.reg
+echo '"apphelp.dll"="native,builtin"' >> dp.reg
+echo '"comctl32.dll"="native,builtin"' >> dp.reg
+echo '"comres.dll"="native,builtin"' >> dp.reg
+echo '"crypt32.dll"="native,builtin"' >> dp.reg
+echo '"dsound3d.dll"="native,builtin"' >> dp.reg
+echo '"gdi32.dll"="native,builtin"' >> dp.reg
+echo '"imagehlp.dll"="native,builtin"' >> dp.reg
+echo '"imm32.dll"="native,builtin"' >> dp.reg
+echo '"iphlpapi.dll"="native,builtin"' >> dp.reg
+echo '"kernel32.dll"="native,builtin"' >> dp.reg
+echo '"ksuser.dll"="native,builtin"' >> dp.reg
+echo '"midimap.dll"="native,builtin"' >> dp.reg
+echo '"msasn1.dll"="native,builtin"' >> dp.reg
+echo '"msctfime.ime"="native,builtin"' >> dp.reg
+echo '"msdmo.dll"="native,builtin"' >> dp.reg
+echo '"msvcrt.dll"="native,builtin"' >> dp.reg
+echo '"mswsock.dll"="native,builtin"' >> dp.reg
+echo '"netapi32.dll"="native,builtin"' >> dp.reg
+echo '"ntdll.dll"="native,builtin"' >> dp.reg
+echo '"rasadhlp.dll"="native,builtin"' >> dp.reg
+echo '"rasapi32.dll"="native,builtin"' >> dp.reg
+echo '"rasman.dll"="native,builtin"' >> dp.reg
+echo '"rtutils.dll"="native,builtin"' >> dp.reg
+echo '"secur32.dll"="native,builtin"' >> dp.reg
+echo '"shlwapi.dll"="native,builtin"' >> dp.reg
+echo '"tapi32.dll"="native,builtin"' >> dp.reg
+echo '"user32.dll"="native,builtin"' >> dp.reg
+echo '"uxtheme.dll"="native,builtin"' >> dp.reg
+echo '"version.dll"="native,builtin"' >> dp.reg
+echo '"wdmaud.drv"="native,builtin"' >> dp.reg
+echo '"winmm.dll"="native,builtin"' >> dp.reg
+echo '"wldap32.dll"="native,builtin"' >> dp.reg
+echo '"ws2_32.dll"="native,builtin"' >> dp.reg
+echo '"ws2help.dll"="native,builtin"' >> dp.reg
+echo '"wsock32.dll"="native,builtin"' >> dp.reg
+echo '"dciman32.dll"="native,builtin"' >> dp.reg
+echo '"ir32_32.dll"="native,builtin"' >> dp.reg
+echo '"mciavi32.dll"="native,builtin"' >> dp.reg
+echo '"msacm32.dll"="native,builtin"' >> dp.reg
+echo '"msaud32.acm"="native,builtin"' >> dp.reg
+echo '"msrle32.dll"="native,builtin"' >> dp.reg
+echo '"msvfw32.dll"="native,builtin"' >> dp.reg
+echo '"msvidc32.dll"="native,builtin"' >> dp.reg
+echo '"streamci.dll"="native,builtin"' >> dp.reg
+### Debe(n) ser DesHabilitado(s) en Wine 1.3.20 de 
+### PlayOnLinux para Ages Of Empires 1 / 2
+### \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+### echo '"msacm32.drv"="native,builtin"' >> dp.reg
+### /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+### Debe(n) ser DesHabilitado(s) en Wine 1.3.20 de 
+### PlayOnLinux para Ages Of Empires 1 / 2
+regedit -S dp.reg
+rm dp.reg
+
+# Registrando Librerias de Indeo
+mkdir -p "$RUTA"/wine/data/drive_c/windows/system32
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/ir41_32.ax
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/msrle32.dll
+rm -rf "$RUTA"/wine/data/drive_c/windows/system32/msvidc32.dll
+
+cp "$RUTA"/arreglos/windows/system32/ir41_32.ax	  "$RUTA"/wine/data/drive_c/windows/system32/
+cp "$RUTA"/arreglos/windows/system32/iac25_32.ax "$RUTA"/wine/data/drive_c/windows/system32/
+cp "$RUTA"/arreglos/windows/system32/ir32_32.dll "$RUTA"/wine/data/drive_c/windows/system32/
+cp "$RUTA"/arreglos/windows/system32/ir50_32.dll "$RUTA"/wine/data/drive_c/windows/system32/
+cp "$RUTA"/arreglos/windows/system32/msaud32.acm "$RUTA"/wine/data/drive_c/windows/system32/
+cp "$RUTA"/arreglos/windows/system32/msrle32.dll "$RUTA"/wine/data/drive_c/windows/system32/
+cp "$RUTA"/arreglos/windows/system32/midimap.dll "$RUTA"/wine/data/drive_c/windows/system32/
+cp "$RUTA"/arreglos/windows/system32/msvidc32.dll "$RUTA"/wine/data/drive_c/windows/system32/
+
+if [ -e "$RUTA"/wine/data/drive_c/windows/system32/drivers ]; then
+cp "$RUTA"/arreglos/windows/system32/drivers/gm.dls 			"$RUTA"/wine/data/drive_c/windows/system32/drivers/
+else
+mkdir -p "$RUTA"/wine/data/drive_c/windows/system32/drivers/
+cp "$RUTA"/arreglos/windows/system32/drivers/gm.dls 			"$RUTA"/wine/data/drive_c/windows/system32/drivers/
+fi
+
+cd "$RUTA"/wine/data/drive_c/windows/system32/
+regsvr32 iac25_32.ax
+regsvr32 ir41_32.ax
+regsvr32 ir50_32.dll
+# Fin del Arreglo para Videos con Indeo
+
+
+
+# Creando Registro de este Software en el Registro de Wine
+echo "REGEDIT4" >> "$RUTA"/Iniciar.reg
+echo "" >> "$RUTA"/Iniciar.reg
+echo "[HKEY_LOCAL_MACHINE\Software\Microsoft\Games]" >> "$RUTA"/Iniciar.reg
+echo "" >> "$RUTA"/Iniciar.reg
+echo "[HKEY_LOCAL_MACHINE\Software\Microsoft\Games\Age of Empires]" >> "$RUTA"/Iniciar.reg
+echo "" >> "$RUTA"/Iniciar.reg
+echo "[HKEY_LOCAL_MACHINE\Software\Microsoft\Games\Age of Empires\1.00]" >> "$RUTA"/Iniciar.reg
+echo '"CDPath"="C:\\\software"' >> "$RUTA"/Iniciar.reg
+echo '"Custom Mouse"=dword:00000000' >> "$RUTA"/Iniciar.reg
+echo '"Game File Number"=dword:00000000' >> "$RUTA"/Iniciar.reg
+echo '"InstallationDirectory"="C:\\\software"' >> "$RUTA"/Iniciar.reg
+echo '"InstallType"="3"' >> "$RUTA"/Iniciar.reg
+echo '"Launched"="1"' >> "$RUTA"/Iniciar.reg
+echo '"PID"="50501-442-2209512-19452"' >> "$RUTA"/Iniciar.reg
+echo '"Version"="1.0b"' >> "$RUTA"/Iniciar.reg
+echo '"VersionType"="RetailVersion"' >> "$RUTA"/Iniciar.reg
+echo '"Zone"="http://www.zone.com/asp/aoferedir.asp"' >> "$RUTA"/Iniciar.reg
+wine regedit -s "$RUTA"/Iniciar.reg
+rm -rf "$RUTA"/Iniciar.reg
+
+echo "REGEDIT4" >> "$RUTA"/software.reg
+echo "" >> "$RUTA"/software.reg
+echo "[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]" >> "$RUTA"/software.reg
+echo "" >> "$RUTA"/software.reg
+echo "[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders]" >> "$RUTA"/software.reg
+echo '"AppData"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"Cache"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"Cookies"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"Desktop"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"Favorites"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"Fonts"="c:\\\software\\\\fuentes"' >> "$RUTA"/software.reg
+echo '"History"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"Local AppData"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"My Music"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"My PictuResolucion"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"My Videos"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"NetHood"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"Personal"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"PrintHood"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"Programs"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"Recent"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"SendTo"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"Start Menu"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"StartUp"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo '"Templates"="c:\\\software\\\"' >> "$RUTA"/software.reg
+echo "" >> "$RUTA"/software.reg
+echo "[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders]" >> "$RUTA"/software.reg
+echo '"AppData"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"Cache"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"Cookies"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"Desktop"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"Favorites"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"Fonts"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,66,75,65,6e,74,65,73,00' >> "$RUTA"/software.reg
+echo '"History"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"Local AppData"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"My Music"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"My PictuResolucion"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"My Videos"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"NetHood"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"Personal"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"PrintHood"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"Programs"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"Recent"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"SendTo"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"Start Menu"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"StartUp"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+echo '"Templates"=hex(2):63,3a,5c,73,6f,66,74,77,61,72,65,5c,00' >> "$RUTA"/software.reg
+wine regedit -s "$RUTA"/software.reg && rm -rf "$RUTA"/software.reg
+wine regedit -s "$RUTA"/arreglos/Midi.reg
+wine regedit -s "$RUTA"/arreglos/Indeo.reg
+wine regedit -s "$RUTA"/arreglos/DirectX.reg
+wine regedit -s "$RUTA"/arreglos/$Nucleo_*.reg
+
+# Detectar el Directorio "Escritorio"
+# Dentro del usuario actual
+
+cd $HOME
+
+if [ -e Desktop ]; then cd Desktop; DirectorioEscritorio=$HOME/Desktop; fi
+if [ -e Escritorio ]; then cd Escritorio; DirectorioEscritorio=$HOME/Escritorio; fi
+
+if [ ! -e $DirectorioEscritorio/"Ages Of Empires 1" ]; then
+mkdir -p $DirectorioEscritorio/"Ages Of Empires 1"
+cd $DirectorioEscritorio/"Ages Of Empires 1"
+fi
+
+if [ -e $DirectorioEscritorio/"Ages Of Empires 1" ]; then
+cd $DirectorioEscritorio/"Ages Of Empires 1"
+fi
+
+# Escribir Los Archivos de "Enlace(s)"
+# Necesarios dentro de la Carpeta "$HOME/$DirectorioEscritorio/Wine"
+
+# Primero Borrar cualquier archivo Anterior
+# De Escritorio , para Evitar Conflictos y no crear archivos innecesarios.
+
+#MENU#if [ -f "Ages Of Empires 1 [Menu].desktop" ]; then rm -rf "Ages Of Empires 1 [Menu].desktop"; fi
+#MENU#touch "Ages Of Empires 1 [Menu].desktop"
+#MENU#echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 [Menu].desktop"
+#MENU#echo "" >> "Ages Of Empires 1 [Menu].desktop"
+#MENU#echo '[Desktop Entry]' >> "Ages Of Empires 1 [Menu].desktop"
+#MENU#echo "Version=1.0" >> "Ages Of Empires 1 [Menu].desktop"
+#MENU#echo "Type=Application" >> "Ages Of Empires 1 [Menu].desktop"
+#MENU#echo "Terminal=false" >> "Ages Of Empires 1 [Menu].desktop"
+#MENU#echo 'Exec=sh "'$RUTA'"/.Lanzar_Menu' >> "Ages Of Empires 1 [Menu].desktop"
+#MENU#echo "Name=Ages Of Empires 1 + Expansion (Menu)" >> "Ages Of Empires 1 [Menu].desktop"
+#MENU#echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 [Menu].desktop"
+#MENU#echo "Path=$RUTA" >> "Ages Of Empires 1 [Menu].desktop"
+#MENU#echo "StartupNotify=true" >> "Ages Of Empires 1 [Menu].desktop"
+#MENU#echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 [Menu].desktop"
+
+#AOE1NE#if [ -f "Ages Of Empires 1 [Sin Musica].desktop" ]; then rm -rf "Ages Of Empires 1 [Sin Musica].desktop"; fi
+#AOE1NE#touch "Ages Of Empires 1 [Sin Musica].desktop"
+#AOE1NE#echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 [Sin Musica].desktop"
+#AOE1NE#echo "" >> "Ages Of Empires 1 [Sin Musica].desktop"
+#AOE1NE#echo '[Desktop Entry]' >> "Ages Of Empires 1 [Sin Musica].desktop"
+#AOE1NE#echo "Version=1.0" >> "Ages Of Empires 1 [Sin Musica].desktop"
+#AOE1NE#echo "Type=Application" >> "Ages Of Empires 1 [Sin Musica].desktop"
+#AOE1NE#echo "Terminal=false" >> "Ages Of Empires 1 [Sin Musica].desktop"
+#AOE1NE#echo 'Exec=sh "'$RUTA'"/.Lanzar-JSE-SM' >> "Ages Of Empires 1 [Sin Musica].desktop"
+#AOE1NE#echo "Name=Ages Of Empires 1 [Sin Musica]" >> "Ages Of Empires 1 [Sin Musica].desktop"
+#AOE1NE#echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 [Sin Musica].desktop"
+#AOE1NE#echo "Path=$RUTA" >> "Ages Of Empires 1 [Sin Musica].desktop"
+#AOE1NE#echo "StartupNotify=true" >> "Ages Of Empires 1 [Sin Musica].desktop"
+#AOE1NE#echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 [Sin Musica].desktop"
+#AOE1NE#
+#AOE1NE#if [ -f "Ages Of Empires 1 + Musica [Timidity via ALSA].desktop" ]; then rm -rf "Ages Of Empires 1 + Musica [Timidity via ALSA].desktop"; fi
+#AOE1NE#touch "Ages Of Empires 1 + Musica [Timidity via ALSA].desktop"
+#AOE1NE#echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 + Musica [Timidity via ALSA].desktop"
+#AOE1NE#echo "" >> "Ages Of Empires 1 + Musica [Timidity via ALSA].desktop"
+#AOE1NE#echo '[Desktop Entry]' >> "Ages Of Empires 1 + Musica [Timidity via ALSA].desktop"
+#AOE1NE#echo "Version=1.0" >> "Ages Of Empires 1 + Musica [Timidity via ALSA].desktop"
+#AOE1NE#echo "Type=Application" >> "Ages Of Empires 1 + Musica [Timidity via ALSA].desktop"
+#AOE1NE#echo "Terminal=false" >> "Ages Of Empires 1 + Musica [Timidity via ALSA].desktop"
+#AOE1NE#echo 'Exec=sh "'$RUTA'"/.Lanzar-JSE-CM-TVA' >> "Ages Of Empires 1 + Musica [Timidity via ALSA].desktop"
+#AOE1NE#echo "Name=Ages Of Empires 1 + Musica [Timidity via ALSA]" >> "Ages Of Empires 1 + Musica [Timidity via ALSA].desktop"
+#AOE1NE#echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 + Musica [Timidity via ALSA].desktop"
+#AOE1NE#echo "Path=$RUTA" >> "Ages Of Empires 1 + Musica [Timidity via ALSA].desktop"
+#AOE1NE#echo "StartupNotify=true" >> "Ages Of Empires 1 + Musica [Timidity via ALSA].desktop"
+#AOE1NE#echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 + Musica [Timidity via ALSA].desktop"
+#AOE1NE#
+#AOE1NE#if [ -f "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA].desktop" ]; then rm -rf "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA].desktop"; fi
+#AOE1NE#touch "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA].desktop"
+#AOE1NE#echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA].desktop"
+#AOE1NE#echo "" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA].desktop"
+#AOE1NE#echo '[Desktop Entry]' >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA].desktop"
+#AOE1NE#echo "Version=1.0" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA].desktop"
+#AOE1NE#echo "Type=Application" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA].desktop"
+#AOE1NE#echo "Terminal=false" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA].desktop"
+#AOE1NE#echo 'Exec=sh "'$RUTA'"/.Lanzar-JSE-CM-FVA' >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA].desktop"
+#AOE1NE#echo "Name=Ages Of Empires 1 + Musica [Fluidsyntn via ALSA]" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA].desktop"
+#AOE1NE#echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA].desktop"
+#AOE1NE#echo "Path=$RUTA" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA].desktop"
+#AOE1NE#echo "StartupNotify=true" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA].desktop"
+#AOE1NE#echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA].desktop"
+#AOE1NE#
+#AOE1NE#if [ -f "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio].desktop" ]; then rm -rf "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio].desktop"; fi
+#AOE1NE#touch "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio].desktop"
+#AOE1NE#echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio].desktop"
+#AOE1NE#echo "" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio].desktop"
+#AOE1NE#echo '[Desktop Entry]' >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio].desktop"
+#AOE1NE#echo "Version=1.0" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio].desktop"
+#AOE1NE#echo "Type=Application" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio].desktop"
+#AOE1NE#echo "Terminal=false" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio].desktop"
+#AOE1NE#echo 'Exec=sh "'$RUTA'"/.Lanzar-JSE-CM-FVP' >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio].desktop"
+#AOE1NE#echo "Name=Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio]" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio].desktop"
+#AOE1NE#echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio].desktop"
+#AOE1NE#echo "Path=$RUTA" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio].desktop"
+#AOE1NE#echo "StartupNotify=true" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio].desktop"
+#AOE1NE#echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio].desktop"
+
+
+
+
+
+
+
+
+if [ -f "Ages Of Empires 1 + Expansion [Sin Musica].desktop" ]; then rm -rf "Ages Of Empires 1 + Expansion [Sin Musica].desktop"; fi
+touch "Ages Of Empires 1 + Expansion [Sin Musica].desktop"
+echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 + Expansion [Sin Musica].desktop"
+echo "" >> "Ages Of Empires 1 + Expansion [Sin Musica].desktop"
+echo '[Desktop Entry]' >> "Ages Of Empires 1 + Expansion [Sin Musica].desktop"
+echo "Version=1.0" >> "Ages Of Empires 1 + Expansion [Sin Musica].desktop"
+echo "Type=Application" >> "Ages Of Empires 1 + Expansion [Sin Musica].desktop"
+echo "Terminal=false" >> "Ages Of Empires 1 + Expansion [Sin Musica].desktop"
+echo 'Exec=sh "'$RUTA'"/.Lanzar-JME-SM' >> "Ages Of Empires 1 + Expansion [Sin Musica].desktop"
+echo "Name=Ages Of Empires 1 + Expansion [Sin Musica]" >> "Ages Of Empires 1 + Expansion [Sin Musica].desktop"
+echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 + Expansion [Sin Musica].desktop"
+echo "Path=$RUTA" >> "Ages Of Empires 1 + Expansion [Sin Musica].desktop"
+echo "StartupNotify=true" >> "Ages Of Empires 1 + Expansion [Sin Musica].desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 + Expansion [Sin Musica].desktop"
+
+if [ -f "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA].desktop" ]; then rm -rf "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA].desktop"; fi
+touch "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA].desktop"
+echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA].desktop"
+echo "" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA].desktop"
+echo '[Desktop Entry]' >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA].desktop"
+echo "Version=1.0" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA].desktop"
+echo "Type=Application" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA].desktop"
+echo "Terminal=false" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA].desktop"
+echo 'Exec=sh "'$RUTA'"/.Lanzar-JME-CM-TVA' >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA].desktop"
+echo "Name=Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA]" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA].desktop"
+echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA].desktop"
+echo "Path=$RUTA" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA].desktop"
+echo "StartupNotify=true" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA].desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA].desktop"
+
+if [ -f "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA].desktop" ]; then rm -rf "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA].desktop"; fi
+touch "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA].desktop"
+echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA].desktop"
+echo "" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA].desktop"
+echo '[Desktop Entry]' >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA].desktop"
+echo "Version=1.0" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA].desktop"
+echo "Type=Application" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA].desktop"
+echo "Terminal=false" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA].desktop"
+echo 'Exec=sh "'$RUTA'"/.Lanzar-JME-CM-FVA' >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA].desktop"
+echo "Name=Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA]" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA].desktop"
+echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA].desktop"
+echo "Path=$RUTA" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA].desktop"
+echo "StartupNotify=true" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA].desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA].desktop"
+
+if [ -f "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio].desktop" ]; then rm -rf "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio].desktop"; fi
+touch "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio].desktop"
+echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio].desktop"
+echo "" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio].desktop"
+echo '[Desktop Entry]' >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio].desktop"
+echo "Version=1.0" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio].desktop"
+echo "Type=Application" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio].desktop"
+echo "Terminal=false" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio].desktop"
+echo 'Exec=sh "'$RUTA'"/.Lanzar-JME-CM-FVP' >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio].desktop"
+echo "Name=Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio]" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio].desktop"
+echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio].desktop"
+echo "Path=$RUTA" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio].desktop"
+echo "StartupNotify=true" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio].desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio].desktop"
+
+if [ -f "Ages Of Empires 1 [Sin Musica] (Modo Ventana).desktop" ]; then rm -rf "Ages Of Empires 1 [Sin Musica] (Modo Ventana).desktop"; fi
+touch "Ages Of Empires 1 [Sin Musica] (Modo Ventana).desktop"
+echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 [Sin Musica] (Modo Ventana).desktop"
+echo "" >> "Ages Of Empires 1 [Sin Musica] (Modo Ventana).desktop"
+echo '[Desktop Entry]' >> "Ages Of Empires 1 [Sin Musica] (Modo Ventana).desktop"
+echo "Version=1.0" >> "Ages Of Empires 1 [Sin Musica] (Modo Ventana).desktop"
+echo "Type=Application" >> "Ages Of Empires 1 [Sin Musica] (Modo Ventana).desktop"
+echo "Terminal=false" >> "Ages Of Empires 1 [Sin Musica] (Modo Ventana).desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_Lanzar-JSE-SM' >> "Ages Of Empires 1 [Sin Musica] (Modo Ventana).desktop"
+echo "Name=Ages Of Empires 1 [Sin Musica] (Modo Ventana)" >> "Ages Of Empires 1 [Sin Musica] (Modo Ventana).desktop"
+echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 [Sin Musica] (Modo Ventana).desktop"
+echo "Path=$RUTA" >> "Ages Of Empires 1 [Sin Musica] (Modo Ventana).desktop"
+echo "StartupNotify=true" >> "Ages Of Empires 1 [Sin Musica] (Modo Ventana).desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 [Sin Musica] (Modo Ventana).desktop"
+
+if [ -f "Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana).desktop" ]; then rm -rf "Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana).desktop"; fi
+touch "Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "" >> "Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo '[Desktop Entry]' >> "Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "Version=1.0" >> "Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "Type=Application" >> "Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "Terminal=false" >> "Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_Lanzar-JSE-CM-TVA' >> "Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "Name=Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana)" >> "Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "Path=$RUTA" >> "Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "StartupNotify=true" >> "Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+
+if [ -f "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop" ]; then rm -rf "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"; fi
+touch "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo '[Desktop Entry]' >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "Version=1.0" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "Type=Application" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "Terminal=false" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_Lanzar-JSE-CM-FVA' >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "Name=Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana)" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "Path=$RUTA" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "StartupNotify=true" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+
+if [ -f "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop" ]; then rm -rf "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"; fi
+touch "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo '[Desktop Entry]' >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "Version=1.0" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "Type=Application" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "Terminal=false" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_Lanzar-JSE-CM-FVP' >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "Name=Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana)" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "Path=$RUTA" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "StartupNotify=true" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+
+if [ -f "Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana).desktop" ]; then rm -rf "Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana).desktop"; fi
+touch "Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana).desktop"
+echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana).desktop"
+echo "" >> "Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana).desktop"
+echo '[Desktop Entry]' >> "Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana).desktop"
+echo "Version=1.0" >> "Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana).desktop"
+echo "Type=Application" >> "Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana).desktop"
+echo "Terminal=false" >> "Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana).desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_Lanzar-JME-SM' >> "Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana).desktop"
+echo "Name=Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana)" >> "Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana).desktop"
+echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana).desktop"
+echo "Path=$RUTA" >> "Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana).desktop"
+echo "StartupNotify=true" >> "Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana).desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana).desktop"
+
+if [ -f "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana).desktop" ]; then rm -rf "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana).desktop"; fi
+touch "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo '[Desktop Entry]' >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "Version=1.0" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "Type=Application" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "Terminal=false" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_Lanzar-JME-CM-TVA' >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "Name=Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana)" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "Path=$RUTA" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "StartupNotify=true" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+
+if [ -f "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop" ]; then rm -rf "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"; fi
+touch "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo '[Desktop Entry]' >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "Version=1.0" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "Type=Application" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "Terminal=false" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_Lanzar-JME-CM-FVA' >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "Name=Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana)" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "Path=$RUTA" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "StartupNotify=true" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+
+if [ -f "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop" ]; then rm -rf "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"; fi
+touch "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "#!/usr/bin/env xdg-open" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo '[Desktop Entry]' >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "Version=1.0" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "Type=Application" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "Terminal=false" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_Lanzar-JME-CM-FVP' >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "Name=Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana)" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "Icon=$RUTA/.aoe1x.png" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "Path=$RUTA" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "StartupNotify=true" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+
+# Marcar como de Confianza (Dar Permiso de Ejecucion):
+#MENU#chmod a+x "Ages Of Empires 1 [Menu].desktop"
+#AOE1NE#chmod a+x "Ages Of Empires 1 [Sin Musica].desktop"
+chmod a+x "Ages Of Empires 1 + Expansion [Sin Musica].desktop"
+#AOE1NE#chmod a+x "Ages Of Empires 1 [Sin Musica] (Modo Ventana).desktop"
+#AOE1NE#chmod a+x "Ages Of Empires 1 + Musica [Timidity via ALSA].desktop"
+#AOE1NE#chmod a+x "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA].desktop"
+#AOE1NE#chmod a+x "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio].desktop"
+chmod a+x "Ages Of Empires 1 + Expansion [Sin Musica] (Modo Ventana).desktop"
+chmod a+x "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA].desktop"
+chmod a+x "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA].desktop"
+#AOE1NE#chmod a+x "Ages Of Empires 1 + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+#AOE1NE#chmod a+x "Ages Of Empires 1 + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+chmod a+x "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio].desktop"
+#AOE1NE#chmod a+x "Ages Of Empires 1 + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+chmod a+x "Ages Of Empires 1 + Expansion + Musica [Timidity via ALSA] (Modo Ventana).desktop"
+chmod a+x "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via ALSA] (Modo Ventana).desktop"
+chmod a+x "Ages Of Empires 1 + Expansion + Musica [Fluidsyntn via PulseAudio] (Modo Ventana).desktop"
+
+if [ $XMessage = xmessage ]; then
+	echo
+	echo 'Mostrar el Mensaje en el Sistema Grafico -> "Se Esta Configurando El Software"'
+	echo
+	xmessage -nearmouse -timeout 3 "Se Ha Configurado Exitosamente" -buttons OK &
+else
+	echo
+	echo "xmessage - NO! ESTA INSTALADO"
+	echo
+	echo "Se Ha Configurado Exitosamente"
+	echo
+fi

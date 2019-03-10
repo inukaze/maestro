@@ -1,0 +1,13 @@
+#!/bin/bash
+export SDL_MOUSE_RELATIVE=0
+export SDL_VIDEO_X11_DGAMOUSE=0
+export LD_LIBRARY_PATH=/usr/share/scripts/libs
+killall -9 unclutter
+killall -9 pulseaudio
+rm -rf "/media/CompartidoJuegos/Abandonware & MS-D.o.s/DosBox/EJECUTAR.BAT"
+touch "/media/CompartidoJuegos/Abandonware & MS-D.o.s/DosBox/EJECUTAR.BAT"
+echo "" >> "/media/CompartidoJuegos/Abandonware & MS-D.o.s/DosBox/EJECUTAR.BAT"
+echo "grldos" >> "/media/CompartidoJuegos/Abandonware & MS-D.o.s/DosBox/EJECUTAR.BAT"
+dosbox
+unclutter &
+exit

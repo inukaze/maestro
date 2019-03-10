@@ -1,0 +1,220 @@
+#!/bin/bash
+# 
+# Autor	:	Inukaze ( Venezuela )
+# Sitio		:	http://inukaze.wordpResolucions.com
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+xmessage -nearmouse -timeout 5 "Configuring Dofus Arena" -buttons OK &
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+cd "$RUTA" ; ./.Permisos
+RUTA_C="$RUTA/wine/data/drive_c"
+ARREGLOS="$RUTA/arreglos"
+
+# Obtener el nombre del nucleo del sistema
+Nucleo=$(uname -s)
+
+if		[ $Nucleo = "Darwin" ]; then
+		Nucleo=mac
+elif		[ $Nucleo = "Linux" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "FreeBSD" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "SunOS" ]; then
+		Nucleo=linux
+else
+		echo "Not Supported Operating System"
+fi
+
+# Borrar Toda Configuracion Previa WINE:
+rm -rf "$RUTA/wine/data/drive_c/users"
+rm -rf "$RUTA/wine/data/drive_c/windows"
+rm -rf "$RUTA/wine/data/Program Files (x86)"
+rm -rf "$RUTA/wine/data/drive_c/Archivos de programa"
+rm -rf "$RUTA/wine/data/drive_c/Program Files (x86)"
+rm -rf "$RUTA/wine/data/system.reg"
+rm -rf "$RUTA/wine/data/user.reg"
+rm -rf "$RUTA/wine/data/userdef.reg"
+rm -rf "$RUTA/wine/data/dosdevices"
+rm -rf "$RUTA/wine/data/.update-timestamp"
+rm -rf "$RUTA/wine/.DS_Store"
+rm -rf "$RUTA/wine/linux/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/bin/.DS_Store"
+rm -rf "$RUTA"/wine/data/cachedmetrics.\:0
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if	       [ $Arquitectura = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+         elif [ $Arquitectura = "x86_64" ]; then
+			export WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="64 Bits"
+	else
+		echo "Arquitectura NO SOPORTADA"
+fi 
+
+# Muestra en la terminal La arquitectura &
+# La version especifica de Wine usada
+Version_De_Wine=$(wine --version)
+echo ""
+echo ""
+echo "Running '$Version_De_Wine' under '$Nucleo' ( Machine '$Arquitectura' )"
+echo ""
+echo ""
+
+`wine regedit -s "$RUTA"/arreglos/software.reg`
+`wine regedit -s "$RUTA"/arreglos/"$Nucleo"_video.reg`
+`wine regedit -s "$RUTA"/arreglos/"$Nucleo"_sonido.reg`
+
+tvid=$(lspci -v -s `lspci | awk '/VGA/{print $1}'` | sed -n '/Memory.*, prefetchable/s/.*\[size=\([^]]\+\)M\]/\1/p')
+let "mvid"=$tvid/2
+
+echo ""
+echo ""
+echo "Has been put the 3D Configuration"
+echo "For Dofus Arena , using half"
+echo "of the video memory available"
+echo ""
+echo ""
+echo 'The Client use "'"$mvid MB"'" Video'
+echo ""
+echo ""
+
+# Detectar el Directorio "Escritorio"
+# Dentro del usuario actual
+
+cd $HOME
+
+if [ -e Desktop ]; then cd Desktop; DirectorioEscritorio=$HOME/Desktop; fi
+if [ -e Escritorio ]; then cd Escritorio; DirectorioEscritorio=$HOME/Escritorio; fi
+
+if [ ! -e $DirectorioEscritorio/DofusArena ]; then
+mkdir -p $DirectorioEscritorio/DofusArena
+cd $DirectorioEscritorio/DofusArena
+fi
+
+if [ -e $DirectorioEscritorio/DofusArena ]; then
+cd $DirectorioEscritorio/DofusArena
+fi
+
+if [ -f "Dofus Arena.desktop" ]; then rm -rf "Dofus Arena.desktop"; fi
+
+# 1 - Dofus Arena
+touch "Dofus Arena.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Dofus Arena.desktop"
+echo "" >> "Dofus Arena.desktop"
+echo '[Desktop Entry]' >> "Dofus Arena.desktop"
+echo "Version=1.0" >> "Dofus Arena.desktop"
+echo "Type=Application" >> "Dofus Arena.desktop"
+echo "Terminal=false" >> "Dofus Arena.desktop"
+echo 'Exec=sh "'$RUTA'"/.LanzarDofusArena' >> "Dofus Arena.desktop"
+echo "Name=Dofus Arena" >> "Dofus Arena.desktop"
+echo "Icon=$RUTA/.DofusArena.png" >> "Dofus Arena.desktop"
+
+# 2 - Setup
+
+if [ -f "Dofus Arena - Setup.desktop" ]; then rm -rf "Dofus Arena - Setup.desktop"; fi
+touch "Dofus Arena - Setup.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Dofus Arena - Setup.desktop"
+echo "" >> "Dofus Arena - Setup.desktop"
+echo '[Desktop Entry]' >> "Dofus Arena - Setup.desktop"
+echo "Version=1.0" >> "Dofus Arena - Setup.desktop"
+echo "Type=Application" >> "Dofus Arena - Setup.desktop"
+echo "Terminal=false" >> "Dofus Arena - Setup.desktop"
+echo 'Exec=sh "'$RUTA'"/.SetupTool' >> "Dofus Arena - Setup.desktop"
+echo "Name=Dofus Arena - Setup" >> "Dofus Arena - Setup.desktop"
+echo "Icon=$RUTA/.SetupTool.png" >> "Dofus Arena - Setup.desktop"
+echo "Path=$RUTA" >> "Dofus Arena - Setup.desktop"
+echo "StartupNotify=true" >> "Dofus Arena - Setup.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Dofus Arena - Setup.desktop"
+
+if [ -f "Window Mode - Dofus Arena.desktop" ]; then rm -rf "Window Mode - Dofus Arena.desktop"; fi
+
+#Crear Enlaces en la Carpeta "$DirectorioEscritorio/DofusArena"
+#Del Software que configura este Script.
+
+# 3 - Dofus Arena - Windowed Mode.
+touch "Window Mode - Dofus Arena.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Window Mode - Dofus Arena.desktop"
+echo "" >> "Window Mode - Dofus Arena.desktop"
+echo '[Desktop Entry]' >> "Window Mode - Dofus Arena.desktop"
+echo "Version=1.0" >> "Window Mode - Dofus Arena.desktop"
+echo "Type=Application" >> "Window Mode - Dofus Arena.desktop"
+echo "Terminal=false" >> "Window Mode - Dofus Arena.desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_IniciarDofusArena' >> "Window Mode - Dofus Arena.desktop"
+echo "Name=Window Mode - Dofus Arena" >> "Window Mode - Dofus Arena.desktop"
+echo "Icon=$RUTA/.DofusArena.png" >> "Window Mode - Dofus Arena.desktop"
+echo "Path=$RUTA" >> "Window Mode - Dofus Arena.desktop"
+echo "StartupNotify=true" >> "Window Mode - Dofus Arena.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Window Mode - Dofus Arena.desktop"
+
+# Marcar como de Confianza (Dar Permiso de Ejecucion):
+chmod a+x "Dofus Arena.desktop"
+chmod a+x "Dofus Arena - Setup.desktop"
+chmod a+x "Window Mode - Dofus Arena.desktop"
+
+xmessage -nearmouse -timeout 5 "Has been Configured Correclty : Dofus Arena" -buttons OK &

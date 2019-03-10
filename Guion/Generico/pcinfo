@@ -1,0 +1,217 @@
+#!/bin/bash
+
+function Procesador()
+{ 
+
+# Determinando la Velocidad del Procesador
+CPUMHz=$(cat /var/log/dmesg | grep "MHz processor" | cut -d " " -f08 | sed 's/[.].*//')
+if [[ "$CPUMHz" < "133" ]];
+	then
+		if [[ "$CPUMHz" < "1024" ]];
+		then
+			echo "$CPUMHz Mhz"
+		fi
+		elif [[ "$CPUMHz" > "1024" ]];
+		then		
+		let "CPUGHz"=$CPUMHz/1000
+			CPUGHz=`echo "scale=2; 1*($CPUMHz/1000)" | bc -l`
+			echo "$CPUGHz GHz"
+
+		else
+		echo "Menos de 133 Mhz de Procesador"
+fi
+
+}
+
+function MemoriaRAM()
+{ 
+
+# Determinando la Cantidad De memoria RAM (Todavia no encuentro como hacer que funcione con toda version de bash)
+RAM_Kb=`grep MemTotal /proc/meminfo | awk '{print $2}'`
+if [[ "$RAM_Kb" < "16000" ]];
+	then
+		if [[ "$RAM_Kb" < "1024000" ]];
+			then
+			let RAM_MB=$RAM_Kb/1024
+			echo "$RAM_MB MB"
+		elif [[ "$RAM_Kb" > "1024000" ]];
+		then
+		let "RAMGb"=$RAM_Kb/102400
+			RAMGb=`echo "scale=1; 1*($RAM_Kb/1024000)" | bc -l`
+			echo "$RAMGb" "GB"
+		fi
+	else
+	echo "Menos de 16 MB RAM"
+fi
+
+}
+
+function Video() 
+{
+# Determinando Tarjeta De Video
+# Determinando Memoria De Video
+vcard=`lspci -v | grep "VGA" | cut -d " " -f05`
+MDV=`MB_DE_VIDEO`
+echo "$MDV"
+}
+
+function MB_DE_VIDEO()
+{
+# Determinando Memoria De Video
+vcard=$(lspci -v | grep "VGA" | cut -d " " -f05)
+vidsize=$(lspci -v -s `lspci | awk '/VGA/{print $1}'` | sed -n '/Memory.*, prefetchable/s/.*\[size=\([^]]\+\)M\]/\1/p')
+Conviduso=$(lspci -nnk | grep -i vga -A3 | grep 'in use' | cut -d " " -f05)
+	if [ "$vidsize" -ge "8" ]
+		then
+			echo "Tarjeta De Video : $vcard "
+			echo "Memoria De Video : $vidsize MB"
+
+			if [ "$Conviduso" = "nvidia" ]; then
+					echo "Control De Video : $Conviduso (Privativo)"
+			fi
+
+			if [ "$Conviduso" = "nv" ]; then
+					echo "Control De Video : $Conviduso (Libre)"
+			fi
+
+			if [ "$Conviduso" = "nouveau" ]; then
+					echo "Control De Video : $Conviduso (Libre)"
+			fi
+
+			if [ "$Conviduso" = "radeon" ]; then
+					echo "Control De Video : $Conviduso (Libre)"
+			fi
+
+			if [ "$Conviduso" = "fglrx" ]; then
+					echo "Control De Video : $Conviduso (Privativo)"
+			fi
+
+			if [ "$Conviduso" = "fglrx_pci" ]; then
+					echo "Control De Video : $Conviduso (Privativo)"
+			fi
+
+			if [ "$Conviduso" = "openchrome" ]; then
+					echo "Control De Video : $Conviduso (Libre)"
+			fi
+
+			if [ "$Conviduso" = "intel" ]; then
+					echo "Control De Video : $Conviduso (Libre)"
+			fi
+
+				support3d=$(glxinfo | grep "direct rendering: Yes" | cut -d " " -f03)
+				if [ $support3d = "Yes" ];
+					then
+						echo "Funcion De Video : Soporte 3D & Renderizado Directo"
+					else
+						echo "Funcion De Video : Sin Soporte 3D"
+				fi
+		else
+			echo "Menos de 8 MB de Video y sin Soporte 3D"
+	fi
+}
+
+
+function Arquitectura() 
+{
+
+# Determinando la Arquitectura de la Maquina
+arch=`uname -m`
+if	      [ $arch = "i386" ]; then
+			echo "Sistema de 32 Bits / x86 "
+	elif  [ $arch = "i486" ]; then
+			echo "Sistema de 32 Bits / x86 "
+	elif  [ $arch = "i586" ]; then
+			echo "Sistema de 32 Bits / x86 "
+	elif  [ $arch = "i686" ]; then
+			echo "Sistema de 32 Bits / x86 "
+	elif  [ $arch = "x86_64" ]; then
+			echo "Sistema de 64 Bits / x86_64 "
+	else
+		echo "Architectura Desconocida"
+fi
+
+
+}
+
+function CPUCache()
+{
+
+# Determinando la Cache del CPU
+CpuCache=`awk -F':' '/^cache size/ { print $2 }' /proc/cpuinfo | uniq | cut -d " " -f02`
+if [ "$CpuCache" -ge "1024" ]
+	then
+		if [ "$CpuCache" -ge "1024" ]
+		then
+		let "CpuCacheMB"=$CpuCache/1000
+			echo "$CpuCacheMB MB"
+		else
+		let "CpuCacheKB"=$CpuCache/1000
+			echo "$CpuCacheKB Kb"
+		fi
+	else
+	echo "Menos de 256 KB de Cache"
+fi
+
+}
+
+clear
+echo '#########################################################################'
+echo '####		Script de Inukaze para Información del PC 	     ####'
+echo '#########################################################################'
+echo ""
+VDP=`Procesador`
+echo "Tienes : `grep -c 'processor' /proc/cpuinfo | uniq` Procesador(es)"
+echo "La Velocidad de la CPU es : $VDP "
+CCache=`CPUCache`
+echo "El Tamaño de Cache de la CPU es: $CCache"
+echo "La Compañía de la CPU es :`awk -F':' '/^vendor_id/ { print $2 }' /proc/cpuinfo | uniq`"
+ARCH=`Arquitectura`
+echo "La Arquitectura Utilizada es: $ARCH " 
+echo "Módelo del CPU :`awk -F':' '/^model name/ { print $2 }' /proc/cpuinfo | uniq`"
+echo ""
+echo "#########################################################################"
+echo "####		Información de la Memoria & Video		     ####"
+echo "#########################################################################"
+echo ""
+MRAM=`MemoriaRAM`
+echo "Memoria RAM : $MRAM "
+echo ""
+MVID=`Video`
+echo "$MVID "
+echo ""
+echo "#########################################################################"
+
+XORG=$(ps -A|grep Xorg|awk '{print $4}')
+if [ "$XORG" = "Xorg" ]; then
+
+if [ -f "$HOME"/.infohw ]; then
+ rm -rf "$HOME"/.infohw
+fi
+
+echo '#########################################################################' >> $HOME/.infohw
+echo '####		Script de Inukaze para Informacion del PC 	     ####' >> $HOME/.infohw
+echo '#########################################################################' >> $HOME/.infohw
+echo "" >> $HOME/.infohw
+VDP=`Procesador`
+echo "Tienes : `grep -c 'processor' /proc/cpuinfo | uniq` Procesador(es)" >> $HOME/.infohw
+echo "La Velocidad de la CPU es : $VDP " >> $HOME/.infohw
+CCache=`CPUCache`
+echo "El Tamano de Cache de la CPU es: $CCache" >> $HOME/.infohw
+echo "La Compania de la CPU es :`awk -F':' '/^vendor_id/ { print $2 }' /proc/cpuinfo | uniq`" >> $HOME/.infohw
+ARCH=`Arquitectura`
+echo "La Arquitectura Utilizada es: $ARCH " >> $HOME/.infohw
+echo "Modelo del CPU :`awk -F':' '/^model name/ { print $2 }' /proc/cpuinfo | uniq`" >> $HOME/.infohw
+echo "" >> $HOME/.infohw
+echo "#########################################################################" >> $HOME/.infohw
+echo "####		Informacion de la Memoria & Video		     ####" >> $HOME/.infohw
+echo "#########################################################################" >> $HOME/.infohw
+echo "" >> $HOME/.infohw
+MRAM=`MemoriaRAM`
+echo "Memoria RAM : $MRAM " >> $HOME/.infohw
+echo "" >> $HOME/.infohw
+MVID=`Video`
+echo "$MVID " >> $HOME/.infohw
+echo "" >> $HOME/.infohw
+echo "#########################################################################" >> $HOME/.infohw
+xmessage -file "$HOME/.infohw"
+fi

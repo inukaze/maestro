@@ -1,0 +1,347 @@
+#!/bin/bash
+# 
+# Autor	:	Inukaze ( From Venezuela )
+# Sitio		:	http://https://goo.gl/ij6WqW
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+# Este Script es para Solucionar problemas de Directx
+# Para el Software que esta Intentado Ejecutar
+# Como NATIVO de un SISTEMA QUE NO ES WINDOWS
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+TITULO="Coleccion De Big City Adventure"
+
+if 	[ -d "$RUTA" ]; then
+	rm -rf "$RUTA/wine/data/drive_c/users"
+	rm -rf "$RUTA/wine/data/drive_c/windows"
+	rm -rf "$RUTA/wine/data/Program Files (x86)"
+	rm -rf "$RUTA/wine/data/drive_c/Arquitecturaivos de programa"
+	rm -rf "$RUTA/wine/data/drive_c/Program Files (x86)"
+	rm -rf "$RUTA/wine/data/system.reg"
+	rm -rf "$RUTA/wine/data/user.reg"
+	rm -rf "$RUTA/wine/data/userdef.reg"
+	rm -rf "$RUTA/wine/data/dosdevices"
+	rm -rf "$RUTA/wine/data/.update-timestamp"
+	rm -rf "$RUTA/wine/.DS_Store"
+	rm -rf "$RUTA/wine/linux/.DS_Store"
+	rm -rf "$RUTA/wine/linux/x86/.DS_Store"
+	rm -rf "$RUTA/wine/linux/x86_64/.DS_Store"
+	rm -rf "$RUTA/wine/linux/x86/bin/.DS_Store"
+	rm -rf "$RUTA/wine/linux/x86_64/bin/.DS_Store"
+	rm -rf "$RUTA/wine/mac/.DS_Store"
+	rm -rf "$RUTA/wine/mac/x86/.DS_Store"
+	rm -rf "$RUTA/wine/mac/x86_64/.DS_Store"
+	rm -rf "$RUTA/wine/mac/x86/bin/.DS_Store"
+	rm -rf "$RUTA/wine/mac/x86_64/bin/.DS_Store"
+	rm -rf "$RUTA"/wine/data/cachedmetrics.\:0
+else
+	echo "   . . . No se borro Configuracion Previa de WINE . . ."
+fi
+
+# Obtener el nombre del nucleo del sistema
+Nucleo=$(uname -s)
+
+if		[ $Nucleo = "Darwin" ]; then
+		Nucleo=mac
+elif		[ $Nucleo = "Linux" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "FreeBSD" ]; then
+		Nucleo=linux
+else
+		echo "Sistema Operativo NO SOPORTADO"
+fi
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if	       [ "$Arquitectura" = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+	elif	[ "$Arquitectura" = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+	elif	[ "$Arquitectura" = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+	elif	[ "$Arquitectura" = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+         elif [ "$Arquitectura" = "x86_64" ]; then
+			wine=$(./wine64)
+			PATH="$PWD/wine/$Nucleo/x86_64/bin:$PATH"
+			#export WINEARCH=win32
+			#export WINEARCH=win64
+			export WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="64 Bits"
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+
+	else
+		echo "Arquitectura NO SOPORTADA"
+fi
+
+# Registrar las Librerias de DirectX (Nativo)
+regsvr32 d3dxof.dll
+regsvr32 ddraw.dll
+regsvr32 ddrawex.dll
+regsvr32 devenum.dll
+regsvr32 dinput.dll
+regsvr32 dinput8.dll
+regsvr32 dsound.dll
+regsvr32 MSCTF.dll
+regsvr32 ole32.dll
+regsvr32 oleaut32.dll
+regsvr32 quartz.dll
+regsvr32 rpcrt4.dll
+regsvr32 shell32.dll
+regsvr32 wintrust.dll
+
+# Agregar Manualmente el Registro de las
+# Bibliotecas DirectX Nativas de Windows
+# Al Registro de WINE para su correcto Funcionamiento
+# Agregar valores de DirectX & DirectPlay al Registro
+
+# - Esto es DirectX 9.X? (Nativo de Windows XP SP 3)
+echo "REGEDIT4" >> arreglos.reg
+echo "" >> arreglos.reg
+echo "[HKEY_CURRENT_USER\Software\Wine\DllOverrides]" >> arreglos.reg
+echo '"advapi32.dll"="native"' >> arreglos.reg
+echo '"comctl32.dll"="native"' >> arreglos.reg
+echo '"comdlg32.dll"="native"' >> arreglos.reg
+echo '"comres.dll"="native"' >> arreglos.reg
+echo '"crypt32.dll"="native"' >> arreglos.reg
+echo '"d3d8.dll"="native"' >> arreglos.reg
+echo '"d3d8thk.dll"="native"' >> arreglos.reg
+echo '"d3d9.dll"="native"' >> arreglos.reg
+echo '"d3dx9_30.dll"="native"' >> arreglos.reg
+echo '"d3dx9_36.dll"="native"' >> arreglos.reg
+echo '"gdi32.dll"="native"' >> arreglos.reg
+echo '"GdiPlus.dll"="native"' >> arreglos.reg
+echo '"glu32.dll"="native"' >> arreglos.reg
+echo '"hid.dll"="native"' >> arreglos.reg
+echo '"imagehlp.dll"="native"' >> arreglos.reg
+echo '"imm32.dll"="native"' >> arreglos.reg
+echo '"kernel32.dll"="native"' >> arreglos.reg
+echo '"ksuser.dll"="native"' >> arreglos.reg
+echo '"mciqtz32.dll"="native"' >> arreglos.reg
+echo '"midimap.dll"="native"' >> arreglos.reg
+echo '"msacm32.dll"="native"' >> arreglos.reg
+echo '"msacm32.drv"="native"' >> arreglos.reg
+echo '"msasn1.dll"="native"' >> arreglos.reg
+echo '"MSCTFIME.IME"="native"' >> arreglos.reg
+echo '"msdmo.dll"="native"' >> arreglos.reg
+echo '"msvcrt.dll"="native"' >> arreglos.reg
+echo '"ntdll.dll"="native"' >> arreglos.reg
+echo '"nvoglnt.dll"="native"' >> arreglos.reg
+echo '"opengl32.dll"="native"' >> arreglos.reg
+echo '"secur32.dll"="native"' >> arreglos.reg
+echo '"setupapi.dll"="native"' >> arreglos.reg
+echo '"shlwapi.dll"="native"' >> arreglos.reg
+echo '"user32.dll"="native"' >> arreglos.reg
+echo '"wdmaud.drv"="native"' >> arreglos.reg
+echo '"winmm.dll"="native"' >> arreglos.reg
+echo '"d3d9caps.dat"="native"' >> arreglos.reg
+echo '' >> arreglos.reg
+echo ""
+echo "Se ha Registrado DirectX con DirectPlay exitosamente"
+echo ""
+
+tvid=$(lspci -v -s `lspci | awk '/VGA/{print $1}'` | sed -n '/Memory.*, prefetchable/s/.*\[size=\([^]]\+\)M\]/\1/p')
+let "mvid"=$tvid/2
+
+echo ""
+echo ""
+echo "Se ha establecido la configuracion 3D"
+echo "Para '"$TITULO"' , utilizando la mitad"
+echo "de la memoria de video disponible"
+echo ""
+echo ""
+echo 'El Juego usara "'"$mvid MB"'" de Video'
+echo ""
+echo ""
+
+# Registrar las Bibliotecas y Borrar Arquitecturaivos de Registro
+echo "Escribiendo Configuraciones pertinentes"
+echo "De '"$TITULO"' en el Sistema de WINE"
+echo ""
+exec `wine regedit -s arreglos.reg` && `rm -rf arreglos.reg`
+exec `wine regedit -s "$RUTA"/arreglos/DirectX.reg`
+
+# Agregar al registro la informacion del juego :
+cd "$RUTA"/arreglos
+wine regedit -S "$Nucleo"_sonido.reg
+wine regedit -S "$Nucleo"_video.reg
+wine regedit -S software.reg
+
+echo "Se ha escrito la configuracion del Juego correctamente"
+
+# Detectar el Directorio "Escritorio"
+# Dentro del usuario actual
+
+cd $HOME
+
+if [ -e Desktop ]; then cd Desktop; DirectorioEscritorio=$HOME/Desktop; fi
+if [ -e Escritorio ]; then cd Escritorio; DirectorioEscritorio=$HOME/Escritorio; fi
+
+if [ ! -e $DirectorioEscritorio/"Big City Adventure" ]; then
+mkdir -p $DirectorioEscritorio/"Big City Adventure"
+cd $DirectorioEscritorio/"Big City Adventure"
+fi
+
+if [ -e $DirectorioEscritorio/"Big City Adventure" ]; then
+cd $DirectorioEscritorio/"Big City Adventure"
+fi
+
+# Escribir Los Archivos de "Enlace(s)"
+# Necesarios dentro de la Carpeta '$HOME/$DirectorioEscritorio/"Big City Adventure"'
+
+# Primero Borrar cualquier archivo Anterior
+# De Escritorio , para Evitar Conflictos y no crear archivos innecesarios.
+
+if [ -f "Big City Adventure 1 - San Francisco".desktop ]; then rm -rf "Big City Adventure 1 - San Francisco".desktop; fi
+if [ -f "Big City Adventure 2 - Sydney Australia".desktop ]; then rm -rf "Big City Adventure 2 - Sydney Australia".desktop; fi
+if [ -f "Big City Adventure 3 - New York City Deluxe".desktop ]; then rm -rf "Big City Adventure 3 - New York City Deluxe".desktop; fi
+if [ -f "Big City Adventure 4 - Vancouver.desktop" ]; then rm -rf "Big City Adventure 4 - Vancouver.desktop"; fi
+
+#Crear Enlaces en la Carpeta "$DirectorioEscritorio/Wine"
+#Del Software que configura este Script.
+
+touch "Big City Adventure 1 - San Francisco.desktop" "Big City Adventure 2 - Sydney Australia.desktop" "Big City Adventure 3 - New York City Deluxe.desktop" "Big City Adventure 4 - Vancouver.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Big City Adventure 1 - San Francisco.desktop"
+echo "" >> "Big City Adventure 1 - San Francisco.desktop"
+echo '[Desktop Entry]' >> "Big City Adventure 1 - San Francisco.desktop"
+echo "Version=1.0" >> "Big City Adventure 1 - San Francisco.desktop"
+echo "Type=Application" >> "Big City Adventure 1 - San Francisco.desktop"
+echo "Terminal=false" >> "Big City Adventure 1 - San Francisco.desktop"
+echo 'Exec=sh "'$RUTA'"/.Lanzar_.1-SanFrancisco' >> "Big City Adventure 1 - San Francisco.desktop"
+echo "Name=Big City Adventure 1 - San Francisco" >> "Big City Adventure 1 - San Francisco.desktop"
+echo "Icon=$RUTA/wine/data/drive_c/software/1-SanFrancisco/SanFrancisco.png" >> "Big City Adventure 1 - San Francisco.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Big City Adventure 2 - Sydney Australia.desktop"
+echo "" >> "Big City Adventure 2 - Sydney Australia.desktop"
+echo '[Desktop Entry]' >> "Big City Adventure 2 - Sydney Australia.desktop"
+echo "Version=1.0" >> "Big City Adventure 2 - Sydney Australia.desktop"
+echo "Type=Application" >> "Big City Adventure 2 - Sydney Australia.desktop"
+echo "Terminal=false" >> "Big City Adventure 2 - Sydney Australia.desktop"
+echo 'Exec=sh "'$RUTA'/.Lanzar_.2-SydneyAustralia"' >> "Big City Adventure 2 - Sydney Australia.desktop"
+echo "Name=Big City Adventure 2 - Sydney Australia" >> "Big City Adventure 2 - Sydney Australia.desktop"
+echo "Icon=$RUTA/wine/data/drive_c/software/2-SydneyAustralia/SydneyAustralia.png" >> "Big City Adventure 2 - Sydney Australia.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Big City Adventure 3 - New York City Deluxe.desktop"
+echo "" >> "Big City Adventure 3 - New York City Deluxe.desktop"
+echo '[Desktop Entry]' >> "Big City Adventure 3 - New York City Deluxe.desktop"
+echo "Version=1.0" >> "Big City Adventure 3 - New York City Deluxe.desktop"
+echo "Type=Application" >> "Big City Adventure 3 - New York City Deluxe.desktop"
+echo "Terminal=false" >> "Big City Adventure 3 - New York City Deluxe.desktop"
+echo 'Exec=sh "'$RUTA'"/.Lanzar_.3-NewYorkCityDeluxe' >> "Big City Adventure 3 - New York City Deluxe.desktop"
+echo "Name=Big City Adventure 3 - New York City Deluxe" >> "Big City Adventure 3 - New York City Deluxe.desktop"
+echo "Icon=$RUTA/wine/data/drive_c/software/3-NewYorkCityDeluxe/NewYorkCityDeluxe.png" >> "Big City Adventure 3 - New York City Deluxe.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Big City Adventure 4 - Vancouver.desktop"
+echo "" >> "Big City Adventure 4 - Vancouver.desktop"
+echo '[Desktop Entry]' >> "Big City Adventure 4 - Vancouver.desktop"
+echo "Version=1.0" >> "Big City Adventure 4 - Vancouver.desktop"
+echo "Type=Application" >> "Big City Adventure 4 - Vancouver.desktop"
+echo "Terminal=false" >> "Big City Adventure 4 - Vancouver.desktop"
+echo 'Exec=sh "'$RUTA'"/.Lanzar_.4-Vancouver' >> "Big City Adventure 4 - Vancouver.desktop"
+echo "Name=Big City Adventure 4 - Vancouver" >> "Big City Adventure 4 - Vancouver.desktop"
+echo "Icon=$RUTA/wine/data/drive_c/software/4-Vancouver/Vancouver.png" >> "Big City Adventure 4 - Vancouver.desktop"
+
+touch "Big City Adventure 1 - San Francisco (Modo Ventana).desktop" "Big City Adventure 2 - Sydney Australia (Modo Ventana).desktop" "Big City Adventure 3 - New York City Deluxe (Modo Ventana).desktop" "Big City Adventure 4 - Vancouver (Modo Ventana).desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Big City Adventure 1 - San Francisco (Modo Ventana).desktop"
+echo "" >> "Big City Adventure 1 - San Francisco (Modo Ventana).desktop"
+echo '[Desktop Entry]' >> "Big City Adventure 1 - San Francisco (Modo Ventana).desktop"
+echo "Version=1.0" >> "Big City Adventure 1 - San Francisco (Modo Ventana).desktop"
+echo "Type=Application" >> "Big City Adventure 1 - San Francisco (Modo Ventana).desktop"
+echo "Terminal=false" >> "Big City Adventure 1 - San Francisco (Modo Ventana).desktop"
+echo 'Exec=sh "'$RUTA'"/.Lanzar_.1-MV_SanFrancisco' >> "Big City Adventure 1 - San Francisco (Modo Ventana).desktop"
+echo "Name=Big City Adventure 1 - San Francisco (Modo Ventana)" >> "Big City Adventure 1 - San Francisco (Modo Ventana).desktop"
+echo "Icon=$RUTA/wine/data/drive_c/software/1-SanFrancisco/SanFrancisco.png" >> "Big City Adventure 1 - San Francisco (Modo Ventana).desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Big City Adventure 2 - Sydney Australia (Modo Ventana).desktop"
+echo "" >> "Big City Adventure 2 - Sydney Australia (Modo Ventana).desktop"
+echo '[Desktop Entry]' >> "Big City Adventure 2 - Sydney Australia (Modo Ventana).desktop"
+echo "Version=1.0" >> "Big City Adventure 2 - Sydney Australia (Modo Ventana).desktop"
+echo "Type=Application" >> "Big City Adventure 2 - Sydney Australia (Modo Ventana).desktop"
+echo "Terminal=false" >> "Big City Adventure 2 - Sydney Australia (Modo Ventana).desktop"
+echo 'Exec=sh "'$RUTA'/.Lanzar_.2-MV_SydneyAustralia"' >> "Big City Adventure 2 - Sydney Australia (Modo Ventana).desktop"
+echo "Name=Big City Adventure 2 - Sydney Australia (Modo Ventana)" >> "Big City Adventure 2 - Sydney Australia (Modo Ventana).desktop"
+echo "Icon=$RUTA/wine/data/drive_c/software/2-SydneyAustralia/SydneyAustralia.png" >> "Big City Adventure 2 - Sydney Australia (Modo Ventana).desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Big City Adventure 3 - New York City Deluxe (Modo Ventana).desktop"
+echo "" >> "Big City Adventure 3 - New York City Deluxe (Modo Ventana).desktop"
+echo '[Desktop Entry]' >> "Big City Adventure 3 - New York City Deluxe (Modo Ventana).desktop"
+echo "Version=1.0" >> "Big City Adventure 3 - New York City Deluxe (Modo Ventana).desktop"
+echo "Type=Application" >> "Big City Adventure 3 - New York City Deluxe (Modo Ventana).desktop"
+echo "Terminal=false" >> "Big City Adventure 3 - New York City Deluxe (Modo Ventana).desktop"
+echo 'Exec=sh "'$RUTA'"/.Lanzar_.3-MV_NewYorkCityDeluxe' >> "Big City Adventure 3 - New York City Deluxe (Modo Ventana).desktop"
+echo "Name=Big City Adventure 3 - New York City Deluxe (Modo Ventana)" >> "Big City Adventure 3 - New York City Deluxe (Modo Ventana).desktop"
+echo "Icon=$RUTA/wine/data/drive_c/software/3-NewYorkCityDeluxe/NewYorkCityDeluxe.png" >> "Big City Adventure 3 - New York City Deluxe (Modo Ventana).desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Big City Adventure 4 - Vancouver (Modo Ventana).desktop"
+echo "" >> "Big City Adventure 4 - Vancouver (Modo Ventana).desktop"
+echo '[Desktop Entry]' >> "Big City Adventure 4 - Vancouver (Modo Ventana).desktop"
+echo "Version=1.0" >> "Big City Adventure 4 - Vancouver (Modo Ventana).desktop"
+echo "Type=Application" >> "Big City Adventure 4 - Vancouver (Modo Ventana).desktop"
+echo "Terminal=false" >> "Big City Adventure 4 - Vancouver (Modo Ventana).desktop"
+echo 'Exec=sh "'$RUTA'"/.Lanzar_.4-MV_Vancouver' >> "Big City Adventure 4 - Vancouver (Modo Ventana).desktop"
+echo "Name=Big City Adventure 4 - Vancouver (Modo Ventana)" >> "Big City Adventure 4 - Vancouver (Modo Ventana).desktop"
+echo "Icon=$RUTA/wine/data/drive_c/software/4-Vancouver/Vancouver.png" >> "Big City Adventure 4 - Vancouver (Modo Ventana).desktop"
+
+# Dar Permisos de Ejecucion
+chmod a+x 'Big City Adventure 1 - San Francisco.desktop'
+chmod a+x 'Big City Adventure 1 - San Francisco (Modo Ventana).desktop'
+chmod a+x 'Big City Adventure 2 - Sydney Australia.desktop'
+chmod a+x 'Big City Adventure 2 - Sydney Australia (Modo Ventana).desktop'
+chmod a+x 'Big City Adventure 3 - New York City Deluxe.desktop'
+chmod a+x 'Big City Adventure 3 - New York City Deluxe (Modo Ventana).desktop'
+chmod a+x 'Big City Adventure 4 - Vancouver.desktop'
+chmod a+x 'Big City Adventure 4 - Vancouver (Modo Ventana).desktop'
+

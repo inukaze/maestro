@@ -1,0 +1,75 @@
+#!/bin/sh
+# 
+# Author	:	Inukaze ( From Venezuela )
+# Site		:	http://https://goo.gl/ij6WqW
+# Email		:	bloginukaze@gmail.com
+# License	:	GPL 3
+#
+#
+# I Try wrote this script to be compatible with
+# Unix & Posix S.O , and "any" S.O when the API
+# Know as "Wine" or "WineHQ" can be run my wish
+# is may Autocontect Packages for Operating Sys
+# Like : Linux , FreeBSD , OpenSolaris 
+# 	 Unix  , BSD	 , Solaris	, MacOS
+
+# Using pre-compiled versions for Arquitectures
+# for x86 & x86_84 , with Specific Version of Wine
+# and the "Official Files" for "Windows" this make
+# Compatible my Packages Autocontect compatible
+# with Microsoft Windows S.O using the Original
+# System Requirements of Softwares / Games / etc...
+# Now Here Begin my Script :
+
+# Go to the Game Directory
+GamePath=""$( cd -P "$( dirname "$" )" && pwd )""
+
+# Get Kernel Name
+kernel=$(uname -s)
+
+if		[ $kernel = "Darwin" ]; then
+		kernel=mac
+elif		[ $kernel = "Linux" ]; then
+		kernel=linux
+else
+		echo "Unsoported Operating System"
+fi
+
+
+# Determining Machine Architecture
+arch=$(uname -m)
+
+if	       [ $arch = "i386" ]; then
+			PATH="$PWD/wine/$kernel/x86/bin:$PATH"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG="-all"
+			arch="32 Bits"
+	elif	[ $arch = "i486" ]; then
+			PATH="$PWD/wine/$kernel/x86/bin:$PATH"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG="-all"
+			arch="32 Bits"
+	elif	[ $arch = "i586" ]; then
+			PATH="$PWD/wine/$kernel/x86/bin:$PATH"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG="-all"
+			arch="32 Bits"
+	elif	[ $arch = "i686" ]; then
+			PATH="$PWD/wine/$kernel/x86/bin:$PATH"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG="-all"
+			arch="32 Bits"
+         elif [ $arch = "x86_64" ]; then
+			PATH="$PWD/wine/$kernel/x86_64/bin:$PATH"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG="-all"
+			arch="64 Bits"
+	else
+		echo "Unsoported Architecture"
+fi 
+
+cd "$GamePath/wine/data/drive_c/game/common" && rm -rf system.dat
+cd "$GamePath/Cards" && cp system.dat "$GamePath/wine/data/drive_c/game/common"
+
+BIN=$(wine regedit -s All_Cards.reg)
+cd $GamePath

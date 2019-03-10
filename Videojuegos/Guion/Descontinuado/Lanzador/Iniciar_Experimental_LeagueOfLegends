@@ -1,0 +1,242 @@
+#!/bin/bash
+# 
+# Author	:	Inukaze ( From Venezuela )
+# Site		:	http://https://goo.gl/ij6WqW
+# E-Mail	:	bloginukaze@gmail.com
+# License	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+# Este Script es para Solucionar problemas de Directx
+# Para el Software que esta Intentado Ejecutar
+# Como NATIVO de un SISTEMA QUE NO ES WINDOWS
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+RUTA_DEL_SOFTWARE="$RUTA"/wine/data/drive_c/software
+RUTASYSTEM32="$RUTA"/wine/data/drive_c/windows/system32
+ARREGLOS="$RUTA"/arreglos
+
+# Obtener el nombre del nucleo del sistema
+Nucleo=$(uname -s)
+
+if		[ $Nucleo = "Darwin" ]; then
+		Nucleo=mac
+elif		[ $Nucleo = "Linux" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "FreeBSD" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "OpenSolaris" ]; then
+		Nucleo=linux
+else
+		echo "Sistema Operativo NO SOPORTADO"
+fi
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if	       [ $Arquitectura = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+         elif [ $Arquitectura = "x86_64" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits (Modo x86) en 64 Bits"
+	else
+		echo "Arquitectura NO SOPORTADA"
+fi
+
+# Muestra en la terminal La arquitectura &
+# La version especifica de Wine usada
+Version_De_Wine=$(wine --version)
+echo ""
+echo ""
+echo "Corriendo '$Version_De_Wine' en '$Nucleo' ( Maquina de '$Arquitectura' )"
+echo ""
+echo ""
+
+# Solucion de Resolucion - Parte 1
+echo `xrandr --current | grep current | awk '{print $8}'` >> RES1
+echo `xrandr --current | grep current | awk '{print $10}'` >> RES2
+cat RES2 | sed -i 's/,//g' RES2
+P1RES=$(cat RES1)
+P2RES=$(cat RES2)
+rm RES1 RES2
+echo "$P1RES"'x'"$P2RES" >> RES
+RES=$(cat RES)
+rm RES
+# Solucion de Resolucion - Parte 1
+
+# Modo Ventana/Pantalla Completa :
+echo "REGEDIT4" >> modo_ventana.reg
+echo "" >> modo_ventana.reg
+echo "[HKEY_CURRENT_USER\Software\Wine\Explorer]" >> modo_ventana.reg
+echo '"Desktop"="Default"' >> modo_ventana.reg
+echo "" >> modo_ventana.reg
+echo "[HKEY_CURRENT_USER\Software\Wine\Explorer\Desktops]" >> modo_ventana.reg
+
+# Para Activar el Modo Ventana :
+#echo '"Default"'='"'"$RES"'"' >> modo_ventana.reg
+
+# Para DesActivar el Modo Ventana :
+echo '"Default"'='"'""'"' >> modo_ventana.reg
+
+regedit -s modo_ventana.reg
+rm -rf modo_ventana.reg
+
+
+killall -9 services.exe winedevice.exe plugplay.exe explorer.exe wineboot.exe dplaysvr.exe winemenubuilder
+killall -9 winemenubuilder rpcss.exe wineserver  pulseaudio
+# Modo Ventana/Pantalla Completa :
+
+cd "$RUTA"/arreglos
+regedit -s "$Nucleo"_video.reg
+regedit -s "$Nucleo"_sonido.reg
+
+# Extraer la cantidad de MB de video
+tvid=$(lspci -v -s `lspci | awk '/VGA/{print $1}'` | sed -n '/Memory.*, prefetchable/s/.*\[size=\([^]]\+\)M\]/\1/p')
+
+# Dividir los MB de video totales
+# Depende del Juego usado en Wine
+# Siempre dividir por un Numero PAR 
+# Para evitar errores
+# utiliza ; 2 , 4 , 8 , 16 , 32 .
+
+let "mvid"=$tvid/2
+echo 'REGEDIT4' >> video.reg
+echo '' >> video.reg
+echo '[HKEY_CURRENT_USER\Software\Wine\Direct3D]' >> video.reg
+echo '"VideoMemorySize"'='"'"$tvid"'"' >> video.reg
+regedit -s video.reg && rm -rf video.reg
+
+echo "Informacion :"
+echo "Arquitectura -> `uname -m` ($Arquitectura) "
+echo "DEBUG -> $WINEDEBUG "
+echo "Prefijo  -> $WINEPREFIX"
+echo "Cargador -> $WINELOADER"
+echo "Servidor -> $WINESERVER"
+echo ""
+echo ""
+echo "$RUTA"
+echo "RUTA -> $RUTA_DEL_SOFTWARE"
+
+cd "$RUTA_DEL_SOFTWARE"
+echo ""
+echo "Ejecutando el Software" 
+echo "League Of Legends "
+
+	function Launcher()
+{
+	cd "$RUTA_DEL_SOFTWARE"/RADS/system
+	killall -9 "League Of Legends.exe" "LolClient.exe" "LoLLauncher.exe" "lol.launcher.admin.exe"
+#	winecfg
+#	regedit
+	wine "rads_user_kernel.exe" run lol_launcher $(ls ../projects/lol_launcher/releases/) LoLLauncher.exe & 
+	echo ""
+	echo ""
+MigrationFlag="1"
+unset PULSEAUDIO
+PULSEAUDIO=$(ps -A	|	grep pulseaudio	|	awk '{print $4}')
+}
+
+Lanzar=`Launcher`
+
+	function JugandoLOL()
+	{
+		until pidlols=$(pidof "League of Legends.exe")
+			do   
+			    sleep 1	
+			done
+
+		for pidlol in $pidlols
+			do  
+
+#			if [ $pidlols -ne 0 ]; then
+				echo ""
+				taskset -p 0xFFFFFFFF $pidlols && echo "Estableciendo Afinidad con Todos Los Procesadores"
+				echo ""
+			    echo ""
+				#sudo renice -n -15 -p $pidlols $PULSEAUDIO && echo "Cambiando La Prioridad a Muy Alta"
+				unset $pidlols
+				echo ""
+#			else
+				echo ""
+				echo "No hay Ninguna Partida de League Of Legends"
+				echo ""
+
+			done
+	}
+
+
+# -> Creo que esto esta mal definido XD ->
+
+while Launchers=$(pidof "LoLLauncher.exe")
+	do   
+	    sleep 60	
+	done
+
+	for Launcher in $Launchers
+	do  
+			if [ $Launcher -ne 0 ]
+			then
+					JUGAR=`JugandoLOL`
+					wait $Launchers
+					unset Launcher
+						killall -9 "League Of Legends.exe" "LolClient.exe" "LoLLauncher.exe" "lol.launcher.admin.exe"
+						killall -9 rpcss.exe wineserver services.exe winedevice.exe plugplay.exe explorer.exe winemenubuilderset
+					exit 1
+			else
+				echo
+				echo "El Lanzador de League Of Legends"
+				echo "No esta en ejecucion"
+				echo
+			fi
+	done
+exit 0

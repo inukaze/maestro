@@ -1,0 +1,284 @@
+#!/usr/bin/env bash
+# Author    :	Inukaze ( Venezuela )
+# WebSite   :	http://https://goo.gl/ij6WqW
+# E-Mail    :	bloginukaze@gmail.com
+# License   :	GPL 2
+#
+#
+# About This Script :   
+# Its a simple graphical installer but depends of Zenity/MateDialog or KDialog
+# i want to improve it, and make it more compatible with another tools like YAD
+
+ThisDIR=(pwd)
+#CURL=$(whereis -B "/usr/sbin" "/usr/local/sbin" "/sbin" "/usr/bin" "/usr/local/bin" "/bin" -b curl	| grep -i "curl" | cut -d " " -f02)
+#CURL=$(echo $CURL | awk -F'/' '/^/ { print $4 }')
+WGET=$(whereis -B "/usr/sbin" "/usr/local/sbin" "/sbin" "/usr/bin" "/usr/local/bin" "/bin" -b wget	| grep -i "wget" | cut -d " " -f02)
+WGET=$(echo $WGET | awk -F'/' '/^/ { print $4 }')
+
+URLSOFT="http://www.zezeniaonline.com/download/downloadlinux"
+URLICON="http://s22.postimg.org/rpkttkefl/Zezenia_logo.png"
+
+#CURL#if	[ "$DOWNLOADER" = "curl" ]; then
+#CURL#	$DOWNLOADER -# -o ZezeniaLinux.zip -O http://www.zezeniaonline.com/download/downloadlinux
+#CURL#	$DOWNLOADER -# -o Zezenia.png -O http://s22.postimg.org/rpkttkefl/Zezenia_logo.png
+#CURL#else
+#CURL#	"You dont have a downloader tool : curl"
+#CURL#
+#CURL#fi
+
+#FileList#FILELIST=$(ls /tmp/FileList-$RANDOM)
+#FileList#if test -f		/tmp/FileList-$RANDOM
+#FileList#	then
+#FileList#		rm	/tmp/FileList-$RANDOM
+#FileList#		echo "http://s22.postimg.org/rpkttkefl/Zezenia_logo.png
+#FileList#		http://www.zezeniaonline.com/download/downloadlinux"|tee /tmp/FileList-$RANDOM
+#FileList#		FILELIST=$(cat /tmp/FileList-$RANDOM)
+#FileList#fi
+
+# ssft -> Shell Scripts Frontend Tool
+
+# python-dialog
+
+# kdialog (Package : kdebase-bin / kde-baseapps-bin)
+
+# Yad (yet another dialog) is a fork of Zenity with many improvements, such
+# as custom buttons, additional dialogs, pop-up menu in notification icon
+# and more.
+
+MATE=$(ps -A		        |	grep mate-session		|	awk '{print $4}')
+XFCE=$(ps -A			|	grep xfce-session		|	awk '{print $4}')
+XFCE4=$(ps -A			|	grep xfce4-session		|	awk '{print $4}')
+
+	if [ "$MATE" = "mate-session" ];then
+		DESKTOP="$MATE"
+	fi
+
+	if [ "$XFCE" = "xfce-session" ]; then
+		DESKTOP="$XFCE"
+	fi
+
+	if [ "$XFCE4" = "xfce4-session" ]; then
+		DESKTOP="$XFCE4"
+	fi
+
+MATEDIALOG=$(whereis -B "/usr/sbin" "/usr/local/sbin" "/sbin" "/usr/bin" "/usr/local/bin" "/bin" -b zenity | grep -i "matedialog" | cut -d " " -f02)
+MATEDIALOG=$(echo $ZENITY | awk -F'/' '/^/ { print $4 }')
+ZENITY=$(whereis -B "/usr/sbin" "/usr/local/sbin" "/sbin" "/usr/bin" "/usr/local/bin" "/bin" -b zenity | grep -i "zenity" | cut -d " " -f02)
+ZENITY=$(echo $ZENITY | awk -F'/' '/^/ { print $4 }')
+KDIALOG=$(whereis -B "/usr/sbin" "/usr/local/sbin" "/sbin" "/usr/bin" "/usr/local/bin" "/bin" -b kdialog | grep -i "kdialog" | cut -d " " -f02)
+KDIALOG=$(echo $KDIALOG | awk -F'/' '/^/ { print $4 }')
+
+	if [ "$DESKTOP" = "$XFCE4" ]; then
+
+		TOOL=$ZENITY
+		CONFIRM_INSTALL=$($TOOL --title "You wanna install?" --question --text "Do you really want to install in this Software?")
+
+		if [ "$?" = 0 ]; then
+			CONFIRM_INSTALL="Yes"
+			export CONFIRM_INSTALL="Yes"
+			
+			# Falta agregar un "Progreso total"
+			# 1 - Descargar Icono
+			# 2 - Descarga el juego con "wget" si no esta wget usar curl en el directorio seleccionado
+			# 3 - Crear la entrada de Menu del Software en donde fue instalado.
+			# 4 - Finalizar Progreso y mostrar "Instalacion Finalizada" con un boton que diga "Ok"
+			
+		elif [ "$?" = 1 ]; then
+			CONFIRM_INSTALL="No"
+			export CONFIRM_INSTALL="No"
+			echo "You Choose : No"
+		else
+			echo "ERROR"
+		fi
+
+		if [ "$CONFIRM_INSTALL" = "Yes" ]; then
+			SELECT_DIR=$($TOOL --title "Please Choose a Directory" --file-selection --directory)
+			CONFIRMDIR=$($TOOL --title "Directory Choise" --question --text "Do you really want to install in this directory?")
+			
+					if [ "$?" = 0 ]; then
+				
+						echo "Selected Folder : $SELECT_DIR"
+						SELECT_DIR=$(echo "$SELECT_DIR")
+						cd "$SELECT_DIR"
+						SELECT_DIR=$(pwd)
+						cd "$SELECT_DIR"
+						rm -rf .Launch .Zezenia.png Start Zezenia.desktop Zezenia.exe zezenia.gfx zezeniaclient "$HOME/.local/share/applications/Zezenia.desktop"
+#						SELECT_DIR=""$( cd -P "$( dirname "$" )" && pwd )""
+#						cd "$SELECT_DIR"
+							
+								  wget -O .Zezenia.png $URLICON
+							
+							# Begun	: Code From -> http://ubuntuforums.org/showthread.php?t=306515&page=2
+							# Start wget | zenity
+							# Note the & at the end of the pipe, this allows the script to continue with wget running in the background
+							
+							# wget  2>&1 | sed -u 's/.*\ \([0-9]\+%\)\ \+\([0-9.]\+\ [KMB\/s]\+\)$/\1\n# Downloading \2/' | zenity --progress --title="Downloading File..." &
+								   wget -O ZezeniaLinux.zip $URLSOFT 2>&1 | sed -u 's/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Downloading at \2\/s \n ETA \3/' | zenity --progress --title="Installation" --auto-close
+							
+							#Start a loop testing if zenity is running, and if not kill wget
+							RUNNING=0
+							while [ $RUNNING -eq 0 ]
+								do
+								if [ -z "$(pidof zenity)" ]
+									then
+									pkill wget
+									RUNNING=1
+								fi
+							done
+
+							# Finish : Code From -> http://ubuntuforums.org/showthread.php?t=306515&page=2
+
+							unzip ZezeniaLinux.zip
+							rm -rf ZezeniaLinux.zip
+							chmod a+o+x zezeniaclient
+							
+2>/dev/null 1>/dev/null $(echo '#!/bin/sh
+
+# The Function of this script is
+# Find the real path of a script or program.
+
+# The Original Version From This Script Are From :
+# 17/FEB/2000 - Sam Lantinga, Loki Entertainment Software
+
+# This a retranslated version of the Script , i translate first to spanish
+# Inukaze From Venezuela
+# Site : http://https://goo.gl/ij6WqW
+
+PATH_FINDER()
+{
+	fullpath=$(echo $1 | grep /)
+    if [ "$fullpath" = "" ]; then
+        oIFS="$IFS"
+        IFS=:
+        for path in $PATH
+        do if [ -x "$path/$1" ]; then
+               if [ "$path" = "" ]; then
+                   path="."
+               fi
+               fullpath="$path/$1"
+               break
+           fi
+        done
+        IFS="$oIFS"
+    fi
+    if [ "$fullpath" = "" ]; then
+        fullpath="$1"
+    fi
+
+    if [ -L "$fullpath" ]; then
+        'fullpath='$'"(ls -l "'"$fullpath"'" |sed -e 's/.* -> //' |sed -e 's/\*//')"'
+    fi
+    dirname $fullpath
+}
+
+if [ "${PROGRAM_PATH}" = "" ]; then
+    PROGRAM_PATH="`PATH_FINDER $0`"
+fi
+
+LD_LIBRARY_PATH=.:${PROGRAM_PATH}:${LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH
+
+if [ -x "${PROGRAM_PATH}/.Launch" ]
+then
+	cd "${PROGRAM_PATH}/"
+	exec "./.Launch" "$@"
+fi
+echo "'"I can't run this Software. Its the Statup Script written Correctly?"'"
+exit 1'|tee Start &> /dev/null)
+
+2>/dev/null 1>/dev/null $(echo '#!/bin/bash
+
+PATH_TO_PROGRAM=$(pwd)
+PROGRAM="zezeniaclient"
+$(cd "$PATH_TO_PROGRAM" ; ./$PROGRAM "$@")'|tee .Launch &> /dev/null)
+
+2>/dev/null 1>/dev/null $(echo '#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Name=Zezenia
+Type=Application
+Exec=sh '$SELECT_DIR'/Start
+Icon='$SELECT_DIR/.Zezenia.png'
+Terminal=false
+Hidden=false
+Categories=Game
+StartupNotify=true
+X-KDE-SubstituteUID=false'|tee Zezenia.desktop &> /dev/null)
+
+chmod a+o+x Start .Launch Zezenia.desktop
+cp Zezenia.desktop $HOME/.local/share/applications						
+
+CONFIRMRUN=$($TOOL --title "Run?" --question --text "Would you like to run?")
+
+if [ "$?" = 0 ]; then
+	CONFIRMRUN="Yes"
+	export CONFIRMRUN="Yes"
+elif [ "$?" = 1 ]; then
+	CONFIRMRUN="No"
+	export CONFIRMRUN="No"
+		echo "You Choose : No"
+	else
+		echo "ERROR"
+fi
+
+if	[ "$CONFIRMRUN" = "Yes" ]; then
+	cd "$SELECT_DIR"
+	
+	if test -f Start
+	then
+		bash Start
+	fi
+
+elif	[ "$CONFIRMRUN" = "No" ]; then
+	exit 1
+fi
+
+#							elif	[ "$DOWNLOADER" = "curl" ]; then
+#							          "$DOWNLOADER" -# -o ZezeniaLinux.zip -O $URL_PROGRAM
+#							else
+#								echo ""
+#								echo "You dont have a downloader tool like : wget or curl"
+#								echo "Please install one downloader tool an try again"
+#								echo ""
+							fi
+						
+									
+			# Falta agregar un "Progreso total"
+			# 1 - Descargar Icono
+			# 2 - Descarga el juego con "wget" si no esta wget usar curl en el directorio seleccionado
+			# 3 - Crear la entrada de Menu del Software en donde fue instalado.
+			# 4 - Finalizar Progreso y mostrar "Instalacion Finalizada" con un boton que diga "Ok"
+			
+					elif [ "$?" = 1 ]; then
+						echo "You Choose Cancel"
+						SELECT_DIR=$(echo "$SELECT_DIR")
+						cd "$SELECT_DIR"
+						SELECT_DIR=$(pwd)
+						cd "$SELECT_DIR"
+						rm -rf Start .Launch zezenia.gfx zezeniaclient Zezenia.desktop
+						killall -9 $DOWNLOADER $TOOL
+					else
+						echo "ERROR"
+					fi
+		fi
+
+	if [ "$DESKTOP" = "$KDE5" ]; then
+		echo
+		#CONFIRM=$(kdialog --title "" --yesno "Do you really want to install in this directory?")
+	fi
+
+	if [ "$DESKTOP" = "$KDE4" ]; then
+		echo
+		#CONFIRM=$(kdialog --title "" --yesno "Do you really want to install in this directory?")
+	fi
+
+	if [ "$DESKTOP" = "$KDE3" ]; then
+		echo
+		#CONFIRM=$(kdialog --title "" --yesno "Do you really want to install in this directory?")
+	fi
+
+	if [ "$DESKTOP" = "$TRINITY" ]; then
+		echo
+		#CONFIRM=$(kdialog --title "" --yesno "Do you really want to install in this directory?")
+	fi

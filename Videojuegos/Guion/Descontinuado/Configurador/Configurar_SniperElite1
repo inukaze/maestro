@@ -1,0 +1,352 @@
+#!/bin/bash
+# 
+# Autor	:	Inukaze ( From Venezuela )
+# Sitio		:	http://https://goo.gl/ij6WqW
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+XMessage=$(whereis xmessage | grep bin | awk '{print $2}' | sed 's/^[/usr/bin/ \t]*//')
+
+if [ $XMessage = xmessage ]; then
+	echo 
+	echo 'Mostrar el Mensaje en el Sistema Grafico -> "Se Esta Configurando El Software"'
+	echo
+	xmessage -nearmouse -timeout 13 "Se Esta Configurando El Software" -buttons OK &
+else
+	echo
+	echo "xmessage - NO! ESTA INSTALADO"
+	echo
+	echo "Se esta Configurando el Software"
+fi
+
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+RUTA_DEL_SOFTWARE="$RUTA"/wine/data/drive_c/software
+RUTASYSTEM32="$RUTA"/wine/data/drive_c/windows/system32
+ARREGLOS="$RUTA"/arreglos
+
+# Borrar Toda Configuracion Previa WINE:
+rm -rf "$RUTA/wine/data/drive_c/users"
+rm -rf "$RUTA/wine/data/drive_c/windows"
+rm -rf "$RUTA/wine/data/Program Files (x86)"
+rm -rf "$RUTA/wine/data/Program Files"
+rm -rf "$RUTA/wine/data/drive_c/Archivos de programa"
+rm -rf "$RUTA/wine/data/drive_c/Program Files (x86)"
+rm -rf "$RUTA/wine/data/drive_c/Program Files"
+rm -rf "$RUTA/wine/data/system.reg"
+rm -rf "$RUTA/wine/data/user.reg"
+rm -rf "$RUTA/wine/data/userdef.reg"
+rm -rf "$RUTA/wine/data/dosdevices"
+rm -rf "$RUTA/wine/data/.update-timestamp"
+rm -rf "$RUTA/wine/.DS_Store"
+rm -rf "$RUTA/wine/linux/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/bin/.DS_Store"
+rm -rf "$RUTA"/wine/data/cachedmetrics.\:0
+
+# Obtener el nombre del nucleo del sistema
+Nucleo=$(uname -s)
+
+if		[ $Nucleo = "Darwin" ]; then
+		Nucleo=mac
+elif		[ $Nucleo = "Linux" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "FreeBSD" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "OpenSolaris" ]; then
+		Nucleo=linux
+else
+		echo "Sistema Operativo NO SOPORTADO"
+fi
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if	       [ $Arquitectura = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="32 Bits"
+         elif [ $Arquitectura = "x86_64" ]; then
+			PATH="$PWD/wine/$Nucleo/x86_64/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86_64/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+			Arquitectura="64 Bits"
+	else
+		echo "Arquitectura NO SOPORTADA"
+fi
+# Determinando la arquitectura de la maquina
+
+# Modo Ventana/Pantalla Completa :
+echo "REGEDIT4" >> modo_ventana.reg
+echo "" >> modo_ventana.reg
+echo "[HKEY_CURRENT_USER\Software\Wine\Explorer]" >> modo_ventana.reg
+echo '"Desktop"="Default"' >> modo_ventana.reg
+echo "" >> modo_ventana.reg
+echo "[HKEY_CURRENT_USER\Software\Wine\Explorer\Desktops]" >> modo_ventana.reg
+
+# Para Activar el Modo Ventana :
+#echo '"Default"'='"'"800x600"'"' >> modo_ventana.reg
+
+# Para DesActivar el Modo Ventana :
+echo '"Default"'='"'""'"' >> modo_ventana.reg
+
+regedit -s modo_ventana.reg
+rm -rf modo_ventana.reg
+killall -9 services.exe winedevice.exe plugplay.exe explorer.exe
+
+# Modo Ventana/Pantalla Completa :# Copiar DirectX al "Sistema" (de Wine)
+cd "$RUTA"/arreglos/DirectX/
+mkdir -p "$RUTA"/wine/data/drive_c/windows/system32
+cp *.* "$RUTA"/wine/data/drive_c/windows/system32
+cd "$RUTA"/wine/data/drive_c/windows/system32/
+echo ""
+echo "DirectX Instalado Correctamente"
+echo "Se Procede a Registrarlo en el Sistema"
+echo ""
+
+# Registrar las Librerias de DirectX (Nativo)
+regsvr32 clbcatq.dll
+regsvr32 comdlg32.dll
+regsvr32 d3dxof.dll
+regsvr32 ddraw.dll
+regsvr32 ddrawex.dll
+regsvr32 devenum.dll
+regsvr32 dinput.dll
+regsvr32 dinput8.dll
+regsvr32 dplayx.dll
+regsvr32 dpnet.dll
+regsvr32 dpnhpast.dll
+regsvr32 dpnmodem.dll
+regsvr32 dpnwsock.dll
+regsvr32 dsound.dll
+regsvr32 eax.dll
+regsvr32 MSCTF.dll
+regsvr32 ole32.dll
+regsvr32 oleaut32.dll
+regsvr32 quartz.dll
+regsvr32 rpcrt4.dll
+regsvr32 shell32.dll
+regsvr32 userenv.dll
+regsvr32 wintrust.dll
+
+# Agregar Manualmente el Registro de las
+# Bibliotecas DirectX Nativas de Windows
+# Al Registro de WINE para su correcto Funcionamiento
+# Agregar valores de DirectX & DirectPlay al Registro
+
+# - Esto es DirectX 9.X? (Nativo de Windows XP SP 3)
+echo "REGEDIT4" >> arreglos.reg
+echo "" >> arreglos.reg
+echo "[HKEY_CURRENT_USER\Software\Wine\DllOverrides]" >> arreglos.reg
+echo '"advapi32.dll"="native"' >> arreglos.reg
+echo '"comctl32.dll"="native"' >> arreglos.reg
+echo '"comres.dll"="native"' >> arreglos.reg
+echo '"crypt32.dll"="native"' >> arreglos.reg
+echo '"d3d8.dll"="native"' >> arreglos.reg
+echo '"d3d8thk.dll"="native"' >> arreglos.reg
+echo '"d3d9.dll"="native"' >> arreglos.reg
+echo '"d3dx9_30.dll"="native"' >> arreglos.reg
+echo '"d3dx9_36.dll"="native"' >> arreglos.reg
+echo '"dnsapi.dll"="native"' >> arreglos.reg
+echo '"dplay.dll"="native"' >> arreglos.reg
+echo '"dplaysvr.exe"="native"' >> arreglos.reg
+echo '"dpnaddr.dll"="native"' >> arreglos.reg
+echo '"dpnlobby.dll"="native"' >> arreglos.reg
+echo '"dpwsock.dll"="native"' >> arreglos.reg
+echo '"dpwsockx.dll"="native"' >> arreglos.reg
+echo '"gdi32.dll"="native"' >> arreglos.reg
+echo '"GdiPlus.dll"="native"' >> arreglos.reg
+echo '"glu32.dll"="native"' >> arreglos.reg
+echo '"hid.dll"="native"' >> arreglos.reg
+echo '"imagehlp.dll"="native"' >> arreglos.reg
+echo '"imm32.dll"="native"' >> arreglos.reg
+echo '"kernel32.dll"="native"' >> arreglos.reg
+echo '"ksuser.dll"="native"' >> arreglos.reg
+echo '"mciqtz32.dll"="native"' >> arreglos.reg
+echo '"midimap.dll"="native"' >> arreglos.reg
+echo '"msacm32.dll"="native"' >> arreglos.reg
+echo '"msacm32.drv"="native"' >> arreglos.reg
+echo '"msasn1.dll"="native"' >> arreglos.reg
+echo '"MSCTFIME.IME"="native"' >> arreglos.reg
+echo '"msdmo.dll"="native"' >> arreglos.reg
+echo '"msvcrt.dll"="native"' >> arreglos.reg
+echo '"mswsock.dll"="native"' >> arreglos.reg
+echo '"ntdll.dll"="native"' >> arreglos.reg
+echo '"nvoglnt.dll"="native"' >> arreglos.reg
+echo '"opengl32.dll"="native"' >> arreglos.reg
+echo '"secur32.dll"="native"' >> arreglos.reg
+echo '"setupapi.dll"="native"' >> arreglos.reg
+echo '"shlwapi.dll"="native"' >> arreglos.reg
+echo '"user32.dll"="native"' >> arreglos.reg
+echo '"wdmaud.drv"="native"' >> arreglos.reg
+echo '"winmm.dll"="native"' >> arreglos.reg
+echo '"wsock32.dll"="native"' >> arreglos.reg
+echo '"d3d9caps.dat"="native"' >> arreglos.reg
+echo '' >> arreglos.reg
+echo ""
+echo "Se ha Registrado DirectX con DirectPlay exitosamente"
+echo ""
+
+tvid=$(lspci -v -s `lspci | awk '/VGA/{print $1}'` | sed -n '/Memory.*, prefetchable/s/.*\[size=\([^]]\+\)M\]/\1/p')
+let "mvid"=$tvid/2
+
+echo ""
+echo ""
+echo "Se ha establecido la configuracion 3D"
+echo "Para Sniper Elite 1 , utilizando la mitad"
+echo "de la memoria de video disponible"
+echo ""
+echo ""
+echo 'El Juego usara "'"$mvid MB"'" de Video'
+echo ""
+echo ""
+
+# Registrar las Bibliotecas y Borrar Archivos de Registro
+echo "Escribiendo Configuraciones pertinentes"
+echo "De Sniper Elite 1 en el Sistema de WINE"
+echo ""
+exec `wine regedit -s arreglos.reg` && `rm -rf arreglos.reg`
+exec `wine regedit -s "$RUTA"/arreglos/DirectX.reg`
+
+# Agregar al registro la informacion del juego :
+cd "$RUTA"/arreglos
+wine regedit -S "software.reg"
+
+echo "Se ha escrito la configuracion del Juego correctamente"
+
+
+# Detectar el Directorio "Escritorio"
+# Dentro del usuario actual
+
+cd $HOME
+
+if [ -e Desktop ]; then cd Desktop; DirectorioEscritorio=$HOME/Desktop; fi
+if [ -e Escritorio ]; then cd Escritorio; DirectorioEscritorio=$HOME/Escritorio; fi
+
+if [ ! -e 	$DirectorioEscritorio/"Sniper Elite 1" ]; then
+mkdir -p 	$DirectorioEscritorio/"Sniper Elite 1"
+cd 		$DirectorioEscritorio/"Sniper Elite 1"
+fi
+
+if [ -e $DirectorioEscritorio/"Sniper Elite 1" ]; then
+cd $DirectorioEscritorio/"Sniper Elite 1"
+fi
+
+# Escribir Los Archivos de "Enlace(s)"
+# Necesarios dentro de la Carpeta "$HOME/$DirectorioEscritorio/Wine"
+
+# Primero Borrar cualquier archivo Anterior
+# De Escritorio , para Evitar Conflictos y no crear archivos innecesarios.
+
+if [ -f "Sniper Elite.desktop" ]; then rm -rf "Sniper Elite.desktop"; fi
+touch "Sniper Elite.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Sniper Elite.desktop"
+echo "" >> "Sniper Elite.desktop"
+echo '[Desktop Entry]' >> "Sniper Elite.desktop"
+echo "Version=1.0" >> "Sniper Elite.desktop"
+echo "Type=Application" >> "Sniper Elite.desktop"
+echo "Terminal=false" >> "Sniper Elite.desktop"
+echo 'Exec=sh "'$RUTA'"/.Lanzar' >> "Sniper Elite.desktop"
+echo "Name=Sniper Elite" >> "Sniper Elite.desktop"
+echo "Icon=$RUTA/.snieli.png" >> "Sniper Elite.desktop"
+echo "Path=$RUTA" >> "Sniper Elite.desktop"
+echo "StartupNotify=true" >> "Sniper Elite.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Sniper Elite.desktop"
+
+if [ -f "Sniper Elite (Modo Ventana).desktop" ]; then rm -rf "Sniper Elite (Modo Ventana).desktop"; fi
+touch "Sniper Elite (Modo Ventana).desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Sniper Elite (Modo Ventana).desktop"
+echo "" >> "Sniper Elite (Modo Ventana).desktop"
+echo '[Desktop Entry]' >> "Sniper Elite (Modo Ventana).desktop"
+echo "Version=1.0" >> "Sniper Elite (Modo Ventana).desktop"
+echo "Type=Application" >> "Sniper Elite (Modo Ventana).desktop"
+echo "Terminal=false" >> "Sniper Elite (Modo Ventana).desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_Lanzar' >> "Sniper Elite (Modo Ventana).desktop"
+echo "Name=Sniper Elite (Modo Ventana)" >> "Sniper Elite (Modo Ventana).desktop"
+echo "Icon=$RUTA/.snieli.png" >> "Sniper Elite (Modo Ventana).desktop"
+echo "Path=$RUTA" >> "Sniper Elite (Modo Ventana).desktop"
+echo "StartupNotify=true" >> "Sniper Elite (Modo Ventana).desktop"
+echo "X-KDE-SubstituteUID=false" >> "Sniper Elite (Modo Ventana).desktop"
+
+chmod a+x "Sniper Elite.desktop"
+chmod a+x "Sniper Elite (Modo Ventana).desktop"
+
+if [ $XMessage = xmessage ]; then
+	echo
+	echo 'Mostrar el Mensaje en el Sistema Grafico -> "Se Esta Configurando El Software"'
+	echo
+	xmessage -nearmouse -timeout 5 "Se Ha Configurado Exitosamente" -buttons OK &
+else
+	echo
+	echo "xmessage - NO! ESTA INSTALADO"
+	echo
+	echo "Se Ha Configurado Exitosamente"
+	echo
+fi

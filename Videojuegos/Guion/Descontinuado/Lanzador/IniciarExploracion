@@ -1,0 +1,141 @@
+#!/bin/sh
+#!/bin/bash
+#
+# Autor	:	Inukaze ( Venezuela )
+# Sitio		:	http://inukaze.wordpResolucions.com
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+ARREGLOS="$RUTA"/arreglos
+RUTA_DEL_SOFTWARE="$RUTA/wine/data/drive_c/Juegos/Inukaze/Half-Life-EE"
+# Obtener el nombre del nucleo del sistema
+Nucleo=$(uname -s)
+
+if		[ $Nucleo = "Darwin" ]; then
+		Nucleo=mac
+elif		[ $Nucleo = "Linux" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "FreeBSD" ]; then
+		Nucleo=freebsd
+else
+		echo "Sistema Operativo NO SOPORTADO"
+		exit 1
+fi
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if	       [ $Arquitectura = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+         elif [ $Arquitectura = "x86_64" ]; then
+			PATH="$PWD/wine/$Nucleo/x86_64/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export WINEDLLPATH="$PWD/wine/$Nucleo/x86_64/lib"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="64 Bits"
+	else
+		echo "Arquitectura NO SOPORTADA"
+fi
+# Determinando la arquitectura de la maquina
+
+# Modo Ventana/Pantalla Completa :
+echo "REGEDIT4" >> modo_ventana.reg
+echo "" >> modo_ventana.reg
+echo "[HKEY_CURRENT_USER\Software\Wine\Explorer]" >> modo_ventana.reg
+echo '"Desktop"="Default"' >> modo_ventana.reg
+echo "" >> modo_ventana.reg
+echo "[HKEY_CURRENT_USER\Software\Wine\Explorer\Desktops]" >> modo_ventana.reg
+
+# Para Activar el Modo Ventana :
+#echo '"Default"'='"'"800x600"'"' >> modo_ventana.reg
+
+# Para DesActivar el Modo Ventana :
+echo '"Default"'='"'""'"' >> modo_ventana.reg
+
+regedit -s modo_ventana.reg
+rm -rf modo_ventana.reg
+killall -9 services.exe winedevice.exe plugplay.exe explorer.exe
+
+# Modo Ventana/Pantalla Completa :
+
+# Muestra en la terminal La arquitectura &
+# La version especifica de Wine usada
+wver=$(wine --version)
+echo ""
+echo ""
+echo "Corriendo '$wver' en '$Nucleo' ( Maquina de '$Arquitectura' )"
+
+# Ejecutando Programa / Software / Juego
+cd "$RUTA_DEL_SOFTWARE"
+regedit -s Software.reg
+
+echo
+echo "Informacion :"
+echo "Arquitectura -> `uname -m` ($Arquitectura) "
+echo "DEBUG	-> $WINEDEBUG "
+echo "Prefijo	-> $WINEPREFIX"
+echo "Cargador	-> $WINELOADER"
+echo "Servidor	-> $WINESERVER"
+echo 
+
+	killall -9 pulseaudio
+	env XMODIFIERS="" wine explorer
+
+exit 1

@@ -1,0 +1,114 @@
+
+
+#!/bin/bash
+# 
+# Author        :       Inukaze ( From Venezuela )
+# Site          :       http://https://goo.gl/ij6WqW
+# E-Mail        :       bloginukaze@gmail.com
+# License       :       GPL 3
+# Language      :       Spanish / Español
+#
+# Acerca de este Script :       
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix.
+# Para facilitar la instalacion y configuracion
+# de softwares en estos sistemas operativos
+# distintos de Windows.
+
+usar_wget=$(whereis wget | awk '{print $2}' | sed 's/[usrbi/]*.//' | sed 's/\///')
+if [ "$usar_wget" = "wget" ]; then
+echo
+else
+#Si falla whereis , usar which 
+#whereis -b "wget" -B "{/bin,/sbin,/usr/bin,/usr/local/bin,/usr/local/sbin}" |  sed 's/[wget: usrbi/]*.//' | sed 's/\///'       
+        usar_wget=$(which wget | sed 's/[wget: usrbi/]*.//' | sed 's/\///')
+        if [ "$usar_wget" = "wget" ]; then
+                echo -e '\nHerramienta : "wget" , no encontrada en el sistema\n'
+                exit 1
+        fi
+fi      
+
+RUTA_JD2="/opt/JDownloader2"
+
+if [ ! -d "$RUTA_JD2" ]; then
+        sudo mkdir -p "$RUTA_JD2"
+        sudo chmod 777 -R "$RUTA_JD2"
+else
+        sudo chmod 777 -R "$RUTA_JD2"
+fi
+
+arch=$(uname -m)
+if      [ "$arch" = "x86" ]; then
+        cd "/tmp"
+        SUMA_NECESARIA=ef0e1fb63d73ed787532a7f7320ed5de656f6d91
+        if [ -f /tmp/JD2SilentSetup_$arch.sh ]
+        then
+        SUMA_OBTENIDA=`sha1sum < JD2SilentSetup_$arch.sh | sed 's/(stdin)= //;s/ .*//'`
+        
+                if [ "$SUMA_NECESARIA"x = "$SUMA_OBTENIDA"x ]
+                then
+                        chmod a+o+x JD2SilentSetup_$arch.sh
+                        ./JD2SilentSetup_$arch.sh -q -dir "$RUTA_JD2"
+                fi
+        fi
+        
+        if [ ! -f /tmp/JD2SilentSetup_$arch.sh ]
+        then
+                cd /tmp
+                wget http://installer.jdownloader.org/JD2SilentSetup_$arch.sh
+                SUMA_OBTENIDA=`sha1sum < JD2SilentSetup_$arch.sh | sed 's/(stdin)= //;s/ .*//'`
+                if [ "$SUMA_NECESARIA"x != "$SUMA_OBTENIDA"x ]
+                        then
+                        chmod a+o+x JD2SilentSetup_$arch.sh
+                        ./JD2SilentSetup_$arch.sh -q -dir "$RUTA_JD2"
+                fi
+        fi
+        
+elif    [ "$arch" = "x86_64" ]; then
+        cd "/tmp"
+        SUMA_NECESARIA=6884a010391941b9bcf84999bf708e86c3459350
+        arch=x64
+        
+        
+        if [ -f /tmp/JD2SilentSetup_$arch.sh ]
+        then
+        SUMA_OBTENIDA=`sha1sum < JD2SilentSetup_$arch.sh | sed 's/(stdin)= //;s/ .*//'`
+        
+                if [ "$SUMA_NECESARIA"x != "$SUMA_OBTENIDA"x ]
+                then
+                        chmod a+o+x JD2SilentSetup_$arch.sh
+                        ./JD2SilentSetup_$arch.sh -q -dir "$RUTA_JD2"
+                fi
+        fi
+        
+        if [ ! -f /tmp/JD2SilentSetup_$arch.sh ]
+        then
+                wget http://installer.jdownloader.org/JD2SilentSetup_$arch.sh
+                SUMA_OBTENIDA=`sha1sum < JD2SilentSetup_$arch.sh | sed 's/(stdin)= //;s/ .*//'`
+                if [ "$SUMA_NECESARIA"x = "$SUMA_OBTENIDA"x ]
+                        then
+                        chmod a+o+x JD2SilentSetup_$arch.sh
+                        ./JD2SilentSetup_$arch.sh -q -dir "$RUTA_JD2"
+                fi
+        fi
+fi
+
+if [ -f "$HOME/JDownloader2.desktop" ]; then
+rm -rf "$HOME/JDownloader2.desktop"
+fi
+
+
+touch "$HOME/JDownloader2.desktop"
+echo '#!/usr/bin/env xdg-open'                          >> "$HOME/JDownloader2.desktop"
+echo '[Desktop Entry]'                                  >> "$HOME/JDownloader2.desktop"
+echo 'Type=Application'                                 >> "$HOME/JDownloader2.desktop"
+echo 'Name=JDownloader 2'                               >> "$HOME/JDownloader2.desktop"
+echo 'Exec=/bin/sh '"$RUTA_JD2/JDownloader2"''          >> "$HOME/JDownloader2.desktop"
+echo 'Icon='"$RUTA_JD2/.install4j/JDownloader2.png'"    >> "$HOME/JDownloader2.desktop"
+echo 'Categories=Network;Application;'                  >> "$HOME/JDownloader2.desktop"
+echo 'Path='"$RUTA_JD2"''                               >> "$HOME/JDownloader2.desktop"
+echo 'GenericName=JDownloader 2'                        >> "$HOME/JDownloader2.desktop"
+echo 'StartupNotify=true'                               >> "$HOME/JDownloader2.desktop"
+chmod a+o+x $HOME/JDownloader2.desktop
+

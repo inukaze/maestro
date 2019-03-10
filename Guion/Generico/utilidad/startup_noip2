@@ -1,0 +1,41 @@
+#! /bin/sh
+# /etc/init.d/noip2.sh
+# Supplied by no-ip.com
+# Modified for Debian GNU/Linux by Florian Moesch
+
+. /lib/lsb/init-functions # modify for your init-functions
+
+PROG=/usr/local/bin/noip2
+NAME=noip2
+
+test -x $PROG || exit 0
+
+case "$1" in
+        start)
+        echo -n "Starting dynamic address update: "
+        $PROG
+        echo "$NAME."
+        ;;
+        stop)
+        echo -n "Shutting down dynamic address update:"
+        killall $NAME
+        echo "$NAME."
+;;
+
+restart)
+        echo -n "Restarting dynamic address update: "
+        killall $NAME
+        $PROG
+        echo "$NAME."
+;;
+
+status)
+        status_of_proc $PROG $NAME && exit 0 || exit $?
+        ;;
+        *)
+        echo "Usage: $0 {status|start|stop|restart}"
+        exit 1
+        esac
+exit 0
+
+

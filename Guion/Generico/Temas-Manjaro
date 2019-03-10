@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+##cd /tmp 
+cd "/media/Compartido/Liñux/cdf/git/Manjaro"
+
+mkdir -p Manjaro/artwork/themes
+cd Manjaro/artwork/themes
+git clone https://gitlab.manjaro.org/artwork/themes/adwaita-manjaro-themes
+git clone https://gitlab.manjaro.org/artwork/themes/andromeda
+git clone https://gitlab.manjaro.org/artwork/themes/breath
+git clone https://gitlab.manjaro.org/artwork/themes/breath-gtk
+git clone https://gitlab.manjaro.org/artwork/themes/ceti
+git clone https://gitlab.manjaro.org/artwork/themes/greenbird
+git clone https://gitlab.manjaro.org/artwork/themes/maia
+git clone https://gitlab.manjaro.org/artwork/themes/maia-gtk
+git clone https://gitlab.manjaro.org/artwork/themes/menda
+git clone https://gitlab.manjaro.org/artwork/themes/menda-plasma5
+git clone https://gitlab.manjaro.org/artwork/themes/numix-manjaro-themes
+git clone https://gitlab.manjaro.org/artwork/themes/numix-reborn-manjaro-themes
+git clone https://gitlab.manjaro.org/artwork/themes/unified-manjaro-themes
+git clone https://gitlab.manjaro.org/artwork/themes/vertex-maia
+git clone https://gitlab.manjaro.org/artwork/themes/vertex-manjaro
+git clone https://gitlab.manjaro.org/artwork/themes/kvantum-manjaro
+
+cd "/media/Compartido/Liñux/cdf/git/Manjaro"
+mkdir -p Manjaro/artwork/icon-themes
+cd Manjaro/artwork/icon-themes
+git clone https://gitlab.manjaro.org/artwork/icon-themes/manjaro-icons
+git clone https://gitlab.manjaro.org/artwork/icon-themes/menda-icon-themes
+git clone https://gitlab.manjaro.org/artwork/icon-themes/vertex-maia-icon-themes
+
+cd "/media/Compartido/Liñux/cdf/git/Manjaro"
+mkdir -p Manjaro/artwork/branding
+cd Manjaro/artwork/branding
+git clone https://gitlab.manjaro.org/artwork/branding/manjaro-syslinux-theme
+git clone https://gitlab.manjaro.org/artwork/branding/mdm-themes
+git clone https://gitlab.manjaro.org/artwork/branding/lxdm-manjaro-theme
+git clone https://gitlab.manjaro.org/artwork/branding/grub-theme
+git clone https://gitlab.manjaro.org/artwork/branding/manjaro-artwork
+git clone https://gitlab.manjaro.org/artwork/branding/turbulence-artwork
+git clone https://gitlab.manjaro.org/artwork/branding/logo
+git clone https://gitlab.manjaro.org/artwork/branding/gfxboot
+git clone https://gitlab.manjaro.org/artwork/branding/thus-slides
+
+
+cd "/media/Compartido/Liñux/cdf/git/Manjaro"
+mkdir -p Manjaro/artwork/cursors
+cd Manjaro/artwork/cursors
+git clone https://gitlab.manjaro.org/artwork/cursors/maia-cursor
+
+cd "/media/Compartido/Liñux/cdf/git/Manjaro"
+mkdir -p Manjaro/artwork/wallpapers
+cd Manjaro/artwork/wallpapers
+git clone https://gitlab.manjaro.org/artwork/wallpapers/wallpapers-2018
+git clone https://gitlab.manjaro.org/artwork/wallpapers/manjaro-wallpapers
+git clone https://gitlab.manjaro.org/artwork/wallpapers/manjaro-wallpapers-18.0
+git clone https://gitlab.manjaro.org/artwork/wallpapers/manjaro-wallpapers-17.0
+

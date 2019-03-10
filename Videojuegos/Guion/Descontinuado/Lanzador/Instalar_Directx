@@ -1,0 +1,153 @@
+#!/bin/sh
+#!/bin/bash
+# 
+# Autor	:	Inukaze ( From Venezuela )
+# Sitio		:	http://https://goo.gl/ij6WqW
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los archivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+# Este Script es para Solucionar problemas de Directx
+# aun no funciona con Yu-Gi-Oh! Power of chaos (Joey)
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+GamePath=""$( cd -P "$( dirname "$" )" && pwd )""
+
+# Obtener el nombre del nucleo del sistema
+kernel=$(uname -s)
+
+if		[ $kernel = "Darwin" ]; then
+		kernel=mac
+elif		[ $kernel = "Linux" ]; then
+		kernel=linux
+else
+		echo "Sistema Operativo NO SOPORTADO"
+fi
+
+# Determinando la arquitectura de la maquina
+arch=$(uname -m)
+
+if	       [ $arch = "i386" ]; then
+			PATH="$PWD/wine/$kernel/x86/bin:$PATH"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG="-all"
+			arch="32 Bits"
+	elif	[ $arch = "i486" ]; then
+			PATH="$PWD/wine/$kernel/x86/bin:$PATH"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG="-all"
+			arch="32 Bits"
+	elif	[ $arch = "i586" ]; then
+			PATH="$PWD/wine/$kernel/x86/bin:$PATH"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG="-all"
+			arch="32 Bits"
+	elif	[ $arch = "i686" ]; then
+			PATH="$PWD/wine/$kernel/x86/bin:$PATH"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG="-all"
+			arch="32 Bits"
+         elif [ $arch = "x86_64" ]; then
+			PATH="$PWD/wine/$kernel/x86_64/bin:$PATH"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG="-all"
+			arch="64 Bits"
+	else
+		echo "Arquitectura NO SOPORTADA"
+fi 
+
+
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3d8.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3d8thk.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3d9.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dim.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dim700.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dpmesh.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dramp.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3drm.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dx9_24.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dx9_25.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dx9_26.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dx9_27.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dx9_28.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dx9_29.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dx9_30.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dx9_31.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dx9_32.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dx9_33.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dx9_34.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dx9_35.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dx9_36.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/D3DX9_37.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/d3dxof.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dciman32.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/ddrawex.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/devenum.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dinput.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dinput8.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dmband.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dmcompos.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dmime.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dmloader.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dmscript.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dmstyle.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dmsynth.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dmusic.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dnsapi.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dplay.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dplaysvr.exe
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dplayx.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dpnaddr.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dpnet.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dpnhpast.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dpnlobby.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dpnmodem.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dpwsockx.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dsound.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dsound3d.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dswave.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/dxdiagn.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/mscoree.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/msdmo.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/qcap.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/quartz.dll
+rm -rf "$GamePath"/wine/data/drive_c/windows/system32/streamci.dll
+
+cd "$GamePath"/fixers/DirectX
+cp	*.*	"$GamePath"/wine/data/drive_c/windows/system32/
+cd "$GamePath"/fixers/
+wine regedit -S DirectX.reg
+cd "$GamePath"/wine/data/drive_c/windows/system32
+
+# Agregar al Registro de Wine
+# Las librerias de Directx para su
+# Correcto funcionamiento
+
+wine regsvr32 dplayx.dll
+wine regsvr32 dpnet.dll
+wine regsvr32 dpnhpast.dll
+wine regsvr32 dpwsockx.dll
+wine regsvr32 dplay.dll
+wine regsvr32 dpnaddr.dll
+wine regsvr32 dpnwsock.dll
+wine regsvr32 dpwsock.dll

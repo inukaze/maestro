@@ -1,0 +1,55 @@
+# Make it possible for ALSA forward to pulseaudio.
+# Based on idea from
+# http://alsa.opensrc.org/index.php/Default_device_from_environment_variable
+# A related note is in
+# http://wiki.archlinux.org/index.php/Pulseaudio#KDE_4
+#
+# See also
+# http://wiki.archlinux.org/index.php/Allowing_Multiple_Programs_to_Play_Sound
+# and <URL: http://bugs.debian.org/604728 >.
+
+pcm.!default {
+        type plug
+        slave.pcm "dmixer"
+}
+
+pcm.dmixer  {
+        type dmix
+        ipc_key 1024
+        slave {
+                pcm "hw:1,0"
+                period_time 0
+                period_size 1024
+                buffer_size 4096
+                rate 44100
+        }
+        bindings {
+                0 0
+                1 1
+        }
+}
+
+ctl.dmixer {
+        type hw
+        card 0
+}
+
+ctl.!default {
+    type pulse
+}
+
+pcm.pulse { type pulse }
+ctl.pulse { type pulse }
+
+pcm.snd_ens1371 {
+	type softvol
+        slave.pcm "hw:0,0"
+        control.name "Master"
+        control.card 0
+}
+
+ctl.snd_end1371 {
+	type hw
+	card 0
+}
+

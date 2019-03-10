@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+echo '
+Autor ----------------> Inukaze ( Venezuela )
+Sitio ----------------> https://goo.gl/ij6WqW
+Correo-E -------------> bloginukaze@gmail.com
+Licencia -------------> GPL 2
+******* Inicio : Acerca de este Script ********
+ 
+ Este Mini-Script es para poder descargar
+ e instalar "Shattered Pixel Dungeon"
+ 
+ Pre-Requisito : Tener Instalado y Configurado
+ alguna de las siguientes versiones de Java :
+ *  openjdk-7-jre
+ *  jre 7 o superior (de oracle)
+ *  jdk 7 o superior (de oracle)
+ 
+ Esto es debido a que sin la version minima
+ el programa no inicia correctamente
+ 
+******** Fin : Acerca de este Script **********
+'
+#NIVEL_USUARIO :
+
+	#Comprobar "SI NO EXISTE" el directorio que se utilizara
+	    if test ! -d "$HOME/.Aplicacion/Videojuegos/Java"
+	    then
+	        mkdir -p "$HOME/.Aplicacion/Videojuegos/Java"
+	    fi
+	
+	#Comprobar que "SI EXISTE" el directorio que se utilizara e ingresar en el
+	    if test -d "$HOME/.Aplicacion/Videojuegos/Java"
+	    then
+	        cd "$HOME/.Aplicacion/Videojuegos/Java"
+	        wget -c "http://www.playapk.org/wp-content/uploads/2017/04/shattered-pixel-dungeon-0-5-0b-icon.png"
+	        mv "shattered-pixel-dungeon-0-5-0b-icon.png" "Shattered-Pixel-Dungeon.png"
+	    fi
+	
+	# Descargar Shattered Pixel Dungeon :
+	# Archivo para Java :
+	    wget -c "https://github.com/00-Evan/shattered-pixel-dungeon-gdx/releases/download/v0.6.4/ShatteredPD.Desktop.v0.6.4.jar"
+	
+	# Crear Entrada para el Menu
+	    echo '[Desktop Entry]
+	    Type=Application
+	    Version=0.6.4
+	    Name=Shattered Pixel Dungeon
+	    Comment=Shattered fork of the popular rogue-like game
+	    Exec=java -jar '"$HOME/.Aplicacion/Videojuegos/Java/ShatteredPD.Desktop.v0.6.4.jar"'
+	    Icon='"$HOME/.Aplicacion/Videojuegos/Java/Shattered-Pixel-Dungeon.png"'
+	    Terminal=false
+	    Categories=Game;' | tee "$HOME/.local/share/applications/Shattered-Pixel-Dungeon-0.6.4.desktop"
+
+	# Establecer los permisos del enlace en el menu
+	    chmod a+o+x "$HOME/.local/share/applications/Shattered-Pixel-Dungeon-0.6.4.desktop"

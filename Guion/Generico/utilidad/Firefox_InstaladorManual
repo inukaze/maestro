@@ -1,0 +1,337 @@
+#!/bin/bash
+
+# Autor : Inukaze (From Venezuela)
+# About This Script
+# Is a Simple Script to make Manuall Instalation
+# Of a Web-Browser called "Firefox"
+# For Distros Linux Like : Canaima
+
+firefox=firefox-29.0.1.tar.bz2
+
+rm -rf $HOME/.usuarioenuso
+touch $HOME/.usuarioenuso
+echo "$USERNAME" >> $HOME/.usuarioenuso
+Usuario=$(cat $HOME/.usuarioenuso)
+rm -rf $HOME/.usuarioenuso
+
+if [ $(whoami) != root ]; then
+    echo
+    echo 'Por favor ejecuta este script como root'
+    echo 'ó en su defecto usando "sudo" antes del script'
+    echo
+else
+
+Nucleo=($uname -s)
+if  [ "$Nucleo"="Linux" ]; then
+        Nucleo="linux"
+else
+    echo "Este no es un sistema Linux"
+    exit 1
+fi
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if              [ "$Arquitectura" = "i386" ]; then
+                        Arquitectura="x86"
+        elif    [ "$Arquitectura" = "i486" ]; then
+                        Arquitectura="x86"
+        elif    [ "$Arquitectura" = "i586" ]; then
+                        Arquitectura="x86"
+        elif    [ "$Arquitectura" = "i686" ]; then
+                        Arquitectura="x86"
+    elif        [ "$Arquitectura" = "x86_64" ]; then
+                        Arquitectura="x86_64"
+        else
+                echo "Arquitectura -> NO SOPORTADA"
+        exit 1
+fi 
+
+# Ir al directorio temporal del sistema
+sudo mkdir -p /tmp
+cd /tmp
+
+# Descargar Firefox segun mi arquitectura
+
+
+if [ "$Arquitectura" = "x86" ]; then
+    echo
+    echo "Detectada Arquitectura de 32 Bits"
+    echo
+    echo "Descargando Firefox de 32 Bits"
+    echo
+
+
+    sudo wget http://mozilla.mirrors.tds.net/pub/mozilla.org/firefox/releases/latest/$Nucleo-i686/es-CL/$firefox
+
+        if [ ! -d /opt ]; then
+            sudo mkdir /opt
+        fi
+
+    sudo mv firefox-29.0.1.tar.bz2 /opt
+
+    cd /opt
+    sudo tar xfvj firefox-29.0.1.tar.bz2
+    sudo chmod a+o+x -R firefox
+
+elif [ "$Arquitectura" = "x86_64" ]; then
+    echo
+    echo "Detectada Arquitectura de 64 Bits"
+    echo
+    echo "Descargando Firefox de 64 Bits"
+    echo
+
+    wget http://mozilla.mirrors.tds.net/pub/mozilla.org/firefox/releases/latest/$Nucleo-x86_64/es-CL/$firefox
+
+        if [ ! -d /opt ]; then
+            sudo mkdir /opt
+        fi
+
+    sudo mv firefox-29.0.1.tar.bz2 /opt
+    cd /opt
+
+    sudo tar xfvj firefox-29.0.1.tar.bz2
+    sudo chmod a+o+x -R firefox
+
+else
+    echo "Sistema Operativo No Soportado"
+fi
+
+cd /opt/firefox
+wget http://lh3.ggpht.com/_WlH1qXjuBv8/Sq0yjoub5jI/AAAAAAAADsI/huyfSefOrnY/s512/zoo-red-panda-01.jpg
+mv zoo-red-panda-01.jpg icon512x512.jpg
+sudo rm -rf /usr/bin/firefox
+sudo rm -rf /usr/local/bin/firefox
+sudo rm -rf /usr/share/applications/firefox.desktop
+sudo touch /usr/bin/firefox
+sudo echo '#!/bin/sh' >> /usr/bin/firefox
+sudo echo 'cd /opt/firefox' >> /usr/bin/firefox
+sudo echo './firefox "$@" 2>>/dev/null' >> /usr/bin/firefox
+sudo echo 'exit' >> /usr/bin/firefox
+sudo chmod a+o+x /usr/bin/firefox
+sudo touch /usr/share/applications/firefox.desktop
+sudo chmod a+o+x /usr/share/applications/firefox.desktop
+sudo echo '[Desktop Entry]' >> /usr/share/applications/firefox.desktop
+sudo echo 'Version=1.0' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name=Firefox Web Browser' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ar]=متصفح الويب فَيَرفُكْس' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ast]=Restolador web Firefox' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[bn]=ফায়ারফক্স ওয়েব ব্রাউজার' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ca]=Navegador web Firefox' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[cs]=Firefox Webový prohlížeč' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[da]=Firefox - internetbrowser' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[el]=Περιηγητής Firefox' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[es]=Navegador web Firefox' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[et]=Firefoxi veebibrauser' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[fa]=مرورگر اینترنتی Firefox' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[fi]=Firefox-selain' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[fr]=Navigateur Web Firefox' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[gl]=Navegador web Firefox' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[he]=דפדפן האינטרנט Firefox' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[hr]=Firefox web preglednik' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[hu]=Firefox webböngésző' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[it]=Firefox Browser Web' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ja]=Firefox ウェブ・ブラウザ' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ko]=Firefox 웹 브라우저' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ku]=Geroka torê Firefox' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[lt]=Firefox interneto naršyklė' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[nb]=Firefox Nettleser' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[nl]=Firefox webbrowser' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[nn]=Firefox Nettlesar' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[no]=Firefox Nettleser' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[pl]=Przeglądarka WWW Firefox' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[pt]=Firefox Navegador Web' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[pt_BR]=Navegador Web Firefox' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ro]=Firefox – Navigator Internet' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ru]=Веб-браузер Firefox' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[sk]=Firefox - internetový prehliadač' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[sl]=Firefox spletni brskalnik' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[sv]=Firefox webbläsare' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[tr]=Firefox Web Tarayıcısı' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ug]=Firefox توركۆرگۈ' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[uk]=Веб-браузер Firefox' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[vi]=Trình duyệt web Firefox' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[zh_CN]=Firefox 网络浏览器' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[zh_TW]=Firefox 網路瀏覽器' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment=Browse the World Wide Web' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[ar]=تصفح الشبكة العنكبوتية العالمية' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[ast]=Restola pela Rede' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[bn]=ইন্টারনেট ব্রাউজ করুন' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[ca]=Navegueu per la web' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[cs]=Prohlížení stránek World Wide Webu' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[da]=Surf på internettet' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[de]=Im Internet surfen' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[el]=Μπορείτε να περιηγηθείτε στο διαδίκτυο (Web)' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[es]=Navegue por la web' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[et]=Lehitse veebi' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[fa]=صفحات شبکه جهانی اینترنت را مرور نمایید' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[fi]=Selaa Internetin WWW-sivuja' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[fr]=Naviguer sur le Web' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[gl]=Navegar pola rede' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[he]=גלישה ברחבי האינטרנט' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[hr]=Pretražite web' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[hu]=A világháló böngészése' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[it]=Esplora il web' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[ja]=ウェブを閲覧します' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[ko]=웹을 돌아 다닙니다' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[ku]=Li torê bigere' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[lt]=Naršykite internete' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[nb]=Surf på nettet' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[nl]=Verken het internet' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[nn]=Surf på nettet' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[no]=Surf på nettet' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[pl]=Przeglądanie stron WWW ' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[pt]=Navegue na Internet' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[pt_BR]=Navegue na Internet' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[ro]=Navigați pe Internet' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[ru]=Доступ в Интернет' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[sk]=Prehliadanie internetu' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[sl]=Brskajte po spletu' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[sv]=Surfa på webben' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[tr]=İnternet te Gezinin' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[ug]=دۇنيادىكى توربەتلەرنى كۆرگىلى بولىدۇ' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[uk]=Перегляд сторінок Інтернету' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[vi]=Để duyệt các trang web' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[zh_CN]=浏览互联网' >> /usr/share/applications/firefox.desktop
+sudo echo 'Comment[zh_TW]=瀏覽網際網路' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName=Web Browser' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[ar]=متصفح ويب' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[ast]=Restolador Web' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[bn]=ওয়েব ব্রাউজার' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[ca]=Navegador web' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[cs]=Webový prohlížeč' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[da]=Webbrowser' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[el]=Περιηγητής διαδικτύου' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[es]=Navegador web' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[et]=Veebibrauser' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[fa]=مرورگر اینترنتی' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[fi]=WWW-selain' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[fr]=Navigateur Web' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[gl]=Navegador Web' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[he]=דפדפן אינטרנט' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[hr]=Web preglednik' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[hu]=Webböngésző' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[it]=Browser web' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[ja]=ウェブ・ブラウザ' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[ko]=웹 브라우저' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[ku]=Geroka torê' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[lt]=Interneto naršyklė' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[nb]=Nettleser' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[nl]=Webbrowser' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[nn]=Nettlesar' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[no]=Nettleser' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[pl]=Przeglądarka WWW' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[pt]=Navegador Web' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[pt_BR]=Navegador Web' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[ro]=Navigator Internet' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[ru]=Веб-браузер' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[sk]=Internetový prehliadač' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[sl]=Spletni brskalnik' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[sv]=Webbläsare' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[tr]=Web Tarayıcı' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[ug]=توركۆرگۈ' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[uk]=Веб-браузер' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[vi]=Trình duyệt Web' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[zh_CN]=网络浏览器' >> /usr/share/applications/firefox.desktop
+sudo echo 'GenericName[zh_TW]=網路瀏覽器' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords=Internet;WWW;Browser;Web;Explorer' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[ar]=انترنت;إنترنت;متصفح;ويب;وب' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[ast]=Internet;WWW;Restolador;Web;Esplorador' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[ca]=Internet;WWW;Navegador;Web;Explorador;Explorer' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[cs]=Internet;WWW;Prohlížeč;Web;Explorer' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[da]=Internet;Internettet;WWW;Browser;Browse;Web;Surf;Nettet' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[de]=Internet;WWW;Browser;Web;Explorer;Webseite;Site;surfen;online;browsen' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[el]=Internet;WWW;Browser;Web;Explorer;Διαδίκτυο;Περιηγητής;Firefox;Φιρεφοχ;Ιντερνετ' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[es]=Explorador;Internet;WWW' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[fi]=Internet;WWW;Browser;Web;Explorer;selain;Internet-selain;internetselain;verkkoselain;netti;surffaa' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[fr]=Internet;WWW;Browser;Web;Explorer;Fureteur;Surfer;Navigateur' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[he]=דפדפן;אינטרנט;רשת;אתרים;אתר;פיירפוקס;מוזילה;' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[hr]=Internet;WWW;preglednik;Web' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[hu]=Internet;WWW;Böngésző;Web;Háló;Net;Explorer' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[it]=Internet;WWW;Browser;Web;Navigatore' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[is]=Internet;WWW;Vafri;Vefur;Netvafri;Flakk' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[ja]=Internet;WWW;Web;インターネット;ブラウザ;ウェブ;エクスプローラ' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[nb]=Internett;WWW;Nettleser;Explorer;Web;Browser;Nettside' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[nl]=Internet;WWW;Browser;Web;Explorer;Verkenner;Website;Surfen;Online' >> /usr/share/applications/firefox.desktop 
+sudo echo 'Keywords[pt]=Internet;WWW;Browser;Web;Explorador;Navegador' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[pt_BR]=Internet;WWW;Browser;Web;Explorador;Navegador' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[ru]=Internet;WWW;Browser;Web;Explorer;интернет;браузер;веб;файрфокс;огнелис' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[sk]=Internet;WWW;Prehliadač;Web;Explorer' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[sl]=Internet;WWW;Browser;Web;Explorer;Brskalnik;Splet' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[tr]=İnternet;WWW;Tarayıcı;Web;Gezgin;Web sitesi;Site;sörf;çevrimiçi;tara' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[uk]=Internet;WWW;Browser;Web;Explorer;Інтернет;мережа;переглядач;оглядач;браузер;веб;файрфокс;вогнелис;перегляд' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[vi]=Internet;WWW;Browser;Web;Explorer;Trình duyệt;Trang web' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[zh_CN]=Internet;WWW;Browser;Web;Explorer;网页;浏览;上网;火狐;Firefox;ff;互联网;网站;' >> /usr/share/applications/firefox.desktop
+sudo echo 'Keywords[zh_TW]=Internet;WWW;Browser;Web;Explorer;網際網路;網路;瀏覽器;上網;網頁;火狐' >> /usr/share/applications/firefox.desktop
+sudo echo 'Exec=firefox %u' >> /usr/share/applications/firefox.desktop
+sudo echo 'Terminal=false' >> /usr/share/applications/firefox.desktop
+sudo echo 'X-MultipleArgs=false' >> /usr/share/applications/firefox.desktop
+sudo echo 'Type=Application' >> /usr/share/applications/firefox.desktop
+sudo echo 'Icon=/opt/firefox/icon512x512.jpg' >> /usr/share/applications/firefox.desktop
+sudo echo 'Categories=GNOME;GTK;Network;WebBrowser;' >> /usr/share/applications/firefox.desktop
+sudo echo 'MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;x-scheme-handler/chrome;video/webm;application/x-xpinstall;' >> /usr/share/applications/firefox.desktop
+sudo echo 'StartupNotify=true' >> /usr/share/applications/firefox.desktop
+sudo echo 'Actions=NewWindow;NewPrivateWindow;' >> /usr/share/applications/firefox.desktop
+sudo echo '' >> /usr/share/applications/firefox.desktop
+sudo echo '[Desktop Action NewWindow]' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name=Open a New Window' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ar]=افتح نافذة جديدة' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ast]=Abrir una ventana nueva' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[bn]=Abrir una ventana nueva' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ca]=Obre una finestra nova' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[cs]=Otevřít nové okno' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[da]=Åbn et nyt vindue' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[de]=Ein neues Fenster öffnen' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[el]=Άνοιγμα νέου παραθύρου' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[es]=Abrir una ventana nueva' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[fi]=Avaa uusi ikkuna' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[fr]=Ouvrir une nouvelle fenêtre' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[gl]=Abrir unha nova xanela' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[he]=פתיחת חלון חדש' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[hr]=Otvori novi prozor' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[hu]=Új ablak nyitása' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[it]=Apri una nuova finestra' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ja]=新しいウィンドウを開く' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ko]=새 창 열기' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ku]=Paceyeke nû veke' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[lt]=Atverti naują langą' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[nb]=Åpne et nytt vindu' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[nl]=Nieuw venster openen' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[pt]=Abrir nova janela' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[pt_BR]=Abrir nova janela' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ro]=Deschide o fereastră nouă' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ru]=Новое окно' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[sk]=Otvoriť nové okno' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[sl]=Odpri novo okno' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[sv]=Öppna ett nytt fönster' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[tr]=Yeni pencere aç' >> /usr/share/applications/firefox.desktop 
+sudo echo 'Name[ug]=يېڭى كۆزنەك ئېچىش' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[uk]=Відкрити нове вікно' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[vi]=Mở cửa sổ mới' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[zh_CN]=新建窗口' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[zh_TW]=開啟新視窗' >> /usr/share/applications/firefox.desktop
+sudo echo 'Exec=firefox -new-window' >> /usr/share/applications/firefox.desktop
+sudo echo 'OnlyShowIn=Unity;' >> /usr/share/applications/firefox.desktop
+sudo echo '' >> /usr/share/applications/firefox.desktop
+sudo echo '[Desktop Action NewPrivateWindow]' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name=Open a New Private Window' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ar]=افتح نافذة جديدة للتصفح الخاص' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ca]=Obre una finestra nova en mode d incògnit' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[de]=Ein neues privates Fenster öffnen' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[es]=Abrir una ventana privada nueva' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[fi]=Avaa uusi yksityinen ikkuna' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[fr]=Ouvrir une nouvelle fenêtre de navigation privée' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[he]=פתיחת חלון גלישה פרטית חדש' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[hu]=Új privát ablak nyitása' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[it]=Apri una nuova finestra anonima' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[nb]=Åpne et nytt privat vindu' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[ru]=Новое приватное окно' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[sl]=Odpri novo okno zasebnega brskanja' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[tr]=Yeni bir pencere aç' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[uk]=Відкрити нове вікно у потайливому режимі' >> /usr/share/applications/firefox.desktop
+sudo echo 'Name[zh_TW]=開啟新隱私瀏覽視窗' >> /usr/share/applications/firefox.desktop
+sudo echo 'Exec=firefox -private-window' >> /usr/share/applications/firefox.desktop
+sudo echo 'OnlyShowIn=Unity;' >> /usr/share/applications/firefox.desktop
+fi
+
+

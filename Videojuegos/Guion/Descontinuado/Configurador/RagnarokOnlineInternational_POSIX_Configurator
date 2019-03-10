@@ -1,0 +1,484 @@
+#!/bin/bash
+# 
+# Autor	:	Inukaze ( Venezuela )
+# Sitio		:	http://inukaze.wordpResolucions.com
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+xmessage -nearmouse -timeout 11 "Configuring Ragnarok Online International" -buttons OK &
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+RUTA_C="$RUTA/wine/data/drive_c"
+fixes="$RUTA/fixes"
+
+# Dar Permisos :
+cd "$RUTA" ; ./.Permisos
+chmod a+o+rw+x -R "$RUTA"
+
+# Obtener el nombre del nucleo del sistema
+Nucleo=$(uname -s)
+
+if		[ $Nucleo = "Darwin" ]; then
+		Nucleo=mac
+elif		[ $Nucleo = "Linux" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "FreeBSD" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "SunOS" ]; then
+		Nucleo=linux
+else
+		echo "Not Supported Operating System"
+fi
+
+# Borrar Toda Configuracion Previa WINE:
+rm -rf "$RUTA/wine/data/drive_c/users"
+rm -rf "$RUTA/wine/data/drive_c/windows"
+rm -rf "$RUTA/wine/data/Program Files (x86)"
+rm -rf "$RUTA/wine/data/drive_c/Archivos de programa"
+rm -rf "$RUTA/wine/data/drive_c/Program Files (x86)"
+rm -rf "$RUTA/wine/data/drive_c/Program Files"
+rm -rf "$RUTA/wine/data/system.reg"
+rm -rf "$RUTA/wine/data/user.reg"
+rm -rf "$RUTA/wine/data/userdef.reg"
+rm -rf "$RUTA/wine/data/dosdevices"
+rm -rf "$RUTA/wine/data/.update-timestamp"
+rm -rf "$RUTA/wine/.DS_Store"
+rm -rf "$RUTA/wine/linux/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/bin/.DS_Store"
+rm -rf "$RUTA"/wine/data/cachedmetrics.\:0
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if	       [ $Arquitectura = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+#			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+#			mkdir -p "$RUTA_C/windows/mono/mono-2.0"
+#			chmod -R 444 "$RUTA_C/windows/mono/mono-2.0"
+#			`wine regedit -s "$PWD/wine/$Nucleo/mono.reg"`
+	elif	[ $Arquitectura = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+#			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+#			mkdir -p "$RUTA_C/windows/mono/mono-2.0"
+#			chmod -R 444 "$RUTA_C/windows/mono/mono-2.0"
+#			`wine regedit -s "$PWD/wine/$Nucleo/mono.reg"`
+	elif	[ $Arquitectura = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+#			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+#			mkdir -p "$RUTA_C/windows/mono/mono-2.0"
+#			chmod -R 444 "$RUTA_C/windows/mono/mono-2.0"
+#			`wine regedit -s "$PWD/wine/$Nucleo/mono.reg"`
+	elif	[ $Arquitectura = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+#			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+#			mkdir -p "$RUTA_C/windows/mono/mono-2.0"
+#			chmod -R 444 "$RUTA_C/windows/mono/mono-2.0"
+#			`wine regedit -s "$PWD/wine/$Nucleo/mono.reg"`
+         elif [ $Arquitectura = "x86_64" ]; then
+			PATH="$PWD/wine/$Nucleo/x86_64/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="64 Bits"
+#			export WINEDLLOVERRIDES=mshtml=wine cmd echo test
+#			mkdir -p "$RUTA_C/windows/mono/mono-2.0"
+#			chmod -R 444 "$RUTA_C/windows/mono/mono-2.0"
+#			`wine regedit -s "$PWD/wine/$Nucleo/mono.reg"`
+	else
+		echo "Arquitectura NO SOPORTADA"
+fi 
+
+cd "$fixes/windows/system32"
+mkdir -p "$RUTA_C/windows/system32"
+cp -rf *.* "$RUTA_C/windows/system32"
+#cd "$fixes/directx" && cp -rf *.* "$RUTA_C/windows/system32"
+
+# Muestra en la terminal La arquitectura &
+# La version especifica de Wine usada
+Version_De_Wine=$(wine --version)
+echo ""
+echo ""
+echo "Running '$Version_De_Wine' under '$Nucleo' ( Machine '$Arquitectura' )"
+echo ""
+echo ""
+
+cd "$fixes/windows/system32"
+cp *.* "$RUTA_C/windows/system32" && cd "$RUTA_C/windows/system32"
+
+# Registrar Librerias con RegSvr32 ;
+regsvr32 ddraw.dll
+regsvr32 dsound.dll
+regsvr32 dinput.dll
+regsvr32 mfc42.dll
+regsvr32 mfc42u.dll
+regsvr32 MSCTF.dll
+regsvr32 MSIMTF.dll
+regsvr32 ole32.dll
+regsvr32 oleaut32.dll
+regsvr32 olepro32.dll
+regsvr32 rpcrt4.dll
+regsvr32 wintrust.dll
+regsvr32 shell32.dll
+
+# Install Fixers :
+#rm -rf "$RUTA_C/vc6temp"
+cd "$fixes"
+`wine VC6RedistSetup_deu.exe /q /r:n /t:c:\vc6temp`
+`wine vcrrun2008_x86.exe /q`
+rm -rf "$RUTA_C/vc6temp"
+
+# - Esto es DirectX 9.X? (Nativo de Windows XP SP 3)
+echo "REGEDIT4" >> fixes.reg
+echo "" >> fixes.reg
+echo "[HKEY_CURRENT_USER\Software\Wine\DllOverrides]" >> fixes.reg
+echo '"advapi32.dll"="native"' >> fixes.reg
+echo '"ADVPACK.dll"="native"' >> fixes.reg
+echo '"asycfilt.dll"="native"' >> fixes.reg
+echo '"atl90.dll"="native"' >> fixes.reg
+echo '"crypt32.dll"="native"' >> fixes.reg
+echo '"dciman32.dll"="native"' >> fixes.reg
+echo '"gdi32.dll"="native"' >> fixes.reg
+echo '"hid.dll"="native"' >> fixes.reg
+echo '"imagehlp.dll"="native"' >> fixes.reg
+echo '"imm32.dll"="native"' >> fixes.reg
+echo '"kernel32.dll"="native"' >> fixes.reg
+echo '"lpk.dll"="native"' >> fixes.reg
+echo '"mfc90.dll"="native"' >> fixes.reg
+echo '"mfcm90.dll"="native"' >> fixes.reg
+echo '"midimap.dll"="native"' >> fixes.reg
+echo '"msacm32.dll"="native"' >> fixes.reg
+echo '"msasn1.dll"="native"' >> fixes.reg
+echo '"MSCTFIME.IME"="native"' >> fixes.reg
+echo '"msvcirt.dll"="native"' >> fixes.reg
+echo '"msvcp60.dll"="native"' >> fixes.reg
+echo '"*msvcm90"="native,builtin"' >> fixes.reg
+echo '"*msvcp90"="native,builtin"' >> fixes.reg
+echo '"*msvcr90"="native,builtin"' >> fixes.reg
+echo '"*vcomp90"="native,builtin"' >> fixes.reg
+echo '"msvcrt.dll"="native"' >> fixes.reg
+echo '"netapi32.dll"="native"' >> fixes.reg
+echo '"ntdll.dll"="native"' >> fixes.reg
+echo '"rpcss.dll"="native"' >> fixes.reg
+echo '"secur32.dll"="native"' >> fixes.reg
+echo '"setupapi.dll"="native"' >> fixes.reg
+echo '"shlwapi.dll"="native"' >> fixes.reg
+echo '"stdole2.tlb"="native"' >> fixes.reg
+echo '"user32.dll"="native"' >> fixes.reg
+echo '"usp10.dll"="native"' >> fixes.reg
+echo '"uxtheme.dll"="native"' >> fixes.reg
+echo '"version.dll"="native"' >> fixes.reg
+echo '"W95INF16.dll"="native"' >> fixes.reg
+echo '"W95INF32.dll"="native"' >> fixes.reg
+echo '"winmm.dll"="native"' >> fixes.reg
+echo '"ws2_32.dll"="native"' >> fixes.reg
+echo '"ws2help.dll"="native"' >> fixes.reg
+`wine regedit -s fixes.reg` && rm -rf fixes.reg
+`wine regedit -s "$fixes"/software.reg`
+`wine regedit -s "$fixes"/"$Nucleo"_video.reg`
+`wine regedit -s "$fixes"/"$Nucleo"_sound.reg`
+
+tvid=$(lspci -v -s `lspci | awk '/VGA/{print $1}'` | sed -n '/Memory.*, prefetchable/s/.*\[size=\([^]]\+\)M\]/\1/p')
+let "mvid"=$tvid/2
+
+echo ""
+echo ""
+echo "Has been put the 3D Configuration"
+echo "For Ragnarok Online International , using half"
+echo "of the video memory available"
+echo ""
+echo ""
+echo 'The Client use "'"$mvid MB"'" Video'
+echo ""
+echo ""
+
+# Detectar el Directorio "Escritorio"
+# Dentro del usuario actual
+
+cd $HOME
+
+if [ -e Desktop ]; then cd Desktop; DirectorioEscritorio=$HOME/Desktop; fi
+if [ -e Escritorio ]; then cd Escritorio; DirectorioEscritorio=$HOME/Escritorio; fi
+
+if [ ! -e $DirectorioEscritorio/iRO ]; then
+mkdir -p $DirectorioEscritorio/iRO
+cd $DirectorioEscritorio/iRO
+touch .directory
+echo "[Desktop Entry]" >> .directory
+echo "Icon=$RUTA/.RagnarokOnline.png" >> .directory
+fi
+
+if [ -e $DirectorioEscritorio/iRO ]; then
+cd $DirectorioEscritorio/iRO
+touch .directory
+echo "[Desktop Entry]" >> .directory
+echo "Icon=$RUTA/.RagnarokOnline.png" >> .directory
+fi
+
+if [ -f "Ragnarok Online International.desktop" ]; then rm -rf "Ragnarok Online International.desktop"; fi
+
+# 1 - Ragnarok Online International
+touch "Ragnarok Online International.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Ragnarok Online International.desktop"
+echo "" >> "Ragnarok Online International.desktop"
+echo '[Desktop Entry]' >> "Ragnarok Online International.desktop"
+echo "Version=1.0" >> "Ragnarok Online International.desktop"
+echo "Type=Application" >> "Ragnarok Online International.desktop"
+echo "Terminal=false" >> "Ragnarok Online International.desktop"
+echo 'Exec=sh "'$RUTA'"/.LanzarRagnarok' >> "Ragnarok Online International.desktop"
+echo "Name=Ragnarok Online International" >> "Ragnarok Online International.desktop"
+echo "Icon=$RUTA/.RagnarokOnline.png" >> "Ragnarok Online International.desktop"
+echo "Path=$RUTA" >> "Ragnarok Online International.desktop"
+echo "StartupNotify=true" >> "Ragnarok Online International.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ragnarok Online International.desktop"
+
+# 2 - Ragnarok Classic
+
+if [ -f "Ragnarok Online International - Classic.desktop" ]; then rm -rf "Ragnarok Online International - Classic.desktop"; fi
+touch "Ragnarok Online International - Classic.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Ragnarok Online International - Classic.desktop"
+echo "" >> "Ragnarok Online International - Classic.desktop"
+echo '[Desktop Entry]' >> "Ragnarok Online International - Classic.desktop"
+echo "Version=1.0" >> "Ragnarok Online International - Classic.desktop"
+echo "Type=Application" >> "Ragnarok Online International - Classic.desktop"
+echo "Terminal=false" >> "Ragnarok Online International - Classic.desktop"
+echo 'Exec=sh "'$RUTA'"/.LanzarRagnarokClassic' >> "Ragnarok Online International - Classic.desktop"
+echo "Name=Ragnarok Online International - Classic" >> "Ragnarok Online International - Classic.desktop"
+echo "Icon=$RUTA/.RagnarokOnline.png" >> "Ragnarok Online International - Classic.desktop"
+echo "Path=$RUTA" >> "Ragnarok Online International - Classic.desktop"
+echo "StartupNotify=true" >> "Ragnarok Online International - Classic.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ragnarok Online International - Classic.desktop"
+
+# 3 - Setup
+
+if [ -f "Ragnarok Online International - Setup.desktop" ]; then rm -rf "Ragnarok Online International - Setup.desktop"; fi
+touch "Ragnarok Online International - Setup.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Ragnarok Online International - Setup.desktop"
+echo "" >> "Ragnarok Online International - Setup.desktop"
+echo '[Desktop Entry]' >> "Ragnarok Online International - Setup.desktop"
+echo "Version=1.0" >> "Ragnarok Online International - Setup.desktop"
+echo "Type=Application" >> "Ragnarok Online International - Setup.desktop"
+echo "Terminal=false" >> "Ragnarok Online International - Setup.desktop"
+echo 'Exec=sh "'$RUTA'"/.LanzarSetup' >> "Ragnarok Online International - Setup.desktop"
+echo "Name=Ragnarok Online International - Setup" >> "Ragnarok Online International - Setup.desktop"
+echo "Icon=$RUTA/.Setup.png" >> "Ragnarok Online International - Setup.desktop"
+echo "Path=$RUTA" >> "Ragnarok Online International - Setup.desktop"
+echo "StartupNotify=true" >> "Ragnarok Online International - Setup.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ragnarok Online International - Setup.desktop"
+
+# 4 - Setup Classic
+
+if [ -f "Ragnarok Online International - Setup Classic.desktop" ]; then rm -rf "Ragnarok Online International - Setup Classic.desktop"; fi
+touch "Ragnarok Online International - Setup Classic.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Ragnarok Online International - Setup Classic.desktop"
+echo "" >> "Ragnarok Online International - Setup Classic.desktop"
+echo '[Desktop Entry]' >> "Ragnarok Online International - Setup Classic.desktop"
+echo "Version=1.0" >> "Ragnarok Online International - Setup Classic.desktop"
+echo "Type=Application" >> "Ragnarok Online International - Setup Classic.desktop"
+echo "Terminal=false" >> "Ragnarok Online International - Setup Classic.desktop"
+echo 'Exec=sh "'$RUTA'"/.LanzarSetupClassic' >> "Ragnarok Online International - Setup Classic.desktop"
+echo "Name=Ragnarok Online International - Setup Classic" >> "Ragnarok Online International - Setup Classic.desktop"
+echo "Icon=$RUTA/.SetupClassic.png" >> "Ragnarok Online International - Setup Classic.desktop"
+echo "Path=$RUTA" >> "Ragnarok Online International - Setup Classic.desktop"
+echo "StartupNotify=true" >> "Ragnarok Online International - Setup Classic.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ragnarok Online International - Setup Classic.desktop"
+
+# 5 - Replay -> Ragnarok Online International
+
+if [ -f "Ragnarok Online International - Replay.desktop" ]; then rm -rf "Ragnarok Online International - Replay.desktop"; fi
+touch "Ragnarok Online International - Replay.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Ragnarok Online International - Replay.desktop"
+echo "" >> "Ragnarok Online International - Replay.desktop"
+echo '[Desktop Entry]' >> "Ragnarok Online International - Replay.desktop"
+echo "Version=1.0" >> "Ragnarok Online International - Replay.desktop"
+echo "Type=Application" >> "Ragnarok Online International - Replay.desktop"
+echo "Terminal=false" >> "Ragnarok Online International - Replay.desktop"
+echo 'Exec=sh "'$RUTA'"/.LanzarReplay' >> "Ragnarok Online International - Replay.desktop"
+echo "Name=Ragnarok Online International - Replay" >> "Ragnarok Online International - Replay.desktop"
+echo "Icon=$RUTA/.2RO.png" >> "Ragnarok Online International - Replay.desktop"
+echo "Path=$RUTA" >> "Ragnarok Online International - Replay.desktop"
+echo "StartupNotify=true" >> "Ragnarok Online International - Replay.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ragnarok Online International - Replay.desktop"
+
+# 6 - OpenSetup -> Alternative OpenSource Setup Tool
+if [ -f "Ragnarok Online International - OpenSetup.desktop" ]; then rm -rf "Ragnarok Online International - OpenSetup.desktop"; fi
+touch "Ragnarok Online International - OpenSetup.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Ragnarok Online International - OpenSetup.desktop"
+echo "" >> "Ragnarok Online International - OpenSetup.desktop"
+echo '[Desktop Entry]' >> "Ragnarok Online International - OpenSetup.desktop"
+echo "Version=1.0" >> "Ragnarok Online International - OpenSetup.desktop"
+echo "Type=Application" >> "Ragnarok Online International - OpenSetup.desktop"
+echo "Terminal=false" >> "Ragnarok Online International - OpenSetup.desktop"
+echo 'Exec=sh "'$RUTA'"/.LanzarOpenSetup' >> "Ragnarok Online International - OpenSetup.desktop"
+echo "Name=Ragnarok Online International - OpenSetup" >> "Ragnarok Online International - OpenSetup.desktop"
+echo "Icon=$RUTA/.OpenSetup.png" >> "Ragnarok Online International - OpenSetup.desktop"
+echo "Path=$RUTA" >> "Ragnarok Online International - OpenSetup.desktop"
+echo "StartupNotify=true" >> "Ragnarok Online International - OpenSetup.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Ragnarok Online International - OpenSetup.desktop"
+
+# Marcar como de Confianza (Dar Permiso de Ejecucion):
+chmod a+x "Ragnarok Online International.desktop"
+chmod a+x "Ragnarok Online International - Setup.desktop"
+chmod a+x "Ragnarok Online International - Replay.desktop"
+chmod a+x "Ragnarok Online International - Classic.desktop"
+chmod a+x "Ragnarok Online International - OpenSetup.desktop"
+chmod a+x "Ragnarok Online International - Setup Classic.desktop"
+
+if [ -f "Window Mode - Ragnarok Online International.desktop" ]; then rm -rf "Window Mode - Ragnarok Online International.desktop"; fi
+
+#Crear Enlaces en la Carpeta "$DirectorioEscritorio/RagnarokOnlineInternational"
+#Del Software que configura este Script.
+
+# 1 - Ragnarok Online - International
+touch "Window Mode - Ragnarok Online International.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Window Mode - Ragnarok Online International.desktop"
+echo "" >> "Window Mode - Ragnarok Online International.desktop"
+echo '[Desktop Entry]' >> "Window Mode - Ragnarok Online International.desktop"
+echo "Version=1.0" >> "Window Mode - Ragnarok Online International.desktop"
+echo "Type=Application" >> "Window Mode - Ragnarok Online International.desktop"
+echo "Terminal=false" >> "Window Mode - Ragnarok Online International.desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_IniciarRagnarok' >> "Window Mode - Ragnarok Online International.desktop"
+echo "Name=Window Mode - Ragnarok Online International" >> "Window Mode - Ragnarok Online International.desktop"
+echo "Icon=$RUTA/.RagnarokOnline.png" >> "Window Mode - Ragnarok Online International.desktop"
+echo "Path=$RUTA" >> "Window Mode - Ragnarok Online International.desktop"
+echo "StartupNotify=true" >> "Window Mode - Ragnarok Online International.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Window Mode - Ragnarok Online International.desktop"
+
+# 2 - Ragnarok Online - International Classic :
+
+if [ -f "Window Mode - Ragnarok Online International - Classic.desktop" ]; then rm -rf "Window Mode - Ragnarok Online International - Classic.desktop"; fi
+touch "Window Mode - Ragnarok Online International - Classic.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Window Mode - Ragnarok Online International - Classic.desktop"
+echo "" >> "Window Mode - Ragnarok Online International - Classic.desktop"
+echo '[Desktop Entry]' >> "Window Mode - Ragnarok Online International - Classic.desktop"
+echo "Version=1.0" >> "Window Mode - Ragnarok Online International - Classic.desktop"
+echo "Type=Application" >> "Window Mode - Ragnarok Online International - Classic.desktop"
+echo "Terminal=false" >> "Window Mode - Ragnarok Online International - Classic.desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_LanzarRagnarokClassic' >> "Window Mode - Ragnarok Online International - Classic.desktop"
+echo "Name=Window Mode - Ragnarok Online International - Classic" >> "Window Mode - Ragnarok Online International - Classic.desktop"
+echo "Icon=$RUTA/.RagnarokOnline.png" >> "Window Mode - Ragnarok Online International - Classic.desktop"
+echo "Path=$RUTA" >> "Window Mode - Ragnarok Online International - Classic.desktop"
+echo "StartupNotify=true" >> "Window Mode - Ragnarok Online International - Classic.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Window Mode - Ragnarok Online International - Classic.desktop"
+
+# 3 - Replay -> Ragnarok Online International
+
+if [ -f "Window Mode - Ragnarok Online International - Replay.desktop" ]; then rm -rf "Window Mode - Ragnarok Online International - Replay.desktop"; fi
+touch "Window Mode - Ragnarok Online International - Replay.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Window Mode - Ragnarok Online International - Replay.desktop"
+echo "" >> "Window Mode - Ragnarok Online International - Replay.desktop"
+echo '[Desktop Entry]' >> "Window Mode - Ragnarok Online International - Replay.desktop"
+echo "Version=1.0" >> "Window Mode - Ragnarok Online International - Replay.desktop"
+echo "Type=Application" >> "Window Mode - Ragnarok Online International - Replay.desktop"
+echo "Terminal=false" >> "Window Mode - Ragnarok Online International - Replay.desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_LanzarReplay' >> "Window Mode - Ragnarok Online International - Replay.desktop"
+echo "Name=Window Mode - Ragnarok Online International - Replay" >> "Window Mode - Ragnarok Online International - Replay.desktop"
+echo "Icon=$RUTA/.2RO.png" >> "Window Mode - Ragnarok Online International - Replay.desktop"
+echo "Path=$RUTA" >> "Window Mode - Ragnarok Online International - Replay.desktop"
+echo "StartupNotify=true" >> "Window Mode - Ragnarok Online International - Replay.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Window Mode - Ragnarok Online International - Replay.desktop"
+
+# 4 - Setup -> Ragnarok Online International
+
+if [ -f "Window Mode - Ragnarok Online International - Setup.desktop" ]; then rm -rf "Window Mode - Ragnarok Online International - Setup.desktop"; fi
+touch "Window Mode - Ragnarok Online International - Setup.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Window Mode - Ragnarok Online International - Setup.desktop"
+echo "" >> "Window Mode - Ragnarok Online International - Setup.desktop"
+echo '[Desktop Entry]' >> "Window Mode - Ragnarok Online International - Setup.desktop"
+echo "Version=1.0" >> "Window Mode - Ragnarok Online International - Setup.desktop"
+echo "Type=Application" >> "Window Mode - Ragnarok Online International - Setup.desktop"
+echo "Terminal=false" >> "Window Mode - Ragnarok Online International - Setup.desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_LanzarSetup' >> "Window Mode - Ragnarok Online International - Setup.desktop"
+echo "Name=Window Mode - Ragnarok Online International - Setup" >> "Window Mode - Ragnarok Online International - Setup.desktop"
+echo "Icon=$RUTA/.Setup.png" >> "Window Mode - Ragnarok Online International - Setup.desktop"
+echo "Path=$RUTA" >> "Window Mode - Ragnarok Online International - Setup.desktop"
+echo "StartupNotify=true" >> "Window Mode - Ragnarok Online International - Setup.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Window Mode - Ragnarok Online International - Setup.desktop"
+
+# 5 - Setup Classic
+
+if [ -f "Window Mode - Ragnarok Online International - Setup Classic.desktop" ]; then rm -rf "Window Mode - Ragnarok Online International - Setup Classic.desktop"; fi
+touch "Window Mode - Ragnarok Online International - Setup Classic.desktop"
+
+echo "#!/usr/bin/env xdg-open"  >> "Window Mode - Ragnarok Online International - Setup Classic.desktop"
+echo "" >> "Window Mode - Ragnarok Online International - Setup Classic.desktop"
+echo '[Desktop Entry]' >> "Window Mode - Ragnarok Online International - Setup Classic.desktop"
+echo "Version=1.0" >> "Window Mode - Ragnarok Online International - Setup Classic.desktop"
+echo "Type=Application" >> "Window Mode - Ragnarok Online International - Setup Classic.desktop"
+echo "Terminal=false" >> "Window Mode - Ragnarok Online International - Setup Classic.desktop"
+echo 'Exec=sh "'$RUTA'"/.MV_LanzarSetupClassic' >> "Window Mode - Ragnarok Online International - Setup Classic.desktop"
+echo "Name=Window Mode - Ragnarok Online International - Setup Classic" >> "Window Mode - Ragnarok Online International - Setup Classic.desktop"
+echo "Icon=$RUTA/.SetupClassic.png" >> "Window Mode - Ragnarok Online International - Setup Classic.desktop"
+echo "Path=$RUTA" >> "Window Mode - Ragnarok Online International - Setup Classic.desktop"
+echo "StartupNotify=true" >> "Window Mode - Ragnarok Online International - Setup Classic.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Window Mode - Ragnarok Online International - Setup Classic.desktop"
+
+# Marcar como de Confianza (Dar Permiso de Ejecucion):
+chmod a+x "Window Mode - Ragnarok Online International.desktop"
+chmod a+x "Window Mode - Ragnarok Online International - Setup.desktop"
+chmod a+x "Window Mode - Ragnarok Online International - Replay.desktop"
+chmod a+x "Window Mode - Ragnarok Online International - Classic.desktop"
+chmod a+x "Window Mode - Ragnarok Online International - Setup Classic.desktop"
+
+
+xmessage -nearmouse -timeout 3 "Ragnarok Online International : Has been Configured Correclty" -buttons OK &

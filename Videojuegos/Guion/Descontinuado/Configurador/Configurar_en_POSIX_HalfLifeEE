@@ -1,0 +1,557 @@
+#!/bin/sh
+#!/bin/bash
+# 
+# Autor	:	Inukaze ( Venezuela )
+# Sitio		:	http://inukaze.wordpResolucions.com
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+./LimpiarConfiguracion
+
+XMessage=$(whereis xmessage | grep bin | awk '{print $2}' | sed 's/^[/usr/bin/ \t]*//')
+
+if [ $XMessage = xmessage ]; then
+	echo 
+	echo '"Se Esta Configurando El Software"'
+	echo
+	xmessage -nearmouse -timeout 15 "Se Esta Configurando El Software" -buttons OK &
+	echo
+else
+	echo
+	echo "xmessage - NO! ESTA INSTALADO"
+	echo
+	echo "Se esta Configurando el Software"
+	echo
+fi
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+RUTA_POSIXWINE="$RUTA/wine"
+RUTA_DEL_SOFTWARE="$RUTA/wine/data/drive_c/Juegos/Inukaze/Half-Life-EE"
+ARREGLOS="$RUTA/arreglos"
+ICONO="$RUTA/wine/data/drive_c/Juegos/Inukaze/Half-Life-EE/iconpngs"
+TITULO="HalfLife1"
+VERSION_WINE=1.7.21
+
+# "$ARREGLOS/"$Nucleo"_vid.reg"
+# "$RUTA_DEL_SOFTWARE/Software.reg"
+
+chmod a+o+x -R "$RUTA"
+
+# Obtener el nombre del nucleo del sistema
+Nucleo=$(uname -s)
+case "$Nucleo" in
+    Linux)	Nucleo="linux"				;;
+    Darwin)	Nucleo="mac"				;;
+    FreeBSD)	Nucleo="freebsd"			;;
+* ) echo "Tu Sistema Operativo -> NO ESTA SOPORTADO"	;;
+esac
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+case "$Arquitectura" in
+    x86)	Arquitectura="x86"					;;
+    i?86)	Arquitectura="x86"					;;
+    amd64)	Arquitectura="x86_64"					;;
+    x86_64)	Arquitectura="x86_64"					;;
+* ) echo    "Tu Arquitectura '$Arquitectura' -> NO ESTA SOPORTADA."	;;
+esac
+
+# Extraer Wine : Segun el Nucleo y la Arquitectura del Sistema
+
+	cd "$RUTA_POSIXWINE"
+	if test -f wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+		then
+			tar xfvj wine-$VERSION_WINE-$Nucleo-$Arquitectura.tar.bz2
+			cd ..
+		else
+			echo -e "\n Arquitectura del Sistema : No soportada\n"
+			cd ..
+			exit 1
+	fi	
+
+# Definir Wine y sus variables :
+
+	if [ $Arquitectura = "x86" ]; then
+		PATH="$PWD/wine/$Nucleo/$Arquitectura/bin:$PATH"
+		export WINESERVER="$PWD/wine/$Nucleo/$Arquitectura/bin/wineserver"
+		export WINELOADER="$PWD/wine/$Nucleo/$Arquitectura/bin/wine"
+		export WINEDLLPATH="$PWD/wine/$Nucleo/$Arquitectura/lib"
+		export WINEPREFIX="$PWD/wine/data"
+		export WINEDEBUG=-all
+		Arquitectura="32 Bits"
+	elif [ $Arquitectura = "x86_64" ]; then
+		PATH="$PWD/wine/$Nucleo/$Arquitectura/bin:$PATH"
+		export WINESERVER="$PWD/wine/$Nucleo/$Arquitectura/bin/wineserver"
+		export WINELOADER="$PWD/wine/$Nucleo/$Arquitectura/bin/wine"
+		export WINEDLLPATH="$PWD/wine/$Nucleo/$Arquitectura/lib"
+		export WINEPREFIX="$PWD/wine/data"
+		export WINEDEBUG=-all
+		Arquitectura="64 Bits"
+	else
+		echo "Arquitectura NO SOPORTADA"
+		exit 1
+	fi 
+
+# Si ejecutas wineboot , no se registrara bien
+# Las fuente que usa , y depaso no va a iniciar :
+# $(wineboot)
+
+# La fuente -> msmincho.ttc
+# De hecho sucede con varias fuentes :
+# Problema y problemas hace que termine el juego abruptamente.
+
+mkdir -p "$RUTA"/wine/data/drive_c/windows/system32
+mkdir -p "$RUTA"/wine/data/drive_c/windows/Fonts
+cd "$ARREGLOS"/windows/Fonts
+cp -rf *.* "$RUTA"/wine/data/drive_c/windows/Fonts
+cd "$ARREGLOS"/windows/system32
+cp -rf *.* "$RUTA"/wine/data/drive_c/windows/system32
+cd "$ARREGLOS"
+
+echo 'REGEDIT4
+
+[HKEY_CURRENT_USER\Software\Wine\DllOverrides]
+"d3dim"="native,builtin"
+"d3dim700"="native,builtin"
+"d3dpmesh"="native,builtin"
+"d3dramp"="native,builtin"
+"d3drm"="native,builtin"
+"d3dx9_24"="native,builtin"
+"d3dx9_25"="native,builtin"
+"d3dx9_26"="native,builtin"
+"d3dx9_27"="native,builtin"
+"d3dx9_28"="native,builtin"
+"d3dx9_29"="native,builtin"
+"d3dx9_30"="native,builtin"
+"d3dx9_31"="native,builtin"
+"d3dx9_32"="native,builtin"
+"d3dx9_33"="native,builtin"
+"d3dx9_34"="native,builtin"
+"d3dx9_35"="native,builtin"
+"d3dx9_36"="native,builtin"
+"d3dx9_37"="native,builtin"
+"d3dxof"="native,builtin"
+"dciman32"="native,builtin"
+"ddrawex"="native,builtin"
+"devenum"="native,builtin"
+"dinput"="native,builtin"
+"dinput8"="native,builtin"
+"dmband"="native,builtin"
+"dmcompos"="native,builtin"
+"dmime"="native,builtin"
+"dmloader"="native,builtin"
+"dmscript"="native,builtin"
+"dmsynth"="native,builtin"
+"dmusic"="native,builtin"
+"dnsapi"="native,builtin"
+"dpcdll"="native,builtin"
+"dpvacm"="native,builtin"
+"dpvoice"="native,builtin"
+"dpvsetup.exe"="native,builtin"
+"dpvvox"="native,builtin"
+"dpwsock"="native,builtin"
+"dpwsockx"="native,builtin"
+"dsdmo"="native,builtin"
+"dsdmoprp"="native,builtin"
+"dsound"="native,builtin"
+"dsound3d"="native,builtin"
+"dsprop"="native,builtin"
+"dsprpres"="native,builtin"
+"dsquery"="native,builtin"
+"dssenh"="native,builtin"
+"dsuiext"="native,builtin"
+"dswave"="native,builtin"
+"duser"="native,builtin"
+"dxtrans"="native,builtin"
+"eax"="native,builtin"
+"hid"="native,builtin"
+"hidserv"="native,builtin"
+"iertutil"="native,builtin"
+"mscoree"="native,builtin"
+"msdmo"="native,builtin"
+"msvcrt"="native,builtin"
+"qcap"="native,builtin"
+"quartz"="native,builtin"
+"streamci"="native,builtin"
+"xinput1_2"="native,builtin"' >> "$ARREGLOS/Biblioteclas.reg"
+
+rm -rf "$ARREGLOS/Fuentes.reg"
+
+echo 'REGEDIT4
+
+[HKEY_CURRENT_USER\\Control Panel\\Desktop]
+"FontSmoothing"="2"
+"FontSmoothingType"=dword:00000002
+"FontSmoothingGamma"=dword:00000578
+"FontSmoothingOrientation"=dword:00000000
+
+[HKEY_CURRENT_USER\\Software\\Wine\\Fonts\\External Fonts]
+"'"Courier New"'"="'"c:\\\\\\\\windows\\\\\\\\Fonts\\\\\\\\cour.ttf"'"
+"'"Courier New Bold"'"="'"c:\\\\\\\\windows\\\\\\\\Fonts\\\\\\\\courbd.ttf"'"'  >> "$ARREGLOS/Fuentes.reg"
+
+wine regedit -s "$ARREGLOS/Fuentes.reg"
+wine regedit -s "$ARREGLOS/Biblioteclas.reg"
+wine regedit -s "$ARREGLOS/"$Nucleo"_snd.reg"
+wine regedit -s "$ARREGLOS/"$Nucleo"_vid.reg"
+wine regedit -s "$RUTA_DEL_SOFTWARE/Software.reg"
+
+rm -rf "$ARREGLOS/Fuentes.reg"
+rm -rf "$ARREGLOS/Biblioteclas.reg"
+
+# Detectar el Directorio "Escritorio"
+# Dentro del usuario actual
+
+cd $HOME
+
+if [ -e Desktop ]; then cd Desktop; DirectorioEscritorio="$HOME/Desktop"; fi
+if [ -e Escritorio ]; then cd Escritorio; DirectorioEscritorio="$HOME/Escritorio"; fi
+
+if [ ! -e "$DirectorioEscritorio/$TITULO/PantallaCompleta" ]; then
+	mkdir -p "$DirectorioEscritorio/$TITULO/PantallaCompleta"
+	cd "$DirectorioEscritorio/$TITULO/PantallaCompleta"
+fi
+
+if [ -e $DirectorioEscritorio/"$TITULO/PantallaCompleta" ]; then
+	cd "$DirectorioEscritorio/$TITULO/PantallaCompleta"
+fi
+
+
+# Escribir Los Archivos de "Enlace(s)"
+# Necesarios dentro de la Carpeta "$HOME/$DirectorioEscritorio/Wine"
+
+# Primero Borrar cualquier archivo Anterior
+# De Escritorio , para Evitar Conflictos y no crear archivos innecesarios.
+
+
+# PANTALLA COMPLETA :
+MOD="Original"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoPC
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+MOD="Blue Shift"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoPC-BlueShift
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+MOD="Counter Strike"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoPC-CounterStrike
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+MOD="Deathmatch Classic"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoPC-DeathmatchClassic
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+MOD="Decay"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoPC-Decay
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+MOD="Opposing Force"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoPC-OpposingForce
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+MOD="Ricochet"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoPC-Ricochet
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+MOD="Team Fortress Classic"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoPC-TeamFortressClassic
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+MOD="Zombie"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoPC-Zombie
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+
+### MODO VENTANA :
+if [ ! -e "$DirectorioEscritorio/$TITULO/Ventana" ]; then
+	mkdir -p "$DirectorioEscritorio/$TITULO/Ventana"
+	cd "$DirectorioEscritorio/$TITULO/Ventana"
+fi
+
+if [ -e $DirectorioEscritorio/"$TITULO/Ventana" ]; then
+	cd "$DirectorioEscritorio/$TITULO/Ventana"
+fi
+
+MOD="Original"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoVT
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+MOD="Blue Shift"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoVT-BlueShift
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+MOD="Counter Strike"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoVT-CounterStrike
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+MOD="Deathmatch Classic"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoVT-DeathmatchClassic
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+MOD="Decay"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoVT-Decay
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+MOD="Opposing Force"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoVT-OpposingForce
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+MOD="Ricochet"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoVT-Ricochet
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+MOD="Team Fortress Classic"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoVT-TeamFortressClassic
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+MOD="Zombie"
+if [ -f "$TITULO : $MOD.desktop" ]; then rm -rf "$TITULO : $MOD.desktop"; fi
+echo "#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sh "'"'$RUTA'"'"/LanzarHLEE-ModoVT-Zombie
+Name=$TITULO : $MOD
+Icon=$ICONO/$TITULO - $MOD.png
+StartupNotify=true
+Categories=Game
+X-KDE-SubstituteUID=false" >> "$TITULO : $MOD.desktop"
+
+# Marcar como de Confianza (Dar Permiso de Ejecucion):
+cd "$DirectorioEscritorio/$TITULO/PantallaCompleta"
+chmod a+o+x **
+cd "$DirectorioEscritorio/$TITULO/Ventana"
+chmod a+o+x **
+cd $RUTA
+
+#INFO#echo
+#INFO#echo "Informacion :"
+#INFO#echo "Arquitectura -> `uname -m` ($Arquitectura) "
+#INFO#echo "DEBUG	-> $WINEDEBUG "
+#INFO#echo "Prefijo	-> $WINEPREFIX"
+#INFO#echo "Cargador	-> $WINELOADER"
+#INFO#echo "Servidor	-> $WINESERVER"
+#INFO#echo 
+
+
+if [ $XMessage = xmessage ]; then
+	echo
+	echo '"Se Ha Configurado Exitosamente"'
+	echo
+	xmessage -nearmouse -timeout 5 "Se Ha Configurado Exitosamente" -buttons OK &
+else
+	echo
+	echo "xmessage - NO! ESTA INSTALADO"
+	echo
+	echo "Se Ha Configurado Exitosamente"
+	echo
+fi

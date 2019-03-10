@@ -1,0 +1,226 @@
+#!/usr/bin/env bash
+
+echo '
+Autor ----------------> Inukaze ( Venezuela )
+Sitio ----------------> https://goo.gl/ij6WqW
+Correo-E -------------> bloginukaze@gmail.com
+Licencia -------------> GPL 2
+
+******* Inicio : Acerca de este Script ********
+				  
+  Yo intento escribir scripts compatibles con
+   Sistemas operativos Unix & POSIX , y otros
+   Sistemas operativos que soporten bash
+
+  Este archivo es un simple instalador 
+   Detectara la arquitectura del Sistema
+   Operativo en uso e instalara LibreOffice.
+
+******** Fin : Acerca de este Script **********
+'
+
+#Prevenir la autoejecucion no deseada de funciones
+unset Nucleo
+unset Arquitectura
+unset UltimaVersion
+unset DescargarDEBS
+unset DetectarComprimidos
+unset Extraer
+unset Instalar
+unset Actualizar
+unset Desinstalar
+
+
+#Funciones Definidas :
+function Nucleo()
+{
+Nucleo=$(uname -s)
+case "$Nucleo" in
+	Linux)		Nucleo="Linux"						;;
+	FreeBSD)	Nucleo="freebsd"					;;
+	GNU/kFreeBSD)	Nucleo="freebsd"					;;
+	* ) echo "Tu Sistema Operativo -> NO ESTA SOPORTADO"			;;
+esac
+}
+
+function Arquitectura()
+{
+Arquitectura=$(uname -m)
+case "$Arquitectura" in
+	x86)    Arquitectura="x86"						;;
+	i?86)   Arquitectura="x86"						;;
+	amd64)  Arquitectura="x86-64"						;;
+	x86_64) Arquitectura="x86-64"						;;
+	* ) echo    "Tú Arquitectura : '$Arquitectura' : -> NO ESTA SOPORTADA."	;;
+esac
+}
+
+function UltimaVersion()
+{
+
+    #Ejemplo -> Q2VA=$(curl -s http://deponie.yamagi.org/quake2/ | grep -Po "quake2-[0-9].[0-9][0-9].tar.xz" | sort -Vr | head -1)
+    Nuevo=$(curl -s https://es.libreoffice.org/descarga/libreoffice/ | sort -Vr | grep -Po ">[0-9].[0-9].[0-9]<" | head -n1 | sed 's/[\<>]//g')
+#    Estable=$(curl -s http://download.documentfoundation.org/libreoffice/stable/ | grep -Po ">[0-9].[0-9].[0-9]/<" | tail -1 | grep -Po "[0-9].[0-9].[0-9]")
+
+}
+
+function DescargarDEBS()
+{
+    mkdir -p "/tmp/LibreOffice"
+    cd "/tmp/LibreOffice"
+    
+    if [ "$Arquitectura" = "x86-64" ]; then
+	wget -c https://www.libreoffice.org/donate/dl/deb-x86_64/"$Nuevo"/es/LibreOffice_"$Nuevo"_Linux_x86-64_deb.tar.gz					# Suite Ofimatica
+	wget -c https://download.documentfoundation.org/libreoffice/stable/"$Nuevo"/deb/x86_64/LibreOffice_"$Nuevo"_Linux_x86-64_deb_helppack_es.tar.gz	# Interfaz traducida al español
+	wget -c http://download.documentfoundation.org/libreoffice/stable/"$Nuevo"/deb/x86_64/LibreOffice_"$Nuevo"_Linux_x86-64_deb_helppack_es.tar.gz	# Ayuda en español
+    fi
+    
+    if [ "$Arquitectura" = "x86" ]; then
+	wget -c https://www.libreoffice.org/donate/dl/deb-x86/"$Nuevo"/es/LibreOffice_"$Nuevo"_Linux_x86_deb.tar.gz						# Suite Ofimatica
+	wget -c http://download.documentfoundation.org/libreoffice/stable/"$Nuevo"/deb/x86/LibreOffice_"$Nuevo"_Linux_x86_deb_langpack_es.tar.gz		# Interfaz traducida al español
+	wget -c http://download.documentfoundation.org/libreoffice/stable/"$Nuevo"/deb/x86/LibreOffice_"$Nuevo"_Linux_x86_deb_helppack_es.tar.gz		# Ayuda en español    
+    fi	
+}
+
+function DetectarComprimidos()
+{
+
+    LISTAR=$(ls -l | grep .tar.gz | grep LibreOffice | awk '{print $9}')
+    
+    if [ "$LISTAR" = " " ]; then
+	    echo "No se detectaron archivos comprimidos de LibreOffice"
+	    exit 0
+    fi
+    
+    LIBREOFFICE=$(echo "$LISTAR" | tail -n1)    
+    Version=$(echo $LIBREOFFICE | cut -c13-17)
+    VersionBase=$(echo $Version | sed 's/.\{2\}$//')
+    Paqueteria=$(echo $LIBREOFFICE | cut -c32-34) 
+    AYUDA=$(ls -l "LibreOffice_"$Version"_"$Nucleo"_"$Arquitectura"_"$Paqueteria"_helppack_es.tar.gz" | awk '{print $9}')
+    Idioma=$(echo $AYUDA | cut -c45-46)	    
+    IDIOMA=$(ls -l "LibreOffice_"$Version"_"$Nucleo"_"$Arquitectura"_"$Paqueteria"_langpack_es.tar.gz" | awk '{print $9}')		  
+    
+}
+
+function Extraer()
+{
+   
+    if test -f "/tmp/LibreOffice/$LIBREOFFICE"
+    then
+	cd "/tmp/LibreOffice"
+	tar xkfvz "$LIBREOFFICE"
+	if test -d "/tmp/LibreOffice/LibreOffice_"$Version"".?"_"$Nucleo"_"$Arquitectura"_"$Paqueteria""
+	then
+	    cd "/tmp/LibreOffice/LibreOffice_"$Version"".?"_"$Nucleo"_"$Arquitectura"_"$Paqueteria""
+	    if test -d "DEBS"
+	    then
+		cd "DEBS"
+		for file in $(ls -la *.deb | awk '{print$09}' | sed 's/\/*$//') ; do unar -f -D "$file" &> /dev/null ; tar xfz data.tar.gz 2>/dev/null ; tar xfj data.tar.bz2 2>/dev/null ; rm -rf "debian-binary" "control.tar.gz" "control.tar.bz2" "data.tar.gz" "data.tar.bz2" ; done
+		cp -rf "./opt/" "/tmp/LibreOffice/"
+		cp -rf "./usr/" "/tmp/LibreOffice/"
+		rm -rf "/tmp/LibreOffice/LibreOffice_"$Version"".?"_"$Nucleo"_"$Arquitectura"_"$Paqueteria""
+	    fi
+	fi
+    fi
+    
+    
+    if test -f "/tmp/LibreOffice/$IDIOMA"
+    then
+	cd "/tmp/LibreOffice"
+	tar xkfvz "$IDIOMA"
+	if test -d "LibreOffice_"$Version"".?"_"$Nucleo"_"$Arquitectura"_"$Paqueteria"_langpack_"$Idioma""
+	then
+	    cd "LibreOffice_"$Version"".?"_"$Nucleo"_"$Arquitectura"_"$Paqueteria"_langpack_"$Idioma""
+	    if test -d "DEBS"
+		then
+		cd "DEBS"
+		for file in $(ls -la *.deb | awk '{print$09}' | sed 's/\/*$//') ; do unar -f -D "$file" &> /dev/null ; tar xfz data.tar.gz 2>/dev/null ; tar xfj data.tar.bz2 2>/dev/null ; rm -rf "debian-binary" "control.tar.gz" "control.tar.bz2" "data.tar.gz" "data.tar.bz2" ; done
+	    fi
+	    if test -d "/tmp/LibreOffice/LibreOffice_"$Version"".?"_"$Nucleo"_"$Arquitectura"_"$Paqueteria"_langpack_"$Idioma"/DEBS"
+		then
+		cd "/tmp/LibreOffice/LibreOffice_"$Version"".?"_"$Nucleo"_"$Arquitectura"_"$Paqueteria"_langpack_"$Idioma"/DEBS"
+		cp -rf "./opt/" "/tmp/LibreOffice/"
+		cd "/tmp/LibreOffice/LibreOffice_"$Version"".?"_"$Nucleo"_"$Arquitectura"_"$Paqueteria"_langpack_"$Idioma""
+		rm -rf "/tmp/LibreOffice/LibreOffice_"$Version"".?"_"$Nucleo"_"$Arquitectura"_"$Paqueteria"_langpack_"$Idioma""
+	    fi
+	fi
+    fi
+    
+    if test -f "/tmp/LibreOffice/$AYUDA"
+    then
+	cd "/tmp/LibreOffice"
+	tar xkfvz "$AYUDA"
+        if test -d "LibreOffice_"$Version"".?"_"$Nucleo"_"$Arquitectura"_"$Paqueteria"_helppack_"$Idioma""
+        then
+        	cd "LibreOffice_"$Version"".?"_"$Nucleo"_"$Arquitectura"_"$Paqueteria"_helppack_"$Idioma""
+		if test -d "DEBS"
+	    	then
+		    cd "DEBS"
+		    for file in $(ls -la *.deb | awk '{print$09}' | sed 's/\/*$//') ; do unar -f -D "$file" &> /dev/null ; tar xfz data.tar.gz 2>/dev/null ; tar xfj data.tar.bz2 2>/dev/null ; rm -rf "debian-binary" "control.tar.gz" "control.tar.bz2" "data.tar.gz" "data.tar.bz2" ; done
+		    cd "/tmp/LibreOffice/LibreOffice_"$Version"".?"_"$Nucleo"_"$Arquitectura"_"$Paqueteria"_helppack_"$Idioma"/DEBS"
+		fi
+		if test -d "./opt"
+		then
+		cd "./opt/libreoffice"$VersionBase""
+		cp -rf "help/es/" "/tmp/LibreOffice/opt/libreoffice"$VersionBase"/help/"
+		cd "/tmp/LibreOffice/LibreOffice_"$Version"".?"_"$Nucleo"_"$Arquitectura"_"$Paqueteria"_helppack_"$Idioma""
+		rm -rf "/tmp/LibreOffice/LibreOffice_"$Version"".?"_"$Nucleo"_"$Arquitectura"_"$Paqueteria"_helppack_"$Idioma""
+		fi
+        fi
+    fi
+}
+
+function Instalar()
+{
+
+    if [ "$(whoami)" != "root" ]; then
+	echo '
+	Por favor ejecuta este script como SuperUsuario (root)
+	ó en su defecto con algun usuario con permisos administrativos 
+	puedes intentar utilizar alguno de los siguientes comandos :
+	
+	su -c "./Instalar_LibreOffice" root
+	sudo "./Instalar_LibreOffice"
+	
+	Utilize este Script bajo su Propio Riesgro
+	El Autor , o sea yo , no me hago responsable
+	de las consecuencias imprevistas que puedan
+	acontecer en tu sistema operativo
+	'
+   else
+	if test -d "/tmp/LibreOffice/opt/"
+	then
+	    cd "/tmp/LibreOffice/"
+	    cp -rf "opt/" "/"
+	    cp -rf "usr/" "/"
+	    rm -rf "/tmp/LibreOffice/LibreOffice_"$Version"".?"_"$Nucleo"_"$Arquitectura"_"$Paqueteria"/opt"
+	    rm -rf "/tmp/LibreOffice/LibreOffice_"$Version"".?"_"$Nucleo"_"$Arquitectura"_"$Paqueteria"/usr"
+	fi
+	    chmod a+o+x "/opt/libreoffice"$VersionBase"/share/xdg/"*".desktop"
+	    chmod a+o+x "/usr/bin/libreoffice"$VersionBase""
+	    find /usr/share/icons -mindepth 1 -maxdepth 1 -type d | while read -r THEME; do
+	if [ -f "$THEME/index.theme" ]; then
+	    gtk-update-icon-cache -f -q "$THEME" 2&>/dev/null
+	fi
+done
+
+    fi
+    
+}
+
+#function Instalar()
+#{
+#}
+
+#function Desinstalar()
+#{
+#}
+
+#Ejecutar funciones
+Nucleo
+Arquitectura
+UltimaVersion
+DescargarDEBS
+DetectarComprimidos
+Extraer
+Instalar

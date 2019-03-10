@@ -1,0 +1,239 @@
+#!/bin/sh
+#!/bin/bash
+# 
+# Autor	:	Inukaze ( Venezuela )
+# Sitio		:	http://inukaze.wordpResolucions.com
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+xmessage -timeout 3 "Se Esta Configurando El Software" &
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+
+# Obtener el nombre del nucleo del sistema
+Nucleo=$(uname -s)
+
+if		[ $Nucleo = "Darwin" ]; then
+		Nucleo=mac
+elif		[ $Nucleo = "Linux" ]; then
+		Nucleo=linux
+else
+		echo "Sistema Operativo NO SOPORTADO"
+fi
+
+# Determinando la arquitectura de la maquina
+Arquitectura=$(uname -m)
+
+if	       [ $Arquitectura = "i386" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i486" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i586" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+	elif	[ $Arquitectura = "i686" ]; then
+			PATH="$PWD/wine/$Nucleo/x86/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="32 Bits"
+         elif [ $Arquitectura = "x86_64" ]; then
+			PATH="$PWD/wine/$Nucleo/x86_64/bin:$PATH"
+			export WINESERVER="$PWD/wine/$Nucleo/x86_64/bin/wineserver"
+			export WINELOADER="$PWD/wine/$Nucleo/x86_64/bin/wine"
+			export WINEPREFIX="$PWD/wine/data"
+			export WINEDEBUG=-all
+			Arquitectura="64 Bits"
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dplaysvr.exe
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/DPLAYSVR.exe
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dplayx.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/DPLAYX.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpmodemx.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/DPMODEMX.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpnet.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/DPNET.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpnhpast.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/DPNHPAST.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpnlobby.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/DPNLOBBY.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpnsvr.exe
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/DPNSVR.exe
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpwsockx.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/DPWSOCKX.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dplaysvr.exe
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3d8.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3d8thk.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3d9.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dim.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dim700.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dpmesh.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dramp.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3drm.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_24.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_25.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_26.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_27.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_28.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_29.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_30.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_31.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_32.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_33.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_34.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_35.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dx9_36.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/D3DX9_37.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/d3dxof.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dciman32.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/ddrawex.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/devenum.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dinput.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dinput8.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dmband.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dmcompos.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dmime.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dmloader.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dmscript.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dmstyle.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dmsynth.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dmusic.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dnsapi.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dplay.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpnaddr.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpnmodem.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dsound.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dsound3d.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dswave.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dxdiagn.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/mscoree.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/msdmo.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/qcap.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/quartz.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/streamci.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpnhupnp.dll
+			rm -rf "$RUTA"/wine/data/drive_c/windows/syswow64/dpserial.dll
+			mkdir -p "$RUTA"/wine/data/drive_c/windows/syswow64
+			cd "$RUTA"/wine/data/drive_c/software/directx
+			cp -rf *.* "$RUTA"/wine/data/drive_c/windows/syswow64
+	else
+		echo "Arquitectura NO SOPORTADA"
+fi 
+
+# Borrar Toda Configuracion Previa WINE:
+rm -rf "$RUTA/wine/data/drive_c/users"
+rm -rf "$RUTA/wine/data/drive_c/windows"
+rm -rf "$RUTA/wine/data/Program Files (x86)"
+rm -rf "$RUTA/wine/data/drive_c/Archivos de programa"
+rm -rf "$RUTA/wine/data/drive_c/Program Files (x86)"
+rm -rf "$RUTA/wine/data/system.reg"
+rm -rf "$RUTA/wine/data/user.reg"
+rm -rf "$RUTA/wine/data/userdef.reg"
+rm -rf "$RUTA/wine/data/dosdevices"
+rm -rf "$RUTA/wine/data/.update-timestamp"
+rm -rf "$RUTA/wine/.DS_Store"
+rm -rf "$RUTA/wine/linux/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/linux/x86_64/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86/bin/.DS_Store"
+rm -rf "$RUTA/wine/mac/x86_64/bin/.DS_Store"
+rm -rf "$RUTA"/wine/data/cachedmetrics.\:0
+
+
+wine regedit -s "$RUTA"/arreglos/software.reg
+wine regedit -s "$RUTA"/arreglos/"$Nucleo"_video.reg
+wine regedit -s "$RUTA"/arreglos/"$Nucleo"_sonido.reg
+
+mkdir -p "$RUTA"/wine/data/dosdevices/
+cd "$RUTA"/wine/data/dosdevices/
+rm -rf "d:"
+ln -s "$RUTA/wine/data/drive_c/software" "d:"
+
+# Ejecutando Programa / Software / Juego
+cd "$RUTA/wine/data/drive_c/software"
+rm -rf __CoDSP
+rm -rf __CoDMP
+cp CoD.ini "$RUTA"/wine/data/drive_c/windows
+
+# Detectar el Directorio "Escritorio"
+# Dentro del usuario actual
+
+cd $HOME
+if [ -e Desktop ]; then cd Desktop; DirectorioEscritorio=$HOME/Desktop; fi
+if [ -e Escritorio ]; then cd Escritorio; DirectorioEscritorio=$HOME/Escritorio; fi
+
+if [ ! -e $DirectorioEscritorio/Wine ]; then
+mkdir -p $DirectorioEscritorio/Wine
+cd $DirectorioEscritorio/Wine
+fi
+
+if [ -e $DirectorioEscritorio/Wine ]; then
+cd $DirectorioEscritorio/Wine
+fi
+
+# Escribir Los Archivos de "Enlace(s)"
+# Necesarios dentro de la Carpeta "$HOME/$DirectorioEscritorio/Wine"
+
+# Primero Borrar cualquier archivo Anterior
+# De Escritorio , para Evitar Conflictos y no crear archivos innecesarios.
+
+if [ -f "Call Of Duty 1.desktop" ]; then rm -rf "Call Of Duty 1.desktop"; fi
+touch "Call Of Duty 1.desktop"
+echo "#!/usr/bin/env xdg-open"  >> "Call Of Duty 1.desktop"
+echo "" >> "Call Of Duty 1.desktop"
+echo '[Desktop Entry]' >> "Call Of Duty 1.desktop"
+echo "Version=1.0" >> "Call Of Duty 1.desktop"
+echo "Type=Application" >> "Call Of Duty 1.desktop"
+echo "Terminal=false" >> "Call Of Duty 1.desktop"
+echo 'Exec=sh "'$RUTA'"/.Lanzar' >> "Call Of Duty 1.desktop"
+echo "Name=Call Of Duty 1" >> "Call Of Duty 1.desktop"
+echo "Icon=$RUTA/.cod.png" >> "Call Of Duty 1.desktop"
+echo "Path=$RUTA" >> "Call Of Duty 1.desktop"
+echo "StartupNotify=true" >> "Call Of Duty 1.desktop"
+echo "X-KDE-SubstituteUID=false" >> "Call Of Duty 1.desktop"
+
+# Marcar como de Confianza (Dar Permiso de Ejecucion):
+chmod a+x "Call Of Duty 1.desktop"
+
+xmessage -timeout 3 "Se Ha Configurado Exitosamente"

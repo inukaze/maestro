@@ -1,0 +1,120 @@
+#!/usr/bin/env bash
+
+PREFIJO="PandoraBox"		#Se refiere al prefijo dentro de PlayOnLinux es decir la carpeta "~/.PlayOnLinux/wineprefix/<NOMBRE>" donde dice <NOMBRE> va el nombre del prefijo o carpeta dentro de PlayOnLinux
+DIRECTORIO="PandoraBox"	#Se refiere a la ruta que lleva hasta la carpeta donde se encuentra el archivo principal que se va a iniciar (Dentro del Prefijo)
+EJECUTABLE="pandora.exe"	#Es el archivo principal que se va a iniciar (Dentro del Directorio que debe estar dentro del Prefijo)
+NOMBRE="Pandora's Box"		#Unicamente para tener más especificacion en el codigo de este guion
+
+# Notas para que esto funcione debes 
+# 1 - Iniciar sesion (o hacer que durante el arranque se autoinicie la session de tu usuario) en la tty6
+# 2 - Tener configurado el archivo "/etc/X11/Xwrapper.config" con el contenido :
+#     allowed_users=anybody
+
+# Inukaze -> http://https://goo.gl/ij6WqW
+
+echo '
+Autor ----------------> Inukaze ( Venezuela )
+Sitio ----------------> https://goo.gl/ij6WqW
+Correo-E -------------> bloginukaze@gmail.com
+Licencia -------------> GPL 2
+
+******* Inicio : Acerca de este Script ********
+
+ Este Mini-Script es para configurarlo, con
+ La facilidad de unicamente cambiar los
+ Valores de las variabes :
+ PREFIJO, DIRECTORIO, EJECUTABLE y NOMBRE
+  
+  
+ Es para iniciar cualquier cosa hecha para
+ Windows que ya tengas preconfigurada dentro
+ de "PlayOnLinux" e iniciarlo en modo pantalla
+ completa en la tty6.
+ 
+ Presiona ALT+F6 Para ir hasta alla y para
+ regresar presionas ALT+F7 y volveras a tu
+ sistema grafico.
+ 
+ Al final de este guion puedes establecer
+ la resolucion y la tasa de refresco que
+ usa tu software especialmente si es baja
+ es mejor usar este metodo.
+ 
+******** Fin : Acerca de este Script **********
+'
+
+# Obtener el Nombre del Nucleo
+Nucleo=$(uname -s)
+case "$Nucleo" in
+	Linux)		Nucleo="linux"						;;
+	FreeBSD)	Nucleo="freebsd"					;;
+	GNU/kFreeBSD)	Nucleo="freebsd"	c				;;
+	* ) echo "Tu Sistema Operativo -> NO ESTA SOPORTADO"			;;
+esac
+
+# Obtener la ARQUITECTURA
+ARQUITECTURA=$(uname -m)
+case "$ARQUITECTURA" in
+	x86)    ARQUITECTURA="x86"						;;
+	i?86)   ARQUITECTURA="x86"						;;
+	amd64)  ARQUITECTURA="amd64"						;;
+	x86_64) ARQUITECTURA="amd64"						;;
+	* ) echo    "Tú Arquitectura : '$ARQUITECTURA' : -> IT NOT SUPPORTED."	;;
+esac
+
+# Comprobrar que (No/)Existen los archivos y rutas, antes de proceder
+if test -d "$HOME/.PlayOnLinux/wineprefix/$PREFIJO"
+	then
+	echo
+			if test -f "$HOME/.PlayOnLinux//wineprefix/"$PREFIJO"/drive_c/./$DIRECTORIO/pandora.exe"
+			then
+				echo "Encontrado ejecutable de "$NOMBRE" en el prefijo de Inukaze"
+			fi		
+	else
+		echo "PandoraBox no esta instalado en el Prefijo de Inukaze"
+		xmessage -timeout 3 "PandoraBox no esta instalado en el Prefijo de Inukaze"
+		exit 1
+fi
+
+if test -f "$HOME/.PlayOnLinux/wineprefix/$PREFIJO/playonlinux.cfg"
+	then
+	# Obtener la version de WINE y su arquitectura del Prefijo PandoraBox dentro de PlayOnLinux ;
+	VERSION_WINE=$(cat "$HOME/.PlayOnLinux/wineprefix/$PREFIJO/playonlinux.cfg" | grep VERSION= | sed 's/VERSION=//g')
+	ARQUITECTURA_WINE=$(cat "$HOME/.PlayOnLinux/wineprefix/$PREFIJO/playonlinux.cfg" | grep ARCH= | sed 's/ARCH=//g')
+	else
+		echo "$NOMBRE no esta instalado en el Prefijo de Inukaze"
+		xmessage -timeout 3 "$NOMBRE no esta instalado en el Prefijo Predeterminado"
+		exit 1
+fi
+
+cd "$HOME/.PlayOnLinux//wineprefix/$PREFIJO/drive_c/./$DIRECTORIO"
+
+# Configurar Variables de Entornos, Rutas e Iniciar "$NOMBRE" para Windows :
+PATH="$HOME/.PlayOnLinux/wine/$ARQUITECTURA-$ARQUITECTURA_WINE/$VERSION_WINE/bin:$PATH"
+export WINESERVER="$HOME/.PlayOnLinux/wine/$Nucleo-$ARQUITECTURA_WINE/$VERSION_WINE/bin/wineserver"
+export WINELOADER="$HOME/.PlayOnLinux/wine/$Nucleo-$ARQUITECTURA_WINE/$VERSION_WINE/bin/wine"
+export WINEDLLPATH="$HOME/.PlayOnLinux/wine/$Nucleo-$ARQUITECTURA_WINE/$VERSION_WINE/lib"
+export WINEPREFIX="$HOME/.PlayOnLinux/wineprefix/$PREFIJO"
+export WINEDEBUG="-all"
+exec xinit "$HOME/.PlayOnLinux/wine/$Nucleo-$ARQUITECTURA_WINE/$VERSION_WINE/bin/wine" "$EJECUTABLE" "$@" -- :1 vt6 -ac &
+
+# Esperar que el "$EJECUTABLE" Inicie
+until pids=$(pidof "$EJECUTABLE")
+do   
+    sleep 1
+done
+
+# Cuando "$NOMBRE" haya sido iniciado
+# Cambiar la resolucion de la tty6 en 800x600
+
+for pid in $pids
+do        
+    DISPLAY=:1 /usr/bin/xrandr -s 800x600 -r 51
+done
+
+# NOTA agregar funcion
+# Para guardar la resolucion actual y esperar que se ejecute algun videojuego especifico
+# Esperar 7 segundos y cambiar la resolucion a la nativa minima recomendada del juego
+# Deus Ex -> 640x480
+# Plants Vs Zombies -> 800x600 (xrandr -s 800x600 -r 51)
+# Cuando finalice ese proceso en especifico, restaurar la resolucion

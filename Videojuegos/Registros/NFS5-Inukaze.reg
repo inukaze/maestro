@@ -1,0 +1,30 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\Software\Electronic Arts\Need For Speed - Porsche 2000]
+"3D Card"="3Dfx Voodoo 2"
+"3D Device Description"="3Dfx Voodoo 2"
+"CD Drive"=".\\"
+"D3D Device"=dword:00000001
+"DisplayName"="Need For Speed - Porsche 2000"
+"Group"="3Dfx"
+"Hardware Acceleration"=dword:00000001
+"Install Dir"="c:\\Inukaze\\ABAN~1OP\\Windows\\NEED~OX5\\5-PO~F4Q"
+"Language"="Spanish"
+"Thrash Driver"="voodoo2"
+"Thrash Resolution"="640x480"
+"Triple Buffer"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\Software\Electronic Arts\Need For Speed - Porsche 2000\1.0]
+"DisplayName"="Need For Speed - Porsche 2000"
+"Language"=dword:00000005
+"LanguageName"="Spanish"
+
+[HKEY_LOCAL_MACHINE\Software\Electronic Arts\Need For Speed - Porsche Unleashed]
+"3D Card"="3Dfx Voodoo 2"
+"3D Device Description"="3Dfx Voodoo 2"
+"D3D Device"=dword:00000000
+"Group"="3Dfx"
+"Hardware Acceleration"=dword:00000001
+"Thrash Driver"="voodoo2"
+"Thrash Resolution"="640x480"
+"Triple Buffer"=dword:00000000

@@ -1,0 +1,97 @@
+#!/bin/bash
+# 
+# Autor	:	Inukaze ( From Venezuela )
+# Sitio		:	http://https://goo.gl/ij6WqW
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 3
+#
+# Acerca de este Script	:	
+#
+# Yo intento escribir Scripts compatibles con
+# Sistemas Operativos Unix & Posix , y cualquier
+# Sistema Operativo que soporte versiones de la API
+# conocida como "Wine" o "WineHQ" para poder ejecutar
+# software de Microsoft Windows , sin necesidad de su
+# sistema operativo , y crear paquetes autocontenidos
+# para sistemas operativos como por ejemplo :
+# Linux , FreeBSD , OpenSolaris 
+# Unix  , BSD	  , Solaris		, MacOS
+
+# Usando versiones pre-compiladas , para arquitecturas
+# como x86 & x86_64 (32 Bits & 64 Bits ) con versiones
+# Especificas de Wine/WineHQ y los Arquitecturaivos oficiales
+# para "Windows" para una mayor compatibilidad usando
+# los requisitos de Sistema Originales y que esto pueda
+# ser aprovechado , por Juegos , Programas , Software
+# Ahora apartir de aqui comienza mi Script :
+
+# Este Script es para Solucionar problemas de Directx
+# Para el Software que esta Intentado Ejecutar
+# Como NATIVO de un SISTEMA QUE NO ES WINDOWS
+
+# Definir el directorio actual , como el principal
+# del juego o programa
+RUTA=""$( cd -P "$( dirname "$" )" && pwd )""
+TITULO="HalfLife1"
+NUCLEO_WINE="$RUTA/wine"
+
+# Obtener el nombre del nucleo del sistema
+Nucleo=$(uname -s)
+
+if		[ $Nucleo = "Darwin" ]; then
+		Nucleo=mac
+elif		[ $Nucleo = "Linux" ]; then
+		Nucleo=linux
+elif		[ $Nucleo = "FreeBSD" ]; then
+		Nucleo=freebsd
+else
+		echo -e "\nSistema Operativo : NO SOPORTADO\n"
+fi
+
+
+if 	[ -d "$RUTA" ]; then
+	rm -rf "$RUTA/wine/data/drive_c/users"
+	rm -rf "$RUTA/wine/data/drive_c/windows"
+	rm -rf "$RUTA/wine/data/Program Files (x86)"
+	rm -rf "$RUTA/wine/data/drive_c/Archivos de programa"
+	rm -rf "$RUTA/wine/data/drive_c/Program Files (x86)"
+	rm -rf "$RUTA/wine/data/drive_c/Program Files"
+	rm -rf "$RUTA/wine/data/system.reg"
+	rm -rf "$RUTA/wine/data/user.reg"
+	rm -rf "$RUTA/wine/data/userdef.reg"
+	rm -rf "$RUTA/wine/data/dosdevices"
+	rm -rf "$RUTA/wine/data/.update-timestamp"
+	rm -rf "$RUTA/wine/.DS_Store"
+	rm -rf "$RUTA/wine/linux/.DS_Store"
+	rm -rf "$RUTA/wine/linux/x86/.DS_Store"
+	rm -rf "$RUTA/wine/linux/x86_64/.DS_Store"
+	rm -rf "$RUTA/wine/linux/x86/bin/.DS_Store"
+	rm -rf "$RUTA/wine/linux/x86_64/bin/.DS_Store"
+	rm -rf "$RUTA/wine/mac/.DS_Store"
+	rm -rf "$RUTA/wine/mac/x86/.DS_Store"
+	rm -rf "$RUTA/wine/mac/x86_64/.DS_Store"
+	rm -rf "$RUTA/wine/mac/x86/bin/.DS_Store"
+	rm -rf "$RUTA/wine/mac/x86_64/bin/.DS_Store"
+	rm -rf "$RUTA/wine/freebsd/.DS_Store"
+	rm -rf "$RUTA/wine/freebsd/x86/.DS_Store"
+	rm -rf "$RUTA/wine/linux/x86_64/.DS_Store"
+	rm -rf "$RUTA/wine/linux/x86/bin/.DS_Store"
+	rm -rf "$RUTA/wine/linux/x86_64/bin/.DS_Store"
+	rm -rf "$RUTA"/wine/data/cachedmetrics.\:0
+	
+	
+	cd "$NUCLEO_WINE"
+	if [ -e "$Nucleo" ]; then rm -rf "$Nucleo" ; fi
+	
+	cd $HOME
+	if [ -e Desktop ]; then cd Desktop; DirectorioEscritorio="$HOME/Desktop"; fi
+	if [ -e Escritorio ]; then cd Escritorio; DirectorioEscritorio="$HOME/Escritorio"; fi
+
+	if [ -e $DirectorioEscritorio/"$TITULO" ]; then
+		rm -rf "$DirectorioEscritorio/$TITULO"
+	fi
+
+	echo "Se ha Limpiado la Configuracion Anterior de W.I.N.E"
+else
+	echo "   . . . No se borro Configuracion Previa de W.I.N.E . . ."
+fi

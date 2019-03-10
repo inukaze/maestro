@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+# Author    :	Inukaze ( Venezuela )
+# WebSite   :	http://https://goo.gl/ij6WqW
+# E-Mail    :	bloginukaze@gmail.com
+# License   :	GPL 2
+#
+# About This Script :   
+# Its simple for make more ease the upgrade of active repositories 
+# On Slackware, using the package manager "slpkg"
+
+if [ "$(whoami)" != root ]; then
+    echo "You must run this script with administrative privileges"
+    exit 0
+else
+
+function DetectBin()
+{
+
+    slpkgpath=$(whereis -B "/usr/sbin" "/usr/local/sbin" "/sbin" "/usr/bin" "/usr/local/bin" "/bin" -b slpkg | grep -i "slpkg" | cut -d " " -f02 | sed 's/[/]slpkg//')
+    if [ -x $slpkgpath/slpkg ]; then
+	    slpkg=$slpkgpath/slpkg
+    else
+	echo -e "slpkg is not installed\nPlease install slpkg before use this script"
+	exit 1
+    fi
+}
+
+function DetectRepositories()
+{
+if [ -f /etc/slpkg/repositories.conf ]; then
+	#echo 'Repositories File : Found'
+	REPOFILE=/etc/slpkg/repositories.conf
+	REPO=$(cat $REPOFILE | grep '^slack$')				; REPO=$(echo -e ''$REPO' ') ; REPOS[0]+=$REPO
+	REPO=$(cat $REPOFILE | grep '^sbo$')				; REPO=$(echo -e ''$REPO' ') ; REPOS[1]+=$REPO
+	REPO=$(cat $REPOFILE | grep '^alien$')				; REPO=$(echo -e ''$REPO' ') ; REPOS[2]+=$REPO
+	REPO=$(cat $REPOFILE | grep '^rlw$')				; REPO=$(echo -e ''$REPO' ') ; REPOS[3]+=$REPO
+	REPO=$(cat $REPOFILE | grep '^slacky$')				; REPO=$(echo -e ''$REPO' ') ; REPOS[4]+=$REPO
+	REPO=$(cat $REPOFILE | grep '^conrad$')				; REPO=$(echo -e ''$REPO' ') ; REPOS[5]+=$REPO
+	REPO=$(cat $REPOFILE | grep '^slonly$')				; REPO=$(echo -e ''$REPO' ') ; REPOS[6]+=$REPO
+	REPO=$(cat $REPOFILE | grep '^ktown' | sed 's/{latest}//')	; REPO=$(echo -e ''$REPO' ') ; REPOS[7]+=$REPO
+	REPO=$(cat $REPOFILE | grep '^multi$')				; REPO=$(echo -e ''$REPO' ') ; REPOS[8]+=$REPO
+	REPO=$(cat $REPOFILE | grep '^slacke' | sed 's/{18}//')		; REPO=$(echo -e ''$REPO' ') ; REPOS[9]+=$REPO
+	REPO=$(cat $REPOFILE | grep '^salix$')				; REPO=$(echo -e ''$REPO' ') ; REPOS[10]+=$REPO
+	REPO=$(cat $REPOFILE | grep '^slackl$')				; REPO=$(echo -e ''$REPO' ') ; REPOS[11]+=$REPO
+	REPO=$(cat $REPOFILE | grep '^rested$')				; REPO=$(echo -e ''$REPO' ') ; REPOS[12]+=$REPO
+	REPO=$(cat $REPOFILE | grep '^msb' | sed 's/{1.16}//')		; REPO=$(echo -e ''$REPO' ') ; REPOS[13]+=$REPO
+	REPO=$(cat $REPOFILE | grep '^csb$')				; REPO=$(echo -e ''$REPO' ') ; REPOS[14]+=$REPO
+	REPO=$(cat $REPOFILE | grep '^connos$')				; REPO=$(echo -e ''$REPO' ') ; REPOS[15]+=$REPO
+	REPO=$(cat $REPOFILE | grep '^mles' | sed 's/{desktop}//')	; REPO=$(echo -e ''$REPO' ') ; REPOS[16]+=$REPO
+else
+	echo 'Repositories File : Not Found'
+	exit 1
+fi
+}	
+
+function UpdateAll()
+{
+	$slpkg update
+}
+
+function UpgradeAll()
+{
+	for repo in ${REPOS[@]}
+	    do
+		 echo "Repository [$repo]"
+		 echo -ne 'y\n' | $slpkg -c $repo --upgrade "$@"
+	    done
+}
+
+	#Run Functions :
+	DetectBin
+	DetectRepositories
+	UpdateAll
+	UpgradeAll
+fi
+exit 0

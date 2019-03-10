@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+echo '
+Autor ----------------> Inukaze ( Venezuela )
+Sitio ----------------> https://goo.gl/ij6WqW
+Correo-E -------------> bloginukaze@gmail.com
+Licencia -------------> GPL 2
+******* Inicio : Acerca de este Script ********
+ 
+ Este Mini-Script es para poder descargar
+ e instalar "FrostWire"
+ 
+ Pre-Requisito : Tener Instalado y Configurado
+ alguna de las siguientes versiones de Java :
+ *  openjdk-8-jre
+ *  jre 8 o superior (de oracle)
+ *  jdk 8 o superior (de oracle)
+ 
+ Esto es debido a que sin la version minima
+ el programa no inicia correctamente
+ 
+******** Fin : Acerca de este Script **********
+'
+
+#NIVEL_USUARIO#
+	#Comprobar "SI NO EXISTE" el directorio que se utilizara
+	if test ! -d "$HOME/.Aplicacion/Gestor/Descargas"
+	then
+	    mkdir -p "$HOME/.Aplicacion/Gestor/Descargas"
+	fi
+	
+	#Comprobar que "SI EXISTE" el directorio que se utilizara e ingresar en el
+	if test -d "$HOME/.Aplicacion/Gestor/Descargas"
+	then
+	    cd "$HOME/.Aplicacion/Gestor/Descargas"
+	fi
+	
+	# Descargar FrostWire
+	# Nota debido a que no tengo forma de obtener la ultima version automaticamente
+	# la linea de abajo debe ser cambiada manualmente cuando se quiera una version más reciente
+	wget -c http://dl.frostwire.com/frostwire/6.6.4/frostwire-6.6.4.noarch.tar.gz
+	
+	#Extraer FrostWire 6.6.4
+	tar xfvz frostwire-6.6.4.noarch.tar.gz
+	
+	# Renombrar e ingresar al directorio
+	mv frostwire-6.6.4.noarch Frostwire-6.6.4 ; cd Frostwire-6.6.4
+	
+	# Descarga una imagen para usarla de icono
+	wget -c http://svgicons.o7a.net/unofficial/frostwire.png
+	
+	# Crear entrada para el menu
+	echo '[Desktop Entry]
+	Version=6.6.4
+	Name=Frostwire 6.6.4
+	Comment=cliente P2P de código abierto compatible con la red Gnutella y Bittorrent basado en el cliente LimeWire
+	TryExec='"$HOME/.Aplicacion/Gestor/Descargas/Frostwire-6.6.4/frostwire"'
+	Exec='"$HOME/.Aplicacion/Gestor/Descargas/Frostwire-6.6.4/frostwire" ""$@""'
+	Icon='"$HOME/.Aplicacion/Gestor/Descargas/Frostwire-6.6.4/frostwire.png"'
+	Terminal=false
+	Type=Application
+	Categories=Network;' | tee "$HOME/.local/share/applications/Frostwire-6.6.4.desktop"
+	
+	
+	# Concederle permisos a la entrada del menu
+	chmod a+o+x "$HOME/.local/share/applications/Frostwire-6.6.4.desktop"

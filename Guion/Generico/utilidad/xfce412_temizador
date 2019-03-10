@@ -1,0 +1,350 @@
+#!/bin/bash
+#!/bin/sh
+#
+# Autor :   Inukaze ( Venezuela )
+# Sitio     :   http://inukaze.wordpResolucions.com
+# Correo-E  :   bloginukaze@gmail.com
+# Licensia  :   GPL 2
+#
+# Acerca de este Script :
+#
+# Es para cambiar con mayor comodidad tu
+# Tema de Escritorio , me refiero a cambiar :
+#
+# Motor(es) / Controles / Botones
+# Cursores
+# Iconos
+# Fuentes
+# Papel Tapiz / Fondo de Pantalla
+#
+# Primero que nada guardando un respaldo
+# de tu tema actual en uso , en caso de que
+# no te guste , puedas restaurarlo comodamente
+#
+#
+
+# Detectar Escritorio en uso :
+DIR=(pwd)
+MATE=$(ps -A            |   grep mate-session       |   awk '{print $4}')
+XFCE=$(ps -A            |   grep xfce-session       |   awk '{print $4}')
+XFCE4=$(ps -A           |   grep xfce4-session      |   awk '{print $4}')
+xfconf_query=$(whereis -B "/usr/sbin" "/usr/local/sbin" "/sbin" "/usr/bin" "/usr/local/bin" "/bin" -b xfconf-query | grep -i "xfconf-query" | cut -d " " -f02)
+
+# Guardar la Resolución En caso de querer Aplicar
+# un Fondo de Pantalla para para la resolución Actual
+# en caso de tener varios
+
+# Guardar - Resolución :
+echo `xrandr --current | grep current | awk '{print $8}'` >> Resolucion1
+echo `xrandr --current | grep current | awk '{print $10}'` >> Resolucion2
+cat Resolucion2 | sed -i 's/,//g' Resolucion2
+P1Resolucion=$(cat Resolucion1)
+P2Resolucion=$(cat Resolucion2)
+rm Resolucion1 Resolucion2
+echo "$P1Resolucion"'x'"$P2Resolucion" >> Resolucion
+Resolucion=$(cat Resolucion)
+rm Resolucion
+# Guardar - Resolución .
+
+
+
+if [ "$XFCE" = "xfce-session" ]; then
+# Si se detecta xfce-session en ejecucion
+# Primero determinar si "xfconf-query"
+# esta instalado
+#
+# Intentar guardar las variables actuales
+# de :
+#
+# Motor(es) / Controles / Botones / Tema GTK
+# Gestor de Ventanas : Si es Xfwm/4 , detectar el tema en uso.
+# Cursores
+# Iconos
+# Fuentes
+# Papel Tapiz / Fondo de Pantalla
+# Panel(es)
+
+
+# Obtener :
+
+# Motor(es) / Controles / Botones / Tema GTK
+# Canal : xfsettings ; Propiedad 1 : /Net/ThemeName
+    #xfconf-query -c xsettings -p /Net/ThemeName -l -v  
+    #Controles=$(xfconf-query -c xsettings -p /Net/ThemeName -l -v | awk -F'/' '/^/ { print $3 }' | sed 's/[ThemeName]*.//')
+     Controles=$(xfconf-query -c xsettings -p /Net/ThemeName)
+
+# Gestor de Ventanas :
+# Tema : Xfwm(4)
+    #xfconf-query -c xfwm4 -p /general/theme -l -v
+    #Tema_Xfwm4=$(xfconf-query -c xfwm4 -p /general/theme -l -v | awk -F'/' '/^/ { print $3 }' | sed 's/[theme]*.//')
+     Tema_Xfwm4=$(xfconf-query -c xfwm4 -p /general/theme)
+
+# Cursores :    
+# Tema de Cursor(es)
+    #xfconf-query -c xsettings -p /Gtk/CursorThemeName -l -v
+    #Tema_Cursores=$(xfconf-query -c xsettings -p /Gtk/CursorThemeName -l -v | awk -F'/' '/^/ { print $3 }' | sed 's/[CursorThemeName]*.//')
+     Tema_Cursores=$(xfconf-query -c xsettings -p /Gtk/CursorThemeName)
+
+# Tamaño de (el/los) Cursor(es)
+    #xfconf-query -c xsettings -p /Gtk/CursorThemeSize -l -v
+    #Tamano_Cursores=$(xfconf-query -c xsettings -p /Gtk/CursorThemeSize -l -v | awk -F'/' '/^/ { print $3 }' | sed 's/[CursorThemeSize]*.//')
+     Tamano_Cursores=$(xfconf-query -c xsettings -p /Gtk/CursorThemeSize)
+
+# Iconos :
+# Tema de Iconos Actual :
+    #xfconf-query -c xsettings -p /Net/IconThemeName -l -v
+    #Tema_Iconos=$(xfconf-query -c xsettings -p /Net/IconThemeName -l -v | awk -F'/' '/^/ { print $3 }' | sed 's/[IconThemeName]*.//')
+     Tema_Iconos=$(xfconf-query -c xsettings -p /Net/IconThemeName)
+
+# Fuente :
+# Nombre de la Fuente + Tamaño de la Fuente
+#xfconf-query -c xsettings -p /Gtk/FontName -l -v
+    #Fuente=$(xfconf-query -c xsettings -p /Gtk/FontName -l -v | awk -F'/' '/^/ { print $3 }' | sed 's/[FontName]*.//')
+     Fuente=$(xfconf-query -c xsettings -p /Gtk/FontName)
+
+# Papel Tapiz / Fondo de Pantalla
+# xfconf-query -c xfce4-desktop -p /backdrop/screen{0,1,2,3,4,5,6,7,8,9}/monitor{0,1,2,3,4,5,6,7,8,9}/image-path -l -v
+
+    FP0M0=$(xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path)
+    FP0M1=$(xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor1/image-path)
+    FP0M2=$(xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor2/image-path)
+    FP0M3=$(xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor3/image-path)
+    FP0M4=$(xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor4/image-path)
+    FP0M5=$(xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor5/image-path) 
+    FP0M6=$(xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor6/image-path)
+    FP0M7=$(xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor7/image-path)
+    FP0M8=$(xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor8/image-path)
+    FP0M9=$(xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor9/image-path) 
+    FP1M0=$(xfconf-query -c xfce4-desktop -p /backdrop/screen1/monitor0/image-path)
+    FP1M1=$(xfconf-query -c xfce4-desktop -p /backdrop/screen1/monitor1/image-path)
+    FP1M2=$(xfconf-query -c xfce4-desktop -p /backdrop/screen1/monitor2/image-path)
+    FP1M3=$(xfconf-query -c xfce4-desktop -p /backdrop/screen1/monitor3/image-path)
+    FP1M4=$(xfconf-query -c xfce4-desktop -p /backdrop/screen1/monitor4/image-path)
+    FP1M5=$(xfconf-query -c xfce4-desktop -p /backdrop/screen1/monitor5/image-path)
+    FP1M6=$(xfconf-query -c xfce4-desktop -p /backdrop/screen1/monitor6/image-path)
+    FP1M7=$(xfconf-query -c xfce4-desktop -p /backdrop/screen1/monitor7/image-path)
+    FP1M8=$(xfconf-query -c xfce4-desktop -p /backdrop/screen1/monitor8/image-path)
+    FP1M9=$(xfconf-query -c xfce4-desktop -p /backdrop/screen1/monitor9/image-path)
+    FP2M0=$(xfconf-query -c xfce4-desktop -p /backdrop/screen2/monitor0/image-path)
+    FP2M1=$(xfconf-query -c xfce4-desktop -p /backdrop/screen2/monitor1/image-path)
+    FP2M2=$(xfconf-query -c xfce4-desktop -p /backdrop/screen2/monitor2/image-path)
+    FP2M3=$(xfconf-query -c xfce4-desktop -p /backdrop/screen2/monitor3/image-path)
+    FP2M4=$(xfconf-query -c xfce4-desktop -p /backdrop/screen2/monitor4/image-path)
+    FP2M5=$(xfconf-query -c xfce4-desktop -p /backdrop/screen2/monitor5/image-path) 
+    FP2M6=$(xfconf-query -c xfce4-desktop -p /backdrop/screen2/monitor6/image-path)
+    FP2M7=$(xfconf-query -c xfce4-desktop -p /backdrop/screen2/monitor7/image-path)
+    FP2M8=$(xfconf-query -c xfce4-desktop -p /backdrop/screen2/monitor8/image-path)
+    FP2M9=$(xfconf-query -c xfce4-desktop -p /backdrop/screen2/monitor9/image-path) 
+    FP3M0=$(xfconf-query -c xfce4-desktop -p /backdrop/screen3/monitor0/image-path)
+    FP3M1=$(xfconf-query -c xfce4-desktop -p /backdrop/screen3/monitor1/image-path)
+    FP3M2=$(xfconf-query -c xfce4-desktop -p /backdrop/screen3/monitor2/image-path)
+    FP3M3=$(xfconf-query -c xfce4-desktop -p /backdrop/screen3/monitor3/image-path)
+    FP3M4=$(xfconf-query -c xfce4-desktop -p /backdrop/screen3/monitor4/image-path)
+    FP3M5=$(xfconf-query -c xfce4-desktop -p /backdrop/screen3/monitor5/image-path) 
+    FP3M6=$(xfconf-query -c xfce4-desktop -p /backdrop/screen3/monitor6/image-path)
+    FP3M7=$(xfconf-query -c xfce4-desktop -p /backdrop/screen3/monitor7/image-path)
+    FP3M8=$(xfconf-query -c xfce4-desktop -p /backdrop/screen3/monitor8/image-path)
+    FP3M9=$(xfconf-query -c xfce4-desktop -p /backdrop/screen3/monitor9/image-path) 
+    FP4M0=$(xfconf-query -c xfce4-desktop -p /backdrop/screen4/monitor0/image-path)
+    FP4M1=$(xfconf-query -c xfce4-desktop -p /backdrop/screen4/monitor1/image-path)
+    FP4M2=$(xfconf-query -c xfce4-desktop -p /backdrop/screen4/monitor2/image-path)
+    FP4M3=$(xfconf-query -c xfce4-desktop -p /backdrop/screen4/monitor3/image-path)
+    FP4M4=$(xfconf-query -c xfce4-desktop -p /backdrop/screen4/monitor4/image-path)
+    FP4M5=$(xfconf-query -c xfce4-desktop -p /backdrop/screen4/monitor5/image-path) 
+    FP4M6=$(xfconf-query -c xfce4-desktop -p /backdrop/screen4/monitor6/image-path)
+    FP4M7=$(xfconf-query -c xfce4-desktop -p /backdrop/screen4/monitor7/image-path)
+    FP4M8=$(xfconf-query -c xfce4-desktop -p /backdrop/screen4/monitor8/image-path)
+    FP4M9=$(xfconf-query -c xfce4-desktop -p /backdrop/screen4/monitor9/image-path) 
+    FP5M0=$(xfconf-query -c xfce4-desktop -p /backdrop/screen5/monitor0/image-path)
+    FP5M1=$(xfconf-query -c xfce4-desktop -p /backdrop/screen5/monitor1/image-path)
+    FP5M2=$(xfconf-query -c xfce4-desktop -p /backdrop/screen5/monitor2/image-path)
+    FP5M3=$(xfconf-query -c xfce4-desktop -p /backdrop/screen5/monitor3/image-path)
+    FP5M4=$(xfconf-query -c xfce4-desktop -p /backdrop/screen5/monitor4/image-path)
+    FP5M5=$(xfconf-query -c xfce4-desktop -p /backdrop/screen5/monitor5/image-path) 
+    FP5M6=$(xfconf-query -c xfce4-desktop -p /backdrop/screen5/monitor6/image-path)
+    FP5M7=$(xfconf-query -c xfce4-desktop -p /backdrop/screen5/monitor7/image-path)
+    FP5M8=$(xfconf-query -c xfce4-desktop -p /backdrop/screen5/monitor8/image-path)
+    FP5M9=$(xfconf-query -c xfce4-desktop -p /backdrop/screen5/monitor9/image-path) 
+    FP6M0=$(xfconf-query -c xfce4-desktop -p /backdrop/screen6/monitor0/image-path)
+    FP6M1=$(xfconf-query -c xfce4-desktop -p /backdrop/screen6/monitor1/image-path)
+    FP6M2=$(xfconf-query -c xfce4-desktop -p /backdrop/screen6/monitor2/image-path)
+    FP6M3=$(xfconf-query -c xfce4-desktop -p /backdrop/screen6/monitor3/image-path)
+    FP6M4=$(xfconf-query -c xfce4-desktop -p /backdrop/screen6/monitor4/image-path)
+    FP6M5=$(xfconf-query -c xfce4-desktop -p /backdrop/screen6/monitor5/image-path) 
+    FP6M6=$(xfconf-query -c xfce4-desktop -p /backdrop/screen6/monitor6/image-path)
+    FP6M7=$(xfconf-query -c xfce4-desktop -p /backdrop/screen6/monitor7/image-path)
+    FP6M8=$(xfconf-query -c xfce4-desktop -p /backdrop/screen6/monitor8/image-path)
+    FP6M9=$(xfconf-query -c xfce4-desktop -p /backdrop/screen6/monitor9/image-path) 
+    FP7M0=$(xfconf-query -c xfce4-desktop -p /backdrop/screen7/monitor0/image-path)
+    FP7M1=$(xfconf-query -c xfce4-desktop -p /backdrop/screen7/monitor1/image-path)
+    FP7M2=$(xfconf-query -c xfce4-desktop -p /backdrop/screen7/monitor2/image-path)
+    FP7M3=$(xfconf-query -c xfce4-desktop -p /backdrop/screen7/monitor3/image-path)
+    FP7M4=$(xfconf-query -c xfce4-desktop -p /backdrop/screen7/monitor4/image-path)
+    FP7M5=$(xfconf-query -c xfce4-desktop -p /backdrop/screen7/monitor5/image-path) 
+    FP7M6=$(xfconf-query -c xfce4-desktop -p /backdrop/screen7/monitor6/image-path)
+    FP7M7=$(xfconf-query -c xfce4-desktop -p /backdrop/screen7/monitor7/image-path)
+    FP7M8=$(xfconf-query -c xfce4-desktop -p /backdrop/screen7/monitor8/image-path)
+    FP7M9=$(xfconf-query -c xfce4-desktop -p /backdrop/screen7/monitor9/image-path) 
+    FP8M0=$(xfconf-query -c xfce4-desktop -p /backdrop/screen8/monitor0/image-path)
+    FP8M1=$(xfconf-query -c xfce4-desktop -p /backdrop/screen8/monitor1/image-path)
+    FP8M2=$(xfconf-query -c xfce4-desktop -p /backdrop/screen8/monitor2/image-path)
+    FP8M3=$(xfconf-query -c xfce4-desktop -p /backdrop/screen8/monitor3/image-path)
+    FP8M4=$(xfconf-query -c xfce4-desktop -p /backdrop/screen8/monitor4/image-path)
+    FP8M5=$(xfconf-query -c xfce4-desktop -p /backdrop/screen8/monitor5/image-path) 
+    FP8M6=$(xfconf-query -c xfce4-desktop -p /backdrop/screen8/monitor6/image-path)
+    FP8M7=$(xfconf-query -c xfce4-desktop -p /backdrop/screen8/monitor7/image-path)
+    FP8M8=$(xfconf-query -c xfce4-desktop -p /backdrop/screen8/monitor8/image-path)
+    FP8M9=$(xfconf-query -c xfce4-desktop -p /backdrop/screen8/monitor9/image-path) 
+    FP9M0=$(xfconf-query -c xfce4-desktop -p /backdrop/screen9/monitor0/image-path)
+    FP9M1=$(xfconf-query -c xfce4-desktop -p /backdrop/screen9/monitor1/image-path)
+    FP9M2=$(xfconf-query -c xfce4-desktop -p /backdrop/screen9/monitor2/image-path)
+    FP9M3=$(xfconf-query -c xfce4-desktop -p /backdrop/screen9/monitor3/image-path)
+    FP9M4=$(xfconf-query -c xfce4-desktop -p /backdrop/screen9/monitor4/image-path)
+    FP9M5=$(xfconf-query -c xfce4-desktop -p /backdrop/screen9/monitor5/image-path) 
+    FP9M6=$(xfconf-query -c xfce4-desktop -p /backdrop/screen9/monitor6/image-path)
+    FP9M7=$(xfconf-query -c xfce4-desktop -p /backdrop/screen9/monitor7/image-path)
+    FP9M8=$(xfconf-query -c xfce4-desktop -p /backdrop/screen9/monitor8/image-path)
+    FP9M9=$(xfconf-query -c xfce4-desktop -p /backdrop/screen9/monitor9/image-path) 
+
+# Agregar if con la condicion a la inversa
+# Para los Fondos de Pantalla
+# Si por ejemplo la variable $FP0M0 = "" , then no hagas nada : else "has algo"
+
+# Panel(es)
+# Todos del 1 al 9 
+#
+#
+# $ xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9} -l -v
+#
+# Aqui se viene el otro lio , que creo que tendre que solucionar 1 por 1
+# como los fondos de pantallas de arriba
+#
+#
+    # 1 - Opacidad del Panel :
+    # Canal : Panel ; Propiedad 1 : /panels/panel-1/background-alpha
+    #xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/background-alpha
+    # Forma Facil   (Puede Fallar)  -> P1VBA=$(xfconf-query -c xfce4-panel -p /panels/panel-1/background-alpha)
+    # Forma Dificil (No Falla)  -> P1VBA=$(xfconf-query -c xfce4-panel -p /panels/panel-1/background-alpha -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[background]*.//' | sed 's/[-alpha]*.//')
+
+    P0VBA=$(xfconf-query -c xfce4-panel -p /panels/panel-0/background-alpha -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[background]*.//' | sed 's/[-alpha]*.//') 
+    P1VBA=$(xfconf-query -c xfce4-panel -p /panels/panel-1/background-alpha -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[background]*.//' | sed 's/[-alpha]*.//') 
+    P2VBA=$(xfconf-query -c xfce4-panel -p /panels/panel-2/background-alpha -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[background]*.//' | sed 's/[-alpha]*.//') 
+    P3VBA=$(xfconf-query -c xfce4-panel -p /panels/panel-3/background-alpha -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[background]*.//' | sed 's/[-alpha]*.//') 
+
+    #2 - Estilo del Fondo del Panel
+    # Canal : Panel ; Propiedad 2 : /panels/panel-1/background-style
+    #xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/background-style
+    # Forma Facil   (Puede Fallar)  -> P1VBS=$(xfconf-query -c xfce4-panel -p /panels/panel-1/background-style)
+    # Forma Dificil (No Falla)  -> P1VBS=$(xfconf-query -c xfce4-panel -p /panels/panel-1/background-style -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[background]*.//' | sed 's/[-style]*.//')
+
+    P0VBS=$(xfconf-query -c xfce4-panel -p /panels/panel-0/background-style -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[background]*.//' | sed 's/[-style]*.//')
+    P1VBS=$(xfconf-query -c xfce4-panel -p /panels/panel-1/background-style -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[background]*.//' | sed 's/[-style]*.//')
+    P2VBS=$(xfconf-query -c xfce4-panel -p /panels/panel-2/background-style -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[background]*.//' | sed 's/[-style]*.//')
+    P3VBS=$(xfconf-query -c xfce4-panel -p /panels/panel-3/background-style -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[background]*.//' | sed 's/[-style]*.//')
+
+    #3 - Opacidad al tener el puntero del raton en el panel
+    # Canal : Panel ; Propiedad 3 : /panels/panel-1/enter-opacity
+    #xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/enter-opacity
+    # Forma Facil   (Puede Fallar)  -> P1VEO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/enter-opacity)
+    # Forma Dificil (No Falla)  -> P1VEO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/enter-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[enter]*.//' | sed 's/[-opacity]*.//')
+
+    P0VEO=$(xfconf-query -c xfce4-panel -p /panels/panel-0/enter-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[enter]*.//' | sed 's/[-opacity]*.//')
+    P1VEO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/enter-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[enter]*.//' | sed 's/[-opacity]*.//')
+    P2VEO=$(xfconf-query -c xfce4-panel -p /panels/panel-2/enter-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[enter]*.//' | sed 's/[-opacity]*.//')
+    P3VEO=$(xfconf-query -c xfce4-panel -p /panels/panel-3/enter-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[enter]*.//' | sed 's/[-opacity]*.//')
+    P4VEO=$(xfconf-query -c xfce4-panel -p /panels/panel-4/enter-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[enter]*.//' | sed 's/[-opacity]*.//')
+    P5VEO=$(xfconf-query -c xfce4-panel -p /panels/panel-5/enter-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[enter]*.//' | sed 's/[-opacity]*.//')
+    P6VEO=$(xfconf-query -c xfce4-panel -p /panels/panel-6/enter-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[enter]*.//' | sed 's/[-opacity]*.//')
+    P7VEO=$(xfconf-query -c xfce4-panel -p /panels/panel-7/enter-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[enter]*.//' | sed 's/[-opacity]*.//')
+    P8VEO=$(xfconf-query -c xfce4-panel -p /panels/panel-8/enter-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[enter]*.//' | sed 's/[-opacity]*.//')
+    P9VEO=$(xfconf-query -c xfce4-panel -p /panels/panel-9/enter-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[enter]*.//' | sed 's/[-opacity]*.//')
+
+    #4 - Opacidad al no tener el puntero del raton en el panel
+    # Canal : Panel ; Propiedad 4 : /panels/panel-?/leave-opacity
+    #xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/leave-opacity
+    # Forma Facil   (Puede Fallar)  -> P1VLO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/leave-opacity)
+    # Forma Dificil (No Falla)  -> P1VLO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/leave-opacity #-l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[leave]*.//' | sed 's/[-opacity]*.//')
+
+    P0VLO=$(xfconf-query -c xfce4-panel -p /panels/panel-0/leave-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[leave]*.//' | sed 's/[-opacity]*.//')
+    P1VLO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/leave-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[leave]*.//' | sed 's/[-opacity]*.//')
+    P2VLO=$(xfconf-query -c xfce4-panel -p /panels/panel-2/leave-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[leave]*.//' | sed 's/[-opacity]*.//')
+    P3VLO=$(xfconf-query -c xfce4-panel -p /panels/panel-3/leave-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[leave]*.//' | sed 's/[-opacity]*.//')
+    P4VLO=$(xfconf-query -c xfce4-panel -p /panels/panel-4/leave-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[leave]*.//' | sed 's/[-opacity]*.//')
+    P5VLO=$(xfconf-query -c xfce4-panel -p /panels/panel-5/leave-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[leave]*.//' | sed 's/[-opacity]*.//')
+    P6VLO=$(xfconf-query -c xfce4-panel -p /panels/panel-6/leave-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[leave]*.//' | sed 's/[-opacity]*.//')
+    P7VLO=$(xfconf-query -c xfce4-panel -p /panels/panel-7/leave-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[leave]*.//' | sed 's/[-opacity]*.//')
+    P8VLO=$(xfconf-query -c xfce4-panel -p /panels/panel-8/leave-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[leave]*.//' | sed 's/[-opacity]*.//')
+    P9VLO=$(xfconf-query -c xfce4-panel -p /panels/panel-9/leave-opacity -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[leave]*.//' | sed 's/[-opacity]*.//')
+
+    #5 - longitud de [el/los] panel[es] 
+    # Canal : Panel ; Propiedad 5 : (/panels/panel-?/length)
+    #xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/length
+    # Forma Facil   (Puede Fallar)  -> P1VLL=$(xfconf-query -c xfce4-panel -p /panels/panel-1/length)
+    # Forma Dificil (No Falla)  -> P1VLL=$(xfconf-query -c xfce4-panel -p /panels/panel-1/length -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[length]*.//')
+
+    P0VLL=$(xfconf-query -c xfce4-panel -p /panels/panel-0/length -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[length]*.//')
+    P1VLL=$(xfconf-query -c xfce4-panel -p /panels/panel-1/length -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[length]*.//')
+    P2VLL=$(xfconf-query -c xfce4-panel -p /panels/panel-2/length -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[length]*.//')
+    P3VLL=$(xfconf-query -c xfce4-panel -p /panels/panel-3/length -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[length]*.//')
+    P4VLL=$(xfconf-query -c xfce4-panel -p /panels/panel-4/length -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[length]*.//')
+    P5VLL=$(xfconf-query -c xfce4-panel -p /panels/panel-5/length -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[length]*.//')
+    P6VLL=$(xfconf-query -c xfce4-panel -p /panels/panel-6/length -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[length]*.//')
+    P7VLL=$(xfconf-query -c xfce4-panel -p /panels/panel-7/length -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[length]*.//')
+    P8VLL=$(xfconf-query -c xfce4-panel -p /panels/panel-8/length -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[length]*.//')
+    P9VLL=$(xfconf-query -c xfce4-panel -p /panels/panel-9/length -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[length]*.//')
+
+
+    #6 - Complementos "ids" ??? : Esto va a estar jodido :S
+    # Canal : Panel ; Propiedad 6 : (/panels/panel-?/plugin-ids)
+    #xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/plugin-ids
+    #Forma 1 -> xfconf-query -c xfce4-panel -p /panels/panel-0/plugin-ids -v | awk '{print $1}' | cut -c "1" | sed '3!d'
+    #Forma 2 -> xfconf-query -c xfce4-panel -p /panels/panel-0/plugin-ids -v | awk '{print $1}' | cut -c "1" | sed -n '3{p;q;}'
+
+    P0VDC1V1=$(xfconf-query -c xfce4-panel -p /panels/panel-0/plugin-ids -v | awk '{print $1}' | cut -c "1" | sed '3!d')
+    P0VDC1V2=$(xfconf-query -c xfce4-panel -p /panels/panel-0/plugin-ids -v | awk '{print $1}' | cut -c "1" | sed '4!d')
+    P0VDC1V3=$(xfconf-query -c xfce4-panel -p /panels/panel-0/plugin-ids -v | awk '{print $1}' | cut -c "1" | sed '5!d')
+    P0VDC1V4=$(xfconf-query -c xfce4-panel -p /panels/panel-0/plugin-ids -v | awk '{print $1}' | cut -c "1" | sed '6!d')
+    P0VDC1V5=$(xfconf-query -c xfce4-panel -p /panels/panel-0/plugin-ids -v | awk '{print $1}' | cut -c "1" | sed '7!d')
+    P0VDC1V6=$(xfconf-query -c xfce4-panel -p /panels/panel-0/plugin-ids -v | awk '{print $1}' | cut -c "1" | sed '8!d')
+
+
+    #7 - Posicion de [el/los] panel[es]
+    # Canal : Panel ; Propiedad 7 : (/panels/panel-?/position)
+    #xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/position
+    # Forma Facil   (Puede Fallar)  -> P1VPO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/position)
+    # Forma Dificil (No Falla)  -> P1VPO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/position -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[position]*.//')
+
+    P1VPO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/position -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[position]*.//')
+    P2VPO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/position -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[position]*.//')
+    P3VPO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/position -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[position]*.//')
+    P4VPO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/position -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[position]*.//')
+    P5VPO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/position -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[position]*.//')
+    P6VPO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/position -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[position]*.//')
+    P7VPO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/position -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[position]*.//')
+    P8VPO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/position -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[position]*.//')
+    P9VPO=$(xfconf-query -c xfce4-panel -p /panels/panel-1/position -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[position]*.//')
+
+    #8 - Bloqueado en su posicion
+    # Canal : Panel ; Propiedad 8 : (/panels/panel-?/position-locked)
+    #xfconf-query -c xfce4-panel -p /panels/panel-{1,2,3,4,5,6,7,8,9}/position-locked
+    # Forma Facil   (Puede Fallar)  -> P1VPL=$(xfconf-query -c xfce4-panel -p /panels/panel-1/position-locked)
+    # Forma Dificil (No Falla)  -> P1VPL=$(xfconf-query -c xfce4-panel -p /panels/panel-1/position-locked -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[position]*.//' | sed 's/[-locked]*.//')
+
+    P1VPL=$(xfconf-query -c xfce4-panel -p /panels/panel-1/position-locked -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[position]*.//' | sed 's/[-locked]*.//')
+    P2VPL=$(xfconf-query -c xfce4-panel -p /panels/panel-2/position-locked -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[position]*.//' | sed 's/[-locked]*.//')
+    P3VPL=$(xfconf-query -c xfce4-panel -p /panels/panel-3/position-locked -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[position]*.//' | sed 's/[-locked]*.//')
+
+    #9 - Tamaños : 
+    # Canal : Panel ; Propiedad 9 : (/panels/panel-?/size)
+    # Forma Facil   (Puede Fallar)  -> P1VOS=$(xfconf-query -c xfce4-panel -p /panels/panel-1/size)
+    # Forma Dificil (No Falla)  -> P1VOS=$(xfconf-query -c xfce4-panel -p /panels/panel-1/size -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[size]*.//')
+
+    P1VOS=$(xfconf-query -c xfce4-panel -p /panels/panel-1/size -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[size]*.//')
+    P2VOS=$(xfconf-query -c xfce4-panel -p /panels/panel-2/size -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[size]*.//')
+    P3VOS=$(xfconf-query -c xfce4-panel -p /panels/panel-3/size -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[size]*.//')
+    P4VOS=$(xfconf-query -c xfce4-panel -p /panels/panel-4/size -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[size]*.//')
+    P5VOS=$(xfconf-query -c xfce4-panel -p /panels/panel-5/size -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[size]*.//')
+    P6VOS=$(xfconf-query -c xfce4-panel -p /panels/panel-6/size -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[size]*.//')
+    P7VOS=$(xfconf-query -c xfce4-panel -p /panels/panel-7/size -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[size]*.//')
+    P8VOS=$(xfconf-query -c xfce4-panel -p /panels/panel-8/size -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[size]*.//')
+    P9VOS=$(xfconf-query -c xfce4-panel -p /panels/panel-9/size -l -v | awk -F'/' '/^/ { print $4 }' | sed 's/[size]*.//')

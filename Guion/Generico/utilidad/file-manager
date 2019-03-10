@@ -1,0 +1,128 @@
+#!/bin/bash
+# 
+# Autor	:	Inukaze ( From Venezuela )
+# Sitio		:	http://https://goo.gl/ij6WqW
+# Correo-E	:	bloginukaze@gmail.com
+# Licensia	:	GPL 2
+#
+# Acerca de este Script	:	
+#
+# Este Script , es para crear otro Script
+# Para establecer un Gestor de Archivos
+# Segun el Entorno de Escritorio
+# Que el usuario este utilizando
+
+if [ $(whoami) != root ]; then
+echo "Por favor ejecuta este script como root"
+
+else
+rm -rf /usr/bin/file-manager
+touch /usr/bin/file-manager
+chmod 777 /usr/bin/file-manager
+echo '#!/bin/bash' >> /usr/bin/file-manager
+echo '#' >> /usr/bin/file-manager
+echo '# Autor	:	Inukaze ( From Venezuela )' >> /usr/bin/file-manager
+echo '# Sitio		:	http://https://goo.gl/ij6WqW' >> /usr/bin/file-manager
+echo '# Correo-E	:	bloginukaze@gmail.com' >> /usr/bin/file-manager
+echo '# Licensia	:	GPL 3' >> /usr/bin/file-manager
+echo '#' >> /usr/bin/file-manager
+echo '# Acerca de este Script	:	' >> /usr/bin/file-manager
+echo '#' >> /usr/bin/file-manager
+echo '# Este Mini-Script , es para Solventar el Error' >> /usr/bin/file-manager
+echo '# Que tienen las Distros Linux , que no son capaces' >> /usr/bin/file-manager
+echo '# de Abrir el "Gestor/Administrador de Archivos"' >> /usr/bin/file-manager
+echo '# Predeterminado de Algun Escritorio en Particular' >> /usr/bin/file-manager
+#############################################################################################################
+echo 'RUTA=""$( cd -P "$( dirname "$" )" && pwd )""' >> /usr/bin/file-manager
+echo 'MATE=$(ps -A|grep mate-session|awk '\''{print $4}'\'')' >> /usr/bin/file-manager
+echo 'KDE=$(ps -A|grep plasma-desktop|awk '\''{print $4}'\'')' >> /usr/bin/file-manager
+echo 'XFCE=$(ps -A|grep xfce-session|awk '\''{print $4}'\'')' >> /usr/bin/file-manager
+echo 'XFCE4=$(ps -A|grep xfce4-session|awk '\''{print $4}'\'')' >> /usr/bin/file-manager
+echo 'LXDE=$(ps -A|grep lxsession|awk '\''{print $4}'\'')' >> /usr/bin/file-manager
+echo 'GNOME=$(ps -A|grep gnome-session|awk '\''{print $4}'\'' )' >> /usr/bin/file-manager
+echo 'ENLIGHTENMENT=$(ps -A|grep enlightenment|awk '\''{print $4}'\'' | sed -n '2p')' >> /usr/bin/file-manager
+echo 'CINNAMON=$(ps -A|grep cinammon|awk '\''{print $4}'\''  | sed -n '2p')' >> /usr/bin/file-manager
+#############################################################################################################
+echo '' >> /usr/bin/file-manager
+echo '	if [ "$MATE" = "mate-session" ]; then' >> /usr/bin/file-manager
+echo '		echo "Entorno de Escritorio : MATE"' >> /usr/bin/file-manager
+echo '		echo Se Utilizara Caja como Gestor/Administrador de Archivos' >> /usr/bin/file-manager
+echo '		caja --no-desktop "$@" &	' >> /usr/bin/file-manager
+echo '	fi' >> /usr/bin/file-manager
+echo '' >> /usr/bin/file-manager
+echo '	if [ "$KDE" = "plasma-desktop" ]; then' >> /usr/bin/file-manager
+echo '		echo "Entorno de Escritorio : KDE4"' >> /usr/bin/file-manager
+echo '		echo Se Utilizara Dolphin como Gestor/Administrador de Archivos' >> /usr/bin/file-manager
+echo '		dolphin "$@"' >> /usr/bin/file-manager
+echo '	fi' >> /usr/bin/file-manager
+echo '' >> /usr/bin/file-manager
+echo '	if [ "$LXDE" = "lxsession" ]; then' >> /usr/bin/file-manager
+echo '		echo "Entorno de Escritorio : LXDE"' >> /usr/bin/file-manager
+echo '		echo Se Utilizara PCManFile como Gestor/Administrador de Archivos' >> /usr/bin/file-manager
+echo '		pcmanfm "$@"' >> /usr/bin/file-manager
+echo '	fi' >> /usr/bin/file-manager
+echo '' >> /usr/bin/file-manager
+echo '	if [ "$XFCE" = "xfce-session" ]; then' >> /usr/bin/file-manager
+echo '		echo "Entorno de Escritorio : XFCE"' >> /usr/bin/file-manager
+echo '		echo Se Utilizara Thunar como Gestor/Administrador de Archivos' >> /usr/bin/file-manager
+echo '		thunar "$@"' >> /usr/bin/file-manager
+echo '	fi' >> /usr/bin/file-manager
+echo '' >> /usr/bin/file-manager
+echo '		if [ "$XFCE4" = "xfce4-session" ]; then' >> /usr/bin/file-manager
+echo '		echo "Entorno de Escritorio : XFCE"' >> /usr/bin/file-manager
+echo '		echo Se Utilizara Thunar como Gestor/Administrador de Archivos' >> /usr/bin/file-manager
+echo '		thunar "$@"' >> /usr/bin/file-manager
+echo '	fi' >> /usr/bin/file-manager
+echo '' >> /usr/bin/file-manager
+echo '	if [ "$GNOME" = "gnome-session" ]; then' >> /usr/bin/file-manager
+echo '		echo "Entorno de Escritorio : GNOME"' >> /usr/bin/file-manager
+echo '		echo Se Utilizara Nautilus como Gestor/Administrador de Archivos' >> /usr/bin/file-manager
+echo '		nautilus "$@"' >> /usr/bin/file-manager
+echo '	fi' >> /usr/bin/file-manager
+echo '' >> /usr/bin/file-manager
+echo '	if "[ $CINNAMON" = "cinnamon" ]; then' >> /usr/bin/file-manager
+echo '			echo "Entorno de Escritorio : GNOME"' >> /usr/bin/file-manager
+echo '			echo Se Utilizara Nemo como Gestor/Administrador de Archivos' >> /usr/bin/file-manager
+echo '			nemo "$@"' >> /usr/bin/file-manager
+echo '	fi' >> /usr/bin/file-manager
+echo '' >> /usr/bin/file-manager	
+echo '	if [ "$ENLIGHTENMENT" = "enlightenment" ]; then' >> /usr/bin/file-manager
+echo '		echo "Entorno de Escritorio : Enlightenment"' >> /usr/bin/file-manager
+echo '		echo Se utilizara el Gestor/Administrador de Archivos de Enlightment' >> /usr/bin/file-manager
+echo '		enlightenment_filemanager "$@"' >> /usr/bin/file-manager
+echo '	fi' >> /usr/bin/file-manager
+echo 'exit 1' >> /usr/bin/file-manager
+chmod a+o+x /usr/bin/file-manager
+
+cd /usr/share/icons/
+wget http://retea.ru/images/ico/explorer.png
+mv explorer.png file-manager.png
+sed -i 's/inode\/\directory=.*/inode\/\directory=file-manager.desktop/g' /usr/share/applications/defaults.list
+sed -i 's/inode\/\directory=.*/inode\/\directory=file-manager.desktop/g' /usr/share/applications/mimeinfo.cache
+sed -i 's/inode\/\directory=.*/inode\/\directory=file-manager.desktop/g' ~/.local/share/applications/mimeapps.list
+sed -i 's/inode\/\directory=.*/inode\/\directory=file-manager.desktop/g' ~/.local/share/applications/mimeapps.list
+
+rm -rf /usr/share/applications/file-manager.desktop
+touch /usr/share/applications/file-manager.desktop
+chmod 777 /usr/share/applications/file-manager.desktop
+echo '[Desktop Entry]' >> /usr/share/applications/file-manager.desktop
+echo 'Name=Open Folder with File-Manager' >> /usr/share/applications/file-manager.desktop
+echo 'Name[es]=Abrir carpeta con Administrador de Archivos' >> /usr/share/applications/file-manager.desktop
+echo 'GenericName=Open Folder' >> /usr/share/applications/file-manager.desktop
+echo 'GenericName[es]=Abrir carpeta' >> /usr/share/applications/file-manager.desktop
+echo 'Exec=/usr/bin/file-manager' >> /usr/share/applications/file-manager.desktop
+echo 'Icon=/usr/share/icons/file-manager.png' >> /usr/share/applications/file-manager.desktop
+echo 'NoDisplay=true' >> /usr/share/applications/file-manager.desktop
+echo 'Terminal=false' >> /usr/share/applications/file-manager.desktop
+echo 'StartupNotify=true' >> /usr/share/applications/file-manager.desktop
+echo 'Type=Application' >> /usr/share/applications/file-manager.desktop
+echo 'Categories=System;Utility;Core;GTK;FileTools;FileManager;' >> /usr/share/applications/file-manager.desktop
+echo 'MimeType=inode/directory;' >> /usr/share/applications/file-manager.desktop
+echo '# vi:set encoding=UTF-8:' >> /usr/share/applications/file-manager.desktop
+chmod a+o+x /usr/share/applications/file-manager.desktop
+
+echo
+echo "Se ha configurado el script file-manager"
+echo
+fi
+exit

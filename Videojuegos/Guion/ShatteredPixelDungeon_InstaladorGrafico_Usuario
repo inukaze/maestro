@@ -1,0 +1,175 @@
+#!/usr/bin/env bash
+# Autor	    :	Inukaze ( Venezuela )
+# Sitio	    :	http://https://goo.gl/ij6WqW
+# Correo    :	bloginukaze@gmail.com
+# Licencia  :	GPL 2
+#
+
+AQUI=(pwd)
+WGET=$(whereis -B "/usr/sbin" "/usr/local/sbin" "/sbin" "/usr/bin" "/usr/local/bin" "/bin" -b wget	| grep -i "wget" | cut -d " " -f02)
+WGET=$(echo $WGET | awk -F'/' '/^/ { print $4 }')
+
+URLSOFT="https://github.com/00-Evan/shattered-pixel-dungeon-gdx/releases/download/v0.6.4/ShatteredPD.Desktop.v0.6.4.jar"
+URLICON="http://www.playapk.org/wp-content/uploads/2017/04/shattered-pixel-dungeon-0-5-0b-icon.png"
+ARCHIVO="ShatteredPD.Desktop.v0.6.4.jar"
+ICONO="Shattered-Pixel-Dungeon.png"
+ENLACEPARAUSUARIO="Shattered-Pixel-Dungeon-0.6.4.desktop"
+
+ZENITY=$(whereis -B "/usr/sbin" "/usr/local/sbin" "/sbin" "/usr/bin" "/usr/local/bin" "/bin" -b zenity | grep -i "zenity" | cut -d " " -f02)
+ZENITY=$(echo $ZENITY | awk -F'/' '/^/ { print $4 }')
+
+	if [ "$ZENITY" = "zenity" ]; then
+
+		TOOL=$ZENITY
+		CONFIRM_INSTALL=$($TOOL --title "Shattered Pixel Dungeon" --question --text "¿Deseas Instalar este Videojuego?")
+
+		if [ "$?" = 0 ]; then
+			CONFIRM_INSTALL="Si"
+			export CONFIRM_INSTALL="Si"	
+			
+		elif [ "$?" = 1 ]; then
+			CONFIRM_INSTALL="No"
+			export CONFIRM_INSTALL="No"
+			echo "Has elegido : No"
+		else
+			echo "ERROR"
+		fi
+
+		if [ "$CONFIRM_INSTALL" = "Si" ]; then
+			SELECT_DIR=$($TOOL --title "Elige La Ruta Absoluta" --file-selection --directory)
+			CONFIRMDIR=$($TOOL --title "Elige La Ruta Absoluta" --question --text "¿Deseas instalar en este directorio?")
+			
+					if [ "$?" = 0 ]; then
+				
+						echo "Directorio Seleccionado : $SELECT_DIR"
+						SELECT_DIR=$(echo "$SELECT_DIR")
+						cd "$SELECT_DIR"
+						SELECT_DIR=$(pwd)
+						cd "$SELECT_DIR"
+						rm -rf "$ARCHIVO" "$HOME/.local/share/applications/$ENLACEPARAUSUARIO"
+						wget -O "$ICONO" "$URLICON"
+						wget "$URLSOFT" 2>&1 | sed -u 's/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Descargando a \2\/s \n TEA \3/' | zenity --progress --title="Instalacion" --auto-close
+												
+							# Iniciar una prueba en bucle si zenity esta en uso, y si no lo esta mata al proceso wget
+							RUNNING=0
+							while [ $RUNNING -eq 0 ]
+								do
+								if [ -z "$(pidof zenity)" ]
+									then
+									pkill wget
+									RUNNING=1
+								fi
+							done
+							chmod a+o+x "$ARCHIVO"
+							
+2>/dev/null 1>/dev/null $(echo '#!/usr/bin/env bash
+
+# The Function of this script is
+# Find the real path of a script or program.
+
+# The Original Version From This Script Are From :
+# 17/FEB/2000 - Sam Lantinga, Loki Entertainment Software
+
+PATH_FINDER()
+{
+	fullpath=$(echo $1 | grep /)
+    if [ "$fullpath" = "" ]; then
+        oIFS="$IFS"
+        IFS=:
+        for path in $PATH
+        do if [ -x "$path/$1" ]; then
+               if [ "$path" = "" ]; then
+                   path="."
+               fi
+               fullpath="$path/$1"
+               break
+           fi
+        done
+        IFS="$oIFS"
+    fi
+    if [ "$fullpath" = "" ]; then
+        fullpath="$1"
+    fi
+
+    if [ -L "$fullpath" ]; then
+        'fullpath='$'"(ls -l "'"$fullpath"'" |sed -e 's/.* -> //' |sed -e 's/\*//')"'
+    fi
+    dirname $fullpath
+}
+
+if [ "${PROGRAM_PATH}" = "" ]; then
+    PROGRAM_PATH="`PATH_FINDER $0`"
+fi
+
+LD_LIBRARY_PATH=.:${PROGRAM_PATH}:${LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH
+
+if [ -x "${PROGRAM_PATH}/.Lanzar" ]
+then
+	cd "${PROGRAM_PATH}/"
+	exec "./.Lanzar" "$@"
+fi
+echo "'"No puedo iniciar este Software. ¿Este guion de inicializacion esta correctamente escrito?"'"
+exit 1'|tee Iniciar &> /dev/null)
+
+2>/dev/null 1>/dev/null $(echo '#!/usr/bin/env bash
+
+PATH_TO_PROGRAM=$(pwd)
+PROGRAM="'"java -jar "$SELECT_DIR/ShatteredPD.Desktop.v0.6.4.jar'"''
+$(cd "$PATH_TO_PROGRAM" ; exec $PROGRAM "$@")'|tee .Lanzar &> /dev/null)
+
+2>/dev/null 1>/dev/null $(echo '#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=0.6.4
+Name=Shattered Pixel Dungeon
+Type=Application
+Exec=sh '$SELECT_DIR'/Iniciar
+Icon='$SELECT_DIR/$ICONO'
+Terminal=false
+Hidden=false
+Categories=Game
+StartupNotify=true
+X-KDE-SubstituteUID=false'|tee "$ENLACEPARAUSUARIO" &> /dev/null)
+
+chmod a+o+x Iniciar .Lanzar "$ENLACEPARAUSUARIO"
+cp "$ENLACEPARAUSUARIO" $HOME/.local/share/applications						
+
+CONFIRMRUN=$($TOOL --title "¿Iniciar?" --question --text "¿Te gustaria iniciarlo?")
+
+if [ "$?" = 0 ]; then
+	CONFIRMRUN="Si"
+	export CONFIRMRUN="Si"
+elif [ "$?" = 1 ]; then
+	CONFIRMRUN="No"
+	export CONFIRMRUN="No"
+		echo "Elegiste : No"
+	else
+		echo "ERROR"
+fi
+
+if	[ "$CONFIRMRUN" = "Si" ]; then
+	cd "$SELECT_DIR"
+	
+	if test -f Iniciar
+	then
+		bash Iniciar
+	fi
+
+elif	[ "$CONFIRMRUN" = "No" ]; then
+	exit 1
+fi
+			
+					elif [ "$?" = 1 ]; then
+						echo "Elegiste Cancelar"
+						SELECT_DIR=$(echo "$SELECT_DIR")
+						cd "$SELECT_DIR"
+						SELECT_DIR=$(pwd)
+						cd "$SELECT_DIR"
+						rm -rf Iniciar .Lanzar "$ARCHIVO" "$ICONO" "$ENLACEPARAUSUARIO"
+						killall -9 "$DOWNLOADER" "$TOOL"
+					else
+						echo "ERROR"
+					fi
+fi
+fi
