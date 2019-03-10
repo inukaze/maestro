@@ -2,11 +2,11 @@
 #deb file:///media/inukaze/devuan_2.0.0_amd64_1/ ascii main non-free
 
 # Devuan - Repositorios de Binarios Precompilados :
-deb http://auto.mirror.devuan.org/merged/	ascii		main contrib non-free	# Repositorio de Aplicaciones
-deb http://auto.mirror.devuan.org/merged/	ascii-security	main contrib non-free	# Repositorio de Seguridad
-deb http://auto.mirror.devuan.org/merged/	ascii-updates	main contrib non-free	# Repositorio de Actualizaciones
+deb http://deb.devuan.org/merged/	ascii		    main contrib non-free	# Repositorio de Aplicaciones
+deb http://deb.devuan.org/merged/	ascii-security	    main contrib non-free	# Repositorio de Seguridad
+deb http://deb.devuan.org/merged/	ascii-updates	    main contrib non-free	# Repositorio de Actualizaciones
 
 #CDF## Devuan Repositorios de Codigo Fuente para apt-build :
-#CDF#deb-src http://auto.mirror.devuan.org/merged/	ascii		main contrib non-free	# Repositorio de Aplicaciones
-#CDF#deb-src http://auto.mirror.devuan.org/merged/	ascii-security	main contrib non-free	# Repositorio de Seguridad
-#CDF#deb-src http://auto.mirror.devuan.org/merged/	ascii-updates	main contrib non-free	# Repositorio de Actualizaciones
+#CDF#deb-src http://deb.devuan.org/merged/	ascii			main contrib non-free	# Repositorio de Aplicaciones
+#CDF#deb-src http://deb.devuan.org/merged/	ascii-security		main contrib non-free	# Repositorio de Seguridad
+#CDF#deb-src http://deb.devuan.org/merged/	ascii-updates		main contrib non-free	# Repositorio de Actualizaciones
