@@ -198,11 +198,17 @@ make install
 
 Si lo ejecutas con dosbox-x-sdl2 no estaran las lineas pero es más dificil conseguir que fluya correctamente.
 en caso de usar dosbox-x-sdl2 sugiero usar la siguiente configuracion :
+
+<br>
+
+```
 CPU Core = Simple
 CPU Type = Pentium Pro
 AutoCycles = Off
 Cycles = 32768
+```
 
+<br>
 
 Pueden encontrar mucho software util para emuladores o maquina virtuales en :
 [VOGONS Vintage Driver Library](http://www.vogonsdrivers.com/index.php?catid=1&menustate=0,0)
