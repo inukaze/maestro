@@ -74,7 +74,7 @@ para solventar el fallo lo más universalmente posible.
 |Resident Evil 3: Nemesis | 1.0 | 1.5.4 (32 Bits) |
 |Microsoft Pandora's Box | 1.0 | 1.6.2 (32 Bits) |
 |ReWrite | 2.0 | 1.6.2 (32 Bits) |
-|BloodRayne 1 | 1.0 / GOG | 1.6.2 (32 Bits) |
+|BloodRayne 1 | 1.0 / GOG | 1.6.2 ó 1.7.50 (32 Bits) |
 | | | |
 
 <br>
@@ -154,6 +154,11 @@ Si quieres que tenga icono deben estar 2 versiones del mismo archivo en formato 
 En su defecto tengo [**Este Guion**](https://raw.githubusercontent.com/inukaze/maestro/master/bash/videojuegos/Lanzador/prueba_en_tty6) en caso de que no quieres usar PlayOnLinux pero si quieras usar algo dentro de sus prefijos
 
 En cualquiera de ambos casos, puedes descargar mis guiones, para editarlos y adaptarlo a tus necesidades.
+
+<br>
+<br>
+
+BloodRayne2 Usar Wine -> 3.0 : Para reparar videos necesitas [LAV Filters minimo 0.67](../../../Arreglo/Wine/LAVFilters-0.67-Installer.exe)
 
 <br>
 <br>
