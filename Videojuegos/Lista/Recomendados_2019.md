@@ -1,7 +1,7 @@
 Videojuegos Gratuitos para Liñux
 =============================
 
-|   Titulo   |
+|   **Titulo :**   |
 |:----------:|
 |[0 A.D](https://play0ad.com/)|
 |[Assault Cube](https://assault.cubers.net/)|
@@ -13,7 +13,7 @@ Videojuegos Gratuitos para Liñux
 |[Urban Terror](https://www.urbanterror.info/home/)|
 |[Warsow](https://warsow.net/)|
 |[Xonotic](http://www.xonotic.org/)|
-|    Steam   |
+|    **En Steam :**   |
 |[AdVenture Capitalist](https://store.steampowered.com/app/346900/AdVenture_Capitalist/)|
 |[Awesomenauts](https://store.steampowered.com/app/204300/Awesomenauts__the_2D_moba/)|
 |[BRAIN / OUT](https://store.steampowered.com/app/578310/BRAIN__OUT/)|
