@@ -1,7 +1,7 @@
 Videojuegos Gratuitos para Liñux
 =============================
 
-|Videojuego|
+|:  Titulo  :|
 |:----------:|
 |[HedgeWars](https://www.hedgewars.org/)|
 |[Warsow](https://warsow.net/)|
