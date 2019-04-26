@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Autor     :	Inukaze ( Venezuela )
+# Sitio     :	http://https://goo.gl/ij6WqW
+# Correo    :	bloginukaze@gmail.com
+# Licencia  :	GPL 2
+# Funcion   :	Descargar, Compilar e Instalar MPlayer2 (Las mas actuales no me funcionan ni mpv tampoco)
+mkdir -p /tmp/cdf ; cd /tmp/cdf
+wget -c http://deb.debian.org/debian/pool/main/m/mplayer2/mplayer2_2.0-728-g2c378c7.orig.tar.xz
+wget -c http://deb.debian.org/debian/pool/main/m/mplayer2/mplayer2_2.0-728-g2c378c7-4.debian.tar.gz
+tar xf mplayer2_2.0-728-g2c378c7.orig.tar.xz
+tar xfz mplayer2_2.0-728-g2c378c7-4.debian.tar.gz
+cd debian/patches
+mv *.patch ../../mplayer2/
+cd ../../mplayer2
+patch -p0 < input_buffer_padding.patch ./libmpdemux/demuxer.h
+patch -p0 < ppc64el.patch ./configure
+patch -p0 < aarch64.patch ./configure
+patch -p0 < samba4.patch ./configure
+patch -p0 < ftbfs-libav10.patch ./Makefile
+./configure --prefix=/usr --language=es --language-msg=es --language-man=es --language-doc=es  --enable-translation --enable-openal
+make
+su -c "make install" root
+
+
+#Alternativa
+wget -c https://codeload.github.com/nezumisama/mplayer2/tar.gz/master -O mplayer2-20131009-14.tar.gz #Pesa : 2,3MB
+tar xfvz mplayer2-20131009-14.tar.gz
+cd mplayer2-master/
+./configure --prefix=/usr --confdir=/etc/mplayer --enable-translation --enable-runtime-cpudetection --enable-joystick --enable-gif --language=all--enable-openal
+make
+
+mkdir -p /tmp/cdf ; cd /tmp/cdf
+wget -c https://codeload.github.com/nezumisama/mplayer2/tar.gz/master -O mplayer2-20131009-14.tar.gz #Pesa : 2,3MB
+tar xfvz mplayer2-20131009-14.tar.gz
+cd mplayer2-master/
+./configure --prefix=/usr --confdir=/etc/mplayer
+--enable-translation --language=all \
+--enable-runtime-cpudetection \
+--enable-joystick \
+--enable-gif \
+--disable-speex \
+--disable-openal \
+--disable-libdv \
+--disable-musepack
+make
+su -c "make install" root
