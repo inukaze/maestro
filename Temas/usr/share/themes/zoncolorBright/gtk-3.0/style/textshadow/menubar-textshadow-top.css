@@ -1,0 +1,6 @@
+.menubar,
+.menubar.menuitem,
+.menubar > GtkMenuItem.menuitem {
+	text-shadow: 0 -1 @menubar_textshadow_color;
+}
+

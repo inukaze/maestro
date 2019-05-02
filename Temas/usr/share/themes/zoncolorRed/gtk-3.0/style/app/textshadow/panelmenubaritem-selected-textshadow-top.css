@@ -1,0 +1,16 @@
+.gnome-panel-menu-bar:prelight,
+.gnome-panel-menu-bar.menuitem:prelight,
+.gnome-panel-menu-bar > GtkMenuItem.menuitem:prelight,
+PanelApplet > GtkMenuBar.menubar:prelight,
+PanelApplet > GtkMenuBar.menubar.menuitem:prelight,
+PanelApplet > GtkMenuBar.menubar > GtkMenuItem.menuitem:prelight,
+PanelMenuBar.menubar:prelight,
+PanelMenuBar.menubar.menuitem:prelight,
+PanelMenuBar.menubar > GtkMenuItem.menuitem:prelight,
+
+.unity-panel.menubar.menuitem:hover,
+.unity-panel.menubar .menuitem *:hover {
+	text-shadow: 0 -1 @panelmenubaritem_selected_textshadow_color;
+	icon-shadow: 0 -1 @panelmenubaritem_selected_textshadow_color;
+}
+

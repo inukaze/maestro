@@ -1,0 +1,15 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Type=Application
+Name=Enable Window Theme
+GenericName=Themes Utility
+Comment=Enable/activate window decoration theme found in this folder.
+Categories=Utility;Settings;DesktopSettings;GTK;GNOME;
+Icon=preferences-desktop-theme
+Exec=sh -c "$(dirname '%k')/enable-window-theme.sh"
+Terminal=false
+StartupNotify=false
+NotShowIn=KDE;
+

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=zonColor Beige
+Comment=Beige variant of zonColor
+
+[X-GNOME-Metatheme]
+GtkTheme=zoncolorBeige
+MetacityTheme=zoncolorDayLight
+ShellTheme=zoncolorDarkNight
+IconTheme=zoncolorBrown
+CursorTheme=zoncolor
+BackgroundImage=Pictures/zoncolorGold.png
+ButtonLayout=close:menu
+GtkColorScheme=@RESET

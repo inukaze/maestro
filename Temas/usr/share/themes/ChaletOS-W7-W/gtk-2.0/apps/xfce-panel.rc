@@ -1,0 +1,197 @@
+style "theme-panel" = "dark"
+{
+	xthickness	= 1
+	ythickness	= 1
+	
+	bg[NORMAL]	= shade (0.35, @bg_color_dark)
+	bg[ACTIVE]	= shade (0.65, @bg_color_dark)
+	bg[PRELIGHT]	= shade (0.85, @selected_bg_color)
+	bg[SELECTED]	= shade (0.65, @selected_bg_color)
+	
+	fg[NORMAL]	= shade (0.9, @base_color)
+	fg[PRELIGHT]	= @base_color
+	fg[ACTIVE]	= shade (0.9, @base_color)
+	fg[SELECTED]	= shade (0.9, @base_color)
+	
+	text[NORMAL]	= shade (0.9, @base_color)
+	text[PRELIGHT]	= @base_color
+	text[ACTIVE]	= shade (0.9, @base_color)
+	text[SELECTED]	= shade (0.9, @base_color)
+
+	engine "murrine" {
+		roundness	= 0
+		glowstyle	= 0
+		glazestyle	= 0
+	}
+}
+
+style "theme-panel-text"
+{
+	fg[NORMAL]	= @base_color
+	fg[PRELIGHT]	= "#ffffff"
+	fg[ACTIVE]	= @base_color
+	
+	text[NORMAL]	= @base_color
+	text[PRELIGHT]	= "#ffffff"
+	text[ACTIVE]	= @base_color
+}
+
+style "panel-entry" = "dark"
+{
+	fg[NORMAL]	= @text_color
+	fg[PRELIGHT]	= @text_color
+	fg[ACTIVE]	= @text_color
+	fg[SELECTED]	= @text_color
+	fg[INSENSITIVE]	= @text_color
+
+	text[NORMAL]	= @text_color
+	text[PRELIGHT]	= @text_color
+	text[ACTIVE]	= @text_color
+	text[SELECTED]	= @text_color
+	text[INSENSITIVE]	= @text_color
+
+}
+
+style "theme-main-menu-text" = "theme-panel-text"
+{
+	fg[PRELIGHT]	= "#ffffff"
+	text[PRELIGHT]	= "#ffffff"
+}
+
+style "workspace-switcher" = "theme-panel"
+{
+	bg[SELECTED]	= shade (0.8, @selected_bg_color)
+}
+
+style "window-buttons" = "theme-panel"
+{
+xthickness = 3
+	GtkWidget::focus-line-width        = 0
+	GtkWidget::focus_padding           = 0
+	GtkWidget::interior_focus          = 0
+	GtkWidget::internal_padding        = 0
+	GtkButton::child_displacement_x    = 0
+	GtkButton::child_displacement_y    = 1
+	GtkButton::default_border          = {6,6,6,6}
+	GtkButton::default_outside_border  = {6,6,6,6}
+	GtkButtonBox::child_internal_pad_x = 0
+	GtkButtonBox::child_internal_pad_y = 0
+	GtkButtonBox::child_min_heigth     = 0
+	engine "murrine" {
+		roundness = 0
+		gradient_shades = {1.0,1.0,1.0,1.0}
+		border_shades = {1.0,1.0}
+		contrast = 0.0
+	}
+	engine "pixmap"	{
+		image {
+			function	= BOX
+			shadow		= OUT
+			recolorable	= TRUE
+			state		= PRELIGHT
+			file		= "buttons/panel-button-active.png"
+			border		= {6,6,6,6}
+			stretch		= TRUE
+		}
+		image {
+			function	= BOX
+			shadow		= IN
+			recolorable	= TRUE
+			state		= PRELIGHT
+			file		= "buttons/panel-button-active-prelight.png"
+			border		= {6,6,6,6}
+			stretch		= TRUE
+		}
+		image {
+			function	= BOX
+			recolorable	= TRUE
+			state		= NORMAL
+			file		= "buttons/panel-button-normal.png"
+			border		= {6,6,6,6}
+			stretch		= TRUE
+		}		
+		image {
+			function	= BOX
+			recolorable	= TRUE
+			state		= INSENSITIVE
+			file		= "buttons/panel-button-inactive.png"
+			border		= {6,6,6,6}
+			stretch		= TRUE
+		}
+		image {
+			function	= BOX
+			recolorable	= TRUE
+			state		= ACTIVE
+			file		= "buttons/panel-button-active.png"
+			border		= {6,6,6,6}
+			stretch		= TRUE
+		}
+		image {
+			function	= BOX
+			recolorable	= TRUE
+			state		= SELECTED
+			file		= "buttons/panel-button-active.png"
+			border		= {6,6,6,6}
+			stretch		= TRUE
+		}
+		image {
+			function	= BOX
+			recolorable	= TRUE
+			state		= PRELIGHT
+			file		= "buttons/panel-button-prelight.png"
+			border		= {6,6,6,6}
+			stretch		= TRUE
+		}
+	}
+}
+
+style "indicator" = "theme-panel"
+{
+	xthickness	= 0
+	ythickness	= 0
+}
+
+
+
+widget "*PanelWidget*"			style "theme-panel"
+widget "*PanelApplet*"			style "theme-panel"
+widget "*fast-user-switch*"		style "theme-panel"
+widget "*CPUFreq*Applet*"		style "theme-panel"
+class "PanelApp*"			style "theme-panel"
+class "PanelToplevel*"			style "theme-panel"
+widget_class "*PanelToplevel*"		style "theme-panel"
+widget_class "*notif*"			style "theme-panel"
+widget_class "*Notif*"			style "theme-panel"
+widget_class "*Tray*"			style "theme-panel" 
+widget_class "*tray*"			style "theme-panel"
+widget_class "*computertemp*"		style "theme-panel"
+widget_class "*Applet*Tomboy*"		style "theme-panel"
+widget_class "*Applet*Netstatus*"	style "theme-panel"
+
+# Fixes for tooltip text in some apps.
+widget_class "*Notif*Beagle*"		style "theme-panel"
+widget_class "*Notif*Brasero*"		style "theme-panel"
+
+# XFCE panel theming.
+widget "*Xfce*Panel*"			style "window-buttons"  #"theme-panel"
+class "*Xfce*Panel*"			style "window-buttons"
+widget "*WnckPager*"			style "window-buttons"
+widget "*Xfce*Panel*task*"               style "window-buttons"
+widget "*Xfce*Panel*button"               style "window-buttons"
+
+# Fix gtk-entries in the panel
+class "GtkEntry"			style "combo"
+class "*SexyIconEntry*"			style:highest "combo"	# fixes dict-plugin
+widget "*xfce4-verve-plugin*GtkEntry"	style:highest "combo"	# fixes verve-plugin
+
+# Make sure panel text color doesn't change
+widget_class "*Panel*MenuBar*"		style "theme-main-menu-text"
+widget_class "*Panel*<GtkMenuBar>*"	style "theme-main-menu-text"
+widget "*.clock-applet-button.*"	style "theme-panel-text"
+widget "*PanelApplet*"			style "window-buttons" #"theme-panel-text"
+
+# Override general panel-style with specific plugin-styles
+widget "*indicator-applet*"		style "window-buttons" #"indicator"
+widget "*indicator-button*"		style "window-buttons" #"indicator"
+widget "*XfceTasklist*"			style "window-buttons"
+

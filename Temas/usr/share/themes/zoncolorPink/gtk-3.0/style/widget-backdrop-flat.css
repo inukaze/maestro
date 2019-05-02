@@ -1,0 +1,243 @@
+@import url("widget-backdrop.css");
+
+/*
+ *********************************************************************
+ * GENERAL
+ *********************************************************************
+*/
+
+.notebook tab:backdrop {
+	background-image: none;
+	background-color: shade (@bg_color, 0.97);
+}
+
+.notebook tab:active:backdrop {
+	background-image: none;
+	background-color: shade (@bg_color, 1.05);
+}
+
+GtkComboBox:backdrop,
+.button:backdrop,
+GtkComboBox.combobox-entry .button:backdrop,
+GtkScale.slider:backdrop,
+GtkScale.slider.vertical:backdrop,
+.notebook .button:backdrop,
+.inline-toolbar.toolbar .button:backdrop {
+	background-image: none;
+	background-color: shade (@bg_color, 1.0);
+}
+
+.button:hover:backdrop,
+GtkComboBox.combobox-entry .button:hover:backdrop,
+GtkScale.slider:hover:backdrop,
+GtkScale.slider.vertical:hover:backdrop,
+.notebook .button:hover:backdrop,
+.inline-toolbar.toolbar .button:hover:backdrop {
+	background-image: none;
+	background-color: shade (@bg_color, 1.05);
+}
+
+.button:active:backdrop,
+GtkComboBox.combobox-entry .button:active:backdrop,
+.notebook .button:active:backdrop,
+.inline-toolbar.toolbar .button:active:backdrop {
+	background-image: none;
+	background-color: shade (@bg_color, 0.925);
+}
+
+.button:active:hover:backdrop,
+GtkComboBox.combobox-entry .button:active:hover:backdrop,
+.notebook .button:active:hover:backdrop,
+.inline-toolbar.toolbar .button:active:hover:backdrop {
+	background-image: none;
+	background-color: shade (@bg_color, 0.975);
+}
+
+.button:insensitive:backdrop,
+GtkComboBox.combobox-entry .button:insensitive:backdrop,
+.notebook .button:insensitive:backdrop,
+.inline-toolbar.toolbar .button:insensitive:backdrop {
+	background-image: none;
+	background-color: shade (@bg_color, 1.02);
+}
+
+.button.default:backdrop {
+	background-image: none;
+	background-color: mix (shade (@backdrop_selected_bg_color, 1.0), @bg_color, 0.3);
+}
+
+.button.default:hover:backdrop {
+	background-image: none;
+	background-color: mix (shade (@backdrop_selected_bg_color, 1.05), @bg_color, 0.3);
+}
+
+.button.default:active:backdrop {
+	background-image: none;
+	background-color: mix (shade (@backdrop_selected_bg_color, 1.0), @bg_color, 0.3);
+}
+
+.button.default:active:hover:backdrop {
+	background-image: none;
+	background-color: mix (shade (@backdrop_selected_bg_color, 1.05), @bg_color, 0.3);
+}
+
+row:selected:backdrop {
+	background-image: none;
+	background-color: shade (@backdrop_selected_bg_color, 1.03);
+}
+
+column-header .button:backdrop,
+.notebook column-header .button:backdrop {
+	background-image: none;
+	background-color: shade (@bg_color, 1.01);
+}
+
+column-header .button:hover:backdrop,
+.notebook column-header .button:hover:backdrop {
+	background-image: none;
+	background-color: shade (@bg_color, 1.03);
+}
+
+.entry:backdrop {
+	background-image: none;
+	background-color: mix (@base_color, @bg_color, 0.4);
+}
+
+GtkIconView.view.cell:selected:backdrop,
+GtkIconView.view.cell:selected:focused:backdrop {
+	background-image: none;
+	background-color: shade (@backdrop_selected_bg_color, 0.95);
+}
+
+.scale.highlight.left:backdrop,
+.progressbar:backdrop,
+.progressbar row:backdrop,
+.progressbar row:hover:backdrop,
+.progressbar row:selected:backdrop,
+.progressbar row:selected:focused:backdrop {
+	background-image: none;
+	background-color: shade (@backdrop_selected_bg_color, 1.0);
+}
+
+.scale.highlight.bottom:backdrop,
+.progressbar.vertical:backdrop {
+	background-image: none;
+	background-color: shade (@backdrop_selected_bg_color, 1.0);
+}
+
+.scale.highlight.left:insensitive:backdrop {
+	background-image: none;
+	background-color: shade (@bg_color, 0.93);
+}
+
+.scale.highlight.bottom:insensitive:backdrop {
+	background-image: none;
+	background-color: shade (@bg_color, 0.93);
+}
+
+GtkScale.slider:backdrop,
+GtkScale.slider:hover:backdrop,
+GtkScale.slider:insensitive:backdrop,
+GtkScale.slider.vertical:backdrop,
+GtkScale.slider.vertical:hover:backdrop,
+GtkScale.slider.vertical:insensitive:backdrop {
+	background-image: none;
+	background-color: shade (@button_bg_color, 0.9);
+}
+
+.spinbutton.button:backdrop,
+.notebook .spinbutton.button:backdrop {
+	background-image: none;
+	background-color: shade (@bg_color, 1.0);
+}
+
+GtkSwitch.trough:backdrop {
+	background-image: none;
+	background-color: shade (@bg_color, 0.925);
+}
+
+GtkSwitch.trough:active:backdrop {
+	background-image: none;
+	background-color: shade (@bg_color, 0.96);
+}
+
+GtkSwitch.trough:insensitive:backdrop {
+	background-image: none;
+	background-color: shade (@bg_color, 0.97);
+}
+
+GtkSwitch.slider:backdrop {
+	background-image: none;
+	background-color: shade (mix (@bg_color, @button_bg_color, 0.5), 1.0);
+}
+
+GtkSwitch.slider:insensitive:backdrop {
+	background-image: none;
+	background-color: shade (@bg_color, 0.95);
+}
+
+
+
+
+/*
+ *********************************************************************
+ * MENUBAR
+ *********************************************************************
+*/
+
+
+
+
+
+/*
+ *********************************************************************
+ * TOOLBAR
+ *********************************************************************
+*/
+
+.menubar.toolbar GtkComboBox.combobox-entry .button:backdrop,
+.menubar.toolbar .raised .button:backdrop,
+.menubar.toolbar .raised.button:backdrop,
+.menubar.toolbar .button:hover:backdrop,
+.primary-toolbar GtkComboBox.combobox-entry .button:backdrop,
+.primary-toolbar .raised .button:backdrop,
+.primary-toolbar .raised.button:backdrop,
+.primary-toolbar .button:hover:backdrop {
+	background-image: none;
+	background-color: shade (@toolbar_bg_color, 1.02);
+}
+
+.menubar.toolbar .button:active:backdrop,
+.primary-toolbar .button:active:backdrop {
+	background-image: none;
+	background-color: shade (@toolbar_bg_color, 0.925);
+}
+
+.menubar.toolbar .button:active:hover:backdrop,
+.primary-toolbar .button:active:hover:backdrop {
+	background-image: none;
+	background-color: shade (@toolbar_bg_color, 0.975);
+}
+
+.menubar.toolbar .button:insensitive:backdrop,
+.primary-toolbar .button:insensitive:backdrop {
+	background-image: none;
+	background-color: shade (@toolbar_bg_color, 1.0);
+}
+
+.menubar.toolbar .button:active:insensitive:backdrop,
+.primary-toolbar .button:active:insensitive:backdrop {
+	background-image: none;
+	background-color: shade (@toolbar_bg_color, 0.98);
+}
+
+
+
+
+/*
+ *********************************************************************
+ * FILE MANAGER
+ *********************************************************************
+*/
+
+

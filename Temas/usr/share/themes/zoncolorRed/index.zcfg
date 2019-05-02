@@ -1,0 +1,18 @@
+[zonColorConfig]
+Type=ThemeSet
+Version=1.0
+Notes=Best viewed as .ini file in Gedit.
+
+[Info]
+Name='zonColor Red'
+Comment='Red variant of zonColor'
+
+[ThemeSet]
+GtkTheme='zoncolorRed'
+WindowTheme='zoncolor'
+ShellTheme='zoncolorDarkNight'
+IconTheme='zoncolorRed'
+CursorTheme='zoncolor'
+Wallpaper='Pictures/zoncolorRedSky.png'
+WindowButtonLayout='close:menu'
+GtkColorScheme='@RESET'

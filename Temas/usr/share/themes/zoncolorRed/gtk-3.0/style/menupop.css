@@ -1,0 +1,443 @@
+/********
+ * menu *
+ ********/
+.menubar.toolbar .button .menu,
+.primary-toolbar .button .menu,
+.menu {
+	background-color: @menupop_bg_color;
+	background-image: none;
+	border-top-color: shade (@menupop_bg_color, 0.8);
+	border-right-color: shade (@menupop_bg_color, 0.7);
+	border-bottom-color: shade (@menupop_bg_color, 0.66);
+	border-left-color: shade (@menupop_bg_color, 0.75);
+	border-style: solid;
+	border-radius: 0;
+	padding: 3px 1px;
+
+	color: @menupop_fg_color;
+
+	-unico-inner-stroke-width: 0;
+	-unico-inner-stroke-gradient: none;
+	-unico-inner-stroke-color: @transparent;
+}
+
+Genericmenuitem .menu,
+DbusmenuGtkMenu .menu,
+.menubar.toolbar .button .menu,
+.primary-toolbar .button .menu,
+.menubar .menu,
+.primary-toolbar .menu {
+	border-top-color: shade (@menupop_bg_color, 0.85);
+}
+
+.menu:selected {
+	background-color: @menupopitem_selected_bg_color;
+	color: @menupopitem_selected_fg_color;
+}
+
+.menubar .button .menu.button:hover,
+.menubar .button .menu.button:active,
+.menubar .button .menu.button:active:insensitive,
+.menubar .button .menu.button:insensitive,
+.menubar .button .menu.button,
+.primary-toolbar .button .menu.button:hover,
+.primary-toolbar .button .menu.button:active,
+.primary-toolbar .button .menu.button:active:insensitive,
+.primary-toolbar .button .menu.button:insensitive,
+.primary-toolbar .button .menu.button,
+.menubar .menu.button:hover,
+.menubar .menu.button:active,
+.menubar .menu.button:active:insensitive,
+.menubar .menu.button:insensitive,
+.menubar .menu.button,
+.primary-toolbar .menu.button:hover,
+.primary-toolbar .menu.button:active,
+.primary-toolbar .menu.button:active:insensitive,
+.primary-toolbar .menu.button:insensitive,
+.primary-toolbar .menu.button {
+	background-color: @menupop_bg_color;
+	background-image: none;
+	border-radius: 0;
+	border-style: none;
+	border-width: 1px;
+
+	-unico-border-gradient: none;
+	-unico-glow-radius: 0;
+	-unico-inner-stroke-width: 0;
+	-unico-outer-stroke-width: 0;
+}
+
+/************
+ * menuitem *
+ ************/
+.menubar.toolbar .button .menuitem,
+.primary-toolbar .button .menuitem,
+.menuitem {
+    background-image: inherit;
+	background-color: inherit;
+	color: @menupop_fg_color;
+}
+
+.menuitem {
+	border-radius: 0;
+	border-style: solid;
+	border-width: 1px;
+	padding: 3px 2px 3px 2px;
+
+	-unico-inner-stroke-width: 1px;
+}
+
+Genericmenuitem .menuitem,
+DbusmenuGtkMenu .menuitem,
+.menubar .menuitem,
+.primary-toolbar .menuitem {
+	color: @menupop_fg_color;
+}
+
+
+
+
+/* Workaround for lp:949368 */
+.menubar.toolbar GtkComboBox .menuitem *,
+.primary-toolbar GtkComboBox .menuitem *,
+GtkComboBox .menuitem * {
+	color: @menupop_fg_color;
+}
+.menubar.toolbar GtkComboBox .menuitem *:hover,
+.primary-toolbar GtkComboBox .menuitem *:hover,
+GtkComboBox .menuitem *:hover {
+	color: @menupopitem_selected_fg_color;
+}
+.menubar.toolbar GtkComboBox .menuitem *:insensitive,
+.primary-toolbar GtkComboBox .menuitem *:insensitive,
+GtkComboBox .menuitem *:insensitive {
+	color: mix (@menupop_bg_color, @menupop_fg_color, 0.35);
+}
+
+
+
+
+.menubar.toolbar .button .menuitem:hover,
+.primary-toolbar .button .menuitem:hover,
+.menuitem:hover,
+.menu .menuitem:hover {
+	background-color: @menupopitem_selected_bg_color;
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@menupopitem_selected_bg_color, 1.125)),
+					to (shade (@menupopitem_selected_bg_color, 0.875)));
+
+	color: @menupopitem_selected_fg_color;
+
+	-unico-bullet-color: @menupopitem_selected_fg_color;
+
+	border-color: shade (@menupopitem_selected_bg_color, 0.8);
+	-unico-border-gradient: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@menupopitem_selected_bg_color, 0.85)),
+					to (shade (@menupopitem_selected_bg_color, 0.75)));
+	-unico-glow-color: shade (@menupopitem_selected_bg_color, 1.1);
+	-unico-glow-radius: 0;
+	-unico-inner-stroke-gradient: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@menupopitem_selected_bg_color, 1.15)),
+					to (shade (@menupopitem_selected_bg_color, 0.85)));
+}
+
+/*
+.menuitem.check:active,
+.menuitem.radio:active {
+	color: @menupop_fg_color;
+
+	-unico-bullet-color: @menupop_fg_color;
+}
+*/
+.menuitem.check:active,
+.menuitem.radio:active {
+	color: @menupop_fg_color;
+	-unico-bullet-color: @menupop_fg_color;
+}
+.menuitem.check:active:insensitive,
+.menuitem.radio:active:insensitive,
+.menuitem.check:active:insensitive:hover,
+.menuitem.radio:active:insensitive:hover {
+	color: mix (@menupop_bg_color, @menupop_fg_color, 0.35);
+	-unico-bullet-color: mix (@menupop_bg_color, @menupop_fg_color, 0.35);
+}
+.menuitem.check:active:hover,
+.menuitem.radio:active:hover {
+	color: @menupopitem_selected_fg_color;
+	-unico-bullet-color: @menupopitem_selected_fg_color;
+}
+.menubar.toolbar .button .menuitem.check,
+.menubar.toolbar .button .menuitem.check:hover,
+.menubar.toolbar .button .menuitem.check:active,
+.menubar.toolbar .button .menuitem.check:active:hover,
+.menubar.toolbar .button .menuitem.check:insensitive,
+.menubar.toolbar .button .menuitem.radio,
+.menubar.toolbar .button .menuitem.radio:hover,
+.menubar.toolbar .button .menuitem.radio:active,
+.menubar.toolbar .button .menuitem.radio:active:hover,
+.menubar.toolbar .button .menuitem.radio:insensitive,
+.primary-toolbar .button .menuitem.check,
+.primary-toolbar .button .menuitem.check:hover,
+.primary-toolbar .button .menuitem.check:active,
+.primary-toolbar .button .menuitem.check:active:hover,
+.primary-toolbar .button .menuitem.check:insensitive,
+.primary-toolbar .button .menuitem.radio,
+.primary-toolbar .button .menuitem.radio:hover,
+.primary-toolbar .button .menuitem.radio:active,
+.primary-toolbar .button .menuitem.radio:active:hover,
+.primary-toolbar .button .menuitem.radio:insensitive,
+.menuitem.check,
+.menuitem.check:hover,
+.menuitem.check:active,
+.menuitem.check:active:hover,
+.menuitem.check:insensitive,
+.menuitem.radio,
+.menuitem.radio:hover,
+.menuitem.radio:active,
+.menuitem.radio:active:hover,
+.menuitem.radio:insensitive,
+whatever {
+	background-color: @transparent;
+	background-image: none;
+	border-color: @transparent;
+}
+
+.menuitem:insensitive,
+.menuitem *:insensitive,
+Genericmenuitem .menuitem:insensitive,
+Genericmenuitem .menuitem *:insensitive,
+DbusmenuGtkMenu .menuitem:insensitive,
+DbusmenuGtkMenu .menuitem *:insensitive,
+.menubar .menuitem:insensitive,
+.menubar .menuitem *:insensitive,
+.primary-toolbar .menuitem:insensitive,
+.primary-toolbar .menuitem *:insensitive {
+	color: mix (@menupop_bg_color, @menupop_fg_color, 0.35);
+}
+
+/*
+Genericmenuitem .menuitem.check:active,
+Genericmenuitem .menuitem.radio:active,
+DbusmenuGtkMenu .menuitem.check:active,
+DbusmenuGtkMenu .menuitem.radio:active,
+.menubar .menuitem.check:active,
+.menubar .menuitem.radio:active,
+.primary-toolbar .menuitem.check:active,
+.primary-toolbar .menuitem.radio:active {
+	color: @menupop_fg_color;
+
+	-unico-bullet-color: @menupop_fg_color;
+}
+*/
+
+/*
+.menuitem.check:active:hover,
+.menuitem.radio:active:hover {
+	color: @menupopitem_selected_fg_color;
+
+	-unico-bullet-color: @menupopitem_selected_fg_color;
+}
+*/
+
+.menubar .menuitem GtkCalendar,
+/*.menubar .menuitem GtkCalendar.button,*/
+.menubar .menuitem GtkCalendar.header,
+.menubar .menuitem GtkCalendar.view,
+.primary-toolbar .menuitem GtkCalendar,
+/*.primary-toolbar .menuitem GtkCalendar.button,*/
+.primary-toolbar .menuitem GtkCalendar.header,
+.primary-toolbar .menuitem GtkCalendar.view,
+.menuitem GtkCalendar,
+/*.menuitem GtkCalendar.button,*/
+.menuitem GtkCalendar.header,
+.menuitem GtkCalendar.view,
+whatever {
+	background-color: mix (@menupop_fg_color, @menupop_bg_color, 0.85);
+	background-image: none;
+	/*border-radius: 0;*/
+	border-style: solid;
+	border-width: 0;
+	padding: 0;
+
+	color: @menupop_fg_color;
+}
+
+.menubar .menuitem GtkCalendar,
+.primary-toolbar .menuitem GtkCalendar,
+.menuitem GtkCalendar,
+whatever {
+	background-color: shade (@menupop_bg_color, 1.0);
+	background-image: none;
+}
+
+.menubar .menuitem .entry,
+.primary-toolbar .menuitem .entry {
+	background-color: shade (@menupop_bg_color, 1.0);
+	background-image: none;
+
+	color: @menupop_fg_color;
+
+	border-color: shade (@menupop_bg_color, 0.825);
+	-unico-border-gradient: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@menupop_bg_color, 0.75)),
+					to (shade (@menupop_bg_color, 0.9)));
+	-unico-outer-stroke-gradient: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@menupop_bg_color, 0.98)),
+					to (shade (@menupop_bg_color, 1.1)));;
+}
+
+@define-color menuitemscaletrough_bg_color	shade (mix (@menupop_fg_color, @menupop_bg_color, 0.85), 1.05);
+.menubar .menuitem GtkScale.trough {
+	background-color: shade (@menuitemscaletrough_bg_color, 0.975);
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@menuitemscaletrough_bg_color, 0.9)),
+					to (shade (@menuitemscaletrough_bg_color, 1.05)));
+
+	border-color: shade (@menuitemscaletrough_bg_color, 0.75);
+	-unico-border-gradient: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@menuitemscaletrough_bg_color, 0.75)),
+					to (shade (@menuitemscaletrough_bg_color, 0.75)));
+}
+
+Genericmenuitem .menuitem .accelerator,
+DbusmenuGtkMenu .menuitem .accelerator,
+.menubar .menuitem .accelerator,
+.primary-toolbar .menuitem .accelerator {
+	color: alpha (@menupop_fg_color, 0.6);
+}
+
+Genericmenuitem .menuitem .accelerator:hover,
+DbusmenuGtkMenu .menuitem .accelerator:hover.
+.menubar .menuitem .accelerator:hover,
+.primary-toolbar .menuitem .accelerator:hover {
+	color: alpha (@menupop_fg_color, 0.8);
+}
+
+Genericmenuitem .menuitem .accelerator:insensitive,
+DbusmenuGtkMenu .menuitem .accelerator:insensitive,
+.menubar .menuitem .accelerator:insensitive,
+.primary-toolbar .menuitem .accelerator:insensitive {
+	color: alpha (mix (@menupop_fg_color, @menupop_bg_color, 0.5), 0.6);
+}
+
+.accelerator,
+.accelerator:hover,
+.accelerator:insensitive,
+.menuitem .accelerator,
+.menuitem .accelerator:hover,
+.menuitem .accelerator:insensitive,
+Genericmenuitem .menuitem .accelerator,
+DbusmenuGtkMenu .menuitem .accelerator,
+.menubar .menuitem .accelerator,
+.primary-toolbar .menuitem .accelerator,
+Genericmenuitem .menuitem .accelerator:hover,
+DbusmenuGtkMenu .menuitem .accelerator:hover.
+.menubar .menuitem .accelerator:hover,
+.primary-toolbar .menuitem .accelerator:hover,
+Genericmenuitem .menuitem .accelerator:insensitive,
+DbusmenuGtkMenu .menuitem .accelerator:insensitive,
+.menubar .menuitem .accelerator:insensitive,
+.primary-toolbar .menuitem .accelerator:insensitive,
+whatever {
+	text-shadow: none;
+}
+
+/*
+.menuitem.separator {
+	-GtkMenuItem-horizontal-padding: 0;
+	-GtkWidget-separator-height: 1;
+	padding: 3px 0;
+	border-color: shade (@menupop_bg_color, 0.925);
+	-unico-inner-stroke-color: alpha (@menupop_bg_color, 0.5);
+}
+*/
+
+/*
+Genericmenuitem .menuitem.separator,
+DbusmenuGtkMenu .menuitem.separator,
+.menubar .menuitem.separator,
+.primary-toolbar .menuitem.separator {
+	border-color: shade (@menupop_bg_color, 0.925);
+	-unico-inner-stroke-color: alpha (@menupop_bg_color, 0.5);
+}
+*/
+
+Genericmenuitem .menuitem.separator,
+DbusmenuGtkMenu .menuitem.separator,
+.menubar .menuitem.separator,
+.primary-toolbar .menuitem.separator,
+.menubar.toolbar .button .menuitem.separator,
+.primary-toolbar .button .menuitem.separator,
+.menuitem.separator {
+	-GtkWidget-wide-separators: false;
+    -GtkMenuItem-horizontal-padding: 0;
+	-GtkWidget-separator-height: 1;
+	/*padding: 3px 0;*/
+	color: shade (@menupop_bg_color, 0.925);
+	border: none;
+	-unico-inner-stroke-color: alpha (@menupop_bg_color, 0.5);
+}
+
+
+.menu.button {
+	color: @menupop_fg_color;
+	background-color: @menupop_bg_color;
+	background-image: none;
+	border-color: @menupop_bg_color;
+	border-right-color: shade (@menupop_bg_color, 0.7);
+	border-left-color: shade (@menupop_bg_color, 0.75);
+	border-width: 0;
+	border-style: solid;
+	border-radius: 0;
+	transition: 0ms ease-in-out;
+	-unico-border-gradient: none;
+	-unico-inner-stroke-width: 0;
+	-unico-outer-stroke-width: 0;
+}
+.menu.button:hover {
+	color: @menupopitem_selected_fg_color;
+	background-color: @menupopitem_selected_bg_color;
+}
+.menu.button:insensitive {
+	color: mix (@menupop_bg_color, @menupop_fg_color, 0.35);
+	background-color: @menupop_bg_color;
+}
+
+
+
+/* primary toolbar menuitem */
+
+.menubar.toolbar .button .menuitem,
+.menubar.toolbar .button .menuitem *,
+.menubar.toolbar .menuitem GtkLabel,
+.menubar.toolbar .menuitem GtkLabel:active,
+.menubar.toolbar .menuitem GtkLabel:active:hover,
+.primary-toolbar .button .menuitem,
+.primary-toolbar .button .menuitem *,
+.primary-toolbar .menuitem GtkLabel,
+.primary-toolbar .menuitem GtkLabel:active,
+.primary-toolbar .menuitem GtkLabel:active:hover,
+whatever {
+	color: @menupop_fg_color;
+}
+.menubar.toolbar .button .menuitem:hover,
+.menubar.toolbar .button .menuitem *:hover,
+.menubar.toolbar .menuitem GtkLabel:hover,
+.primary-toolbar .button .menuitem:hover,
+.primary-toolbar .button .menuitem *:hover,
+.primary-toolbar .menuitem GtkLabel:hover,
+whatever {
+	color: @menupopitem_selected_fg_color;
+}
+.menubar.toolbar .button .menuitem:insensitive,
+.menubar.toolbar .button .menuitem *:insensitive,
+.menubar.toolbar .menuitem GtkLabel:insensitive,
+.menubar.toolbar .menuitem GtkLabel:insensitive:hover,
+.primary-toolbar .button .menuitem:insensitive,
+.primary-toolbar .button .menuitem *:insensitive,
+.primary-toolbar .menuitem GtkLabel:insensitive,
+.primary-toolbar .menuitem GtkLabel:insensitive:hover,
+whatever {
+	color: mix (@menupop_bg_color, @menupop_fg_color, 0.35);
+}
+

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=zonColor Basic
+Comment=Basic zonColor GTK-theme.
+
+[X-GNOME-Metatheme]
+GtkTheme=zoncolorBasic
+MetacityTheme=zoncolor
+ShellTheme=zoncolor
+IconTheme=zoncolor
+CursorTheme=zoncolor
+BackgroundImage=Pictures/zoncolor.png
+ButtonLayout=close:menu
+GtkColorScheme=@RESET

@@ -1,0 +1,12 @@
+NemoPathbarButton:active,
+NemoPathbarButton:active:hover,
+.menubar.toolbar .button *:active,
+.menubar.toolbar .button *:active:hover,
+.menubar.toolbar .button:active,
+.primary-toolbar .button *:active,
+.primary-toolbar .button *:active:hover,
+.primary-toolbar .button:active {
+	text-shadow: 0 1 @toolbarbutton_selected_textshadow_color;
+	icon-shadow: 0 1 @toolbarbutton_selected_textshadow_color;
+}
+

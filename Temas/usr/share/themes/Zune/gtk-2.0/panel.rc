@@ -1,0 +1,215 @@
+#############################################################
+#SLICKNESS PANEL SETTINGS
+#############################################################
+
+#############################################################
+#THIS FIXES THE STANDARD SHUTDOWN-DIALOG ON GNOME
+#############################################################
+
+style "fix"
+{
+xthickness = 0
+ythickness = 0
+bg_pixmap[NORMAL] = "shadows/window-bg.png"
+}
+
+class "*Panel*" style "fix"
+
+#############################################################
+
+style "panel"
+{
+
+xthickness = 0
+ythickness = 0
+
+  	fg[NORMAL]			= "#d7d7d7" #TEXT ON NORMAL PANEL BUTTONS
+  	fg[PRELIGHT]			= "#ffffff" #TEXT ON MOUSEOVERED PANEL BUTTONS
+  	fg[ACTIVE]			= "#f0f0f0" #TEXT ON ACTIVE PANEL BUTTON
+  	fg[SELECTED]			= "#000000"
+  	fg[INSENSITIVE]			= "#6B6B6B"
+#  	bg[SELECTED]			= "#3d3d3d"
+	bg_pixmap[NORMAL] 		= "panel/panel-bg.png"
+	bg_pixmap[ACTIVE] 		= "panel/panel-bg.png"
+	bg_pixmap[SELECTED] 		= "panel/panel-bg.png"
+	bg_pixmap[INSENSITIVE] 		= "panel/panel-bg.png"
+	bg_pixmap[PRELIGHT] 		= "panel/panel-bg.png"
+}
+
+
+#############################################################
+#THESE DECLARATIONS MAKE SURE THE PANEL STILL USES PANEL STYLE
+#############################################################
+
+class "*Mail*" style "panel"
+class "*notif*" style "panel"
+class "*Notif*" style "panel"
+class "*Tray*" style "panel"
+class "*tray*" style "panel"
+widget_class "*Mail*" style "panel"
+widget_class "*notif*" style "panel"
+widget_class "*Notif*" style "panel"
+widget_class "*Tray*" style "panel"
+widget_class "*tray*" style "panel"
+widget_class "*BonoboDockItem" style "panel"
+class "*BonoboDockItem" style "panel"
+widget "*TrayIcon*" style "panel"
+class "*Panel*Applet*" style "panel"
+widget_class "*Panel*GtkToggleButton" style "panel"
+widget_class "*Panel*GtkButton" style "panel"
+widget_class "*.Panel*Button*GtkLabel" style "panel"
+widget_class "*.Panel*GtkLabel" style "panel"
+widget "*PanelWidget*" style "panel"
+widget "*PanelApplet*" style "panel"
+
+
+#############################################################
+#THIS MAKES THE APPLICATIONS PLACES SYSTEM MENU ON THE PANEL
+#USE PANEL STYLE
+#############################################################
+
+
+style "panelbar"
+{
+engine "pixmap"
+
+	{
+	image
+	{
+		function	= BOX
+		state		= NORMAL
+		file		= "panel/panel-bg.png"
+		border		= { 0 , 0 , 0 , 0}
+		stretch		= FALSE
+	}
+
+	
+	image
+	{
+		function	= BOX
+		state		= ACTIVE
+		file		= "panel/panel-bg.png"
+		border		= { 0 , 0 , 0 , 0}
+		stretch		= FALSE
+	}
+
+	
+	image
+	{
+		function	= BOX
+		state		= INSENSITIVE
+		file		= "panel/panel-bg.png"
+		border		= { 0 , 0 , 0 , 0}
+		stretch		= FALSE
+	}
+
+	
+	image
+	{
+		function	= BOX
+		state		= PRELIGHT
+		recolorable	= TRUE
+		file		= "menubar/menubar-item.png"
+		border		= { 4 , 4 , 4 , 4}
+		stretch		= TRUE
+	}
+
+}
+
+}
+
+widget_class "*Panel*MenuBar*" style "panelbar"
+
+
+
+#############################################################
+
+style "panelbuttons"
+{
+ xthickness            			= 4
+ ythickness            			= 4
+
+	GtkWidget::focus_padding = 2
+
+	engine "pixmap" {
+      
+	image
+	{
+		function        		= BOX
+		recolorable     		= TRUE
+		state				= NORMAL
+		file            		= "panel/panel-button-inactive.png"
+		border          		= { 3, 3, 3, 3 }
+		stretch         		= TRUE
+	}
+		
+	image
+	{
+		function        		= BOX
+		shadow				= OUT
+		recolorable     		= TRUE
+		state				= PRELIGHT
+		file            		= "panel/panel-button-prelight.png"
+		border          		= { 3, 3, 3, 3 }
+		stretch         		= TRUE
+		overlay_file			= "panel/panel-button-null.png"
+		overlay_border			=  { 3, 3, 3, 3 }
+		overlay_stretch			= TRUE
+	}		
+
+	image
+	{
+		function        		= BOX
+		recolorable     		= TRUE
+		shadow				= IN
+		state				= PRELIGHT
+		file            		= "panel/panel-button-active.png"
+		border          		= { 3, 3, 3, 3 }
+		stretch         		= TRUE
+		overlay_file			= "panel/panel-button-active.png"
+		overlay_border			=  { 3, 3, 3, 3 }
+		overlay_stretch			= TRUE
+	}
+		
+
+	image
+	{
+		function        		= BOX
+		recolorable     		= TRUE
+		state				= ACTIVE
+		file            		= "panel/panel-button-active.png"
+		border          		= { 3, 3, 3, 3 }
+		stretch         		= TRUE
+	}  
+
+	image
+	{
+		function        		= BOX
+		recolorable     		= TRUE
+		state				= INSENSITIVE
+		file            		= "panel/panel-button-inactive.png"
+		border          		= { 3, 3, 3, 3 }
+		stretch         		= TRUE
+	} 
+
+	image
+	{
+		function        		= BOX
+		recolorable     		= TRUE
+		state				= SELECTED
+		file            		= "panel/panel-button-active.png"
+		border          		= { 3, 3, 3, 3 }
+		stretch         		= TRUE
+	}  
+
+}
+
+}
+
+#############################################################
+#THESE DECLARATIONS MAKE SURE THE LAUNCHER EDITOR USE 
+#STANDARD STYLE AND NOT PANEL STYLE
+#############################################################
+
+widget_class "*Panel*GtkToggleButton" style "panelbuttons"
+widget "*.tasklist-button" style "panelbuttons"

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=zonColor Xtra: Redmond::ModernUI
+Comment=Redmond::ModernUI extra variant of zonColor
+
+[X-GNOME-Metatheme]
+GtkTheme=zoncolorXtra-RedmondModern
+MetacityTheme=zoncolorXtra-RedmondModern
+ShellTheme=zoncolorDarkNight
+IconTheme=zoncolorMix-YellowTurquoise
+CursorTheme=DMZ-White
+BackgroundImage=Pictures/zoncolorHilight.png
+ButtonLayout=menu:minimize,maximize,close
+GtkColorScheme=@RESET

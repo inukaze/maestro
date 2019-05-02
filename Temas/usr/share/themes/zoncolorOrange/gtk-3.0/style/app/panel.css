@@ -1,0 +1,372 @@
+/*******************************
+ * Fallback Mode GNOME 3 Panel *
+ *******************************/
+PanelWidget,
+PanelApplet,
+PanelToplevel {
+	padding: 0;
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@panel_bg_color, 1.3)),
+					color-stop (0.65, shade (@panel_bg_color, 1.06)),
+					to (shade (@panel_bg_color, 1.0)));
+
+	color: @panel_fg_color;
+}
+
+PanelApplet {
+	border-width: 0;
+}
+
+PanelAppletFrame { 
+	background-color: @transparent;
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@panel_bg_color, 1.3)),
+					color-stop (0.65, shade (@panel_bg_color, 1.06)),
+					to (shade (@panel_bg_color, 1.0)));
+	border-width: 0;
+}
+
+
+/* Panel menubar */
+.gnome-panel-menu-bar,
+PanelApplet > GtkMenuBar.menubar,
+PanelMenuBar.menubar,
+.whatever {
+	box-shadow: none;
+	border-width: 0;
+	-unico-inner-stroke-width: 0;
+}
+
+.gnome-panel-menu-bar.menuitem,
+PanelApplet > GtkMenuBar.menubar.menuitem,
+PanelMenuBar.menubar.menuitem,
+.gnome-panel-menu-bar > GtkMenuItem.menuitem,
+PanelApplet > GtkMenuBar.menubar > GtkMenuItem.menuitem,
+PanelMenuBar.menubar > GtkMenuItem.menuitem {
+	padding-left: 0;
+	padding-right: 0;
+}
+PanelMenuBar.menubar.menuitem,
+PanelMenuBar.menubar > GtkMenuItem.menuitem {
+	padding-left: 2px;
+	padding-right: 4px;
+}
+.gnome-panel-menu-bar {
+	-PanelMenuBar-icon-visible: true;
+}
+.gnome-panel-menu-bar > GtkMenuItem.menuitem {
+	font: bold;
+	-GtkMenuItem-toggle-spacing: 2;
+}
+.gnome-panel-menu-bar > GtkMenuItem.menuitem .menuitem {
+	font: normal;
+}
+
+.gnome-panel-menu-bar:backdrop,
+.gnome-panel-menu-bar.menuitem:backdrop,
+.gnome-panel-menu-bar > GtkMenuItem.menuitem:backdrop,
+PanelApplet > GtkMenuBar.menubar:backdrop,
+PanelApplet > GtkMenuBar.menubar.menuitem:backdrop,
+PanelApplet > GtkMenuBar.menubar > GtkMenuItem.menuitem:backdrop,
+PanelMenuBar.menubar:backdrop,
+PanelMenuBar.menubar.menuitem:backdrop,
+PanelMenuBar.menubar > GtkMenuItem.menuitem:backdrop,
+.gnome-panel-menu-bar,
+.gnome-panel-menu-bar.menuitem,
+.gnome-panel-menu-bar > GtkMenuItem.menuitem,
+PanelApplet > GtkMenuBar.menubar,
+PanelApplet > GtkMenuBar.menubar.menuitem,
+PanelApplet > GtkMenuBar.menubar > GtkMenuItem.menuitem,
+PanelMenuBar.menubar,
+PanelMenuBar.menubar.menuitem,
+PanelMenuBar.menubar > GtkMenuItem.menuitem {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@panel_bg_color, 1.3)),
+					color-stop (0.65, shade (@panel_bg_color, 1.06)),
+					to (shade (@panel_bg_color, 1.0)));
+	color: @panel_fg_color;
+	border-color: @transparent;
+}
+
+.gnome-panel-menu-bar:prelight,
+.gnome-panel-menu-bar.menuitem:prelight,
+.gnome-panel-menu-bar > GtkMenuItem.menuitem:prelight,
+PanelApplet > GtkMenuBar.menubar:prelight,
+PanelApplet > GtkMenuBar.menubar.menuitem:prelight,
+PanelApplet > GtkMenuBar.menubar > GtkMenuItem.menuitem:prelight,
+PanelMenuBar.menubar:prelight,
+PanelMenuBar.menubar.menuitem:prelight,
+PanelMenuBar.menubar > GtkMenuItem.menuitem:prelight {
+	background-color: @panelmenubaritem_selected_bg_color;
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@panelmenubaritem_selected_bg_color, 0.9)),
+					to (shade (@panelmenubaritem_selected_bg_color, 1.1)));
+
+	color: @panelmenubaritem_selected_fg_color;
+	border-color: shade (mix (@panel_bg_color, @panelmenubaritem_selected_bg_color, 0.5), 0.8);
+	-unico-glow-radius: 0;
+	-unico-glow-color: @transparent;
+}
+
+PanelApplet > GtkMenuBar.menubar > GtkMenuItem.menuitem:backdrop,
+PanelApplet > GtkMenuBar.menubar > GtkMenuItem.menuitem {
+}
+PanelApplet > GtkMenuBar.menubar > GtkMenuItem.menuitem *:prelight {
+	color: @panelmenubaritem_selected_fg_color;
+}
+PanelApplet > GtkMenuBar.menubar > GtkMenuItem.menuitem .menuitem *:prelight {
+	color: @menupopitem_selected_fg_color;
+}
+
+
+/* Panel button */
+ClockBox:backdrop,
+ClockBox,
+PanelApplet .button:backdrop,
+PanelApplet .button {
+	padding-top: 0;
+	padding-bottom: 0;
+	-GtkButton-inner-border: 2;
+	background-color: @transparent;
+	/*background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@panel_bg_color, 1.3)),
+					color-stop (0.65, shade (@panel_bg_color, 1.06)),
+					to (shade (@panel_bg_color, 1.0)));*/
+	background-image: none;
+	box-shadow: none;
+	border-color: @transparent;
+	/*border-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@panel_bg_color, 1.3)),
+					color-stop (0.65, shade (@panel_bg_color, 1.06)),
+					to (shade (@panel_bg_color, 1.0))) 1;*/
+	border-radius: 0;
+	border-width: 0 1px 0 1px;
+	color: @panel_fg_color;
+	transition: 0ms ease-in-out;
+	-unico-border-gradient: none;
+	-unico-glow-radius: 0;
+	-unico-glow-color: @transparent;
+	-unico-inner-stroke-width: 0;
+	-unico-outer-stroke-width: 0;
+}
+
+ClockBox:prelight:backdrop,
+ClockBox:prelight,
+PanelApplet .button:prelight:backdrop,
+PanelApplet .button:prelight {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@panel_bg_color, 1.4)),
+					to (shade (@panel_bg_color, 1.1)));
+	box-shadow:	0 1 shade (@panel_bg_color, 1.5),
+			0 -1 shade (@panel_bg_color, 1.0);
+	border-color: shade (@panel_bg_color, 0.9);
+	border-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@panel_bg_color, 0.9)),
+					to (shade (@panel_bg_color, 0.9))) 1;
+	border-radius: 0;
+	border-width: 0 1px 0 1px;
+	color: @panel_fg_color;
+	-unico-border-gradient: none;
+	-unico-glow-radius: 0;
+	-unico-glow-color: @transparent;
+	-unico-inner-stroke-width: 0;
+	-unico-outer-stroke-width: 0;
+}
+
+ClockBox:active:prelight:backdrop,
+ClockBox:active:prelight,
+ClockBox:active:backdrop,
+ClockBox:active,
+PanelApplet .button:active:prelight:backdrop,
+PanelApplet .button:active:backdrop,
+PanelApplet .button:active:prelight,
+PanelApplet .button:active {
+	font: bold;
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@panelbutton_selected_bg_color, 0.9)),
+					to (shade (@panelbutton_selected_bg_color, 1.1))); 
+	box-shadow:	0 1 shade (@panelbutton_selected_bg_color, 0.8),
+			0 -1 shade (@panelbutton_selected_bg_color, 1.15);
+	border-color: shade (mix (@panel_bg_color, @panelbutton_selected_bg_color, 0.5), 0.8);
+	border-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (mix (@panel_bg_color, @panelbutton_selected_bg_color, 0.5), 0.8)),
+					to (shade (mix (@panel_bg_color, @panelbutton_selected_bg_color, 0.5), 0.8))) 1; 
+	border-radius: 0;
+	border-width: 0 1px 0 1px;
+	color: @panelbutton_selected_fg_color;
+	-unico-border-gradient: none;
+	-unico-glow-radius: 0;
+	-unico-glow-color: @transparent;
+	-unico-inner-stroke-width: 0;
+	-unico-outer-stroke-width: 0;
+}
+
+/* WnckTasklist (Window List) button*/
+/*
+WnckTasklist .button,
+WnckTasklist .button:backdrop,
+.whatever {
+	border-width: 2px 2px;
+	border-color: @transparent;
+	border-image: none;
+	-unico-border-gradient: none;
+	-unico-inner-stroke-width: 1px;
+	-unico-inner-stroke-color: @transparent;
+	-unico-inner-stroke-gradient: none;
+}
+
+WnckTasklist .button:prelight,
+WnckTasklist .button:prelight:backdrop,
+.whatever {
+	border-width: 2px 2px;
+	border-color: @transparent;
+	border-image: none;
+	-unico-border-gradient: none;
+	-unico-inner-stroke-width: 1px;
+	-unico-inner-stroke-color: shade (@panel_bg_color, 0.9);
+	-unico-inner-stroke-gradient: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@panel_bg_color, 1.05)),
+					to (shade (@panel_bg_color, 0.75)));
+}
+
+WnckTasklist .button:active,
+WnckTasklist .button:active:backdrop,
+WnckTasklist .button:active:prelight,
+WnckTasklist .button:active:prelight:backdrop,
+.whatever {
+	border-width: 2px 2px;
+	border-color: @transparent;
+	border-image: none;
+	-unico-border-gradient: none;
+	-unico-inner-stroke-width: 1px;
+	-unico-inner-stroke-color: shade (mix (@panel_bg_color, @panelbutton_selected_bg_color, 0.5), 0.8);
+	-unico-inner-stroke-gradient: -gtk-gradient (linear, left top, left bottom,
+					from (shade (mix (@panel_bg_color, @panelbutton_selected_bg_color, 0.5), 0.8)),
+					to (shade (mix (@panel_bg_color, @panelbutton_selected_bg_color, 0.5), 0.8)));
+}
+*/
+
+/* Panel Applet Misc */
+ClockBox {
+	color: @panel_fg_color;
+}
+
+ClockBox,
+PanelApplet .button,
+.whatever {
+	font: bold;
+}
+
+WnckTasklist,
+WnckTasklist.button,
+WnckTasklist .button,
+.whatever {
+	font: normal;
+}
+
+WnckPager {
+	padding: 2px;
+	background-color: shade (@panel_bg_color, 1.125);
+	color: @panel_fg_color;
+}
+WnckPager:selected {
+	background-color: @panelbutton_selected_bg_color;
+	color: @panelbutton_selected_fg_color;
+}
+
+PanelSeparator,
+PanelSeparator:backdrop,
+PanelSeparator :backdrop,
+.whatever {
+	background-color: shade (@panel_bg_color, 1.15);
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@panel_bg_color, 1.3)),
+					color-stop (0.65, shade (@panel_bg_color, 1.06)),
+					to (shade (@panel_bg_color, 1.0)));
+	border-width: 0;
+	border-color: @transparent;
+}
+
+NaTrayApplet {
+	-NaTrayApplet-icon-padding: 1;
+	-NaTrayApplet-icon-size: 22;
+}
+
+
+
+/***************
+ * Unity Panel *
+ ***************/
+UnityPanelWidget,
+.unity-panel {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@panel_bg_color, 1.3)),
+					color-stop (0.65, shade (@panel_bg_color, 1.06)),
+					to (shade (@panel_bg_color, 1.0)));
+	border-top-color: shade (@panel_bg_color, 1.4);
+	border-style: solid;
+	border-width: 1px 0 0 0;
+	-unico-border-gradient: none;
+}
+
+.unity-panel.menubar,
+.unity-panel .menubar {
+}
+
+.unity-panel.menuitem,
+.unity-panel .menuitem {
+	border-color:@transparent;
+	border-width: 0 1px 0 1px;
+	color: @panel_fg_color;
+}
+
+.unity-panel.menubar.menuitem:hover,
+.unity-panel.menubar .menuitem *:hover {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@panelmenubaritem_selected_bg_color, 0.95)),
+					to (shade (@panelmenubaritem_selected_bg_color, 1.05)));
+	border-color: shade (mix (@panel_bg_color, @panelmenubaritem_selected_bg_color, 0.5), 0.8);
+	border-width: 0 1px 0 1px;
+	color: @panelmenubaritem_selected_fg_color;
+}
+
+
+
+/***************
+ * Wingpanel *
+ ***************/
+.panel {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@panel_bg_color, 1.3)),
+					color-stop (0.65, shade (@panel_bg_color, 1.06)),
+					to (shade (@panel_bg_color, 1.0)));
+	border-top-color: shade (@panel_bg_color, 1.4);
+	border-style: solid;
+	border-width: 1px 0 0 0;
+	-unico-border-gradient: none;
+	color: @panel_fg_color;
+}
+
+/*
+.shadow {
+	background-color: @transparent;
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (alpha (#000000, 0.3)),
+					to (alpha (#000000, 0.0)));
+}
+*/
+
+.composited-indicator,
+.wingpanel-app-button, 
+.wingpanel-indicator-button {
+	background-color: @transparent;
+	color: @panel_fg_color;
+}
+
+.composited-indicator.menuitem:active,
+.composited-indicator.menuitem:prelight {
+	border-style: none;
+	-unico-inner-stroke-width: 0;
+	background-image: none;
+}
+

@@ -1,0 +1,18 @@
+[zonColorConfig]
+Type=ThemeSet
+Version=1.0
+Notes=Best viewed as .ini file in Gedit.
+
+[Info]
+Name='zonColor Silver'
+Comment='Silver variant of zonColor'
+
+[ThemeSet]
+GtkTheme='zoncolorSilver'
+WindowTheme='zoncolor'
+ShellTheme='zoncolorDayLight'
+IconTheme='zoncolorSilver'
+CursorTheme='zoncolor'
+Wallpaper='Pictures/zoncolorSlate.png'
+WindowButtonLayout='close:menu'
+GtkColorScheme='@RESET'

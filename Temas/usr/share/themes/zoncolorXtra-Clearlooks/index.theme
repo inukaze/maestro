@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=zonColor Xtra-Clearlooks
+Comment=Xtra-Clearlooks variant of zonColor
+
+[X-GNOME-Metatheme]
+GtkTheme=zoncolorXtra-Clearlooks
+MetacityTheme=zoncolor
+ShellTheme=zoncolorDayLight
+IconTheme=zoncolorSky
+CursorTheme=zoncolor
+BackgroundImage=Pictures/zoncolorHilight.png
+ButtonLayout=menu:minimize,maximize,close
+GtkColorScheme=@RESET

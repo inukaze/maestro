@@ -1,0 +1,520 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" >
+  <head>
+    <meta http-equiv="content-type" content="text/htm; charset=UTF-8" />
+    <title>Pre-config : vista icon theme </title>
+    <style>
+      body {font-family: Verdana, sans-serif; background-color: #eeeeec; padding: 10px; }
+
+      h1 {text-align: center;
+      vertical-align: middle;}
+
+      h2 {font-size:120%; font-weight:normal; margin:0px; padding:0px; margin-top:40px;}
+
+      p { color:#888a85; margin:0px; padding:0px; margin-bottom:4px;}
+
+      table { border: 2px solid #babdb6;}
+
+      th, td { text-align: center;
+      vertical-align: middle;
+      padding: 5px;
+      color:#2e3436;
+      border: 1px solid #babdb6; }
+      .hor th { text-align: left; }
+      .hor td { vertical-align: bottom; }
+    </style>
+  </head>
+
+  <body>
+    
+    <h1>Pre-configuration tool</h1>
+
+<!--
+<select name="langue" id="langue" onchange="changeLanguage(this.value)">
+<option value="Fr" selected>Français</option>
+<option value="En">English</option>
+</select>
+-->
+
+<p>&nbsp;</p>
+
+<form name="configuration" id="configuration">
+    <h2>--color</h2>
+    <p>Variantes de bleu pour les icones ayant un écran de représenté</p>
+    <table class="hor">
+      <tr>
+	<th><input type="radio" name="color" value="disabled"
+	checked id="color_disabled" />
+	  <label for="color_disabled">(No change)</label></th>
+	<td>&nbsp;</td>
+      </tr>
+      <tr>
+	<th><input type="radio" name="color" value="vista" id="color_vista" />
+	  <label for="color_vista">vista</label></th>
+	<td><label for="color_vista">
+	    <img src="devices/48x48/computer_vista.png" width="48" height="48" />
+	    <img src="devices/48x48/video-display_vista.png" width="48" height="48" />
+	    <img src="places/48x48/network-workgroup_vista.png" width="48" height="48" />
+	    <img src="categories/48x48/preferences-system-network_vista.png" width="48" height="48" />
+	    <img src="apps/48x48/preferences-desktop-theme_vista.png" width="48" height="48" />
+	    <img src="apps/48x48/preferences-desktop-sound_vista.png" width="48" height="48" />
+	    <img src="apps/48x48/checkbox_vista.png" width="48" height="48" />
+	</label></td>
+      </tr>
+      <tr>
+	<th><input type="radio" name="color" value="tango" id="color_tango" />
+	  <label for="color_tango">tango</label></th>
+	<td><label for="color_tango">
+	    <img src="devices/48x48/computer_tango.png" width="48" height="48" />
+	    <img src="devices/48x48/video-display_tango.png" width="48" height="48" />
+	    <img src="places/48x48/network-workgroup_tango.png" width="48" height="48" />
+	    <img src="categories/48x48/preferences-system-network_tango.png" width="48" height="48" />
+	    <img src="apps/48x48/preferences-desktop-theme_tango.png" width="48" height="48" />
+	    <img src="apps/48x48/preferences-desktop-sound_tango.png" width="48" height="48" />
+	    <img src="apps/48x48/checkbox_tango.png" width="48" height="48" />
+	</label></td>
+      </tr>
+    </table>
+
+
+    <h2>--start</h2>
+    <p>Icone de start-here : icone du menu Gnome</p>
+    <table class="vert">
+      <tr>
+	<td>&nbsp;</td>
+	<td><label for="start_blue">
+	     <img src="places/24x24/start-here_blue.png" width="24" height="24" />
+	</label></td>
+	<td><label for="start_green">
+	    <img src="places/24x24/start-here_green.png" width="24" height="24" />
+	</label></td>
+	<td><label for="start_white">
+	    <img src="places/24x24/start-here_white.png" width="24" height="24" />
+	</label></td>
+      </tr>
+      <tr>
+	<th>
+	  <label for="start_disabled">(No change)</label>
+	  <br/><input type="radio" name="start" value="disabled"
+		      checked id="start_disabled" />
+	</th>
+	<th>
+	  <label for="start_blue">blue</label>
+	  <br /><input type="radio" name="start" value="blue" id="start_blue" /></th>
+	<th>
+	  <label for="start_green">green</label>
+	  <br /><input type="radio" name="start" value="green" id="start_green" /></th>
+	<th>
+	  <label for="start_white">white</label>
+	  <br /><input type="radio" name="start" value="white" id="start_white" /></th>
+      </tr>
+    </table>
+
+
+    <h2>--update</h2>
+    <p>Icone du gestionnaire de mise à jour</p>
+    <table class="vert">
+      <tr>
+	<td>&nbsp;</td>
+	<td><label for="update_windows">
+	     <img src="apps/48x48/system-software-update_windows.png" width="48" height="48" />
+	</label></td>
+	<td><label for="update_ubuntu">
+	     <img src="apps/48x48/system-software-update_ubuntu.png" width="48" height="48" />
+	</label></td>
+	<td><label for="update_mandriva">
+	     <img src="apps/48x48/system-software-update_mandriva.png" width="48" height="48" />
+	</label></td>
+	<td><label for="update_fedora">
+	     <img src="apps/48x48/system-software-update_fedora.png" width="48" height="48" />
+	</label></td>
+      </tr>
+      <tr>
+	<th>
+	  <label for="update_disabled">(No change)</label>
+	  <br/><input type="radio" name="update" value="disabled"
+		      checked id="update_disabled" />
+	</th>
+	<th>
+	  <label for="update_windows">windows</label>
+	  <br /><input type="radio" name="update" value="windows"
+	  id="update_windows" /></th>
+	<th>
+	  <label for="update_ubuntu">ubuntu</label>
+	  <br /><input type="radio" name="update" value="ubuntu"
+	  id="update_ubuntu" /></th>
+	<th>
+	  <label for="update_mandriva">mandriva</label>
+	  <br /><input type="radio" name="update" value="mandriva"
+	  id="update_mandriva" /></th>
+	<th>
+	  <label for="update_fedora">fedora</label>
+	  <br /><input type="radio" name="update" value="fedora"
+	  id="update_fedora" /></th>
+      </tr>
+    </table>
+
+
+    <h2>--document-open</h2>
+    <p>Icone des menus lors d'un Fichier > Ouvrir</p>
+    <table class="vert">
+      <tr>
+	<td>&nbsp;</td>
+	<td><label for="documentopen_normal">
+	     <img src="actions/48x48/document-open_normal.png" width="48" height="48" />
+	</label></td>
+	<td><label for="documentopen_folder">
+	     <img src="places/48x48/folder.png" width="48" height="48" />
+	</label></td>
+      </tr>
+      <tr>
+	<th>
+	  <label for="documentopen_disabled">(No change)</label>
+	  <br/><input type="radio" name="documentopen" value="disabled"
+		      checked id="documentopen_disabled" />
+	</th>
+	<th>
+	  <label for="documentopen_normal">normal</label>
+	  <br /><input type="radio" name="documentopen" value="normal"
+	  id="documentopen_normal" /></th>
+	<th>
+	  <label for="documentopen_folder">folder</label>
+	  <br /><input type="radio" name="documentopen" value="folder"
+	  id="documentopen_folder" /></th>
+      </tr>
+    </table>
+
+
+    <h2>--file-manager</h2>
+    <p>Icone du gestionnaire de fichier : icone des fenêtres de l'explorateur (nautilus, konqueror, ...)</p>
+    <table class="vert">
+      <tr>
+	<td>&nbsp;</td>
+	<td><label for="filemanager_gnomelike">
+	     <img src="apps/48x48/system-file-manager_gnomelike.png" width="48" height="48" />
+	</label></td>
+	<td><label for="filemanager_folder">
+	     <img src="places/48x48/folder.png" width="48" height="48" />
+	</label></td>
+	<td><label for="filemanager_seven">
+	     <img src="apps/48x48/system-file-manager_seven.png" width="48" height="48" />
+	</label></td>
+      </tr>
+      <tr>
+	<th>
+	  <label for="filemanager_disabled">(No change)</label>
+	  <br/><input type="radio" name="filemanager" value="disabled"
+		      checked id="filemanager_disabled" />
+	</th>
+	<th>
+	  <label for="filemanager_gnomelike">gnomelike</label>
+	  <br /><input type="radio" name="filemanager" value="gnomelike"
+	  id="filemanager_gnomelike" /></th>
+	<th>
+	  <label for="filemanager_folder">folder</label>
+	  <br /><input type="radio" name="filemanager" value="folder"
+	  id="filemanager_folder" /></th>
+	<th>
+	  <label for="filemanager_seven">seven</label>
+	  <br /><input type="radio" name="filemanager" value="seven"
+	  id="filemanager_seven" /></th>
+      </tr>
+    </table>
+
+
+   <h2>--app-graphics</h2>
+    <p>Icone pour la catégorie Graphisme du menu de Gnome</p>
+    <table class="vert">
+      <tr>
+	<td>&nbsp;</td>
+	<td><label for="appgraphics_vista">
+	     <img src="categories/24x24/applications-graphics_vista.png" width="24" height="24" />
+	</label></td>
+	<td><label for="appgraphics_seven">
+	     <img src="categories/24x24/applications-graphics_seven.png" width="24" height="24" />
+	</label></td>
+      </tr>
+      <tr>
+	<th>
+	  <label for="appgraphics_disabled">(No change)</label>
+	  <br/><input type="radio" name="appgraphics" value="disabled"
+		      checked id="appgraphics_disabled" />
+	</th>
+	<th>
+	  <label for="appgraphics_vista">vista</label>
+	  <br /><input type="radio" name="appgraphics" value="vista"
+	  id="appgraphics_vista" /></th>
+	<th>
+	  <label for="appgraphics_seven">seven</label>
+	  <br /><input type="radio" name="appgraphics" value="seven"
+	  id="appgraphics_seven" /></th>
+      </tr>
+    </table>
+
+
+   <h2>--app-games</h2>
+    <p>Icone pour la catégorie Jeux du menu de Gnome</p>
+    <table class="vert">
+      <tr>
+	<td>&nbsp;</td>
+	<td><label for="appgames_vista">
+	     <img src="categories/24x24/applications-games_vista.png" width="24" height="24" />
+	</label></td>
+	<td><label for="appgames_seven">
+	     <img src="categories/24x24/applications-games_seven.png" width="24" height="24" />
+	</label></td>
+      </tr>
+      <tr>
+	<th>
+	  <label for="appgames_disabled">(No change)</label>
+	  <br/><input type="radio" name="appgames" value="disabled"
+		      checked id="appgames_disabled" />
+	</th>
+	<th>
+	  <label for="appgames_vista">vista</label>
+	  <br /><input type="radio" name="appgames" value="vista"
+	  id="appgames_vista" /></th>
+	<th>
+	  <label for="appgames_seven">seven</label>
+	  <br /><input type="radio" name="appgames" value="seven"
+	  id="appgames_seven" /></th>
+      </tr>
+    </table>
+
+
+   <h2>--pref-system</h2>
+    <p>Icone pour la catégorie Administration du menu de Gnome</p>
+    <table class="vert">
+      <tr>
+	<td>&nbsp;</td>
+	<td><label for="prefsystem_vista">
+	     <img src="categories/24x24/preferences-system_vista.png" width="24" height="24" />
+	</label></td>
+	<td><label for="prefsystem_seven">
+	     <img src="categories/24x24/preferences-system_seven.png" width="24" height="24" />
+	</label></td>
+      </tr>
+      <tr>
+	<th>
+	  <label for="prefsystem_disabled">(No change)</label>
+	  <br/><input type="radio" name="prefsystem" value="disabled"
+		      checked id="prefsystem_disabled" />
+	</th>
+	<th>
+	  <label for="prefsystem_vista">vista</label>
+	  <br /><input type="radio" name="prefsystem" value="vista"
+	  id="prefsystem_vista" /></th>
+	<th>
+	  <label for="prefsystem_seven">seven</label>
+	  <br /><input type="radio" name="prefsystem" value="seven"
+	  id="prefsystem_seven" /></th>
+      </tr>
+    </table>
+
+
+     <h2>--folders</h2>
+    <p>Jeux d'icones de dossiers spéciaux</p>
+    <table class="hor">
+      <tr>
+	<th><input type="radio" name="folders" value="disabled"
+	checked id="folders_disabled" />
+	  <label for="folders_disabled">(No change)</label></th>
+	<td>&nbsp;</td>
+      </tr>
+      <tr>
+	<th><input type="radio" name="folders" value="vista" id="folders_vista" />
+	  <label for="folders_vista">vista</label></th>
+	<td><label for="folders_vista">
+	    <img src="places/48x48/user-home_vista.png" width="48" height="48" />
+	    <img src="places/48x48/folder-documents_vista.png" width="48" height="48" />
+	    <img src="places/48x48/folder-download_vista.png" width="48" height="48" />
+	    <img src="places/48x48/folder-music_vista.png" width="48" height="48" />
+	    <img src="places/48x48/folder-pictures_vista.png" width="48" height="48" />
+	    <img src="places/48x48/folder-publicshare_vista.png" width="48" height="48" />
+	    <img src="places/48x48/folder-video_vista.png" width="48" height="48" />
+	    <img src="places/48x48/folder-saved-search_vista.png" width="48" height="48" />
+	    <img src="places/48x48/folder-templates_vista.png" width="48" height="48" />
+	    <img src="places/48x48/folder-games_vista.png" width="48" height="48" />
+	    <img src="places/48x48/folder-desktop_vista.png" width="48" height="48" />
+	</label></td>
+      </tr>
+      <tr>
+	<th><input type="radio" name="folders" value="seven" id="folders_seven" />
+	  <label for="folders_seven">seven</label></th>
+	<td><label for="folders_seven">
+	    <img src="places/48x48/user-home_seven.png" width="48" height="48" />
+	    <img src="places/48x48/folder-documents_seven.png" width="48" height="48" />
+	    <img src="places/48x48/folder-download_seven.png" width="48" height="48" />
+	    <img src="places/48x48/folder-music_seven.png" width="48" height="48" />
+	    <img src="places/48x48/folder-pictures_seven.png" width="48" height="48" />
+	    <img src="places/48x48/folder-publicshare_seven.png" width="48" height="48" />
+	    <img src="places/48x48/folder-video_seven.png" width="48" height="48" />
+	    <img src="places/48x48/folder-saved-search_seven.png" width="48" height="48" />
+	    <img src="places/48x48/folder-templates_seven.png" width="48" height="48" />
+	    <img src="places/48x48/folder-games_seven.png" width="48" height="48" />
+	    <img src="places/48x48/folder-desktop_seven.png" width="48" height="48" />
+	</label></td>
+      </tr>
+    </table>
+
+
+   <h2>--terminal</h2>
+    <p>Icone pour la console de terminal</p>
+    <table class="vert">
+      <tr>
+	<td>&nbsp;</td>
+	<td><label for="terminal_command">
+	     <img src="apps/24x24/utilities-terminal_command.png" width="24" height="24" />
+	</label></td>
+	<td><label for="terminal_powershell">
+	     <img src="apps/24x24/utilities-terminal_powershell.png" width="24" height="24" />
+	</label></td>
+      </tr>
+      <tr>
+	<th>
+	  <label for="terminal_disabled">(No change)</label>
+	  <br/><input type="radio" name="terminal" value="disabled"
+		      checked id="terminal_disabled" />
+	</th>
+	<th>
+	  <label for="terminal_command">command</label>
+	  <br /><input type="radio" name="terminal" value="command"
+	  id="terminal_command" /></th>
+	<th>
+	  <label for="terminal_powershell">powershell</label>
+	  <br /><input type="radio" name="terminal" value="powershell"
+	  id="terminal_powershell" /></th>
+      </tr>
+    </table>
+
+
+   <h2>--html</h2>
+    <p>Icone pour les fichiers html</p>
+    <table class="vert">
+      <tr>
+	<td>&nbsp;</td>
+	<td><label for="html_chrome">
+	     <img src="mimetypes/48x48/text-html_chrome.png" width="48" height="48" />
+	</label></td>
+	<td><label for="html_chromium">
+	     <img src="mimetypes/48x48/text-html_chromium.png" width="48" height="48" />
+	</label></td>
+	<td><label for="html_default">
+	     <img src="mimetypes/48x48/text-html_default.png" width="48" height="48" />
+	</label></td>
+	<td><label for="html_firefox">
+	     <img src="mimetypes/48x48/text-html_firefox.png" width="48" height="48" />
+	</label></td>
+	<td><label for="html_konqueror">
+	     <img src="mimetypes/48x48/text-html_konqueror.png" width="48" height="48" />
+	</label></td>
+	<td><label for="html_rekonq">
+	     <img src="mimetypes/48x48/text-html_rekonq.png" width="48" height="48" />
+	</label></td>
+	<td><label for="html_opera">
+	     <img src="mimetypes/48x48/text-html_opera.png" width="48" height="48" />
+	</label></td>
+      </tr>
+      <tr>
+	<th>
+	  <label for="html_disabled">(No change)</label>
+	  <br/><input type="radio" name="html" value="disabled"
+		      checked id="html_disabled" />
+	</th>
+	<th>
+	  <label for="html_chrome">chrome</label>
+	  <br /><input type="radio" name="html" value="chrome"
+	  id="html_chrome" /></th>
+	<th>
+	  <label for="html_chromium">chromium</label>
+	  <br /><input type="radio" name="html" value="chromium"
+	  id="html_chromium" /></th>
+	<th>
+	  <label for="html_default">default</label>
+	  <br /><input type="radio" name="html" value="default"
+	  id="html_default" /></th>
+	<th>
+	  <label for="html_firefox">firefox</label>
+	  <br /><input type="radio" name="html" value="firefox"
+	  id="html_firefox" /></th>
+	<th>
+	  <label for="html_konqueror">konqueror</label>
+	  <br /><input type="radio" name="html" value="konqueror"
+	  id="html_konqueror" /></th>
+	<th>
+	  <label for="html_rekonq">rekonq</label>
+	  <br /><input type="radio" name="html" value="rekonq"
+	  id="html_rekonq" /></th>
+	<th>
+	  <label for="html_opera">opera</label>
+	  <br /><input type="radio" name="html" value="opera"
+	  id="html_opera" /></th>
+      </tr>
+    </table>
+</form>
+
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<script>
+function generate() {
+var cmd="cd ~/.icons/Vista\n./config.sh";
+var opt="";
+var formulaire = document.getElementById("configuration");
+
+if (formulaire.color[1].checked) opt+= " --color " + formulaire.color[1].value;
+if (formulaire.color[2].checked) opt+= " --color " + formulaire.color[2].value;
+
+if (formulaire.start[1].checked) opt+= " --start " + formulaire.start[1].value;
+if (formulaire.start[2].checked) opt+= " --start " + formulaire.start[2].value;
+if (formulaire.start[3].checked) opt+= " --start " + formulaire.start[3].value;
+
+if (formulaire.update[1].checked) opt+= " --update " + formulaire.update[1].value;
+if (formulaire.update[2].checked) opt+= " --update " + formulaire.update[2].value;
+if (formulaire.update[3].checked) opt+= " --update " + formulaire.update[3].value;
+if (formulaire.update[4].checked) opt+= " --update " + formulaire.update[4].value;
+
+if (formulaire.documentopen[1].checked) opt+= " --document-open " + formulaire.documentopen[1].value;
+if (formulaire.documentopen[2].checked) opt+= " --document-open " + formulaire.documentopen[2].value;
+
+if (formulaire.filemanager[1].checked) opt+= " --file-manager " + formulaire.filemanager[1].value;
+if (formulaire.filemanager[2].checked) opt+= " --file-manager " + formulaire.filemanager[2].value;
+if (formulaire.filemanager[3].checked) opt+= " --file-manager " + formulaire.filemanager[3].value;
+
+if (formulaire.appgraphics[1].checked) opt+= " --app-graphics " + formulaire.appgraphics[1].value;
+if (formulaire.appgraphics[2].checked) opt+= " --app-graphics " + formulaire.appgraphics[2].value;
+
+if (formulaire.appgames[1].checked) opt+= " --app-games " + formulaire.appgames[1].value;
+if (formulaire.appgames[2].checked) opt+= " --app-games " + formulaire.appgames[2].value;
+
+if (formulaire.prefsystem[1].checked) opt+= " --pref-system " + formulaire.prefsystem[1].value;
+if (formulaire.prefsystem[2].checked) opt+= " --pref-system " + formulaire.prefsystem[2].value;
+
+if (formulaire.folders[1].checked) opt+= " --folders " + formulaire.folders[1].value;
+if (formulaire.folders[2].checked) opt+= " --folders " + formulaire.folders[2].value;
+
+if (formulaire.terminal[1].checked) opt+= " --terminal " + formulaire.terminal[1].value;
+if (formulaire.terminal[2].checked) opt+= " --terminal " + formulaire.terminal[2].value;
+
+if (formulaire.html[1].checked) opt+= " --html " + formulaire.html[1].value;
+if (formulaire.html[2].checked) opt+= " --html " + formulaire.html[2].value;
+if (formulaire.html[3].checked) opt+= " --html " + formulaire.html[3].value;
+if (formulaire.html[4].checked) opt+= " --html " + formulaire.html[4].value;
+if (formulaire.html[5].checked) opt+= " --html " + formulaire.html[5].value;
+if (formulaire.html[6].checked) opt+= " --html " + formulaire.html[6].value;
+if (formulaire.html[7].checked) opt+= " --html " + formulaire.html[7].value;
+
+if (opt=="") {
+	document.getElementById("shell").value = "";
+	alert("You must select at least one option");
+	} else {
+	document.getElementById("shell").value = cmd + opt;
+}
+}
+</script>
+
+<p><input type="button" value="Generate command !" onclick="generate()"/></p>
+<p><textarea cols="80" rows="4" id="shell" value=""></textarea></p>
+
+  </body>
+</html>

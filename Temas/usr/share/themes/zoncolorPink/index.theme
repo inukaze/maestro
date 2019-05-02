@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=zonColor Pink
+Comment=Pink variant of zonColor
+
+[X-GNOME-Metatheme]
+GtkTheme=zoncolorPink
+MetacityTheme=zoncolorXtra-CupertinoGrey
+ShellTheme=zoncolorDayLight
+IconTheme=zoncolorPink
+CursorTheme=zoncolorWhite
+BackgroundImage=Pictures/zoncolorPink.png
+ButtonLayout=close:menu
+GtkColorScheme=@RESET

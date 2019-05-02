@@ -1,0 +1,15 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Type=Application
+Name=Enable GTK Theme
+GenericName=Themes Utility
+Comment=Enable/activate GTK theme found in this folder.
+Categories=Utility;Settings;DesktopSettings;GTK;GNOME;
+Icon=preferences-desktop-theme
+Exec=sh -c "$(dirname '%k')/enable-gtk-theme.sh"
+Terminal=false
+StartupNotify=false
+NotShowIn=KDE;
+

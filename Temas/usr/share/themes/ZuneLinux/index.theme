@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Royale
+Type=X-GNOME-Metatheme
+Name[en_US]=ZuneLinux
+
+[X-GNOME-Metatheme]
+GtkTheme=Royale
+MetacityTheme=Royale
+IconTheme=Tango

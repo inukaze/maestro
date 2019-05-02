@@ -1,0 +1,11 @@
+ClockBox:active:prelight:backdrop,
+ClockBox:active:prelight,
+ClockBox:active:backdrop,
+ClockBox:active,
+PanelApplet .button:active:prelight:backdrop,
+PanelApplet .button:active:backdrop,
+PanelApplet .button:active:prelight,
+PanelApplet .button:active {
+	text-shadow: 0 -1 @panelbutton_selected_textshadow_color;
+}
+

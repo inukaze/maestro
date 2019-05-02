@@ -1,0 +1,34 @@
+ClockBox:backdrop,
+ClockBox,
+
+PanelApplet .button:backdrop,
+PanelApplet .button,
+
+.gnome-panel-menu-bar:backdrop,
+.gnome-panel-menu-bar.menuitem:backdrop,
+.gnome-panel-menu-bar > GtkMenuItem.menuitem:backdrop,
+PanelApplet > GtkMenuBar.menubar:backdrop,
+PanelApplet > GtkMenuBar.menubar.menuitem:backdrop,
+PanelApplet > GtkMenuBar.menubar > GtkMenuItem.menuitem:backdrop,
+PanelMenuBar.menubar:backdrop,
+PanelMenuBar.menubar.menuitem:backdrop,
+PanelMenuBar.menubar > GtkMenuItem.menuitem:backdrop,
+.gnome-panel-menu-bar,
+.gnome-panel-menu-bar.menuitem,
+.gnome-panel-menu-bar > GtkMenuItem.menuitem,
+PanelApplet > GtkMenuBar.menubar,
+PanelApplet > GtkMenuBar.menubar.menuitem,
+PanelApplet > GtkMenuBar.menubar > GtkMenuItem.menuitem,
+PanelMenuBar.menubar,
+PanelMenuBar.menubar.menuitem,
+PanelMenuBar.menubar > GtkMenuItem.menuitem,
+
+PanelApplet > GtkMenuBar.menubar > GtkMenuItem.menuitem:backdrop,
+PanelApplet > GtkMenuBar.menubar > GtkMenuItem.menuitem,
+
+.unity-panel.menuitem,
+.unity-panel .menuitem {
+	text-shadow: 0 1 @panel_textshadow_color;
+	icon-shadow: 0 1 @panel_textshadow_color;
+}
+

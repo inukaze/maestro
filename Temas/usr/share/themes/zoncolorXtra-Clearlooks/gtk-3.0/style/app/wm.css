@@ -1,0 +1,92 @@
+/******************
+ * Focused window *
+ ******************/
+@define-color wm_focused_bg					@wm_focused_bg_color;
+@define-color wm_focused_bg_top					@wm_focused_bg_top_color;
+
+@define-color wm_focused_text					@wm_focused_fg_color;
+@define-color wm_focused_text_shadow				@wm_focused_textshadow_color;
+
+@define-color wm_focused_bg_grad_1				shade (@wm_focused_bg, 1.02);
+@define-color wm_focused_bg_grad_end				shade (@wm_focused_bg_top, 1.0);
+@define-color wm_focused_bg_topline				shade (@wm_focused_bg, 1.35);
+
+@define-color wm_focused_bg_grad_1_max				shade (@wm_focused_bg, 1.02);
+@define-color wm_focused_bg_grad_end_max			shade (@wm_focused_bg_top, 1.0);
+@define-color wm_focused_bg_topline_max				shade (@wm_focused_bg, 1.35);
+
+@define-color wm_focused_border					shade (@wm_focused_bg, 0.8);
+
+@define-color wm_focused_border_grad_1				shade (@wm_focused_bg, 0.85);
+@define-color wm_focused_border_grad_2				shade (@wm_focused_bg, 0.9);
+@define-color wm_focused_border_grad_3				shade (@wm_focused_bg, 0.95);
+@define-color wm_focused_border_grad_end			@wm_focused_bg;
+
+@define-color wm_focused_border_inner_top			@wm_focused_bg;
+@define-color wm_focused_border_inner_leftright_grad_top	@wm_focused_bg;
+@define-color wm_focused_border_inner_leftright_grad_bottom	@wm_focused_bg;
+@define-color wm_focused_border_inner_bottom			@wm_focused_bg;
+
+
+/* Focused wmhighlight window */
+@define-color wmhighlight_focused_bg						@wmhighlight_focused_bg_color;
+@define-color wmhighlight_focused_bg_top					@wmhighlight_focused_bg_top_color;
+
+@define-color wmhighlight_focused_text						@wmhighlight_focused_fg_color;
+@define-color wmhighlight_focused_text_shadow					@wmhighlight_focused_textshadow_color;
+
+@define-color wmhighlight_focused_bg_grad_1					shade (@wmhighlight_focused_bg, 1.02);
+@define-color wmhighlight_focused_bg_grad_end					shade (@wmhighlight_focused_bg_top, 1.0);
+@define-color wmhighlight_focused_bg_topline					shade (@wmhighlight_focused_bg, 1.35);
+
+@define-color wmhighlight_focused_bg_grad_1_max					shade (@wmhighlight_focused_bg, 1.02);
+@define-color wmhighlight_focused_bg_grad_end_max				shade (@wmhighlight_focused_bg_top, 1.0);
+@define-color wmhighlight_focused_bg_topline_max				shade (@wmhighlight_focused_bg, 1.35);
+
+@define-color wmhighlight_focused_border					shade (@wmhighlight_focused_bg, 0.8);
+
+@define-color wmhighlight_focused_border_grad_1					shade (@wmhighlight_focused_bg, 0.85);
+@define-color wmhighlight_focused_border_grad_2					shade (@wmhighlight_focused_bg, 0.9);
+@define-color wmhighlight_focused_border_grad_3					shade (@wmhighlight_focused_bg, 0.95);
+@define-color wmhighlight_focused_border_grad_end				@wmhighlight_focused_bg;
+
+@define-color wmhighlight_focused_border_inner_top				@wmhighlight_focused_border;
+@define-color wmhighlight_focused_border_inner_leftright_grad_top		@wmhighlight_focused_border;
+@define-color wmhighlight_focused_border_inner_leftright_grad_bottom		@wmhighlight_focused_border;
+@define-color wmhighlight_focused_border_inner_bottom				@wmhighlight_focused_border;
+
+
+/******************
+ * Unfocused window *
+ ******************/
+@define-color wm_unfocused_bg					@wm_unfocused_bg_color;
+
+@define-color wm_unfocused_text					@wm_unfocused_fg_color;
+@define-color wm_unfocused_text_shadow				@wm_unfocused_textshadow_color;
+
+@define-color wm_unfocused_bg_grad_1				shade (@wm_unfocused_bg, 1.015);
+@define-color wm_unfocused_bg_grad_end				shade (@wm_unfocused_bg, 1.04);
+@define-color wm_unfocused_bg_topline				shade (@wm_unfocused_bg, 1.025);
+
+@define-color wm_unfocused_bg_grad_1_max			shade (@wm_unfocused_bg, 1.015);
+@define-color wm_unfocused_bg_grad_end_max			shade (@wm_unfocused_bg, 1.04);
+@define-color wm_unfocused_bg_topline_max			shade (@wm_unfocused_bg, 1.025);
+
+@define-color wm_unfocused_border				shade (@wm_unfocused_bg, 0.8);
+
+@define-color wm_unfocused_border_grad_1			shade (@wm_unfocused_bg, 0.85);
+@define-color wm_unfocused_border_grad_2			shade (@wm_unfocused_bg, 0.9);
+@define-color wm_unfocused_border_grad_3			shade (@wm_unfocused_bg, 0.95);
+@define-color wm_unfocused_border_grad_end			@wm_unfocused_bg;
+
+@define-color wm_unfocused_border_inner_top			@wm_unfocused_bg;
+@define-color wm_unfocused_border_inner_leftright_grad_top	@wm_unfocused_bg;
+@define-color wm_unfocused_border_inner_leftright_grad_bottom	@wm_unfocused_bg;
+@define-color wm_unfocused_border_inner_bottom			@wm_unfocused_bg;
+
+
+/**********************
+ * Border only window *
+ **********************/
+@define-color wm_borderonly_border		shade (@bg_color, 0.8);
+

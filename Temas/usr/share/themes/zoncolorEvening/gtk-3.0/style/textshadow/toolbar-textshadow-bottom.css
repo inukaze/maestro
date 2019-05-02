@@ -1,0 +1,17 @@
+NemoPathbarButton,
+.menubar.toolbar,
+.menubar.toolbar .toolbar,
+.menubar.toolbar.toolbar,
+.menubar.toolbar GtkComboBox,
+/*.menubar.toolbar .button *,*/
+.menubar.toolbar .button,
+.primary-toolbar,
+.primary-toolbar .toolbar,
+.primary-toolbar.toolbar,
+.primary-toolbar GtkComboBox,
+/*.primary-toolbar .button *,*/
+.primary-toolbar .button {
+	text-shadow: 0 1 @toolbar_textshadow_color;
+	icon-shadow: 0 1 @toolbar_textshadow_color;
+}
+

@@ -1,0 +1,131 @@
+style "panel" = "panel_color" {
+	xthickness = 0
+	ythickness = 0
+	GtkWidget::focus-line-width = 0
+}
+
+style "panel_menubar" = "panelmenubar_color" {
+	engine "murrine" {
+		textstyle = 1
+		gradient_shades = {0.95,1.0,1.0,1.05}
+		border_shades = {0.85,1.05}
+	}
+}
+
+style "panel_task_button" = "panel" {
+	xthickness = 3
+	GtkWidget::focus-line-width        = 0
+	GtkWidget::focus_padding           = 0
+	GtkWidget::interior_focus          = 0
+	GtkWidget::internal_padding        = 0
+	GtkButton::child_displacement_x    = 0
+	GtkButton::child_displacement_y    = 1
+	GtkButton::default_border          = {6,6,6,6}
+	GtkButton::default_outside_border  = {6,6,6,6}
+	GtkButtonBox::child_internal_pad_x = 0
+	GtkButtonBox::child_internal_pad_y = 0
+	GtkButtonBox::child_min_heigth     = 0
+	engine "murrine" {
+		roundness = 0
+		gradient_shades = {1.0,1.0,1.0,1.0}
+		border_shades = {1.0,1.0}
+		contrast = 0.0
+	}
+	engine "pixmap"	{
+		image {
+			function	= BOX
+			shadow		= OUT
+			recolorable	= TRUE
+			state		= PRELIGHT
+			file		= "buttons/panel-button-active.png"
+			border		= {6,6,6,6}
+			stretch		= TRUE
+		}
+		image {
+			function	= BOX
+			shadow		= IN
+			recolorable	= TRUE
+			state		= PRELIGHT
+			file		= "buttons/panel-button-active-prelight.png"
+			border		= {6,6,6,6}
+			stretch		= TRUE
+		}
+		image {
+			function	= BOX
+			recolorable	= TRUE
+			state		= NORMAL
+			file		= "buttons/panel-button-normal.png"
+			border		= {6,6,6,6}
+			stretch		= TRUE
+		}		
+		image {
+			function	= BOX
+			recolorable	= TRUE
+			state		= INSENSITIVE
+			file		= "buttons/panel-button-inactive.png"
+			border		= {6,6,6,6}
+			stretch		= TRUE
+		}
+		image {
+			function	= BOX
+			recolorable	= TRUE
+			state		= ACTIVE
+			file		= "buttons/panel-button-active.png"
+			border		= {6,6,6,6}
+			stretch		= TRUE
+		}
+		image {
+			function	= BOX
+			recolorable	= TRUE
+			state		= SELECTED
+			file		= "buttons/panel-button-active.png"
+			border		= {6,6,6,6}
+			stretch		= TRUE
+		}
+		image {
+			function	= BOX
+			recolorable	= TRUE
+			state		= PRELIGHT
+			file		= "buttons/panel-button-prelight.png"
+			border		= {6,6,6,6}
+			stretch		= TRUE
+		}
+	}
+}
+
+#widget_class "*Panel*"            style "panel"
+widget "*PanelWidget*"            style "panel"
+widget "*PanelApplet*"            style "panel"
+widget "*fast-user-switch*"       style "panel" # workaround for Fast User Switch applet
+widget "*gdm-user-switch*"      style "panel"
+class "PanelApp*"                 style "panel"
+class "PanelToplevel*"            style "panel"
+#widget_class "*Mail*"             style "panel"
+widget_class "*notif*"            style "panel"
+
+#widget_class "*?anel*utton"       style "panel_task_button" # causing problems to monodevelop
+widget_class "*?anel*pplet*utton"       style:highest "panel_task_button"
+
+widget "*task*"                   style "panel_task_button"
+widget "*.tasklist-button"        style "panel_task_button"
+widget "*PanelApplet*TaskTitle*"  style "panel_task_button"
+
+widget "*indicator-applet*"		style "panel"
+class "PanelApp*"			style "panel"
+class "PanelToplevel*"			style "panel"
+widget_class "*PanelToplevel*"		style "panel"
+widget_class "*Notif*"			style "panel"
+widget_class "*Tray*"			style "panel" 
+widget_class "*tray*"			style "panel"
+widget_class "*computertemp*"		style "panel"
+widget_class "*Applet*Tomboy*"		style "panel"
+widget_class "*Applet*Netstatus*"	style "panel"
+
+widget_class "*Panel*<GtkMenuBar>.<GtkMenuItem>*"			style:highest "panel_menubar"
+
+# XFCE panel theming.
+widget "*Xfce*Panel*"               style "panel"
+class "*Xfce*Panel*"                style "panel"
+widget "*Xfce*Panel*task*"               style "panel_task_button"
+widget "*Xfce*Panel*button"               style "panel_task_button"
+

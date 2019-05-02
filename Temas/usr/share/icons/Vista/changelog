@@ -1,0 +1,138 @@
+CHANGELOG :
+
+----------------------------------------------
+v1.0 : 1/01/2010
+ First realease of the theme 
+
+
+----------------------------------------------
+v1.1 : 12/02/2011
+
+FIXED
+position of emblems (symlinks, ...) on special folders
+
+DELETE
+apps/gnome-nettool
+
+CHANGED
+actions/application-exit (16 24 32 48)
+actions/dialog-cancel (16 24 32 48)
+actions/document-new (16 24)
+actions/process-stop (16 24 32 48)
+actions/window-close (16 24 32 48)
+actions/document-properties (16 24 32 48)
+actions/edit-copy (16 24 48)
+actions/edit-cut (16 24 32 48)
+actions/edit-delete (16 24 32 48)
+actions/edit-paste (16)
+actions/dialog-cancel 16 24 32 48)
+actions/contact-new
+apps/gnome-power-manager (24)
+
+NEW ALIASES
+actions/system-reboot
+apps/preferences-system-power-management
+apps/preferences-desktop-default-applications
+apps/preferences-desktop-font
+apps/preferences-desktop-sound
+apps/preferences-system-time
+mimetypes/application-x-shellscript
+mimetypes/application-x-zerosize
+mimetypes/text-x-uri
+
+ADD
+actions/character-set
+actions/color-picker
+actions/document-export
+actions/document-import
+actions/document-revert
+actions/document-sign
+actions/edit-select-all
+actions/tools-media-optical-burn
+actions/folder-copy
+actions/folder-move
+actions/folder-sync
+actions/format-fill-color
+actions/format-indent-less
+actions/format-indent-more
+actions/format-justify-center
+actions/format-justify-fill
+actions/format-justify-left
+actions/format-justify-right
+actions/format-list-ordored
+actions/format-list-unordored
+actions/format-text-color
+actions/go-jump-today
+actions/mail-attachment
+actions/mail-encrypted
+actions/mail-flag
+actions/mail-forward
+actions/mail-mark-important
+actions/mail-mark-junk
+actions/mail-mark-notjunk
+actions/mail-mark-read
+actions/mail-mark-unread
+actions/mail-message-new
+actions/mail-queue
+actions/mail-receive
+actions/mail-reply-sender
+actions/mail-reply-all
+actions/mail-send
+actions/mail-send-receive
+actions/mail-signed
+actions/rating
+actions/stock_mail-flag-for-followup.png
+actions/tag-new
+actions/task-new
+actions/tool-options
+actions/tools-check-spelling
+actions/view-calendar
+actions/view-calendar-day
+actions/view-calendar-list
+actions/view-calendar-month
+actions/view-calendar-tasks
+actions/view-calendar-week
+actions/view-calendar-workweek
+actions/view-task
+apps/evolution-memos
+apps/internet-mail
+apps/office-calendar
+apps/office-address-book
+apps/preferences-desktop-color
+apps/preferences-desktop-gaming
+apps/preferences-desktop-locale
+apps/preferences-desktop-mouse
+apps/preferences-desktop-notification
+apps/preferences-desktop-printer
+apps/preferences-desktop-text-to-speech
+apps/preferences-plugin
+apps/preferences-system-bluetooth
+apps/wine-notepad
+devices/media-memory-sm
+emblems/emblem-readonly
+emblems/emblem-unreadable
+mimetypes/image-x-xcf
+mimetypes/message-rfc822
+mimetypes/text-html_default
+mimetypes/text-html_opera
+mimetypes/text-html_chrome
+mimetypes/text-html_chromium
+mimetypes/text-html_konqueror
+mimetypes/text-html_rekonq
+places/document-multiple
+places/mail-copy
+places/mail-folder-draft
+places/mail-folder-important
+places/mail-folder-inbox
+places/mail-folder-junk
+places/mail-folder-outbox
+places/mail-folder-sent
+places/mail-move
+status/mail-read
+status/mail-unread
+status/offline
+status/online
+status/security-high
+status/security-low
+status/security-medium
+

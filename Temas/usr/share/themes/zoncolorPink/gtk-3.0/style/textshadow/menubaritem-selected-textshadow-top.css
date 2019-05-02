@@ -1,0 +1,5 @@
+.menubar.menuitem:hover,
+.menubar > GtkMenuItem.menuitem:hover {
+	text-shadow: 0 -1 @menubaritem_selected_textshadow_color;
+}
+

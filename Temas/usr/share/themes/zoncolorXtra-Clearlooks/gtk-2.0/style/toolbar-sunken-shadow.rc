@@ -1,0 +1,50 @@
+style "toolbar" = "toolbar_color" {
+	engine "murrine" {
+		toolbarstyle = 1
+		lightborder_shade = 0.75
+		border_shades = {0.75,1.0}
+		gradient_shades = {0.75,0.95,0.95,1.0}
+		contrast = 0.0
+	}
+}
+
+style "toolbar_button" = "toolbar" {
+}
+
+style "toolbar_entry" = "toolbar" {
+	engine "murrine" {
+		contrast = 0.3
+	}
+}
+
+
+################
+# WIDGET MATCH #
+################
+
+class "GtkToolbar" style "toolbar"
+class "GtkHandleBox" style:highest "toolbar"
+widget "GtkWindow.GtkFixed*.GtkToolbar" style:highest "toolbar"
+
+# Buttons
+widget_class "*<GtkToolbar>*<GtkButton>" style "toolbar_button"
+# Labels
+widget_class "*<GtkToolbar>*<GtkLabel>" style "toolbar_button"
+# Arrows
+widget_class "*<GtkToolbar>*<GtkButton>*<GtkArrow>" style "toolbar_button"
+# ComboBoxes
+widget_class "*<GtkToolbar>*<GtkComboBox>*" style:highest "toolbar_button"
+# Text Entry
+widget_class "*GtkToolbar*.*Entry*" style "toolbar_entry"
+
+
+# GtkFileChooser (Exclude it from special styling)
+style "filechooser_toolbar" = "default" {
+	GtkToolbar::button-relief = GTK_RELIEF_NORMAL
+	GtkToolbar::shadow-type = GTK_SHADOW_NONE
+}
+style "filechooser_toolbar_button" = "button" {
+}
+widget_class "*GtkFileChooser*GtkToolbar*" style "filechooser_toolbar"
+widget_class "*GtkFileChooser*GtkToolbar*GtkButton*" style "filechooser_toolbar_button"
+

@@ -1,0 +1,140 @@
+/* Window */
+TerminalWindow,
+TerminalWindow.background,
+TerminalWindow.background:backdrop,
+TerminalWindow whatever {
+	background-color: @terminalwindow_bg_color;
+	color: @terminalwindow_fg_color;
+	background-image: none;
+}
+
+
+/* Screen */
+TerminalScreen {
+	background-color: @terminalscreen_bg_color;
+	color: @terminalscreen_fg_color;
+	-TerminalScreen-background-darkness: 0.85;
+}
+
+
+/* Notebook */
+TerminalWindow .notebook,
+TerminalWindow .notebook tab,
+TerminalWindow .notebook tab GtkLabel:active,
+TerminalWindow .notebook tab GtkLabel,
+TerminalWindow .notebook tab:active,
+TerminalWindow .notebook:backdrop,
+TerminalWindow .notebook tab:backdrop,
+TerminalWindow .notebook tab GtkLabel:active:backdrop,
+TerminalWindow .notebook tab GtkLabel:backdrop,
+TerminalWindow .notebook tab:active:backdrop,
+whatever {
+	background-color: shade (@terminalwindow_bg_color, 0.9);
+	background-image: none;
+	color: @terminalwindow_fg_color;
+	border-width: 1px;
+	border-color: shade (@terminalwindow_bg_color, 0.85);
+	-unico-border-color: none;
+	-unico-border-gradient: none;
+	-unico-inner-stroke-color: @transparent;
+	-unico-inner-stroke-gradient: none;
+	-unico-inner-stroke-width: 0;
+	-unico-outer-stroke-color: @transparent;
+	-unico-outer-stroke-gradient: none;
+	-unico-outer-stroke-width: 0;
+	-unico-focus-border-color: @transparent;
+	-unico-focus-border-radius: 0;
+	-unico-focus-fill-color: @transparent;
+	-unico-focus-outer-stroke-color: @transparent;
+}
+TerminalWindow .notebook tab GtkLabel:active,
+TerminalWindow .notebook tab GtkLabel,
+TerminalWindow .notebook tab GtkLabel:active:backdrop,
+TerminalWindow .notebook tab GtkLabel:backdrop,
+whatever {
+	background-color: @transparent;
+	border-color: @transparent;
+}
+TerminalWindow .notebook tab:active,
+TerminalWindow .notebook tab:active:backdrop,
+whatever {
+	background-color: shade (@terminalscreen_bg_color, 1.0);
+}
+TerminalWindow .notebook,
+whatever {
+	background-color: shade (@terminalscreen_bg_color, 1.0);
+}
+
+/* Scrollbar */
+TerminalWindow .scrollbar,
+TerminalWindow .scrollbar.trough,
+TerminalWindow .scrollbar.trough.vertical,
+TerminalWindow .scrollbar.slider,
+TerminalWindow .scrollbar.slider:hover,
+TerminalWindow .scrollbar.button,
+TerminalWindow .scrollbar.slider.vertical,
+TerminalWindow .scrollbar.slider.vertical:hover,
+TerminalWindow .scrollbar.button.vertical,
+TerminalWindow .scrollbar:backdrop,
+TerminalWindow .scrollbar.trough:backdrop,
+TerminalWindow .scrollbar.trough.vertical:backdrop,
+TerminalWindow .scrollbar.slider:backdrop,
+TerminalWindow .scrollbar.slider:hover:backdrop,
+TerminalWindow .scrollbar.button:backdrop,
+TerminalWindow .scrollbar.slider.vertical:backdrop,
+TerminalWindow .scrollbar.slider.vertical:hover:backdrop,
+TerminalWindow .scrollbar.button.vertical:backdrop,
+whatever {
+	background-color: @terminalscreen_bg_color;
+	background-image: none;
+	border-radius: 0;
+	border-width: 0;
+	border-color: @transparent;
+	-unico-glow-radius: 0;
+	-unico-glow-color: @transparent;
+	-unico-border-width: 0;
+	-unico-border-gradient: none;
+	-unico-border-color: @transparent;
+	-unico-inner-stroke-width: 0;
+	-unico-inner-stroke-gradient: none;
+	-unico-inner-stroke-color: @transparent;
+	-unico-outer-stroke-width: 0;
+	-unico-outer-stroke-gradient: none;
+	-unico-outer-stroke-color: @transparent;
+}
+TerminalWindow .scrollbar.slider,
+TerminalWindow .scrollbar.slider:hover,
+TerminalWindow .scrollbar.button,
+TerminalWindow .scrollbar.slider.vertical,
+TerminalWindow .scrollbar.slider.vertical:hover,
+TerminalWindow .scrollbar.button.vertical,
+whatever {
+	border-width: 1px;
+	border-color: shade (@terminalscreen_bg_color, 0.85);
+}
+TerminalWindow .scrollbar.slider,
+TerminalWindow .scrollbar.slider:hover,
+TerminalWindow .scrollbar.button,
+whatever {
+	background-image: -gtk-gradient (
+		linear, left top, left bottom,
+		from (shade (@terminalscreen_bg_color, 1.25)),
+		to (shade (@terminalscreen_bg_color, 1.05)));
+}
+TerminalWindow .scrollbar.slider.vertical,
+TerminalWindow .scrollbar.slider.vertical:hover,
+TerminalWindow .scrollbar.button.vertical,
+whatever {
+	background-image: -gtk-gradient (
+		linear, left top, right top,
+		from (shade (@terminalscreen_bg_color, 1.25)),
+		to (shade (@terminalscreen_bg_color, 1.05)));
+}
+
+/* overlay scrollbar */
+TerminalWindow OsThumb:selected,
+TerminalWindow OsScrollbar:selected,
+whatever {
+	background-color: @selected_bg_color;
+}
+

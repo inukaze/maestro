@@ -1,0 +1,10 @@
+MarlinViewWindow .sidebar row:selected,
+MarlinViewWindow .sidebar GtkTreeView.view:selected,
+NemoWindow .sidebar row:selected,
+NemoWindow .sidebar GtkTreeView.view:selected,
+NautilusWindow .sidebar row:selected,
+NautilusWindow .sidebar GtkTreeView.view:selected {
+	text-shadow: 0 -1 @fmsidebarrow_active_textshadow_color;
+	icon-shadow: 0 -1 @fmsidebarrow_active_textshadow_color;
+}
+

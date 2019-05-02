@@ -1,0 +1,499 @@
+[Icon Theme]
+Name=w2k-bibo
+Name[af]=w2k-bibo
+Name[ar]=جنوم
+Name[az]=w2k-bibo
+Name[be]=w2k-bibo
+Name[be@latin]=w2k-bibo
+Name[bg]=w2k-bibo
+Name[bn]=গুহ্নোম
+Name[bn_IN]=w2k-bibo
+Name[bs]=w2k-bibo
+Name[ca]=w2k-bibo
+Name[cs]=w2k-bibo
+Name[cy]=w2k-bibo
+Name[da]=w2k-bibo
+Name[de]=w2k-bibo
+Name[dz]=ཇི་ནོམ།
+Name[el]=w2k-bibo
+Name[en_CA]=w2k-bibo
+Name[en_GB]=w2k-bibo
+Name[es]=w2k-bibo
+Name[et]=w2k-bibo
+Name[eu]=w2k-bibo
+Name[fa]=گنوم
+Name[fi]=w2k-bibo
+Name[fr]=w2k-bibo
+Name[fur]=w2k-bibo
+Name[ga]=w2k-bibo
+Name[gl]=w2k-bibo
+Name[gu]=જીનોમ
+Name[he]=w2k-bibo
+Name[hi]=गनोम
+Name[hr]=w2k-bibo
+Name[hu]=w2k-bibo
+Name[id]=w2k-bibo
+Name[is]=w2k-bibo
+Name[it]=w2k-bibo
+Name[ja]=w2k-bibo
+Name[ka]=გნომი
+Name[ko]=그놈
+Name[lt]=w2k-bibo
+Name[lv]=w2k-bibo
+Name[mg]=w2k-bibo
+Name[mk]=w2k-bibo
+Name[ml]=ഗ്നോം
+Name[mn]=ГНОМЕ
+Name[mr]=w2k-bibo
+Name[ms]=w2k-bibo
+Name[nb]=w2k-bibo
+Name[ne]=जिनोम
+Name[nl]=w2k-bibo
+Name[nn]=w2k-bibo
+Name[oc]=w2k-bibo
+Name[or]=ନୋମ
+Name[pa]=ਗਨੋਮ
+Name[pl]=w2k-bibo
+Name[pt]=w2k-bibo
+Name[pt_BR]=w2k-bibo
+Name[ro]=w2k-bibo
+Name[ru]=Среда w2k-bibo
+Name[si]=w2k-bibo
+Name[sk]=w2k-bibo
+Name[sl]=w2k-bibo
+Name[sq]=w2k-bibo
+Name[sr]=Гном
+Name[sr@Latn]=Gnom
+Name[sv]=w2k-bibo
+Name[ta]=w2k-bibo
+Name[te]=గ్నోమ్
+Name[th]=w2k-bibo
+Name[tk]=w2k-bibo
+Name[tr]=w2k-bibo
+Name[uk]=w2k-bibo
+Name[vi]=w2k-bibo
+Name[xh]=i-w2k-bibo
+Name[zh_CN]=w2k-bibo
+Name[zh_HK]=w2k-bibo
+Name[zh_TW]=w2k-bibo
+Comment=Default w2k-bibo Theme
+Comment[af]=Verstek-w2k-bibo-tema
+Comment[ar]=سِمة جنوم الإفتراضية
+Comment[az]=Ön Qurğulu w2k-bibo Örtüyü
+Comment[be]=Прадвызначаная тэма w2k-bibo
+Comment[be@latin]=Zmoŭčany matyŭ w2k-bibo
+Comment[bg]=Тема на w2k-bibo по подразбиране
+Comment[bn]=ডিফল্ট গুহ্নোম থীম
+Comment[bn_IN]=ডিফল্ট w2k-bibo থিম
+Comment[bs]=Uobičajena w2k-bibo Tema
+Comment[ca]=Tema del w2k-bibo per defecte
+Comment[cs]=Výchozí motiv w2k-bibo
+Comment[cy]=Thema diofyn w2k-bibo
+Comment[da]=Standardtema til w2k-bibo
+Comment[de]=w2k-bibo-Vorgabethema
+Comment[dz]=སྔོན་སྒྲིག་ཇི་ནོམ་བརྗོད་དོན།
+Comment[el]=Εξ ορισμού θέμα του w2k-bibo
+Comment[en_CA]=Default w2k-bibo Theme
+Comment[en_GB]=Default w2k-bibo Theme
+Comment[es]=Tema predeterminado de w2k-bibo
+Comment[et]=w2k-bibo'i vaiketeema
+Comment[eu]=Lehenetsitako w2k-biboren gaia
+Comment[fa]=تم پیش‌فرض گنوم
+Comment[fi]=w2k-bibon oletusteema
+Comment[fr]=Thème w2k-bibo par défaut
+Comment[fur]=Teme predefinît di w2k-bibo
+Comment[ga]=Téama w2k-bibo Réamhshocraithe
+Comment[gl]=Tema predeterminado de w2k-bibo
+Comment[gu]=મૂળભૂત જીનોમ થીમ
+Comment[he]=ערכת הנושא ברירת המחדל של w2k-bibo
+Comment[hi]=डिफ़ॉल्ट गनोम प्रसंग
+Comment[hr]=Uobičajena tema w2k-bibo sustava
+Comment[hu]=Alapértelmezett w2k-bibo-téma
+Comment[id]=Tema w2k-bibo Standar
+Comment[is]=Sjálfgefið w2k-bibo Þema
+Comment[it]=Tema predefinito di w2k-bibo
+Comment[ja]=デフォルトの w2k-bibo テーマ
+Comment[ka]=ნაგულისხმევი გნომის გაფორმება
+Comment[ko]=기본 그놈 테마
+Comment[lt]=Standartinė w2k-bibo tema
+Comment[lv]=Noklusētā w2k-bibo tēma
+Comment[mg]=Endrika w2k-bibo lasitra
+Comment[mk]=Основна тема на w2k-bibo
+Comment[ml]=ഗ്നോമിലെ സഹജമായ രംഗവിധാനം
+Comment[mn]=ГНОМЕ-стандарт загварууд
+Comment[mr]=मुलभूत w2k-bibo थीम
+Comment[ms]=Tema w2k-bibo Default
+Comment[nb]=Forvalgt w2k-bibo tema
+Comment[ne]=पूर्वनिर्धारित जिनोम विषयवस्तु
+Comment[nl]=Standaard w2k-bibo-thema
+Comment[nn]=Vanleg w2k-bibo-drakt
+Comment[oc]=Tèma per defaut de w2k-bibo
+Comment[or]=ପୂର୍ବ ନିର୍ଦ୍ଧାରିତ ନୋମ ପ୍ରସଙ୍ଗ
+Comment[pa]=ਮੂਲ ਗਨੋਮ ਸਰੂਪ
+Comment[pl]=Domyślny motyw w2k-bibo
+Comment[pt]=Tema w2k-bibo por Omissão
+Comment[pt_BR]=Tema Padrão do w2k-bibo
+Comment[ro]=Temă implicită w2k-bibo
+Comment[ru]=Стандартная тема среды w2k-bibo
+Comment[si]=සාමාන්‍ය w2k-bibo තේමාව
+Comment[sk]=Štandardná téma w2k-bibo
+Comment[sl]=Privzeta tema w2k-bibo
+Comment[sq]=Tema e prezgjedhur e w2k-bibo
+Comment[sr]=Подразумевана тема Гнома
+Comment[sr@Latn]=Podrazumevana tema Gnoma
+Comment[sv]=Standardtema för w2k-bibo
+Comment[ta]=முன்னிருப்பு w2k-bibo பொருள்
+Comment[te]=అప్రమెయ గ్నొమ్ వైవిద్యాంశం
+Comment[th]=ชุดตกแต่งปริยายของ w2k-bibo
+Comment[tk]=w2k-biboniň oň bellenen temi
+Comment[tr]=Öntanımlı w2k-bibo Teması
+Comment[uk]=Типова тема середовища w2k-bibo
+Comment[vi]=Sắc thái w2k-bibo Mặc Định
+Comment[xh]=Misela Umxholo we w2k-bibo
+Comment[zh_CN]=w2k-bibo 默认主题
+Comment[zh_HK]=預設 w2k-bibo 佈景主題
+Comment[zh_TW]=預設 w2k-bibo 佈景主題
+
+Directories=8x8/emblems,16x16/actions,16x16/animations,16x16/apps,16x16/categories,16x16/devices,16x16/emblems,16x16/emotes,16x16/filesystems,16x16/mimetypes,16x16/places,16x16/status,16x16/stock/chart,16x16/stock/code,16x16/stock/code,16x16/stock/data,16x16/stock/document,16x16/stock/emoticons,16x16/stock/form,16x16/stock/generic,16x16/stock/image,16x16/stock/io,16x16/stock/media,16x16/stock/navigation,16x16/stock/net,16x16/stock/object,16x16/stock/table,16x16/stock/text,22x22/actions,22x22/animations,22x22/apps,22x22/categories,22x22/devices,22x22/devices,22x22/emblems,22x22/emotes,22x22/mimetypes,22x22/places,22x22/status,32x32/actions,32x32/animations,32x32/apps,32x32/categories,32x32/devices,32x32/emblems,32x32/emotes,32x32/mimetypes,32x32/places,32x32/status,48x48/actions,48x48/animations,48x48/apps,48x48/categories,48x48/devices,48x48/emblems,48x48/filesystems,48x48/mimetypes,48x48/places,48x48/stock/code,48x48/stock/document,48x48/stock/generic,48x48/stock/io,48x48/stock/net,64x64/actions,64x64/apps,64x64/devices,64x64/mimetypes,64x64/filesystems
+
+[8x8/emblems]
+Size=8
+Context=Emblems
+Type=Fixed
+
+[16x16/actions]
+Size=16
+Context=Actions
+Type=Fixed
+
+[16x16/animations]
+Size=16
+Context=Animations
+Type=Fixed
+
+[16x16/apps]
+Size=16
+Context=Applications
+Type=Fixed
+
+[16x16/categories]
+Size=16
+Context=Categories
+Type=Fixed
+
+[16x16/devices]
+Size=16
+Context=Devices
+Type=Fixed
+
+[16x16/emblems]
+Size=16
+Context=Emblems
+Type=Fixed
+
+[16x16/emotes]
+Size=16
+Context=Emotes
+Type=Fixed
+
+[16x16/filesystems]
+Size=16
+Context=FileSystems
+Type=Fixed
+
+[16x16/mimetypes]
+Size=16
+Context=MimeTypes
+Type=Fixed
+
+[16x16/places]
+Size=16
+Context=Places
+Type=Fixed
+
+[16x16/status]
+Size=16
+Context=Status
+Type=Fixed
+
+[16x16/stock/chart]
+Size=16
+Context=Stock
+Type=Fixed
+
+[16x16/stock/code]
+Size=16
+Context=Stock
+Type=Fixed
+
+[16x16/stock/data]
+Size=16
+Context=Stock
+Type=Fixed
+
+[16x16/stock/document]
+Size=16
+Context=Stock
+Type=Fixed
+
+[16x16/stock/emoticons]
+Size=16
+Context=Stock
+Type=Fixed
+
+[16x16/stock/form]
+Size=16
+Context=Stock
+Type=Fixed
+
+[16x16/stock/generic]
+Size=16
+Context=Stock
+Type=Fixed
+
+[16x16/stock/image]
+Size=16
+Context=Stock
+Type=Fixed
+
+[16x16/stock/io]
+Size=16
+Context=Stock
+Type=Fixed
+
+[16x16/stock/media]
+Size=16
+Context=Stock
+Type=Fixed
+
+[16x16/stock/navigation]
+Size=16
+Context=Stock
+Type=Fixed
+
+[16x16/stock/net]
+Size=16
+Context=Stock
+Type=Fixed
+
+[16x16/stock/object]
+Size=16
+Context=Stock
+Type=Fixed
+
+[16x16/stock/table]
+Size=16
+Context=Stock
+Type=Fixed
+
+[16x16/stock/text]
+Size=16
+Context=Stock
+Type=Fixed
+
+[22x22/actions]
+Size=22
+Context=Actions
+Type=Fixed
+
+[22x22/animations]
+Size=22
+Context=Animations
+Type=Fixed
+
+[22x22/apps]
+Size=22
+Context=Applications
+Type=Fixed
+
+[22x22/categories]
+Size=22
+Context=Categories
+Type=Fixed
+
+[22x22/devices]
+Size=22
+Context=Devices
+Type=Fixed
+
+[22x22/emblems]
+Size=22
+Context=Emblems
+Type=Fixed
+
+[22x22/emotes]
+Size=22
+Context=Emotes
+Type=Fixed
+
+[22x22/mimetypes]
+Size=22
+Context=MimeTypes
+Type=Fixed
+
+[22x22/places]
+Size=22
+Context=Places
+Type=Fixed
+
+[22x22/status]
+Size=22
+Context=Status
+Type=Fixed
+
+[32x32/actions]
+Size=32
+Context=Actions
+Type=Fixed
+
+[32x32/animations]
+Size=32
+Context=Animations
+Type=Fixed
+
+[32x32/apps]
+Size=32
+Context=Applications
+Type=Fixed
+
+[32x32/categories]
+Size=32
+Context=Categories
+Type=Fixed
+
+[32x32/devices]
+Size=32
+Context=Devices
+Type=Fixed
+
+[32x32/emblems]
+Size=32
+Context=Emblems
+Type=Fixed
+
+[32x32/emotes]
+Size=32
+Context=Emotes
+Type=Fixed
+
+[32x32/mimetypes]
+Size=32
+Context=MimeTypes
+Type=Fixed
+
+[32x32/places]
+Size=32
+Context=Places
+Type=Fixed
+
+[32x32/status]
+Size=32
+Context=Status
+Type=Fixed
+
+[48x48/actions]
+Size=48
+Context=Actions
+Type=Fixed
+
+[48x48/animations]
+Size=48
+Context=Animations
+Type=Fixed
+
+[48x48/apps]
+Size=48
+Context=Applications
+Type=Fixed
+
+[48x48/categories]
+Size=48
+Context=Categories
+Type=Fixed
+
+[48x48/devices]
+Size=48
+Context=Devices
+Type=Fixed
+
+[48x48/emblems]
+Size=48
+Context=Emblems
+Type=Fixed
+
+[48x48/filesystems]
+Size=48
+Context=FileSystems
+Type=Fixed
+
+[48x48/mimetypes]
+Size=48
+Context=MimeTypes
+Type=Fixed
+
+[48x48/places]
+Size=48
+Context=Places
+Type=Fixed
+
+[48x48/stock/code]
+Size=48
+Context=Stock
+Type=Fixed
+
+[48x48/stock/document]
+Size=48
+Context=Stock
+Type=Fixed
+
+[48x48/stock/generic]
+Size=48
+Context=Stock
+Type=Fixed
+
+[48x48/stock/io]
+Size=48
+Context=Stock
+Type=Fixed
+
+[48x48/stock/net]
+Size=48
+Context=Stock
+Type=Fixed
+
+[64x64/actions]
+Size=48
+MinSize=32
+MaxSize=256
+Context=Actions
+Type=Scalable
+
+[64x64/apps]
+Size=48
+MinSize=32
+MaxSize=256
+Context=Apps
+Type=Scalable
+
+[64x64/devices]
+Size=48
+MinSize=32
+MaxSize=256
+Context=Devices
+Type=Scalable
+
+[64x64/filesystems]
+Size=48
+MinSize=32
+MaxSize=256
+Context=Emblems
+Type=Scalable
+
+[64x64/mimetypes]
+Size=48
+MinSize=32
+MaxSize=256
+Context=MimeTypes
+Type=Scalable
+
+

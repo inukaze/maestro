@@ -1,0 +1,19 @@
+Zune GTK+ Theme
+---------------
+
+Based on the "RoyaleXP" theme by Gnominator
+(http://www.gnome-look.org/content/show.php/XProyale?content=83622)
+
+Images replaced with Zune theme images by Casey Kirsle.
+www.cuvou.com
+
+Changes
+-------
+
+0.04 Jul 10 2009
+* Fixed combo boxes so the text doesn't turn white on mouse hover
+* Fixed the selected text color so the text doesn't turn white when the selection
+  becomes unfocused
+* Fixed the unchecked radio button graphic (it was too dark before)
+* Changed the progress bar - uses XP2002's graphics but are orange not green
+* Switched the arrow graphics for the one in XP2002 - more accurate for WinXP

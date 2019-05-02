@@ -1,0 +1,114 @@
+#################### PANEL BACKGROUND #########################
+
+style "panelbg"
+{
+  xthickness            			= 0
+  ythickness            			= 0
+ bg_pixmap[NORMAL]					= "panel/panel-bg.png"
+}
+
+style "panel"
+{
+xthickness = 0
+ythickness = 0
+}
+class "*Panel*" style "panel"
+#class "*notif*" style "panelbg"
+#class "*Notif*" style "panelbg"
+#class "*Tray*" style "panelbg"
+#class "*tray*" style "panelbg"
+widget_class "*BonoboDockItem" style "panelbg"
+class "*BonoboDockItem" style "panelbg"
+
+style "appletcolor"
+{
+	bg_pixmap[NORMAL]	= "panel/panel-bg.png"
+}
+
+widget "*PanelWidget*" style "appletcolor"
+widget "*PanelApplet*" style "appletcolor"
+
+style "panel"
+
+{
+  fg[NORMAL]			= "#d7d7d7"
+  fg[PRELIGHT]			= "#ffffff" #"#3585AF" #"#B2E7FF"
+  fg[ACTIVE]			= "#f0f0f0"
+  fg[SELECTED]			= "#000000"
+  fg[INSENSITIVE]		= "#6B6B6B" #"#8A857C"
+  bg[SELECTED]			= "#3d3d3d"
+}
+
+widget_class "*Panel*GtkToggleButton" style "panel"
+widget_class "*Panel*GtkButton" style "panel"
+widget_class "*.Panel*Button*GtkLabel" style "panel"
+widget_class "*.Panel*GtkLabel" style "panel"
+
+##################### PANEL BUTTONS ###############################
+
+style "panelbuttons" = "default"
+{
+
+  fg[NORMAL]        = "#ffffff"
+  fg[PRELIGHT]      = "#ffffff" # text on buttons (hover)
+  fg[ACTIVE]        = "#ffffff" # text on unfocused tabs
+  fg[SELECTED]      = "#ffffff" # selected text on lists
+  fg[INSENSITIVE]   = "#ffffff" # greyed "unused" text
+
+ xthickness            			= 4
+ ythickness            			= 4
+
+	GtkWidget::focus_padding = 2
+
+	engine "pixmap" {
+      
+		image
+		{
+			function        			= BOX
+			recolorable     		= TRUE
+			state										= NORMAL
+			file            						= "panel/panel-button-inactive.png"
+			border          			= { 3, 3, 3, 3 }
+			stretch         				= TRUE
+		}
+		
+image
+		{
+			function        			= BOX
+			recolorable     		= TRUE
+			state										= PRELIGHT
+			file            						= "panel/panel-button-prelight.png"
+			border          			= { 3, 3, 3, 3 }
+			stretch         				= TRUE
+
+		}
+
+image
+		{
+			function        			= BOX
+			recolorable     		= TRUE
+			state										= ACTIVE
+			file            						= "panel/panel-button-active.png"
+			border          			= { 3, 3, 3, 3 }
+			stretch         				= TRUE
+		}  
+image
+		{
+			function        			= BOX
+			recolorable     		= TRUE
+			state										= INSENSITIVE
+			file            						= "panel/panel-button-inactive.png"
+			border          			= { 3, 3, 3, 3 }
+			stretch         				= TRUE
+		}  
+
+	}
+
+}
+widget_class "*Panel*GtkToggleButton" style "panelbuttons"
+#widget_class "*Panel*GtkButton" style "panelbuttons"
+
+widget "*.tasklist-button" style "panelbuttons"
+
+
+

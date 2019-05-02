@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=zonColor Xtra-Canonical
+Comment=Xtra-Canonical variant of zonColor
+
+[X-GNOME-Metatheme]
+GtkTheme=zoncolorXtra-Canonical
+MetacityTheme=zoncolorXtra-Rambiance
+ShellTheme=zoncolorDarkNight
+IconTheme=zoncolorPurple
+CursorTheme=zoncolor
+BackgroundImage=Pictures/zoncolorRedSky.png
+ButtonLayout=close,minimize,maximize:
+GtkColorScheme=@RESET

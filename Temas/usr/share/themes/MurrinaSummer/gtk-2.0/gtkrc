@@ -1,0 +1,225 @@
+# MurrinaSummer by DDZ based on MurrinaAquaIsh with Clearlooks/Ubuntulooks-Looking Roundness and matching the Summer E16 and GTK+ theme colors (yellow replaced by light blue) by THR4K.
+# Also include Chrome hacks for Chromium based web browser like SRWare Iron.
+
+gtk-color-scheme = "base_color:#f5faff\nfg_color:#000000\ntooltip_fg_color:#000000\nselected_bg_color:#009bff\nselected_fg_color:#000000\ntext_color:#000000\nbg_color:#ebf5ff\ntooltip_bg_color:#a5e1ff"
+
+style "theme-default"
+{
+  GtkButton      ::default_border    = { 0, 0, 0, 0 }
+  GtkRange       ::trough_border     = 0
+  GtkPaned       ::handle_size       = 6
+  GtkRange       ::slider_width      = 15
+  GtkRange       ::stepper_size      = 15
+
+  GtkScrollbar   ::min_slider_length = 30
+  GtkCheckButton ::indicator_size    = 14
+  GtkMenuBar     ::internal-padding  = 0
+  GtkTreeView    ::expander_size     = 14
+  GtkExpander    ::expander_size     = 16
+  GtkScale       ::slider-length     = 24
+  
+  xthickness = 1
+  ythickness = 1
+
+  fg[NORMAL] 		= "#000000"
+  fg[PRELIGHT] 		= "#000000"
+  fg[SELECTED] 		= "#000000"
+  fg[ACTIVE] 		= "#000000"
+  fg[INSENSITIVE] 	= "#afafaf"
+ 
+  bg[NORMAL] 		= "#ebf5ff"
+  bg[PRELIGHT] 		= "#ebf5ff"
+  bg[SELECTED] 		= "#009bff"
+  bg[ACTIVE] 		= "#a5e1ff"
+  bg[INSENSITIVE] 	= "#f5faff"
+
+  base[NORMAL] 		= "#f5faff"
+  base[PRELIGHT] 	= "#009bff"
+  base[SELECTED] 	= "#009bff"
+  base[ACTIVE] 		= "#a5e1ff"
+  base[INSENSITIVE] 	= "#f5faff"
+
+  text[NORMAL] 		= "#000000"
+  text[PRELIGHT] 	= "#000000"
+  text[SELECTED] 	= "#ffffff"
+  text[ACTIVE] 		= "#000000"
+  text[INSENSITIVE] 	= "#afafaf"
+
+  GtkTreeView::odd_row_color = mix(0.98, @bg_color, @selected_bg_color)
+  GnomeHRef::link_color		="#0062DC" 
+  GtkIMHtmlr::hyperlink-color	="#8D52DC"
+
+	engine "nodoka"
+	{
+#		scrollbar_color		= shade (1.040897799, "#008DD7")
+		animation		= TRUE # FALSE = disabled, TRUE = enabled
+#		contrast		= 1.0
+#		gradients		= FALSE
+#		hilight_ratio		= 0.909090909
+		listviewheaderstyle	= 1 # 0 = flat, 1 = gradient, 2 = raised
+		listviewstyle		= 1 # 0 = nothing, 1 = dotted
+		menubarstyle		= 3 # 0 = flat, 1 = normal raised gradient, 2 = normal lowered gradient, 3 = menubar gradient
+		toolbarstyle		= 2 # 0 = flat, 1 = normal raised gradient, 2 = normal lowered gradient, 3 = menubar gradient
+		roundness		= 6 # 0 = squared, 1 = old default, more will increase roundness
+		scrollbarstyle		= 1 # 0 = nothing, 1 = circles, 2 = bars
+		stripes			= TRUE # enable or disable stripes in progressbars
+		bullet_color		= "#005DC2"
+		focus_fill		= TRUE # enable or disable focus overlay fill
+		focus_inner		= FALSE	# TRUE = secondary focus ring inside, FALSE = secondary focus ring outside widgets
+	}
+}
+
+
+style "theme-wide" = "theme-default"
+{
+  xthickness = 2
+  ythickness = 2
+}
+
+style "theme-wider" = "theme-default"
+{
+  xthickness = 3
+  ythickness = 3
+}
+
+style "theme-entry" = "theme-wider"
+{
+  bg[SELECTED]	    = @selected_bg_color
+}
+
+style "theme-button" = "theme-wider"
+{
+  bg[NORMAL]        = mix(0.98, shade (0.97,@bg_color), @selected_bg_color)
+  bg[PRELIGHT]      = @selected_bg_color
+  bg[ACTIVE]	    = @tooltip_bg_color
+  bg[SELECTED]      = @selected_bg_color
+  bg[INSENSITIVE]   = @bg_color
+}
+
+style "theme-notebook" = "theme-wide"
+{
+  bg[NORMAL]      = @bg_color
+  bg[INSENSITIVE] = @base_color
+  bg[SELECTED]    = @selected_bg_color
+  bg[ACTIVE]      = @tooltip_bg_color
+
+  engine "clearlooks" {
+    style = GLOSSY
+  }
+}
+
+style "theme-tasklist" = "theme-default"
+{
+  xthickness = 5
+  ythickness = 3
+}
+
+style "theme-menu" = "theme-default"
+{
+  xthickness = 2
+  ythickness = 1
+}
+
+style "theme-menu-item" = "theme-default"
+{
+  ythickness = 3
+
+}
+
+style "theme-menubar" = "theme-default"
+{
+  #bg[NORMAL] = "#FFFFFF"
+  bg[NORMAL] = @bg_color
+}
+
+style "theme-menubar-item"
+{
+	ythickness = 4
+	bg[PRELIGHT] = @selected_bg_color
+	fg[ACTIVE] = @selected_fg_color
+}
+
+style "theme-tree" = "theme-default"
+{
+  xthickness = 2
+  ythickness = 2
+}
+
+style "theme-frame-title" = "theme-default"
+{
+  fg[NORMAL] = @text_color
+}
+
+style "theme-tooltips" = "theme-default"
+{
+  xthickness = 4
+  ythickness = 4
+  bg[NORMAL] = { 1.0,1.0,0.75 }
+}
+
+style "theme-progressbar" = "theme-wide"
+{
+  xthickness = 1
+  ythickness = 1
+  font_name  = "Liberation Sans Bold"
+  bg[NORMAL]   =  @tooltip_bg_color
+  bg[SELECTED] = @selected_bg_color
+  fg[PRELIGHT] = @text_color
+}
+
+style "theme-combo" = "theme-button"
+{
+}
+
+style "chrome-hacks" 
+{ 
+    ChromeGtkFrame::frame-color = @selected_bg_color
+    ChromeGtkFrame::inactive-frame-color = @tooltip_bg_color
+    ChromeGtkFrame::frame-gradient-size = 16 
+    ChromeGtkFrame::frame-gradient-color = shade (0.95,@selected_bg_color)
+    ChromeGtkFrame::inactive-frame-gradient-color = shade (0.95,@tooltip_bg_color)
+    ChromeGtkFrame::incognito-frame-color = "#1E527A"
+    ChromeGtkFrame::incognito-inactive-frame-color = "#C8EBFF"
+    ChromeGtkFrame::incognito-frame-gradient-color = shade (0.95,"#1E527A")
+    ChromeGtkFrame::incognito-inactive-frame-gradient-color = shade (0.95,"#C8EBFF")
+    ChromeGtkFrame::scrollbar-trough-color = shade (0.9, @bg_color)
+    ChromeGtkFrame::scrollbar-slider-prelight-color = shade (1.05, @selected_bg_color)
+    ChromeGtkFrame::scrollbar-slider-normal-color = @selected_bg_color
+} 
+
+class "ChromeGtkFrame" style "chrome-hacks"
+
+# widget styles
+class "GtkWidget"      style "theme-default"
+class "GtkButton"      style "theme-button"
+class "GtkScale"       style "theme-button"
+class "GtkCombo"       style "theme-button"
+class "GtkRange"       style "theme-wide"
+class "GtkFrame"       style "theme-wide"
+class "GtkMenu"        style "theme-menu"
+class "GtkEntry"       style "theme-entry"
+class "GtkMenuItem"    style "theme-menu-item"
+class "GtkNotebook"    style "theme-notebook"
+class "GtkProgressBar" style "theme-progressbar"
+class "*MenuBar*"      style "theme-menubar"
+
+widget_class "*MenuItem.*" style "theme-menu-item"
+widget_class "*MenuBar.*"  style "theme-menubar-item"
+
+# combobox stuff
+widget_class "*.GtkComboBox.GtkButton" style "theme-combo"
+widget_class "*.GtkCombo.GtkButton"    style "theme-combo"
+# tooltips stuff
+widget_class "*.tooltips.*.GtkToggleButton" style "theme-tasklist"
+widget "gtk-tooltips" style "theme-tooltips"
+
+# treeview stuff
+widget_class "*.GtkTreeView.GtkButton" style "theme-tree"
+widget_class "*.GtkCTree.GtkButton" style "theme-tree"
+widget_class "*.GtkList.GtkButton" style "theme-tree"
+widget_class "*.GtkCList.GtkButton" style "theme-tree"
+widget_class "*.GtkFrame.GtkLabel" style "theme-frame-title"
+
+# notebook stuff
+widget_class "*.GtkNotebook.*.GtkEventBox" style "theme-notebook"
+widget_class "*.GtkNotebook.*.GtkViewport" style "theme-notebook"

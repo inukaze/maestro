@@ -1,0 +1,109 @@
+# Main window
+style "fm_window" {
+	bg[NORMAL] = mix (0.75, @bg_color, @base_color)
+}
+#widget_class "*Nautilus*Window" style "fm_window"
+#widget_class "*Caja*Window" style "fm_window"
+
+
+# Main view
+style "fm_view" {
+	xthickness = 0
+	ythickness = 0
+}
+widget_class "*Nautilus*View*" style "fm_view"
+widget_class "*Caja*View*" style "fm_view"
+
+
+# Sidebar
+style "fm_sidebar" = "fm_sidebar_color" {
+	GtkTreeView::odd_row_color = shade (0.975, @bg_color)
+	#GtkTreeView::even_row_color = @bg_color
+	xthickness = 0
+	ythickness = 0
+}
+widget_class "*Nautilus*Places*Sidebar*" style "fm_sidebar"
+widget_class "*Nautilus*<GtkNotebook>*<GtkEventBox>" style "fm_sidebar"
+widget_class "*Caja*Places*Sidebar*" style "fm_sidebar"
+widget_class "*Caja*<GtkNotebook>*<GtkEventBox>" style "fm_sidebar"
+widget_class "*ThunarShortcutsView*" style "fm_sidebar"
+widget_class "*ThunarTreeView*" style "fm_sidebar"
+widget_class "*FmSidePane*" style "fm_sidebar"
+
+style "fm_handle" {
+	GtkPaned::handle-size = 1
+	engine "pixmap" {
+		image {
+			function	= HANDLE
+			recolorable	= TRUE
+			file		= "image/fm-handle.png"
+			stretch		= TRUE
+			border 		= { 0, 0, 0, 0 }
+		}
+	}
+}
+widget "*Nautilus*Splitter" style "fm_handle"
+widget_class "*Nautilus*HPaned" style "fm_handle"
+widget "*Caja*Splitter" style "fm_handle"
+widget_class "*Caja*HPaned" style "fm_handle"
+style "fm_handle_alt" {
+	GtkPaned::handle-size = 2
+}
+widget_class "Thunar*HPaned" style "fm_handle_alt"
+widget_class "*FmMainWin*" style "fm_handle_alt"
+
+
+# Statusbar
+style "fm_statusbar" {
+	bg[NORMAL] = @base_color
+	fg[NORMAL] = @text_color
+	xthickness = 2
+	engine "murrine" {
+		contrast = 0.0
+	}
+}
+widget_class "*Nautilus*Statusbar*" style "fm_statusbar"
+widget_class "*Caja*Statusbar*" style "fm_statusbar"
+
+# Make icon text background in Xfce desktop more transparent
+style "xfdesktop_icon_view" {
+	XfdesktopIconView::label-alpha = 25 # 0-100
+	base[NORMAL] = "#222222"
+	base[SELECTED] = @selected_bg_color
+	base[ACTIVE] = @bg_color
+	fg[NORMAL] = "#dddddd"
+	fg[SELECTED] = @selected_fg_color
+	fg[ACTIVE] = @fg_color
+}
+widget_class "*XfdesktopIconView*" style "xfdesktop_icon_view"
+
+# Thunar
+#style "thunar_window" {
+#	GtkPaned::handle-size = 1
+#	engine "murrine" {
+#		contrast = 0.0
+#	}
+#}
+#widget_class "Thunar*Window*" style "thunar_window"
+style "thunar_window_widget" {
+	engine "murrine" {
+		contrast = 0.8
+	}
+}
+widget_class "Thunar*Window*Button*" style "thunar_window_widget"
+widget_class "Thunar*Window*Menu*" style "thunar_window_widget"
+widget_class "Thunar*Window*View*" style "thunar_window_widget"
+widget_class "Thunar*Window*Toolbar*" style "thunar_window_widget"
+widget_class "Thunar*Window*Scrollbar*" style "thunar_window_widget"
+style "thunar_view" {
+	xthickness = 0
+	ythickness = 0
+}
+#widget_class "*Thunar*View*" style "thunar_view"
+style "thunar_window_entry" {
+	engine "murrine" {
+		contrast = 0.5
+	}
+}
+widget_class "Thunar*Window*Entry" style "thunar_window_entry"
+

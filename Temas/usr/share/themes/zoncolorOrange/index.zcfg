@@ -1,0 +1,18 @@
+[zonColorConfig]
+Type=ThemeSet
+Version=1.0
+Notes=Best viewed as .ini file in Gedit.
+
+[Info]
+Name='zonColor Orange'
+Comment='Orange variant of zonColor'
+
+[ThemeSet]
+GtkTheme='zoncolorOrange'
+WindowTheme='zoncolor'
+ShellTheme='zoncolorDarkNight'
+IconTheme='zoncolorOrange'
+CursorTheme='zoncolor'
+Wallpaper='Pictures/zoncolorGold.png'
+WindowButtonLayout='close:menu'
+GtkColorScheme='@RESET'

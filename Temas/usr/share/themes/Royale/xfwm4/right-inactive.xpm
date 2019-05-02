@@ -1,0 +1,13 @@
+/* XPM */
+static char * right_inactive_xpm[] = {
+"4 5 5 1",
+" 	c None",
+".	c #529EE7",
+"+	c #94C7EF",
+"@	c #84BEEF",
+"#	c #6BA2EF",
+".+@#",
+".+@#",
+".+@#",
+".+@#",
+".+@#"};

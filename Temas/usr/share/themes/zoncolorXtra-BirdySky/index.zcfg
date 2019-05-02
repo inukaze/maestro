@@ -1,0 +1,18 @@
+[zonColorConfig]
+Type=ThemeSet
+Version=1.0
+Notes=Best viewed as .ini file in Gedit.
+
+[Info]
+Name='zonColor Xtra-BirdySky'
+Comment='Xtra-BirdySky variant of zonColor'
+
+[ThemeSet]
+GtkTheme='zoncolorXtra-BirdySky'
+WindowTheme='zoncolorXtra-Basic'
+ShellTheme='zoncolorDarkNight'
+IconTheme='zoncolorSlate'
+CursorTheme='zoncolor'
+Wallpaper='Pictures/zoncolorLowlight.png'
+WindowButtonLayout='menu:minimize,maximize,close'
+GtkColorScheme='@RESET'

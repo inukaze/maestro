@@ -1,0 +1,178 @@
+
+style "fix"
+{
+xthickness = 0
+ythickness = 0
+bg_pixmap[NORMAL] = "shadows/window-bg.png"
+}
+
+class "*Panel*" style "fix"
+
+style "panel"
+{
+
+xthickness = 0
+ythickness = 0
+
+  	fg[NORMAL]			= "#ffffff"
+  	fg[PRELIGHT]			= "#ffffff"
+  	fg[ACTIVE]			= "#ffffff"
+  	fg[SELECTED]			= "#000000"
+  	fg[INSENSITIVE]			= "#6B6B6B"
+	bg_pixmap[NORMAL] 		= "panel/panel-bg.png"
+	bg_pixmap[ACTIVE] 		= "panel/panel-bg.png"
+	bg_pixmap[SELECTED] 		= "panel/panel-bg.png"
+	bg_pixmap[INSENSITIVE] 		= "panel/panel-bg.png"
+	bg_pixmap[PRELIGHT] 		= "panel/panel-bg.png"
+}
+
+class "*Mail*" style "panel"
+class "*notif*" style "panel"
+class "*Notif*" style "panel"
+widget_class "*Panel*GtkToggleButton" style "panel"
+widget_class "*Panel*GtkButton" style "panel"
+widget_class "*.Panel*Button*GtkLabel" style "panel"
+widget_class "*.Panel*GtkLabel" style "panel"
+widget_class "*Netstatus*" style "panel"
+widget_class "*Tomboy*Tray*" style "panel"
+widget "*fast-user-switch*" style "panel"
+widget_class "*PanelToplevel*" style "panel"
+class "Xfce*Panel*" style "panel"
+widget "*PanelWidget*" style "panel"
+class "*PanelApplet*" style "panel"
+widget_class "*Xfce*Panel*" style "panel"
+widget_class "*Panel*Applet*" style "panel"
+
+style "panelbar"
+{
+engine "pixmap"
+
+	{
+	image
+	{
+		function	= BOX
+		state		= NORMAL
+		file		= "panel/panel-bg.png"
+		border		= { 0 , 0 , 0 , 0}
+		stretch		= FALSE
+	}
+
+	
+	image
+	{
+		function	= BOX
+		state		= ACTIVE
+		file		= "panel/panel-bg.png"
+		border		= { 0 , 0 , 0 , 0}
+		stretch		= FALSE
+	}
+
+	
+	image
+	{
+		function	= BOX
+		state		= INSENSITIVE
+		file		= "panel/panel-bg.png"
+		border		= { 0 , 0 , 0 , 0}
+		stretch		= FALSE
+	}
+
+	
+	image
+	{
+		function	= BOX
+		state		= PRELIGHT
+		recolorable	= TRUE
+		file		= "menubar/menubar-item.png"
+		border		= { 3 , 3 , 3 , 3}
+		stretch		= TRUE
+	}
+}
+
+}
+
+widget_class "*Panel*MenuBar*" style "panelbar"
+
+style "panelbuttons"
+{
+ xthickness            			= 3
+ ythickness            			= 3
+
+	GtkWidget::focus_padding = 2
+
+	engine "pixmap" {
+      
+	image
+	{
+		function        		= BOX
+		recolorable     		= TRUE
+		state				= NORMAL
+		file            		= "panel/panel-button-inactive.png"
+		border          		= { 3, 3, 3, 3 }
+		stretch         		= TRUE
+	}
+		
+	image
+	{
+		function        		= BOX
+		shadow				= OUT
+		recolorable     		= TRUE
+		state				= PRELIGHT
+		file            		= "panel/panel-button-prelight.png"
+		border          		= { 3, 3, 3, 3 }
+		stretch         		= TRUE
+		overlay_file			= "panel/panel-button-null.png"
+		overlay_border			=  { 3, 3, 3, 3 }
+		overlay_stretch			= TRUE
+	}		
+
+	image
+	{
+		function        		= BOX
+		recolorable     		= TRUE
+		shadow				= IN
+		state				= PRELIGHT
+		file            		= "panel/panel-button-active.png"
+		border          		= { 3, 3, 3, 3 }
+		stretch         		= TRUE
+		overlay_file			= "panel/panel-button-active-hover.png"
+		overlay_border			=  { 3, 3, 3, 3 }
+		overlay_stretch			= TRUE
+	}
+		
+
+	image
+	{
+		function        		= BOX
+		recolorable     		= TRUE
+		state				= ACTIVE
+		file            		= "panel/panel-button-active.png"
+		border          		= { 3, 3, 3, 3 }
+		stretch         		= TRUE
+	}  
+
+	image
+	{
+		function        		= BOX
+		recolorable     		= TRUE
+		state				= INSENSITIVE
+		file            		= "panel/panel-button-inactive.png"
+		border          		= { 3, 3, 3, 3 }
+		stretch         		= TRUE
+	} 
+
+	image
+	{
+		function        		= BOX
+		recolorable     		= TRUE
+		state				= SELECTED
+		file            		= "panel/panel-button-active.png"
+		border          		= { 3, 3, 3, 3 }
+		stretch         		= TRUE
+	}  
+
+}
+}
+
+widget_class "*Panel*GtkToggleButton" style "panelbuttons"
+widget "*.tasklist-button" style "panelbuttons"

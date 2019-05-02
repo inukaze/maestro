@@ -1,0 +1,26 @@
+README :
+
+* Problem with 24x24 in menus 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ Some gtk themes such as Ambiance, had a parameter to have 22x22 icon in panel-menus. Please note that this config makes the Vista 24x24 icon blured in theses menus. If you want to correct this, you must modify the "panel-menu" value of the "gtk-icon-sizes" to "24,24" in the gtkrc config file of your theme (for default themes look in /usr/share/themes/<THEME_NAME>/gtk-2.0/).
+
+* Configuration of the theme
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ Use the pre-config webpage, and the config script to change different aspect of the theme (to have a Vista or Seven Look and feel for example). Use   ./config.sh --help
+
+* Source of the icons
+^^^^^^^^^^^^^^^^^^^^^
+ All icons are based on official Vista icons, Seven Icons, Wordpad, Paint and Windows Live. However I was obliged to create somes of them. For the complete list, refer to sources.txt
+
+
+* Unused icons
+^^^^^^^^^^^^^^
+ Some icons have non recognized name, but are present if necessary. You can apply them manually to some specific folders.
+  - actions/object-rotate-180
+  - places/folder-desktop
+  - places/folder-games
+  - places/mail-folder-draft
+  - places/mail-folder-important
+  - places/mail-folder-junk
+
+

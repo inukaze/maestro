@@ -1,0 +1,265 @@
+# zonColor Themes Pack Project - http://www.fandigital.com
+# -------------------------------------------------------------------
+# zonColor GTK-Theme
+
+
+#############################
+# Standard GTK color scheme #
+#############################
+gtk-color-scheme = "bg_color:#f2f1f0"
+gtk-color-scheme = "fg_color:#4c4c4c"
+gtk-color-scheme = "base_color:#ffffff"
+gtk-color-scheme = "text_color:#3C3C3C"
+gtk-color-scheme = "selected_bg_color:#f07746"
+gtk-color-scheme = "selected_fg_color:#ffffff"
+gtk-color-scheme = "tooltip_bg_color:#000000"
+gtk-color-scheme = "tooltip_fg_color:#ffffff"
+gtk-color-scheme = "link_color:#DD4814"
+
+include "style/default.rc"
+
+
+
+########################
+# SPECIAL COLOR SCHEME #
+########################
+
+gtk-color-scheme = "header_bg_color:#3c3b37"
+gtk-color-scheme = "header_fg_color:#dfdbd2"
+gtk-color-scheme = "header_textshadow_color:#000000"
+
+gtk-color-scheme = "menubar_bg_color:#3c3b37"
+gtk-color-scheme = "menubar_fg_color:#dfdbd2"
+gtk-color-scheme = "menubaritem_selected_bg_color:#484742"
+gtk-color-scheme = "menubaritem_selected_fg_color:#dfdbd2"
+
+gtk-color-scheme = "toolbar_bg_color:#3c3b37"
+gtk-color-scheme = "toolbar_fg_color:#dfdbd2"
+gtk-color-scheme = "toolbarbutton_selected_bg_color:#484742"
+gtk-color-scheme = "toolbarbutton_selected_fg_color:#dfdbd2"
+
+gtk-color-scheme = "menupop_bg_color:#484742"
+gtk-color-scheme = "menupop_fg_color:#dfdbd2"
+gtk-color-scheme = "menupopitem_selected_bg_color:#f07746"
+gtk-color-scheme = "menupopitem_selected_fg_color:#ffffff"
+
+gtk-color-scheme = "panel_bg_color:#3c3b37"
+gtk-color-scheme = "panel_fg_color:#dfdbd2"
+gtk-color-scheme = "panelbutton_selected_bg_color:#484742"
+gtk-color-scheme = "panelbutton_selected_fg_color:#dfdbd2"
+gtk-color-scheme = "panelmenubaritem_selected_bg_color:#484742"
+gtk-color-scheme = "panelmenubaritem_selected_fg_color:#dfdbd2"
+
+# FILE MANAGER
+gtk-color-scheme = "fm2sidebar_bg_color:#f2f1f0"
+gtk-color-scheme = "fm2sidebar_fg_color:#4c4c4c"
+
+
+
+################
+# COLOR DETAIL #
+################
+
+include "style/special-color.rc"
+
+# MENUBAR
+	style "menubar_color" = "menubarbased_color" {
+	}
+	style "menubaritem_color" = "menubar_color" {
+		bg[ACTIVE] = @menubaritem_selected_bg_color
+		bg[SELECTED] = @menubaritem_selected_bg_color
+		bg[PRELIGHT] = @menubaritem_selected_bg_color
+		fg[ACTIVE] = @menubaritem_selected_fg_color
+		fg[SELECTED] = @menubaritem_selected_fg_color
+		fg[PRELIGHT] = @menubaritem_selected_fg_color
+	}
+	style "gtkfixed_menubaritem_color" {
+		bg[SELECTED] = mix (0.75, @menubar_bg_color, @menubar_fg_color)
+		fg[PRELIGHT] = @selected_fg_color
+		fg[SELECTED] = @selected_fg_color
+	}
+	include "style/menubar.rc"
+
+
+# TOOLBAR
+	style "toolbar_color" = "toolbarbased_color" {
+		bg[ACTIVE] = @toolbarbutton_selected_bg_color
+		bg[SELECTED] = @toolbarbutton_selected_bg_color
+		fg[ACTIVE] = @toolbarbutton_selected_fg_color
+		fg[SELECTED] = @toolbarbutton_selected_fg_color
+	}
+	include "style/toolbar-sunken.rc" # toolbar.rc / toolbar-flat.rc / toolbar-sunken.rc / toolbar-sunken-shadow.rc
+
+
+# POP-UP MENU
+	style "menupopup_color" = "menupopbased_color" {
+	}
+	style "menupopupitem_color" = "menupopup_color" {
+		bg[PRELIGHT] = @menupopitem_selected_bg_color
+		bg[SELECTED] = @menupopitem_selected_bg_color
+		fg[PRELIGHT] = @menupopitem_selected_fg_color
+		fg[SELECTED] = @menupopitem_selected_fg_color
+		text[PRELIGHT] = @menupopitem_selected_fg_color
+		text[SELECTED] = @menupopitem_selected_fg_color
+	}
+	include "style/menupopup.rc"
+
+
+
+########################
+# APP-SPECIFIC WIDGETS #
+########################
+
+include "style/app/app-misc.rc"
+
+# PANEL
+	style "panel_color" = "panelbased_color" {
+		#bg_pixmap[NORMAL] = "style/app/image/panel-bg-dark.png"	# causing problem with lxpanel
+		bg[ACTIVE] = @panelbutton_selected_bg_color
+		bg[SELECTED] = @panelbutton_selected_bg_color
+		fg[ACTIVE] = @panelbutton_selected_fg_color
+		fg[SELECTED] = @panelbutton_selected_fg_color
+	}
+	style "panelmenubar_color" = "panel_color" {
+		bg[ACTIVE] = @panelmenubaritem_selected_bg_color
+		bg[SELECTED] = @panelmenubaritem_selected_bg_color
+		bg[PRELIGHT] = @panelmenubaritem_selected_bg_color
+		fg[ACTIVE] = @panelmenubaritem_selected_fg_color
+		fg[SELECTED] = @panelmenubaritem_selected_fg_color
+		fg[PRELIGHT] = @panelmenubaritem_selected_fg_color
+	}
+	include "style/app/panel.rc"
+
+# DESKTOP ICONS
+style "xfdesktop-icon-view" {
+    XfdesktopIconView::label-alpha = 0
+    XfdesktopIconView::selected-label-alpha = 170
+    XfdesktopIconVIew::ellipsize-icon-labels = 1
+
+    XfdesktopIconView::shadow-x-offset = 1
+    XfdesktopIconView::shadow-y-offset = 1
+    XfdesktopIconView::shadow-color = "#000000"
+    XfdesktopIconView::selected-shadow-x-offset = 1
+    XfdesktopIconView::selected-shadow-y-offset = 1
+    XfdesktopIconView::selected-shadow-color = "#000000"
+
+    XfdesktopIconVIew::cell-spacing = 2
+    XfdesktopIconView::cell-padding = 2
+    XfdesktopIconView::cell-text-width-proportion = 2
+
+    base[NORMAL] = "#cccccc"
+    base[SELECTED] = "#cccccc"
+    base[ACTIVE] = "#cccccc"
+
+    fg[NORMAL] = "#ffffff"
+    fg[SELECTED] = "#000000"
+    fg[ACTIVE] = "#000000"
+}
+widget_class "*XfdesktopIconView*" style "xfdesktop-icon-view"
+
+# FILE MANAGER
+	style "fm_sidebar_color" {
+		GtkTreeView::even_row_color = @fm2sidebar_bg_color
+		bg[NORMAL] = @bg_color
+		base[NORMAL] = @fm2sidebar_bg_color
+		base[ACTIVE] = mix (0.65, @fm2sidebar_bg_color, mix (0.75, @selected_bg_color, @selected_fg_color))
+		fg[NORMAL] = @fg_color
+		text[NORMAL] = @fm2sidebar_fg_color
+		text[ACTIVE] = @fm2sidebar_fg_color
+	}
+	include "style/app/fm.rc"
+
+
+# TERMINAL
+	style "terminal_color" = "menubarbased_color" {
+		base[NORMAL] = shade (1.08, @menubar_bg_color)
+	}
+	style "terminalnotebook_color" = "terminal_color" {
+		bg[NORMAL] = shade (1.08, @menubar_bg_color)
+		bg[ACTIVE] = shade (0.95, @menubar_bg_color)
+	}
+	include "style/app/terminal.rc"
+
+
+# WINDOW DECORATION
+	style "wm_color" {
+		base[PRELIGHT] = @header_bg_color
+		base[ACTIVE] = shade (1.1785, mix (0.96, @header_bg_color, @header_fg_color))
+		text[PRELIGHT] = @header_fg_color
+		text[ACTIVE] = @header_textshadow_color
+		ChromeGtkFrame::frame-color = @header_bg_color
+		ChromeGtkFrame::incognito-frame-color = @header_bg_color
+		base[INSENSITIVE] = @header_bg_color
+		text[INSENSITIVE] = mix (0.3, @header_fg_color, @header_bg_color)
+		ChromeGtkFrame::inactive-frame-color = @header_bg_color
+		ChromeGtkFrame::incognito-inactive-frame-color = @header_bg_color
+	}
+	style "xfwm_color" = "wm_color" {
+		bg[SELECTED] = @header_bg_color
+		fg[SELECTED] = @header_fg_color
+		bg[INSENSITIVE] = @header_bg_color
+		fg[INSENSITIVE] = mix (0.3, @header_fg_color, @header_bg_color)
+	}
+	include "style/app/wm.rc"
+
+
+# MISC. APPS
+
+# XfsmLogoutDialog
+	style "xfsm_logout_dialog_color" = "panel_color" {
+	}
+	include "style/app/xfsm.rc"
+
+# MintMenu
+	style "mintmenu_color" = "panel_color" {
+	}
+	include "style/app/mintmenu.rc"
+
+# Cardapio
+	style "cardapio_window_color" = "panel_color" {
+		bg[PRELIGHT] = @selected_bg_color
+		fg[PRELIGHT] = @selected_fg_color
+	}
+	style "cardapio_app_pane_color" = "default" {
+	}
+	include "style/app/cardapio.rc"
+
+# Chrome/Chromium
+	include "style/app/chrome.rc"
+
+# Mozilla
+	include "style/app/mozilla.rc"
+
+# OpenOffice/LibreOffice
+	include "style/app/openlibreoffice.rc"
+
+#Whisker theme
+    style "darkback"
+    {
+            bg[NORMAL] = @header_bg_color
+            bg[ACTIVE] = @header_bg_color
+            bg[PRELIGHT] = @header_bg_color
+            fg[NORMAL] = @header_fg_color
+            fg[ACTIVE] = @header_fg_color
+            fg[PRELIGHT] = @header_fg_color
+    }
+    widget "whiskermenu-window*" style "darkback"
+
+style "darktree"
+{
+
+   base[NORMAL] = @fm2sidebar_bg_color
+   base[ACTIVE] = mix (0.65, @fm2sidebar_bg_color, mix (0.75, @selected_bg_color, @selected_fg_color))
+   text[NORMAL] = @header_bg_color
+   text[ACTIVE] = @fm2sidebar_fg_color
+   
+}
+widget "whiskermenu-window*TreeView*" style "darktree"
+
+#############
+# Overrides #
+#############
+# Put your additional style in "override.rc" file that will override all of the above styling:
+
+include "override.rc"
+

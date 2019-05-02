@@ -1,0 +1,10 @@
+style "xfsm_logout_dialog" = "xfsm_logout_dialog_color" {
+}
+
+
+################
+# WIDGET MATCH #
+################
+
+widget_class "*XfsmLogoutDialog*"	style "xfsm_logout_dialog"
+

@@ -1,0 +1,43 @@
+@import url("toolbar.css");
+
+.menubar.toolbar,
+.primary-toolbar,
+.primary-toolbar .toolbar,
+.primary-toolbar.toolbar {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (@toolbar_bg_top_color),
+					color-stop (0.5, mix (@toolbar_bg_top_color, @toolbar_bg_bottom_color, 0.75)),
+					to (@toolbar_bg_bottom_color));
+}
+
+.menubar.toolbar .linked .button,
+.menubar.toolbar .linked .button:hover,
+.menubar.toolbar .linked .button:active,
+.menubar.toolbar .linked .button:insensitive,
+.menubar.toolbar .raised .button,
+.menubar.toolbar .raised.button,
+.menubar.toolbar .button:hover,
+.menubar.toolbar .button:active,
+.menubar.toolbar .button:insensitive,
+.primary-toolbar .raised .button,
+.primary-toolbar .raised.button,
+.primary-toolbar .button:hover,
+.primary-toolbar .button:active,
+.primary-toolbar .button:insensitive {
+	-unico-outer-stroke-gradient: -gtk-gradient (linear, left top, left bottom,
+					from (alpha (shade (@toolbar_bg_color, 1.08), 0.0)),
+					to (alpha (shade (@toolbar_bg_color, 1.08), 0.5)));
+}
+
+@define-color toolbarbutton_selected_border_color	mix (@toolbar_bg_color, @toolbarbutton_selected_bg_color, 0.5);
+
+.menubar.toolbar .button:active,
+.primary-toolbar .button:active {
+	border-color: shade (@toolbarbutton_selected_border_color, 0.825);
+	border-top-color: shade (@toolbarbutton_selected_border_color, 0.75);
+	border-bottom-color: shade (@toolbarbutton_selected_border_color, 0.9);
+	-unico-border-gradient: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@toolbarbutton_selected_border_color, 0.75)),
+					to (shade (@toolbarbutton_selected_border_color, 0.9)));
+}
+

@@ -1,0 +1,8 @@
+[X-GNOME-Metatheme]
+Name=Zune
+Type=X-GNOME-Metatheme
+Comment=Windows XP Zune Theme
+Encoding=UTF-8
+GtkTheme=Zune
+MetacityTheme=Zune
+IconTheme=gnome

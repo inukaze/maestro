@@ -1,0 +1,44 @@
+# ==================================================================
+# zonColor Themes Pack Project - http://www.fandigital.com
+# This GTK theme is licensed under GNU GPL version 3 or later.
+# ==================================================================
+
+
+To enable/activate this theme:
+==============================
+If you have zonColor app installed, you can just double click *.zcfg
+file or by selecting it manually to enable theme-set ("metatheme")
+specified in the config file.
+
+Or you can go to 'zcsetup' folder and run enable-*-theme
+laucher/script to enable each theme individually (if available).
+The launcher/script support Unity/GNOME/Cinnamon/MATE/Xfce session.
+
+Or usual way:
+Use a theme changer utility (e.g. GNOME Tweak Tool) or a
+built-in appearance settings app (if available).
+
+.
+
+NOTES
+=====
+
+To use a GNOME Shell theme, you have to install "user-theme"
+GNOME Shell extension. Install the extension using software center/
+package manager provided in your system, or go to this website:
+https://extensions.gnome.org/extension/19/user-themes/
+
+You may need to set file permission to the script to allow
+executing it as program.
+* To set file permission in Nautilus file manager:
+    Right-click on the file ==> Properties ==> Permissions ==>
+    Execute ==> Check "Allow executing file as program" option.
+  You may also need to change Nautilus (Files) preference to be able
+  to run executable text files:
+    Open Nautilus (Files) Preferences window ==> Behavior ==>
+    Executable Text Files: Select "Ask each time".
+* To mark the script file as executable via Terminal:
+  Navigate to this folder, and then run this command:
+  "chmod +x *.sh" (without quotes)
+
+.

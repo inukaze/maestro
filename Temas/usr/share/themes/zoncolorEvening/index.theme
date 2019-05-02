@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=zonColor Evening
+Comment=Evening variant of zonColor
+
+[X-GNOME-Metatheme]
+GtkTheme=zoncolorEvening
+MetacityTheme=zoncolorDarkNight
+ShellTheme=zoncolorDarkNight
+IconTheme=zoncolorBrave
+CursorTheme=zoncolor
+BackgroundImage=Pictures/zoncolorDarkSlateBlue.png
+ButtonLayout=close:menu
+GtkColorScheme=@RESET

@@ -1,0 +1,16 @@
+style "cardapio_window" = "cardapio_window_color" {
+	bg_pixmap[NORMAL] = "image/transparent.png"
+	engine "murrine" {
+		rgba = TRUE
+		#gradient_shades = {1.2,1.025,0.975,0.8}
+		trough_shades = {1.5,1.6}
+		trough_border_shades = {1.35,1.35}
+	}
+}
+style "cardapio_app_pane" = "cardapio_app_pane_color" {
+	bg_pixmap[NORMAL] = "image/transparent.png"
+}
+
+widget "CardapioWindow*" style "cardapio_window"
+widget "ApplicationPane" style "cardapio_app_pane"
+

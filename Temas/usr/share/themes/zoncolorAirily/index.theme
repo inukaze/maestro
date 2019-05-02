@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=zonColor Airily
+Comment=Airily variant of zonColor
+
+[X-GNOME-Metatheme]
+GtkTheme=zoncolorAirily
+MetacityTheme=zoncolorInset
+ShellTheme=zoncolorDarkNight
+IconTheme=zoncolorSlate
+CursorTheme=zoncolor
+BackgroundImage=Pictures/zoncolorXtra-UbuntuPhoneBlue.png
+ButtonLayout=close,minimize,maximize:spacer,menu
+GtkColorScheme=@RESET

@@ -1,0 +1,95 @@
+/***********
+ * menubar *
+ ***********/
+.menubar {
+	-GtkWidget-window-dragging: true;
+	/*padding: 10px;*/
+	color: @menubar_fg_color;
+	background-color: @menubar_bg_color;
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (@menubar_bg_top_color),
+					to (@menubar_bg_bottom_color));
+	border-width: 0;
+	-unico-border-gradient: none;
+
+	box-shadow: inset 0 -1 @menubar_border_bottom_color;
+	border-bottom-width: 1px;
+	border-bottom-color: @menubar_border_bottom_highlight_color;
+	-unico-inner-stroke-width: 0 0 1px 0;
+	-unico-inner-stroke-bottom-color: @menubar_border_bottom_color;
+
+}
+
+
+/***************
+ * menubaritem *
+ ***************/
+.menubar.menuitem,
+.menubar > GtkMenuItem.menuitem {
+    background-image: inherit;
+	background-color: inherit;
+	border-width: 1px 1px 0 1px;
+	color: @menubar_fg_color;
+}
+
+.menubar.menuitem,
+.menubar > GtkMenuItem.menuitem,
+/*.menubar .menuitem,*/
+.whatever {
+	padding: 3px 5px 3px 5px;
+	-GtkMenuItem-toggle-spacing: 0;
+}
+
+.menubar.menuitem:hover,
+.menubar > GtkMenuItem.menuitem:hover,
+/*.menubar .menuitem:hover,*/
+.whatever {
+	background-color: @menubaritem_selected_bg_color;
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@menubaritem_selected_bg_color, 0.9)),
+					to (shade (@menubaritem_selected_bg_color, 1.1)));
+	color: @menubaritem_selected_fg_color;
+	border-width: 1px 1px 0 1px;
+	border-color: shade (mix (@menubar_bg_color, @menubaritem_selected_bg_color, 0.75), 0.775);
+	-unico-glow-radius: 3;
+	-unico-glow-color: shade (@menubaritem_selected_bg_color, 0.9);
+	-unico-border-width: 0;
+	-unico-border-gradient: none;
+	-unico-border-color: @transparent;
+	-unico-inner-stroke-width: 0;
+	-unico-inner-stroke-gradient: none;
+	-unico-inner-stroke-color: @transparent;
+	-unico-outer-stroke-width: 0;
+	-unico-outer-stroke-gradient: none;
+	-unico-outer-stroke-color: @transparent;
+}
+
+.menuitem.separator:backdrop {
+}
+
+.menubar .menuitem.separator:backdrop,
+.primary-toolbar .menuitem.separator:backdrop {
+}
+
+
+
+/************
+ * BACKDROP *
+ ************/
+/*
+.menubar:backdrop,
+whatever {
+	box-shadow: none;
+	border-bottom-color: @transparent;
+	-unico-inner-stroke-bottom-color: @transparent;
+}
+.menubar:backdrop,
+.menubar > GtkMenuItem.menuitem:backdrop {
+	color: mix (@menubar_bg_color, @menubar_fg_color, 0.5);
+}
+.menubar:backdrop,
+.menubar > GtkMenuItem.menuitem:backdrop {
+	text-shadow: none;
+}
+*/
+

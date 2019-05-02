@@ -1,0 +1,22 @@
+@define-color menubar_border_bottom_color shade (@menubar_bg_color, 0.85);
+@define-color menubar_border_bottom_highlight_color shade (@menubar_bg_color, 1.15);
+
+.primary-toolbar,
+.primary-toolbar .toolbar,
+.primary-toolbar.toolbar,
+NautilusWindow .primary-toolbar,
+NautilusWindow .primary-toolbar .toolbar,
+NautilusWindow .primary-toolbar.toolbar,
+whatever {
+	border-top-width: 0;
+	box-shadow: none;
+	engine: unico;
+	-unico-inner-stroke-width: 0;
+}
+
+NautilusWindow .sidebar .frame
+whatever {
+	border-top-width: 0;
+	box-shadow: none;
+}
+

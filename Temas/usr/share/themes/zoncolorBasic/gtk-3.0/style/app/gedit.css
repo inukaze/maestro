@@ -1,0 +1,55 @@
+@define-color notebook_tab_gradient_b		shade (@bg_color, 0.95);
+
+GeditWindow .pane-separator,
+GeditWindow .pane-separator:hover {
+}
+
+GeditPanel.title GtkLabel {
+}
+
+GeditPanel .toolbar {
+	border-style: none;
+	background-color: transparent;
+}
+
+GeditDocumentsPanel .view {
+}
+
+GeditDocumentsPanel .view:backdrop {
+}
+
+GeditWindow .notebook {
+	padding: 0;
+}
+
+GeditPanel .notebook {
+	padding: 3px;
+}
+
+GeditPanel .notebook tab,
+GeditWindow .notebook tab {
+}
+
+
+
+/****************************
+ * Gedit window notebook *
+ ****************************/
+
+GeditWindow .notebook tab:active,
+GeditWindow .notebook tab:active:backdrop,
+GeditWindow .notebook tab .button:active,
+GeditWindow .notebook tab .button:active:hover,
+GeditWindow .notebook tab .button:active:backdrop,
+GeditWindow .notebook tab .button:active:hover:backdrop,
+whatever {
+	background-image: none;
+	background-color: @base_color;
+	color: @text_color;
+}
+GeditWindow .notebook tab GtkLabel:active,
+GeditWindow .notebook tab GtkLabel:active:backdrop,
+whatever {
+	color: @text_color;
+}
+

@@ -1,0 +1,100 @@
+/* Fallback Mode Panel */
+PanelWidget :backdrop,
+PanelApplet :backdrop,
+PanelToplevel :backdrop,
+PanelWidget,
+PanelApplet,
+PanelToplevel {
+    border-image: none;
+
+    color: #FFFFFF;
+}
+
+PanelWidget,
+PanelApplet,
+PanelToplevel {
+    background-color: transparent;
+    background-image: -gtk-gradient (linear, left top, left bottom,
+                                     from (#83c2ed),
+                                     color-stop (0.50, #5593de),
+                                     color-stop (0.50, #3980d2),
+                                     to (#2c55b1));
+    border-top-color: #2a4dab;
+}
+
+PanelApplet {
+    border-width: 1px;
+}
+
+PanelSeparator:backdrop,
+PanelSeparator {
+    border-width: 0;
+    background-color: @dark_fg_color;
+}
+
+.gnome-panel-menu-bar,
+PanelApplet > GtkMenuBar.menubar,
+PanelApplet > GtkMenuBar.menubar.menuitem,
+PanelMenuBar.menubar,
+PanelMenuBar.menubar.menuitem {
+    -PanelMenuBar-icon-visible: true;
+    background-color: transparent;
+    background-image: -gtk-gradient (linear, left top, left bottom,
+                                     from (#83c2ed),
+                                     color-stop (0.50, #5593de),
+                                     color-stop (0.50, #3980d2),
+                                     to (#2c55b1));
+}
+
+PanelAppletFrame { 
+    background-color: @dark_bg_color;
+    border-width: 0;
+}
+
+PanelApplet .button:backdrop,
+PanelApplet .button {
+    -GtkButton-inner-border: 2;
+
+    border-image: url("images/button-taskbar.png") 10 12 10 12 / 10px 12px 10px 12px stretch;
+    background-color: transparent;
+    background-image: -gtk-gradient (linear, left top, left bottom,
+                                     from (#83c2ed),
+                                     color-stop (0.50, #5593de),
+                                     color-stop (0.50, #3980d2),
+                                     to (#2c55b1));
+    border-radius: 0;
+    border-width: 0 1px 0 1px;
+    text-shadow: none;
+}
+
+PanelApplet .button:active:prelight:backdrop,
+PanelApplet .button:active:prelight,
+PanelApplet .button:active:backdrop,
+PanelApplet .button:active {
+    border-image: url("images/button-taskbar.png") 10 12 10 12 / 10px 12px 10px 12px stretch;
+    background-color: transparent;
+    background-image: -gtk-gradient (linear, left top, left bottom,
+                                     from (#63a2cd),
+                                     color-stop (0.50, #3573be),
+                                     color-stop (0.50, #1960b2),
+                                     to (#0c3591));
+}
+
+PanelApplet .button:prelight:backdrop,
+PanelApplet .button:prelight {
+    border-image: url("images/button-taskbar.png") 10 12 10 12 / 10px 12px 10px 12px stretch;
+    background-color: transparent;
+    background-image: -gtk-gradient (linear, left top, left bottom,
+                                     from (#93d2fd),
+                                     color-stop (0.50, #65a3ee),
+                                     color-stop (0.50, #4990e2),
+                                     to (#3c65c1));
+}
+
+ClockBox {
+    text-shadow: none;
+}
+
+WnckPager, WnckTasklist {
+    background-color: @dark_bg_color;
+}

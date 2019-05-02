@@ -1,0 +1,18 @@
+[zonColorConfig]
+Type=ThemeSet
+Version=1.0
+Notes=Best viewed as .ini file in Gedit.
+
+[Info]
+Name='zonColor Xtra-Redmond'
+Comment='Xtra-Redmond variant of zonColor'
+
+[ThemeSet]
+GtkTheme='zoncolorXtra-Redmond'
+WindowTheme='zoncolorXtra-Redmond'
+ShellTheme='zoncolorDarkNight'
+IconTheme='zoncolorMix-YellowTurquoise'
+CursorTheme='DMZ-White'
+Wallpaper='Pictures/zoncolorHilight.png'
+WindowButtonLayout='menu:minimize,maximize,close'
+GtkColorScheme='@RESET'

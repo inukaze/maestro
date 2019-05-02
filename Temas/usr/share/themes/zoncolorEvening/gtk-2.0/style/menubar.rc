@@ -1,0 +1,29 @@
+style "menubar" = "menubar_color" {
+	GtkMenuBar::shadow-type = GTK_SHADOW_NONE
+	engine "murrine" {
+		contrast = 0.0
+	}
+}
+
+style "menubar_item" = "menubaritem_color" {
+	engine "murrine" {
+		roundness = 2
+		textstyle = 1
+		gradient_shades = {0.9,1.0,1.0,1.1}
+		border_shades = {0.85,1.05}
+		contrast = 0.8
+	}
+}
+
+
+widget_class "*<GtkMenuBar>*" style "menubar"
+widget_class "*<GtkMenuBar>*<GtkMenuItem>*" style "menubar_item"
+widget_class "*<GtkMenuBar>.<GtkMenuItem>*" style:highest "menubar_item"
+
+
+# GtkFixed (QT/KDE apps, Mozilla, Libre/OpenOffice)
+style "gtkfixed_menubar_item" = "gtkfixed_menubaritem_color" {
+}
+widget_class "*GtkFixed*MenuItem*" style:highest "gtkfixed_menubar_item"
+widget_class "*GtkFixed*<GtkMenuBar>.<GtkMenuItem>*" style:highest "gtkfixed_menubar_item"
+

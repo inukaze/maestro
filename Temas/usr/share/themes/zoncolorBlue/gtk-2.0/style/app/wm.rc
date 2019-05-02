@@ -1,0 +1,21 @@
+style "window_frame" = "wm_color" {
+	ChromeGtkFrame::frame-gradient-size = 16
+	#ChromeGtkFrame::frame-gradient-color = "#ffffff"
+	ChromeGtkFrame::incognito-frame-gradient-size = 16
+	#ChromeGtkFrame::incognito-frame-gradient-color = "#ffffff"
+}
+
+style "xfwm_frame" = "xfwm_color" {
+}
+
+
+################
+# WIDGET MATCH #
+################
+
+widget "GtkWindow" style "window_frame"
+class "MetaFrames" style "window_frame"
+class "ChromeGtkFrame" style "window_frame"
+
+widget "xfwm" style "xfwm_frame"
+

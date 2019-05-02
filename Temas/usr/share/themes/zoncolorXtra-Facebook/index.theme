@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=zonColor Xtra-Facebook
+Comment=Xtra-Facebook variant of zonColor
+
+[X-GNOME-Metatheme]
+GtkTheme=zoncolorXtra-Facebook
+MetacityTheme=zoncolorFlat
+ShellTheme=zoncolorDarkNight
+IconTheme=zoncolorBrave
+CursorTheme=zoncolor
+BackgroundImage=Pictures/zoncolor.png
+ButtonLayout=close:menu
+GtkColorScheme=@RESET

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=zonColor Xtra: Ambiance::ModernUI
+Comment=Ambiance::ModernUI extra variant of zonColor
+
+[X-GNOME-Metatheme]
+GtkTheme=zoncolorXtra-RadianceModern
+MetacityTheme=zoncolorXtra-RedmondModern
+ShellTheme=zoncolorDayLight
+IconTheme=zoncolorXtra-Ubuntuish-Light
+CursorTheme=DMZ-White
+BackgroundImage=Pictures/zoncolorGold.png
+ButtonLayout=close,minimize,maximize:menu
+GtkColorScheme=@RESET

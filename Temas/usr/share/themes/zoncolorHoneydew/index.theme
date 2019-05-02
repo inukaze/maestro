@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=zonColor Honeydew
+Comment=Honeydew variant of zonColor
+
+[X-GNOME-Metatheme]
+GtkTheme=zoncolorHoneydew
+MetacityTheme=zoncolorLittle
+ShellTheme=zoncolorDarkNight
+IconTheme=zoncolorSlate
+CursorTheme=zoncolor
+BackgroundImage=Pictures/zoncolorSlate.png
+ButtonLayout=close,minimize,maximize:spacer,menu
+GtkColorScheme=@RESET

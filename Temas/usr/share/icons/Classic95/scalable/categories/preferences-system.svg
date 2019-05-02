@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48px"
+   height="48px"
+   id="svg4289"
+   sodipodi:version="0.32"
+   inkscape:version="0.91 r"
+   sodipodi:docname="preferences-system.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   version="1.1">
+  <defs
+     id="defs4291">
+    <linearGradient
+       id="linearGradient6791">
+      <stop
+         id="stop6793"
+         offset="0"
+         style="stop-color:#ffffff;stop-opacity:1;" />
+      <stop
+         id="stop6795"
+         offset="1"
+         style="stop-color:#ffffff;stop-opacity:0" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient6707">
+      <stop
+         id="stop6709"
+         offset="0"
+         style="stop-color:#888a85;stop-opacity:1" />
+      <stop
+         id="stop6711"
+         offset="1"
+         style="stop-color:#555753;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient6545">
+      <stop
+         style="stop-color:#d3d7cf;stop-opacity:1"
+         offset="0"
+         id="stop6547" />
+      <stop
+         style="stop-color:#eeeeec;stop-opacity:1"
+         offset="1"
+         id="stop6549" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient6525">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop6527" />
+      <stop
+         style="stop-color:#babdb6;stop-opacity:1"
+         offset="1"
+         id="stop6529" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient5440">
+      <stop
+         id="stop5442"
+         offset="0"
+         style="stop-color:#eeeeec;stop-opacity:1" />
+      <stop
+         id="stop5444"
+         offset="1"
+         style="stop-color:#a2a298;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2808">
+      <stop
+         id="stop2810"
+         offset="0"
+         style="stop-color:white;stop-opacity:1;" />
+      <stop
+         id="stop2812"
+         offset="1"
+         style="stop-color:white;stop-opacity:0.2937853" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666"
+     borderopacity="0.31372549"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="4"
+     inkscape:cx="40.725752"
+     inkscape:cy="9.5969463"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:grid-bbox="false"
+     inkscape:document-units="px"
+     inkscape:window-width="897"
+     inkscape:window-height="694"
+     inkscape:window-x="88"
+     inkscape:window-y="0"
+     inkscape:showpageshadow="false"
+     inkscape:grid-points="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     showborder="true"
+     inkscape:window-maximized="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid5999" />
+    <inkscape:grid
+       id="GridFromPre046Settings"
+       type="xygrid"
+       originx="0px"
+       originy="0px"
+       spacingx="0.5px"
+       spacingy="0.5px"
+       color="#3f3fff"
+       empcolor="#3f3fff"
+       opacity="0.15"
+       empopacity="0.38"
+       empspacing="2" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4294">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>System Preferences</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Andreas Nilsson</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>category</rdf:li>
+            <rdf:li>system</rdf:li>
+            <rdf:li>preferences</rdf:li>
+            <rdf:li>settings</rdf:li>
+            <rdf:li>control center</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>Jakub Steiner
+Ulisse Perusin</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/GPL/2.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/GPL/2.0/">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Notice" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/ShareAlike" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/SourceCode" />
+      </cc:License>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Preferences</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Andreas Nilsson</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>Lapo Calamandrei, Ulisse Perusin, Jakub Steiner</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/GPL/2.0/" />
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>category</rdf:li>
+            <rdf:li>system</rdf:li>
+            <rdf:li>preferences</rdf:li>
+            <rdf:li>settings</rdf:li>
+            <rdf:li>control center</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/GPL/2.0/">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Notice" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/ShareAlike" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/SourceCode" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <image
+       y="2.25"
+       x="2"
+       id="image3431"
+       xlink:href="data:image/png;base64,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
+"
+       preserveAspectRatio="none"
+       height="43"
+       width="44.75" />
+  </g>
+</svg>

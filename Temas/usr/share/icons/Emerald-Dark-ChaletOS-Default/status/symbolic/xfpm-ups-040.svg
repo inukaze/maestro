@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg3014"
+   height="22"
+   width="26"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="xfpm-ups-040.svg">
+  <defs
+     id="defs11" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1014"
+     id="namedview9"
+     showgrid="true"
+     inkscape:zoom="28.393057"
+     inkscape:cx="14.052566"
+     inkscape:cy="10.985417"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg3014">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2995" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3019">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="g4135"
+     transform="matrix(0.83564057,0,0,0.66541114,2.1014527,3.6100376)">
+    <rect
+       x="7"
+       y="-10"
+       width="8"
+       height="7"
+       ry="0"
+       rx="0"
+       transform="matrix(0,1,-1,0,0,0)"
+       style="fill:#f2f2f2;fill-opacity:1;fill-rule:evenodd"
+       id="rect3190" />
+    <path
+       sodipodi:nodetypes="ccccccccccccccccccc"
+       inkscape:connector-curvature="0"
+       id="path2988"
+       d="m 1,5 22,0 0,3 2,0 0,6 -2,0 0,2.999999 -21.9999998,0 0,-9.999999 1,1 0,7.999999 L 22,15.999999 22,13 24,13 24,9 22,9 22,6 2,6 Z"
+       style="fill:#f2f2f2;fill-opacity:1;stroke:none" />
+  </g>
+</svg>

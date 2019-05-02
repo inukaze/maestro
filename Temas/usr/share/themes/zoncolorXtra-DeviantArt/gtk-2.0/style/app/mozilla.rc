@@ -1,0 +1,21 @@
+style "mozilla_toolbar" = "default" {
+	engine "murrine" {
+		gradient_shades = {1.0,1.0,1.0,1.0}
+	}
+}
+style "mozilla_button" {
+	fg[NORMAL] = mix(0.5, @fg_color, @bg_color)
+}
+widget	"MozillaGtkWidget*Toolbar*" style:highest "mozilla_toolbar" # workaround for add-on bar
+widget	"MozillaGtkWidget*Statusbar*" style:highest "mozilla_toolbar" # workaround for add-on bar
+widget	"MozillaGtkWidget*Button*" style:highest "mozilla_button"
+
+style "mozilla_entry" {
+	text[NORMAL] = "black"
+	base[NORMAL] = mix (0.5, "white", @base_color)
+}
+widget "MozillaGtkWidget*Entry*" style	"mozilla_entry"
+widget "MozillaGtkWidget*Text*" style	"mozilla_entry"
+class "GtkInvisible" style	"mozilla_entry"
+widget "GtkInvisible" style	"mozilla_entry"
+

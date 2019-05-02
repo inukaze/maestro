@@ -1,0 +1,18 @@
+[zonColorConfig]
+Type=ThemeSet
+Version=1.0
+Notes=Best viewed as .ini file in Gedit.
+
+[Info]
+Name='zonColor Xtra-Facebook'
+Comment='Xtra-Facebook variant of zonColor'
+
+[ThemeSet]
+GtkTheme='zoncolorXtra-Facebook'
+WindowTheme='zoncolorFlat'
+ShellTheme='zoncolorDarkNight'
+IconTheme='zoncolorBrave'
+CursorTheme='zoncolor'
+Wallpaper='Pictures/zoncolor.png'
+WindowButtonLayout='close:menu'
+GtkColorScheme='@RESET'

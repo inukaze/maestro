@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=zonColor Purple
+Comment=Purple variant of zonColor
+
+[X-GNOME-Metatheme]
+GtkTheme=zoncolorPurple
+MetacityTheme=zoncolor
+ShellTheme=zoncolorDarkNight
+IconTheme=zoncolorPurple
+CursorTheme=zoncolor
+BackgroundImage=Pictures/zoncolorRedSky.png
+ButtonLayout=close:menu
+GtkColorScheme=@RESET

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+
+  <!-- Category: default -->
+    <!-- Element: bg[NORMAL] -->
+  <element id ="0" value="#D4D0C8"/>
+    <!-- Element: bg[PRELIGHT] -->
+  <element id ="1" value="#FF0000" disabled="true"/>
+    <!-- Element: bg[SELECTED] -->
+  <element id ="2" value="#FFFFFF" disabled="true"/>
+    <!-- Element: bg[ACTIVE] -->
+  <element id ="3" value="#D4D0C8"/>
+    <!-- Element: bg[INSENSITIVE] -->
+  <element id ="4" value="#EEEAB0" disabled="true"/>
+    <!-- Element: fg[NORMAL] -->
+  <element id ="5" value="#FF0000" disabled="true"/>
+    <!-- Element: fg[PRELIGHT] -->
+  <element id ="6" value="#00FF00" disabled="true"/>
+    <!-- Element: fg[ACTIVE] -->
+  <element id ="7" value="#000000"/>
+    <!-- Element: fg[SELECTED] -->
+  <element id ="8" value="#E7A0A0" disabled="true"/>
+    <!-- Element: fg[INSENSITIVE] -->
+  <element id ="9" value="#DBDACC" disabled="true"/>
+    <!-- Element: base[NORMAL] -->
+  <element id ="10" value="#FBFCE7" disabled="true"/>
+    <!-- Element: base[PRELIGHT] -->
+  <element id ="11" value="#FF0000" disabled="true"/>
+    <!-- Element: base[SELECTED] -->
+  <element id ="12" value="#FFFFFF" disabled="true"/>
+    <!-- Element: base[ACTIVE] -->
+  <element id ="13" value="#0000FF" disabled="true"/>
+    <!-- Element: base[INSENSITIVE] -->
+  <element id ="14" value="#EEEAB0" disabled="true"/>
+    <!-- Element: text[NORMAL] -->
+  <element id ="15" value="#FF0000" disabled="true"/>
+    <!-- Element: text[PRELIGHT] -->
+  <element id ="16" value="#00FF00" disabled="true"/>
+    <!-- Element: text[ACTIVE] -->
+  <element id ="17" value="#FFFF00" disabled="true"/>
+    <!-- Element: text[SELECTED] -->
+  <element id ="18" value="#C65656" disabled="true"/>
+    <!-- Element: text[INSENSITIVE] -->
+  <element id ="19" value="#DBDACC" disabled="true"/>
+    <!-- Element: xthickness -->
+  <element id ="20" value="0" disabled="true"/>
+    <!-- Element: ythickness -->
+  <element id ="21" value="0" disabled="true"/>
+    <!-- Element: bg_pixmap[NORMAL] -->
+  <element id ="56" value="&lt;none&gt;" disabled="true"/>
+    <!-- Element: bg_pixmap[PRELIGHT] -->
+  <element id ="57" value="&lt;none&gt;" disabled="true"/>
+    <!-- Element: bg_pixmap[INSENSITIVE] -->
+  <element id ="60" value="&lt;none&gt;" disabled="true"/>
+
+    <!-- Engine: smooth -->
+  <engine name="smooth" category="default" disabled="true">
+  </engine>
+
+
+  <!-- Category: desktop-icon -->
+    <!-- Element: NautilusIconContainer::frame_text -->
+  <element id ="22" value="1" disabled="true"/>
+    <!-- Element: text[NORMAL] -->
+  <element id ="23" value="#000000" disabled="true"/>
+    <!-- Element: base[NORMAL] -->
+  <element id ="24" value="#FFFFFF" disabled="true"/>
+    <!-- Element: NautilusIconContainer::normal_alpha -->
+  <element id ="25" value="0" disabled="true"/>
+    <!-- Element: NautilusIconContainer::normal_icon_render_mode -->
+  <element id ="61" value="0" disabled="true"/>
+    <!-- Element: NautilusIconContainer::prelight_icon_render_mode -->
+  <element id ="62" value="1" disabled="true"/>
+    <!-- Element: NautilusIconContainer::normal_icon_color -->
+  <element id ="63" value="#FF0000" disabled="true"/>
+    <!-- Element: NautilusIconContainer::prelight_icon_color -->
+  <element id ="64" value="#FF00AA" disabled="true"/>
+    <!-- Element: NautilusIconContainer::normal_icon_saturation -->
+  <element id ="65" value="150" disabled="true"/>
+    <!-- Element: NautilusIconContainer::prelight_icon_saturation -->
+  <element id ="66" value="255" disabled="true"/>
+    <!-- Element: NautilusIconContainer::normal_icon_brightness -->
+  <element id ="67" value="200" disabled="true"/>
+    <!-- Element: NautilusIconContainer::prelight_icon_brightness -->
+  <element id ="68" value="255" disabled="true"/>
+    <!-- Element: NautilusIconContainer::selection_box_color -->
+  <element id ="69" value="#0000FF" disabled="true"/>
+    <!-- Element: NautilusIconContainer::selection_box_alpha -->
+  <element id ="70" value="100" disabled="true"/>
+    <!-- Element: NautilusIconContainer::normal_icon_lighten -->
+  <element id ="71" value="0" disabled="true"/>
+    <!-- Element: NautilusIconContainer::prelight_icon_lighten -->
+  <element id ="72" value="25" disabled="true"/>
+    <!-- Element: NautilusIconContainer::activate_prelight_icon_label -->
+  <element id ="73" value="1" disabled="true"/>
+    <!-- Element: text[PRELIGHT] -->
+  <element id ="74" value="#000000" disabled="true"/>
+    <!-- Element: base[PRELIGHT] -->
+  <element id ="75" value="#FFFFFF" disabled="true"/>
+    <!-- Element: NautilusIconContainer::prelight_alpha -->
+  <element id ="76" value="255" disabled="true"/>
+
+    <!-- Engine: smooth -->
+  <engine name="smooth" category="desktop-icon" disabled="true">
+  </engine>
+
+
+  <!-- Category: panel -->
+    <!-- Element: bg[NORMAL] -->
+  <element id ="26" value="#999999" disabled="true"/>
+    <!-- Element: bg[PRELIGHT] -->
+  <element id ="27" value="#FF0000" disabled="true"/>
+    <!-- Element: bg[SELECTED] -->
+  <element id ="28" value="#FFFFFF" disabled="true"/>
+    <!-- Element: bg[ACTIVE] -->
+  <element id ="29" value="#0000FF" disabled="true"/>
+    <!-- Element: bg[INSENSITIVE] -->
+  <element id ="30" value="#EEEAB0" disabled="true"/>
+    <!-- Element: fg[NORMAL] -->
+  <element id ="31" value="#FF0000" disabled="true"/>
+    <!-- Element: fg[PRELIGHT] -->
+  <element id ="32" value="#00FF00" disabled="true"/>
+    <!-- Element: fg[ACTIVE] -->
+  <element id ="33" value="#FFFF00" disabled="true"/>
+    <!-- Element: fg[SELECTED] -->
+  <element id ="34" value="#FFFFFF" disabled="true"/>
+    <!-- Element: fg[INSENSITIVE] -->
+  <element id ="35" value="#DBDACC" disabled="true"/>
+    <!-- Element: xthickness -->
+  <element id ="36" value="1" disabled="true"/>
+    <!-- Element: ythickness -->
+  <element id ="37" value="1" disabled="true"/>
+    <!-- Element: font_name -->
+  <element id ="54" value="Arial 8" disabled="true"/>
+    <!-- Element: bg_pixmap[NORMAL] -->
+  <element id ="55" value="&lt;none&gt;" disabled="true"/>
+
+    <!-- Engine: smooth -->
+  <engine name="smooth" category="panel" disabled="true">
+  </engine>
+
+
+  <!-- Category: window-decoration-with_compiz -->
+    <!-- Element: fg[NORMAL] -->
+  <element id ="38" value="#C8C8C8" disabled="true"/>
+    <!-- Element: fg[SELECTED] -->
+  <element id ="39" value="#FFFFFF" disabled="true"/>
+    <!-- Element: bg[NORMAL] -->
+  <element id ="40" value="#BBBBBB" disabled="true"/>
+    <!-- Element: bg[SELECTED] -->
+  <element id ="41" value="#FFC050" disabled="true"/>
+
+  <!-- Category: window-decoration -->
+    <!-- Element: fg[NORMAL] -->
+  <element id ="42" value="#C8C8C8" disabled="true"/>
+    <!-- Element: bg[SELECTED] -->
+  <element id ="43" value="#FFC050" disabled="true"/>
+
+  <!-- Category: scrollbar -->
+    <!-- Element: bg[NORMAL] -->
+  <element id ="44" value="#00BFFF" disabled="true"/>
+    <!-- Element: bg[PRELIGHT] -->
+  <element id ="45" value="#FFFFFF" disabled="true"/>
+    <!-- Element: bg[ACTIVE] -->
+  <element id ="46" value="#00DFFF" disabled="true"/>
+    <!-- Element: GtkScrollbar::slider_width -->
+  <element id ="47" value="15" disabled="true"/>
+    <!-- Element: GtkScrollbar::stepper_size -->
+  <element id ="77" value="15" disabled="true"/>
+
+    <!-- Engine: smooth -->
+  <engine name="smooth" category="scrollbar" disabled="true">
+  </engine>
+
+
+  <!-- Category: progressbar -->
+    <!-- Element: bg[SELECTED] -->
+  <element id ="48" value="#00DFFF" disabled="true"/>
+    <!-- Element: xthickness -->
+  <element id ="49" value="0" disabled="true"/>
+    <!-- Element: ythickness -->
+  <element id ="50" value="1" disabled="true"/>
+
+    <!-- Engine: smooth -->
+  <engine name="smooth" category="progressbar" disabled="true">
+  </engine>
+
+
+  <!-- Category: tooltips -->
+    <!-- Element: bg[NORMAL] -->
+  <element id ="51" value="#FFFFAF" disabled="true"/>
+    <!-- Element: fg[NORMAL] -->
+  <element id ="78" value="#000000" disabled="true"/>
+
+    <!-- Engine: smooth -->
+  <engine name="smooth" category="tooltips" disabled="true">
+  </engine>
+
+
+  <!-- Category: button -->
+    <!-- Element: xthickness -->
+  <element id ="52" value="2" disabled="true"/>
+    <!-- Element: ythickness -->
+  <element id ="53" value="1" disabled="true"/>
+
+    <!-- Engine: smooth -->
+  <engine name="smooth" category="button" disabled="true">
+  </engine>
+
+
+  <!-- Category: _TOPLEVEL_ -->
+    <!-- Element: gtk-menu -->
+  <element id ="100" value="16,16" disabled="true"/>
+    <!-- Element: panel-menu -->
+  <element id ="102" value="16,16"/>
+    <!-- Element: gtk-large-toolbar -->
+  <element id ="103" value="16,16"/>
+    <!-- Element: gtk-button -->
+  <element id ="104" value="16,16"/>
+    <!-- Element: gtk-button-images -->
+  <element id ="105" value="0" disabled="true"/>
+
+</theme>

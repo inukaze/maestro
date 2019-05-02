@@ -1,0 +1,6 @@
+row:selected:focused,
+GtkIconView.view.cell:selected:focused,
+GtkSwitch.trough:active {
+	text-shadow: 0 1 @selected_textshadow_color;
+}
+

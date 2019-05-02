@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=XP Royale
+Type=X-GNOME-Metatheme
+Comment=This is my second theme made from "royale.msstyles".
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=XPRoyale
+MetacityTheme=XPRoyale
+IconTheme=Tango

@@ -1,0 +1,119 @@
+# 1. Color style based on header bg/fg colors
+style "headerbased_color" {
+	bg[NORMAL] = @header_bg_color
+	bg[PRELIGHT] = shade (1.1, @header_bg_color)
+	bg[ACTIVE] = mix (0.75, @header_bg_color, @header_fg_color)
+	bg[SELECTED] = shade (1.15, mix (0.85, @header_bg_color, @header_fg_color))
+	bg[INSENSITIVE] = shade (0.95, @header_bg_color)
+	fg[NORMAL] = @header_fg_color
+	fg[PRELIGHT] = @header_fg_color
+	fg[ACTIVE] = @header_fg_color
+	fg[SELECTED] = @header_fg_color
+	fg[INSENSITIVE] = mix (0.35, @header_fg_color, @header_bg_color)
+	base[NORMAL] = mix (0.75, @header_bg_color, @base_color)
+	base[PRELIGHT] = shade (1.1, mix (0.75, @header_bg_color, @base_color))
+	base[ACTIVE] = mix (0.65, mix (0.75, @header_bg_color, @base_color), mix (0.75, @selected_bg_color, @selected_fg_color))
+	base[SELECTED] = @selected_bg_color
+	base[INSENSITIVE] = shade (0.95, mix (0.75, @header_bg_color, @base_color))
+	text[NORMAL] = @header_fg_color
+	text[PRELIGHT] = @header_fg_color
+	text[ACTIVE] = @header_fg_color
+	text[SELECTED] = @selected_fg_color
+	text[INSENSITIVE] = mix (0.35, @header_fg_color, @header_bg_color)
+}
+# 2. Color style based on menubar bg/fg colors
+style "menubarbased_color" {
+	bg[NORMAL] = @menubar_bg_color
+	bg[PRELIGHT] = shade (1.1, @menubar_bg_color)
+	bg[ACTIVE] = mix (0.75, @menubar_bg_color, @menubar_fg_color)
+	bg[SELECTED] = shade (1.15, mix (0.85, @menubar_bg_color, @menubar_fg_color))
+	bg[INSENSITIVE] = shade (0.95, @menubar_bg_color)
+	fg[NORMAL] = @menubar_fg_color
+	fg[PRELIGHT] = @menubar_fg_color
+	fg[ACTIVE] = @menubar_fg_color
+	fg[SELECTED] = @menubar_fg_color
+	fg[INSENSITIVE] = mix (0.35, @menubar_fg_color, @menubar_bg_color)
+	base[NORMAL] = mix (0.75, @menubar_bg_color, @base_color)
+	base[PRELIGHT] = shade (1.1, mix (0.75, @menubar_bg_color, @base_color))
+	base[ACTIVE] = mix (0.65, mix (0.75, @menubar_bg_color, @base_color), mix (0.75, @selected_bg_color, @selected_fg_color))
+	base[SELECTED] = @selected_bg_color
+	base[INSENSITIVE] = shade (0.95, mix (0.75, @menubar_bg_color, @base_color))
+	text[NORMAL] = @menubar_fg_color
+	text[PRELIGHT] = @menubar_fg_color
+	text[ACTIVE] = @menubar_fg_color
+	text[SELECTED] = @selected_fg_color
+	text[INSENSITIVE] = mix (0.35, @menubar_fg_color, @menubar_bg_color)
+}
+# 3. Color style based on toolbar bg/fg colors
+style "toolbarbased_color" {
+	bg[NORMAL] = @toolbar_bg_color
+	bg[PRELIGHT] = shade (1.1, @toolbar_bg_color)
+	bg[ACTIVE] = mix (0.75, @toolbar_bg_color, @toolbar_fg_color)
+	bg[SELECTED] = shade (1.15, mix (0.85, @toolbar_bg_color, @toolbar_fg_color))
+	bg[INSENSITIVE] = shade (0.95, @toolbar_bg_color)
+	fg[NORMAL] = @toolbar_fg_color
+	fg[PRELIGHT] = @toolbar_fg_color
+	fg[ACTIVE] = @toolbar_fg_color
+	fg[SELECTED] = @toolbar_fg_color
+	fg[INSENSITIVE] = mix (0.35, @toolbar_fg_color, @toolbar_bg_color)
+	base[NORMAL] = mix (0.75, @toolbar_bg_color, @base_color)
+	base[PRELIGHT] = shade (1.1, mix (0.75, @toolbar_bg_color, @base_color))
+	base[ACTIVE] = mix (0.65, mix (0.75, @toolbar_bg_color, @base_color), mix (0.75, @selected_bg_color, @selected_fg_color))
+	base[SELECTED] = @selected_bg_color
+	base[INSENSITIVE] = shade (0.95, mix (0.75, @toolbar_bg_color, @base_color))
+	text[NORMAL] = @toolbar_fg_color
+	text[PRELIGHT] = @toolbar_fg_color
+	text[ACTIVE] = @toolbar_fg_color
+	text[SELECTED] = @selected_fg_color
+	text[INSENSITIVE] = mix (0.35, @toolbar_fg_color, @toolbar_bg_color)
+}
+# 4. Color style based on menupop bg/fg colors
+style "menupopbased_color" {
+	bg[NORMAL] = @menupop_bg_color
+	bg[PRELIGHT] = shade (1.1, @menupop_bg_color)
+	bg[ACTIVE] = mix (0.75, @menupop_bg_color, @menupop_fg_color)
+	bg[SELECTED] = shade (1.1, mix (0.9, @menupop_bg_color, @menupop_fg_color))
+	bg[INSENSITIVE] = shade (0.95, @menupop_bg_color)
+	fg[NORMAL] = @menupop_fg_color
+	fg[PRELIGHT] = @menupop_fg_color
+	fg[ACTIVE] = @menupop_fg_color
+	fg[SELECTED] = @menupop_fg_color
+	fg[INSENSITIVE] = mix (0.35, @menupop_fg_color, @menupop_bg_color)
+	base[NORMAL] = mix (0.75, @menupop_bg_color, @base_color)
+	base[PRELIGHT] = shade (1.1, mix (0.75, @menupop_bg_color, @base_color))
+	base[ACTIVE] = mix (0.65, mix (0.75, @menupop_bg_color, @base_color), mix (0.75, @selected_bg_color, @selected_fg_color))
+	base[SELECTED] = @selected_bg_color
+	base[INSENSITIVE] = shade (0.95, mix (0.75, @menupop_bg_color, @base_color))
+	text[NORMAL] = @menupop_fg_color
+	text[PRELIGHT] = @menupop_fg_color
+	text[ACTIVE] = @menupop_fg_color
+	text[SELECTED] = @selected_fg_color
+	text[INSENSITIVE] = mix (0.35, @menupop_fg_color, @menupop_bg_color)
+}
+# 5. Color style based on panel bg/fg colors
+style "panelbased_color" {
+	bg[NORMAL] = @panel_bg_color
+	bg[PRELIGHT] = shade (1.2, @panel_bg_color)
+	bg[ACTIVE] = mix (0.75, @panel_bg_color, @panel_fg_color)
+	bg[SELECTED] = shade (1.15, mix (0.85, @panel_bg_color, @panel_fg_color))
+	bg[INSENSITIVE] = shade (0.95, @panel_bg_color)
+	fg[NORMAL] = @panel_fg_color
+	fg[PRELIGHT] = shade (1.08, @panel_fg_color)
+	fg[ACTIVE] = @panel_fg_color
+	fg[SELECTED] = @panel_fg_color
+	fg[INSENSITIVE] = mix (0.35, @panel_fg_color, @panel_bg_color)
+	base[NORMAL] = mix (0.75, @panel_bg_color, @base_color)
+	base[PRELIGHT] = shade (1.1, mix (0.75, @panel_bg_color, @base_color))
+	base[ACTIVE] = mix (0.65, mix (0.75, @panel_bg_color, @base_color), mix (0.75, @selected_bg_color, @selected_fg_color))
+	base[SELECTED] = @selected_bg_color
+	base[INSENSITIVE] = shade (0.95, mix (0.75, @panel_bg_color, @base_color))
+	text[NORMAL] = shade (1.1, @panel_fg_color)
+	text[PRELIGHT] = shade (1.1, @panel_fg_color)
+	text[ACTIVE] = shade (1.1, @panel_fg_color)
+	text[SELECTED] = @selected_fg_color
+	text[INSENSITIVE] = mix (0.35, shade (1.1, @panel_fg_color), mix (0.75, @panel_bg_color, @base_color))
+}
+
+
+
+

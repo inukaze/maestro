@@ -1,0 +1,13 @@
+.menuitem,
+.menu .menuitem {
+	text-shadow: none;
+	icon-shadow: none;
+}
+.menuitem:hover,
+.menuitem:prelight,
+.menu .menuitem:hover,
+.menu .menuitem:prelight {
+	text-shadow: 0 -1 @menupopitem_selected_textshadow_color;
+	icon-shadow: none;
+}
+

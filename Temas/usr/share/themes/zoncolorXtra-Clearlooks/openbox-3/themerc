@@ -1,0 +1,140 @@
+# zonColor Themes Pack Project - http://www.fandigital.com
+# -------------------------------------------------------------------
+# zonColor Openbox-Theme
+
+
+#########################################################
+# Replace each color code using Search and Replace tool #
+# with Replace All method, one code at a time.          #
+# ----------------------------------------------------- #
+# Use UNIQUE COLOR CODE for each item,                  #
+# to avoid color code misplacement.                     #
+#########################################################
+
+
+# WINDOW FRAME
+# ============
+# Active/focused
+# '#769Bc9'	Background (active window) ==> GTK "header_bg_color"
+# '#ffffff'	Text, button (active window) ==> GTK 'header_fg_color'
+# '75'	Text shadow (-110 to 100, -100=white, 0=transparent, 100=black)
+# '#8ebaf1'	Background-highlight (top gradient) (active window) ==> lighter header_bg_color
+# '#5e7ca1'	Border (active window) ==> darker header_bg_color
+# '#86abd9'	prelight button (active window) ==> GTK 'selected_fg_color'
+# '#43566c'	pressed button (active window) ==> darker selected_fg_color
+# Inactive/unfocused
+# '#769Bc9'	Background (inactive window) ==> GTK "header_bg_color"
+# '#a6bedc'	Text, button (inactive window)
+# '#6a8cb5'	Border (inactive window) ==> darker header_bg_color
+
+# POP-UP MENU
+# ===========
+# '#fDfCfB'	Background ==> GTK "menupop_bg_color"
+# '#000000'	Text
+# '#86abd9'	Background-prelight ==> GTK "menupop_selected_bg_color"
+# '#ffffff'	Text-prelight
+# '#a4a4a3'	Text-insensitive, separator
+# '#cacac9'	Pop-up border
+
+
+#################
+# STOP EDITING! #
+#################
+
+
+# General
+border.width: 1
+padding.width: 4
+padding.height: 3
+window.handle.width: 2
+window.client.padding.width: 0
+window.label.text.justify: center
+
+
+# Menu
+menu.border.color: #cacac9
+menu.border.width: 1
+menu.title.bg: solid flat
+menu.title.bg.color: #a4a4a3
+menu.title.text.color: #000000
+menu.items.bg: Flat Solid
+menu.items.bg.color: #fDfCfB
+menu.items.text.color: #000000
+menu.items.disabled.text.color: #a4a4a3
+menu.items.active.bg: Flat Gradient vertical border
+menu.items.active.bg.color: #86abd9
+menu.items.active.bg.colorTo: #86abd9
+menu.items.active.bg.border.color: #86abd9
+menu.items.active.text.color: #ffffff
+menu.separator.width: 1
+menu.separator.padding.width: 0
+menu.separator.padding.height: 4
+menu.separator.color: #a4a4a3
+
+
+# OSD
+osd.bg: flat solid
+osd.bg.color: #dbdcde
+osd.border.color: #555555
+osd.hilight.bg: flat gradient vertical
+osd.hilight.bg.color: #c3c4c5
+osd.hilight.bg.colorTo: #9d9e9f
+osd.label.text.color: #3c3c3c
+osd.unhilight.bg: flat gradient vertical
+osd.unhilight.bg.color: #9d9e9f
+osd.unhilight.bg.colorTo: #6b6c6d
+
+
+# Active window
+window.active.border.color: #5e7ca1
+window.active.button.disabled.bg: parentrelative
+window.active.button.disabled.image.color: #a6bedc
+window.active.button.hover.image.color: #86abd9
+window.active.button.pressed.bg: parentrelative
+window.active.button.pressed.image.color: #43566c
+window.active.button.toggled.hover.image.color: #86abd9
+window.active.button.toggled.image.color: #ffffff
+window.active.button.toggled.pressed.image.color: #43566c
+window.active.button.unpressed.bg: parentrelative
+window.active.button.unpressed.image.color: #ffffff
+window.active.grip.bg: Solid Flat
+window.active.grip.bg.color: #769Bc9
+window.active.grip.bg.border.color: #769Bc9
+window.active.handle.bg: Solid Flat
+window.active.handle.bg.color: #769Bc9
+window.active.handle.bg.colorTo: #769Bc9
+window.active.handle.bg.border.color: #769Bc9
+window.active.label.bg: parentrelative
+window.active.label.text.color: #ffffff
+window.active.label.text.font:shadow=y:shadowtint=75:shadowoffset=1
+window.active.title.separator.color: #769Bc9
+window.active.title.bg: Gradient Vertical Flat
+window.active.title.bg.color: #8ebaf1
+window.active.title.bg.colorTo: #769Bc9
+
+
+# Inactive window
+window.inactive.border.color: #6a8cb5
+window.inactive.button.disabled.bg: parentrelative
+window.inactive.button.disabled.image.color: #a6bedc
+window.inactive.button.hover.image.color: #a6bedc
+window.inactive.button.pressed.bg: parentrelative
+window.inactive.button.pressed.image.color: #43566c
+window.inactive.button.toggled.hover.image.color: #a6bedc
+window.inactive.button.toggled.image.color: #a6bedc
+window.inactive.button.unpressed.bg: parentrelative
+window.inactive.button.unpressed.image.color: #a6bedc
+window.inactive.grip.bg: Solid Flat
+window.inactive.grip.bg.color: #769Bc9
+window.inactive.grip.bg.border.color: #769Bc9
+window.inactive.handle.bg: Solid Flat
+window.inactive.handle.bg.color: #769Bc9
+window.inactive.handle.bg.colorTo: #769Bc9
+window.inactive.handle.bg.border.color: #769Bc9
+window.inactive.label.bg: parentrelative
+window.inactive.label.text.color: #a6bedc
+window.inactive.title.separator.color: #769Bc9
+window.inactive.title.bg: Gradient Vertical Flat
+window.inactive.title.bg.color: #769Bc9
+window.inactive.title.bg.colorTo: #769Bc9
+

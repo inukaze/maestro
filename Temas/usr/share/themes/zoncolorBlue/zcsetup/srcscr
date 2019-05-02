@@ -1,0 +1,266 @@
+#! binti bash
+
+# ===================================================================
+# zonColor Themes Pack Project - http://www.fandigital.com
+# Beautiful themes, your own colors, unlimited!
+# -------------------------------------------------------------------
+# Copyright (C) 2012 Zon Saja <zonsaja@gmail.com>
+# ===================================================================
+# zonColor is free software: you can redistribute it and/or modify
+# it nder the terms of the GNU General Public License as published
+# by the Free Software Foundation, either version 3 of the License,
+# or (at your option) any later version.
+#
+# zonColor is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with zonColor. If not, see <http://www.gnu.org/licenses>.
+# ===================================================================
+
+
+
+# VARIABLES
+
+# About script
+SrcRef=${BASH_SOURCE[0]}; SrcName=$(basename "$SrcRef"); SrcDirRef=$(dirname "$SrcRef");
+
+# App and Environmment Variables
+CurrentSessionName="this desktop";
+CanEnableSettings=false;
+LxdeSession=false;
+LxAppearanceReady=false;
+ZenityReady=false; MateDialogReady=false; XmessageReady=false; NotifySendReady=false;
+
+# Input-based variables
+
+# Internal variables
+GtkTheme="$ThemeName";
+WindowTheme="$ThemeName";
+ShellTheme="$ThemeName";
+CommonTheme="zoncolor";
+UTDName=".themes"; UTDPath="$HOME/$UTDName";
+OUTDName=".local/share/themes"; OUTDPath="$HOME/$OUTDName";
+STDPath="/usr/share/themes";
+TargetDir="$UTDPath";
+ResetAllString="@RESETALL";
+
+
+# FUNCTIONS
+
+# Session
+CheckSession () {
+	if ((pidof "gnome-session" >/dev/null 2>&1) || \
+		(pidof "gdm-simple-slave" >/dev/null 2>&1) || \
+		(pidof "x-session-manager" >/dev/null 2>&1) || \
+		(pidof "gnome-settings-daemon" >/dev/null 2>&1) || \
+		(pidof "xfce4-session" >/dev/null 2>&1) || \
+		(pidof "mate-session" >/dev/null 2>&1) || \
+		(pidof "mate-settings-daemon" >/dev/null 2>&1)
+		); then
+		CanEnableSettings=true;
+	elif (pidof "lxsession" >/dev/null 2>&1); then
+		LxdeSession=true;
+	fi;
+}
+EnableInSessionErrorMsg () {
+	SessionErrorMsgText=$(printf "Sorry, cannot set/enable settings under $CurrentSessionName session.");
+	echo -e "$SessionErrorMsgText";
+	#xmessage -title "$CommonName" "$SessionErrorMsgText" >/dev/null 2>&1 & sleep 1;
+}
+
+# Apps
+CheckApps () {
+	if (command -v zenity >/dev/null 2>&1); then ZenityReady=true; fi;
+	if (command -v matedialog >/dev/null 2>&1); then MateDialogReady=true; fi;
+	if ($ZenityReady); then ZorMDapp="zenity"; elif ($MateDialogReady); then ZorMDapp="matedialog"; fi;
+	if (command -v xmessage >/dev/null 2>&1); then XmessageReady=true; fi;
+	if (command -v notify-send >/dev/null 2>&1); then NotifySendReady=true; fi;
+	if (command -v xdg-open >/dev/null 2>&1); then XdgOpenReady=true; fi;
+	if (command -v lxappearance >/dev/null 2>&1); then LxAppearanceReady=true; fi;
+}
+
+# Folder clean up
+CleanUpFolderContent () {
+	# Usage: CleanUpFolderContent "<FOLDER>";
+	local CurDir=$(pwd);
+	cd "$1";
+	find . -type d -name "*source*" -exec rm -r {} \+;
+	find . -type f -name "*source*" -exec rm {} \+;
+	find . -type f -name "*symlink*" -exec rm {} \+;
+	find . -type f -name "*.sh" -exec chmod +x {} \+;
+	find . -type f -name "*.desktop" -exec chmod +x {} \+;
+	cd "$CurDir";
+}
+
+# GtkTheme
+EnableGtkTheme () {
+	if ((test -d "$ThemeFolderFP/gtk-3.0") || (test -d "$ThemeFolderFP/gtk-2.0")); then
+		gsettings set org.gnome.desktop.interface gtk-theme "$GtkTheme" >/dev/null 2>&1;
+		gsettings set org.mate.interface gtk-theme "$GtkTheme" >/dev/null 2>&1;
+		mateconftool-2 --type=string --set /desktop/mate/interface/gtk_theme "$GtkTheme" >/dev/null 2>&1;
+		gconftool-2 --type=string --set /desktop/gnome/interface/gtk_theme "$GtkTheme" >/dev/null 2>&1;
+		xfconf-query -c xsettings -p /Net/ThemeName -n -t string -s "$GtkTheme" >/dev/null 2>&1;
+		echo "GTK-theme enabled: '$GtkTheme'.";
+	fi;
+}
+ResetGtkTheme () {
+	gsettings reset org.gnome.desktop.interface gtk-theme >/dev/null 2>&1;
+	gsettings reset org.mate.interface gtk-theme >/dev/null 2>&1;
+	mateconftool-2 --unset /desktop/mate/interface/gtk_theme >/dev/null 2>&1;
+	gconftool-2 --unset /desktop/gnome/interface/gtk_theme >/dev/null 2>&1;
+	xfconf-query -c xsettings -p /Net/ThemeName -r >/dev/null 2>&1;
+}
+
+# WindowTheme
+EnableWindowTheme () {
+	if ((test -d "$ThemeFolderFP/metacity-1") || (test -d "$ThemeFolderFP/xfwm4")); then
+		if (test -d "$ThemeFolderFP/metacity-1"); then
+			if (command -v "gnome-shell" >/dev/null 2>&1); then
+				if (! test -d "$HOME/.local/share/themes/$WindowTheme"); then
+					if (test -d "$HOME/.themes/$WindowTheme"); then
+						if (! test -d "/usr/share/themes/$WindowTheme"); then
+							ln -s "$HOME/.themes" "$HOME/.local/share/themes";
+						fi;
+					fi;
+				fi;
+			fi;
+			gsettings set org.gnome.desktop.wm.preferences theme "$WindowTheme" >/dev/null 2>&1;
+			gsettings set org.mate.Marco.general theme "$WindowTheme" >/dev/null 2>&1;
+			gsettings set org.pantheon.desktop.gala.appearance theme "$WindowTheme" >/dev/null 2>&1;
+			gconftool --type=string --set /desktop/cinnamon/windows/theme "$WindowTheme" >/dev/null 2>&1;
+			gconftool-2 --type=string --set /apps/metacity/general/theme "$WindowTheme" >/dev/null 2>&1;
+			mateconftool-2 --type=string --set /apps/marco/general/theme "$WindowTheme" >/dev/null 2>&1;
+		fi;
+		if (! pidof "xfce4-session" >/dev/null 2>&1); then echo "Window-theme enabled: '$WindowTheme'."; fi;
+		if (test -d "$ThemeFolderFP/xfwm4"); then
+			xfconf-query -c xfwm4 -p /general/theme -n -t string -s "$WindowTheme" >/dev/null 2>&1;
+		else
+			WindowTheme="$CommonTheme";
+			xfconf-query -c xfwm4 -p /general/theme -n -t string -s "$WindowTheme" >/dev/null 2>&1;
+		fi;
+		if (pidof "xfce4-session" >/dev/null 2>&1); then echo "Window-theme enabled: '$WindowTheme'."; fi;
+	fi;
+}
+ResetWindowTheme () {
+	gsettings reset org.gnome.desktop.wm.preferences theme >/dev/null 2>&1;
+	gsettings reset org.mate.Marco.general theme >/dev/null 2>&1;
+	gconftool --unset /desktop/cinnamon/windows/theme >/dev/null 2>&1;
+	gconftool-2 --unset /apps/metacity/general/theme >/dev/null 2>&1;
+	mateconftool-2 --unset /apps/marco/general/theme >/dev/null 2>&1;
+	xfconf-query -c xfwm4 -p /general/theme -r >/dev/null 2>&1;
+}
+
+# ShellTheme
+GSUserThemeExtSchemaFile="$HOME/.local/share/gnome-shell/extensions/user-theme@gnome-shell-extensions.gcampax.github.com/schemas/org.gnome.shell.extensions.user-theme.gschema.xml";
+ShowGSThemeErrorMsg () {
+	GSThemeErrorMsgHeader="Unable to set GNOME Shell theme.";
+	GSThemeErrorMsgSeparator="--------------------------------";
+	GSThemeErrorMsgBody1="It seems that the 'user-theme' GNOME Shell extension is not properly installed.";
+	GSThemeErrorMsgBody2="Install/reinstall it and then enable it. If not work, try running this command";
+	GSThemeErrorMsgBody3="(admin privilege required):";
+	GSThemeErrorMsgBody=$(printf "$GSThemeErrorMsgBody1\n$GSThemeErrorMsgBody2\n$GSThemeErrorMsgBody3");
+	GSThemeErrorMsgBodyHint1="sudo cp $GSUserThemeExtSchemaFile /usr/share/glib-2.0/schemas";
+	GSThemeErrorMsgBodyHint2="sudo glib-compile-schemas /usr/share/glib-2.0/schemas";
+	GSThemeErrorMsgFooter="and then run this script again.";
+	GSThemeErrorMsgText=$(printf "\n$GSThemeErrorMsgHeader\n$GSThemeErrorMsgSeparator\n$GSThemeErrorMsgBody\n\n$GSThemeErrorMsgBodyHint1 && $GSThemeErrorMsgBodyHint2\n\n$GSThemeErrorMsgFooter\n");
+	echo -e "$GSThemeErrorMsgText";
+	#if ($ZenityReady); then
+	#	GSThemeErrorMsgTextZenity=$(printf "<big><b>$GSThemeErrorMsgHeader</b></big>\n\n$GSThemeErrorMsgBody\n\n<small><tt><b>$GSThemeErrorMsgBodyHint1 &amp;&amp; $GSThemeErrorMsgBodyHint2</b></tt></small>\n\n$GSThemeErrorMsgFooter");
+	#	zenity --error --text "$GSThemeErrorMsgTextZenity" --title "$ShellTheme" >/dev/null 2>&1 & sleep 1;
+	#fi;
+}
+CheckGSThemeError () {
+	if ((pidof "gnome-shell" >/dev/null 2>&1) && \
+		(	(! gsettings get org.gnome.shell.extensions.user-theme name >/dev/null 2>&1) || \
+			(! test -f "$GSUserThemeExtSchemaFile")
+			)
+		); then
+		ShowGSThemeErrorMsg;
+	fi;
+}
+EnableShellTheme () {
+	if ((test -d "$ThemeFolderFP/cinnamon") || (test -d "$ThemeFolderFP/gnome-shell")); then
+		if (test -d "$ThemeFolderFP/cinnamon"); then
+			gsettings set org.cinnamon.theme name "$ShellTheme" >/dev/null 2>&1;
+		fi;
+		if (test -d "$ThemeFolderFP/gnome-shell"); then
+			gsettings set org.gnome.shell.extensions.user-theme name "$ShellTheme" >/dev/null 2>&1;
+			CheckGSThemeError;
+		fi;
+		echo "Shell-theme enabled: '$ShellTheme'.";
+	fi;
+}
+ResetShellTheme () {
+	gsettings reset org.cinnamon.theme name >/dev/null 2>&1;
+	gsettings reset org.gnome.shell.extensions.user-theme name >/dev/null 2>&1;
+}
+
+# GtkColorScheme
+EnableGtkColorScheme () {
+	gsettings set org.gnome.desktop.interface gtk-color-scheme "$GtkColorScheme" >/dev/null 2>&1;
+	gsettings set org.mate.interface gtk-color-scheme "$GtkColorScheme" >/dev/null 2>&1;
+	gconftool --type=string --set /desktop/gnome/interface/gtk_color_scheme "$GtkColorScheme" >/dev/null 2>&1;
+	mateconftool-2 --type=string --set /desktop/mate/interface/gtk_color_scheme "$GtkColorScheme" >/dev/null 2>&1;
+	gconftool-2 --type=string --set /desktop/gnome/interface/gtk_color_scheme "$GtkColorScheme" >/dev/null 2>&1;
+}
+ResetGtkColorScheme () {
+	gsettings reset org.gnome.desktop.interface gtk-color-scheme >/dev/null 2>&1;
+	gsettings reset org.mate.interface gtk-color-scheme >/dev/null 2>&1;
+	gconftool --unset /desktop/gnome/interface/gtk_color_scheme >/dev/null 2>&1;
+	mateconftool-2 --unset /desktop/mate/interface/gtk_color_scheme >/dev/null 2>&1;
+	gconftool-2 --unset /desktop/gnome/interface/gtk_color_scheme >/dev/null 2>&1;
+}
+
+# ResetAllGtkThemes
+ResetAllGtkThemes () {
+	ResetGtkTheme;
+	ResetWindowTheme;
+	ResetShellTheme;
+	ResetGtkColorScheme;
+}
+
+# Install theme if not already
+InstallTheme () {
+	# Usage: InstallTheme "<THEMENAME>";
+	if ((! test -d "$UTDPath/$1") && \
+		(! test -d "$OUTDPath/$1") && \
+		(! test -d "$STDPath/$1")
+		); then
+		mkdir -p "$TargetDir";
+		cp -L -r "$SourceDir"/"$1" "$TargetDir";
+		CleanUpFolderContent "$TargetDir/$1";
+		echo "'$1' theme installed.";
+	fi;
+}
+
+# Create symlink if not already (for backward compatibility)
+CreateSymlink () {
+	if (! test -L "$TargetDir"); then
+		if (! readlink "$OUTDPath" | grep -q "$UTDName"); then
+			TimeStamp=$(date -u +%Y%m%d%H%M%S); OUTDBackupName="$OUTDName-backup_$TimeStamp";
+			mkdir -p "$TargetDir";
+			cp -r "$OUTDPath"/* "$TargetDir" >/dev/null 2>&1;
+			mv "$HOME/$OUTDName" "$HOME/$OUTDBackupName" >/dev/null 2>&1;
+			ln -s "$TargetDir" "$HOME/$OUTDName";
+		fi;
+	fi;
+}
+
+CheckAndSetupTheme () {
+	if (! test "$ThemeName" = "$CommonTheme"); then InstallTheme "$CommonTheme"; fi;
+	InstallTheme "$ThemeName";
+	CreateSymlink;
+	CheckApps;
+	CheckSession;
+	if (! $CanEnableSettings); then
+		if ($LxdeSession); then
+			if (($LxAppearanceReady) && (! pidof lxappearance >/dev/null 2>&1)); then nohup lxappearance >/dev/null 2>&1 & sleep 1; fi;
+		else
+			EnableInSessionErrorMsg;
+		fi;
+	fi;
+}
+

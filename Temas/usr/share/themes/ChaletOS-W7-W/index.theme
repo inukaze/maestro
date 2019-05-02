@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=ChaletOS-W7-W
+Comment=ChaletOS-W7-W theme by Dejan Petrovic
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=ChaletOS-W7-W
+IconTheme=ChaletOS-Win2-7
+CursorTheme=DMZ-White
+ButtonLayout=:minimize,maximize,close

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=zonColor Xtra-BirdySky
+Comment=Xtra-BirdySky variant of zonColor
+
+[X-GNOME-Metatheme]
+GtkTheme=zoncolorXtra-BirdySky
+MetacityTheme=zoncolorXtra-Basic
+ShellTheme=zoncolorDarkNight
+IconTheme=zoncolorSlate
+CursorTheme=zoncolor
+BackgroundImage=Pictures/zoncolorLowlight.png
+ButtonLayout=menu:minimize,maximize,close
+GtkColorScheme=@RESET

@@ -1,0 +1,15 @@
+# Openoffice, Libreoffice hacks
+
+style "gtkwindow_hack" {
+	engine "adwaita" {
+	}
+}
+class "GtkWindow" style "gtkwindow_hack"
+
+style "openlibreoffice_scrollbar" {
+	GtkScrollbar::slider-width = 14
+	GtkScrollbar::stepper-size = 14
+}
+widget "*openoffice-toplevel*" style "openlibreoffice_scrollbar"
+widget "*libreoffice-toplevel*" style "openlibreoffice_scrollbar"
+

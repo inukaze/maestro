@@ -1,0 +1,10 @@
+MarlinViewWindow .sidebar,
+MarlinViewWindow .sidebar .view,
+NemoWindow .sidebar,
+NemoWindow .sidebar .view,
+NautilusWindow .sidebar,
+NautilusWindow .sidebar .view {
+	text-shadow: 0 -1 @fmsidebarrow_textshadow_color;
+	icon-shadow: 0 -1 @fmsidebarrow_textshadow_color;
+}
+

@@ -1,0 +1,14 @@
+style "mintmenu" = "mintmenu_color" {
+	bg_pixmap[NORMAL] = "image/transparent.png"
+}
+style "mintmenu_alt" {
+    bg[NORMAL] = "#3e3e3e"
+    bg[PRELIGHT] = "#4e4e4e"
+    bg[ACTIVE] = "#2e2e2e"
+    fg[NORMAL] = "#e7e7e7"
+    fg[PRELIGHT] = "white"
+    fg[ACTIVE] = "white"
+}
+
+widget "mintmenu.*" style "mintmenu"
+

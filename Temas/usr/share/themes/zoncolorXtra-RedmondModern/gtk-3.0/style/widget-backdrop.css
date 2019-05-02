@@ -1,0 +1,933 @@
+/*
+ *********************************************************************
+ * GENERAL
+ *********************************************************************
+*/
+
+GtkWindow:backdrop {
+	color: mix (@fg_color, @bg_color, 0.17);
+}
+
+* {
+	color: inherit;
+	background-color: @bg_color;
+}
+
+/**********
+ * states *
+ **********/
+*:insensitive:backdrop {
+	color: mix (shade (@bg_color, 0.6), @bg_color, 0.2);
+}
+
+*:selected:backdrop,
+*:selected:focused:backdrop {
+	background-color: @backdrop_selected_bg_color;
+	color: @backdrop_selected_fg_color;
+}
+
+/******************
+ * common effects *
+ ******************/
+/* border and inner stroke */
+.frame:backdrop,
+.notebook:backdrop {
+	border-color: shade (@bg_color, 0.84);
+	-unico-border-gradient: none;
+}
+
+.notebook tab:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@bg_color, 0.99)),
+					color-stop (0.80, shade (@bg_color, 0.97)),
+					to (shade (@bg_color, 0.94)));
+	border-color: shade (@bg_color, 0.885);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-color: @transparent;
+}
+
+.notebook tab:active:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@bg_color, 1.1)),
+					to (shade (@bg_color, 1.01)));
+
+	border-color: shade (@bg_color, 0.89);
+	-unico-border-gradient: none;
+}
+
+/**********
+ * button *
+ **********/
+GtkComboBox:backdrop,
+.button:backdrop,
+GtkComboBox.combobox-entry .button:backdrop,
+GtkScale.slider:backdrop,
+GtkScale.slider.vertical:backdrop,
+.notebook .button:backdrop,
+.inline-toolbar.toolbar .button:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@bg_color, 1.03)),
+					to (shade (@bg_color, 0.97)));
+	box-shadow: none;
+	border-top-color: shade (@bg_color, 0.86);
+	border-right-color: shade (@bg_color, 0.82);
+	border-bottom-color: shade (@bg_color, 0.76);
+	border-left-color: shade (@bg_color, 0.82);
+	color: mix (@fg_color, @bg_color, 0.2);
+	-unico-border-gradient: none;
+	-unico-glow-color: @transparent;
+	-unico-inner-stroke-gradient: none;
+}
+
+.button:hover:backdrop,
+GtkComboBox.combobox-entry .button:hover:backdrop,
+GtkScale.slider:hover:backdrop,
+GtkScale.slider.vertical:hover:backdrop,
+.notebook .button:hover:backdrop,
+.inline-toolbar.toolbar .button:hover:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@bg_color, 1.16)),
+					to (shade (@bg_color, 0.95)));
+	box-shadow: none;
+	border-top-color: shade (@bg_color, 0.85);
+	border-right-color: shade (@bg_color, 0.82);
+	border-bottom-color: shade (@bg_color, 0.67);
+	border-left-color: shade (@bg_color, 0.82);
+	-unico-border-gradient: none;
+	-unico-glow-color: shade (@bg_color, 1.07);
+	-unico-inner-stroke-gradient: none;
+}
+
+.button:active:backdrop,
+GtkComboBox.combobox-entry .button:active:backdrop,
+.notebook .button:active:backdrop,
+.inline-toolbar.toolbar .button:active:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@bg_color, 0.9)),
+					to (shade (@bg_color, 0.95)));
+	box-shadow: none;
+	border-top-color: shade (@bg_color, 0.62);
+	border-right-color: shade (@bg_color, 0.72);
+	border-bottom-color: shade (@bg_color, 0.76);
+	border-left-color: shade (@bg_color, 0.72);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-gradient: none;
+}
+
+.button:active:hover:backdrop,
+GtkComboBox.combobox-entry .button:active:hover:backdrop,
+.notebook .button:active:hover:backdrop,
+.inline-toolbar.toolbar .button:active:hover:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@bg_color, 0.95)),
+					to (shade (@bg_color, 1.0)));
+	box-shadow: none;
+	border-top-color: shade (@bg_color, 0.64);
+	border-right-color: shade (@bg_color, 0.74);
+	border-bottom-color: shade (@bg_color, 0.79);
+	border-left-color: shade (@bg_color, 0.74);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-gradient: none;
+}
+
+.button:insensitive:backdrop,
+GtkComboBox.combobox-entry .button:insensitive:backdrop,
+.notebook .button:insensitive:backdrop,
+.inline-toolbar.toolbar .button:insensitive:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@bg_color, 1.06)),
+					to (shade (@bg_color, 0.98)));
+	box-shadow: none;
+	border-top-color: shade (@bg_color, 0.86);
+	border-right-color: shade (@bg_color, 0.86);
+	border-bottom-color: shade (@bg_color, 0.86);
+	border-left-color: shade (@bg_color, 0.9);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-gradient: none;
+}
+
+/* default button */
+.button.default:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (mix (shade (@backdrop_selected_bg_color, 1.16), @bg_color, 0.3)),
+					to (mix (shade (@backdrop_selected_bg_color, 0.84), @bg_color, 0.3)));
+	box-shadow: none;
+	border-color: mix (shade (@backdrop_selected_bg_color, 0.72), @bg_color, 0.3);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-gradient: none;
+	-unico-glow-color: @transparent;
+	-unico-focus-border-color: @transparent;
+	-unico-focus-outer-stroke-color: alpha (@backdrop_selected_bg_color, 0.2);
+}
+
+.button.default:hover:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (mix (shade (@backdrop_selected_bg_color, 1.21), @bg_color, 0.3)),
+					to (mix (shade (@backdrop_selected_bg_color, 0.89), @bg_color, 0.3)));
+	box-shadow: none;
+	border-color: mix (shade (@backdrop_selected_bg_color, 0.75), @bg_color, 0.3);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-gradient: none;
+}
+
+.button.default:active:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (mix (shade (@backdrop_selected_bg_color, 0.95), @bg_color, 0.3)),
+					to (mix (shade (@backdrop_selected_bg_color, 1.05), @bg_color, 0.3)));
+	box-shadow: none;
+	border-color: mix (shade (@backdrop_selected_bg_color, 0.7), @bg_color, 0.3);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-gradient: none;
+}
+
+.button.default:active:hover:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (mix (shade (@backdrop_selected_bg_color, 1.0), @bg_color, 0.3)),
+					to (mix (shade (@backdrop_selected_bg_color, 1.1), @bg_color, 0.3)));
+	box-shadow: none;
+	border-color: mix (shade (@backdrop_selected_bg_color, 0.7), @bg_color, 0.3);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-gradient: none;
+}
+
+.button.default:insensitive:backdrop {
+	box-shadow: none;
+	-unico-glow-color: @transparent;
+}
+.button.default:backdrop,
+whatever {
+	text-shadow: none;
+}
+
+/****************
+ * cell and row *
+ ****************/
+.cell:backdrop {
+	background-color: mix (@base_color, @bg_color, 0.4);
+}
+
+row:selected:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@backdrop_selected_bg_color, 1.06)),
+					to (shade (@backdrop_selected_bg_color, 1.0)));
+	border-top-color: shade (@backdrop_selected_bg_color, 0.98);
+	color: @backdrop_selected_fg_color;
+}
+
+/*******************
+ * check and radio *
+ *******************/
+.check row:selected:backdrop,
+.radio row:selected:backdrop,
+.check:backdrop,
+.check row:backdrop,
+.radio:backdrop,
+.radio row:backdrop,
+whatver {
+	background-color: @base_color;
+	background-image: none;
+	border-color: shade (@bg_color, 0.85);
+}
+.check:active:backdrop,
+.check row:selected:active:backdrop,
+.check row:selected:focused:active:backdrop,
+.notebook .check:active:backdrop,
+.notebook .radio:active:backdrop,
+.radio:active:backdrop,
+.radio row:selected:active:backdrop,
+.radio row:selected:focused:active:backdrop,
+.check:inconsistent:backdrop,
+.check row:selected:inconsistent:backdrop,
+.check row:selected:focused:inconsistent:backdrop,
+.notebook .check:inconsistent:backdrop,
+.notebook .radio:inconsistent:backdrop,
+.radio:inconsistent:backdrop,
+.radio row:selected:inconsistent:backdrop,
+.radio row:selected:focused:inconsistent:backdrop,
+whatever {
+	background-color: @base_color;
+	background-image: none;
+	color: @text_color;
+	border-color: shade (@bg_color, 0.85);
+	-unico-bullet-color: @text_color;
+	-unico-bullet-outline-color: @transparent;
+}
+.check:insensitive:active:backdrop,
+.radio:insensitive:active:backdrop,
+.check:insensitive:inconsistent:backdrop,
+.radio:insensitive:inconsistent:backdrop,
+whatever {
+	background-color: @bg_color;
+	background-image: none;
+	color: @checkradio_insensitive_bullet_color;
+	border-color: shade (@bg_color, 0.85);
+	-unico-bullet-color: @checkradio_insensitive_bullet_color;
+	-unico-bullet-outline-color: @transparent;
+}
+
+/*****************
+ * column-header *
+ *****************/
+column-header .button:backdrop,
+column-header .button:active:backdrop,
+.notebook column-header .button:backdrop,
+.notebook column-header .button:active:backdrop {
+	-unico-glow-color: @transparent;
+	-unico-outer-stroke-color: @transparent;
+	-unico-outer-stroke-gradient: none;
+}
+
+column-header .button:backdrop,
+.notebook column-header .button:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@bg_color, 1.04)),
+					to (shade (@bg_color, 0.98)));
+	border-color: shade (@bg_color, 0.86);
+	-unico-border-gradient: none;
+	-unico-glow-color: @transparent;
+	-unico-inner-stroke-gradient: none;
+}
+
+column-header .button:hover:backdrop,
+.notebook column-header .button:hover:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@bg_color, 1.06)),
+					to (shade (@bg_color, 1.0)));
+	border-color: shade (@bg_color, 0.88);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-gradient: none;
+}
+
+/******************
+ * combobox entry *
+ ******************/
+GtkComboBox.combobox-entry .button:backdrop,
+GtkComboBox.combobox-entry .button:hover:backdrop,
+GtkComboBox.combobox-entry .button:active:backdrop,
+GtkComboBox.combobox-entry .button:insensitive:backdrop {
+	border-top-color: shade (@bg_color, 0.64);
+	border-right-color: shade (@bg_color, 0.8);
+	border-bottom-color: shade (@bg_color, 0.86);
+	border-left-color: shade (@bg_color, 0.76);
+}
+
+/*********
+ * entry *
+ *********/
+.entry:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (mix (shade (@base_color, 0.98), @bg_color, 0.4)),
+					to (mix (@base_color, @bg_color, 0.4)));
+	border-top-color: shade (@bg_color, 0.72);
+	border-right-color: shade (@bg_color, 0.82);
+	border-bottom-color: shade (@bg_color, 0.88);
+	border-left-color: shade (@bg_color, 0.82);
+	color: mix (@fg_color, @base_color, 0.2);
+	-unico-inner-stroke-gradient: none;
+}
+
+.entry:selected:backdrop,
+.entry:selected:focused:backdrop {
+	background-color: @backdrop_selected_bg_color;
+	color: @backdrop_selected_fg_color;
+}
+
+.entry:focused:backdrop {
+	border-color: shade (@backdrop_selected_bg_color, 0.775);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-color: @transparent;
+	-unico-inner-stroke-gradient: none;
+}
+
+.entry:insensitive:backdrop {
+	background-color: shade (@bg_color, 0.98);
+	background-image: none;
+	color: mix (@text_color, @base_color, 0.5);
+	-unico-inner-stroke-gradient: none;
+}
+
+.primary-toolbar .entry.progressbar:backdrop,
+.primary-toolbar .entry.progressbar:backdrop,
+.entry.progressbar:backdrop {
+}
+
+/************
+ * iconview *
+ ************/
+GtkIconView.view.cell:selected:backdrop,
+GtkIconView.view.cell:selected:focused:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@backdrop_selected_bg_color, 1.0)),
+					to (shade (@backdrop_selected_bg_color, 0.9)));
+	color: @backdrop_selected_fg_color;
+	border-color: shade (@backdrop_selected_bg_color, 0.7);
+	-unico-border-gradient: none;
+	-unico-glow-color: @transparent;
+	-unico-inner-stroke-gradient: none;
+}
+
+.rubberband:backdrop {
+	background-color: alpha (@backdrop_selected_bg_color, 0.35);
+	border-color: @backdrop_selected_bg_color;
+}
+
+/* notebook *
+ ************/
+.notebook:backdrop {
+	background-color: shade (@bg_color, 1.01);
+}
+
+/* progressbar and scale *
+ *************************/
+.scale.highlight.left:backdrop,
+.progressbar:backdrop,
+.progressbar row:backdrop,
+.progressbar row:hover:backdrop,
+.progressbar row:selected:backdrop,
+.progressbar row:selected:focused:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@backdrop_selected_bg_color, 1.05)),
+					to (shade (@backdrop_selected_bg_color, 0.95)));
+	border-color: shade (@backdrop_selected_bg_color, 0.8);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-gradient: none;
+	-unico-outer-stroke-color: @transparent;
+	-unico-outer-stroke-gradient: none;
+}
+
+.scale.highlight.bottom:backdrop,
+.progressbar.vertical:backdrop {
+	background-image: -gtk-gradient (linear, left top, right top,
+					from (shade (@backdrop_selected_bg_color, 1.05)),
+					to (shade (@backdrop_selected_bg_color, 0.95)));
+	border-color: shade (@backdrop_selected_bg_color, 0.86);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-gradient: none;
+}
+
+.scale.highlight.left:insensitive:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@bg_color, 0.98)),
+					to (shade (@bg_color, 0.88)));
+	border-color: shade (@bg_color, 0.82);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-gradient: none;
+}
+
+.scale.highlight.bottom:insensitive:backdrop {
+	background-image: -gtk-gradient (linear, left top, right top,
+					from (shade (@bg_color, 0.98)),
+					to (shade (@bg_color, 0.88)));
+	border-color: shade (@bg_color, 0.82);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-gradient: none;
+}
+.trough:backdrop,
+.trough row:backdrop,
+.trough row:hover:backdrop,
+.trough row:selected:backdrop,
+.trough row:selected:focused:backdrop,
+.trough.vertical:backdrop {
+	background-color: shade (@bg_color, 1.08);
+	background-image: none;
+	border-color: shade (@bg_color, 0.9);
+	-unico-border-gradient: none;
+}
+.trough:insensitive:backdrop,
+.trough row:insensitive:backdrop,
+.trough row:selected:insensitive:backdrop,
+.trough.vertical:insensitive:backdrop {
+	background-color: shade (@bg_color, 0.95);
+	background-image: none;
+	border-color: shade (@bg_color, 0.9);
+	-unico-border-gradient: none;
+}
+
+GtkScale.slider:backdrop,
+GtkScale.slider:hover:backdrop,
+GtkScale.slider:insensitive:backdrop,
+GtkScale.slider.vertical:backdrop,
+GtkScale.slider.vertical:hover:backdrop,
+GtkScale.slider.vertical:insensitive:backdrop {
+	background-image: -gtk-gradient (linear, left top, right top,
+					from (shade (@button_bg_color, 0.9)),
+					to (shade (@button_bg_color, 0.9)));
+}
+
+
+/*************
+ * Scrollbar *
+ *************/
+
+.scrollbar.trough:backdrop,
+.scrollbar.trough.vertical:backdrop,
+.scrollbar.trough.horizontal:backdrop {
+	background-color: @transparent;
+	background-image: none;
+	border-color: @transparent;
+	-unico-border-gradient: none;
+}
+
+.scrollbar.slider:backdrop,
+.scrollbar.slider.vertical:backdrop,
+.scrollbar.slider.horizontal:backdrop {
+	background-color: mix (@bg_color, @button_bg_color, 0.5);
+	background-image: none;
+	border-color: shade (@bg_color, 0.85);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-color: @transparent;
+	-unico-inner-stroke-gradient: none;
+}
+
+
+/*******************
+ * scrolled window *
+ *******************/
+GtkScrolledWindow.frame:backdrop {
+}
+
+
+/***********
+ * sidebar *
+ ***********/
+.sidebar:backdrop,
+.sidebar .view:backdrop {
+	background-color: mix (@text_color, @base_color, 0.95);
+}
+
+/**************
+ * spinbutton *
+ **************/
+.spinbutton.button:active:backdrop,
+.spinbutton.button:insensitive:backdrop,
+.notebook .spinbutton.button:active:backdrop,
+.notebook .spinbutton.button:insensitive:backdrop,
+.spinbutton.button:backdrop,
+.notebook .spinbutton.button:backdrop {
+}
+
+.spinbutton.button:active:nth-child(last):backdrop,
+.spinbutton.button:insensitive:nth-child(last):backdrop,
+.notebook .spinbutton.button:active:nth-child(last):backdrop,
+.notebook .spinbutton.button:insensitive:nth-child(last):backdrop,
+.spinbutton.button:nth-child(last):backdrop,
+.notebook .spinbutton.button:nth-child(last):backdrop {
+}
+
+.spinbutton.button:backdrop,
+.notebook .spinbutton.button:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@bg_color, 1.06)),
+					to (shade (@bg_color, 0.94)));
+	border-top-color: shade (@bg_color, 0.72);
+	border-right-color: shade (@bg_color, 0.82);
+	border-bottom-color: shade (@bg_color, 0.88);
+	border-left-color: shade (@bg_color, 0.82);
+	-unico-border-gradient: none;
+}
+
+/***********
+ * spinner *
+ ***********/
+.menu.spinner:backdrop,
+.primary-toolbar .spinner:backdrop,
+.primary-toolbar .spinner:backdrop {
+	color: @backdrop_selected_bg_color;
+}
+
+/**********
+ * switch *
+ **********/
+GtkSwitch:backdrop {
+	-unico-focus-border-color: alpha (@backdrop_selected_bg_color, 0.3);
+	-unico-focus-fill-color: @transparent;
+}
+
+GtkSwitch.trough:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@bg_color, 0.89)),
+					to (shade (@bg_color, 0.96)));
+	color: mix (@fg_color, @bg_color, 0.17);
+	border-color: shade (@bg_color, 0.765);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-gradient: none;
+}
+
+GtkSwitch.trough:active:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@backdrop_selected_bg_color, 0.93)),
+					to (shade (@backdrop_selected_bg_color, 0.99)));
+	color: @backdrop_selected_fg_color;
+	border-color: shade (@backdrop_selected_bg_color, 0.765);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-gradient: none;
+}
+
+GtkSwitch.trough:insensitive:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@bg_color, 0.95)),
+					to (shade (@bg_color, 0.99)));
+	color: mix (shade (@bg_color, 0.6), @bg_color, 0.17);
+	border-color: shade (@bg_color, 0.82);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-gradient: none;
+}
+
+GtkSwitch.slider:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (mix (@bg_color, @button_bg_color, 0.5), 1.05)),
+					to (shade (mix (@bg_color, @button_bg_color, 0.5), 0.95)));
+	border-color: shade (@bg_color, 0.765);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-gradient: none;
+}
+
+GtkSwitch.slider:insensitive:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@bg_color, 1.0)),
+					to (shade (@bg_color, 0.9)));
+	border-color: shade (@bg_color, 0.82);
+	-unico-border-gradient: none;
+}
+
+/************
+ * textview *
+ ************/
+GtkTextView:backdrop {
+	background-color: mix (@text_color, @base_color, 0.95);
+}
+GtkTextView.view:selected:backdrop {
+	background-color: mix (@text_color, @base_color, 0.85);
+}
+
+
+
+
+/*
+ *********************************************************************
+ * MENUBAR
+ *********************************************************************
+*/
+
+.menubar:backdrop,
+whatever {
+	box-shadow: none;
+	border-bottom-color: @transparent;
+	-unico-inner-stroke-bottom-color: @transparent;
+}
+.menubar:backdrop,
+.menubar > GtkMenuItem.menuitem:backdrop {
+	color: mix (@menubar_bg_color, @menubar_fg_color, 0.5);
+}
+.menubar:backdrop,
+.menubar > GtkMenuItem.menuitem:backdrop {
+	text-shadow: none;
+}
+
+
+
+
+/*
+ *********************************************************************
+ * TOOLBAR
+ *********************************************************************
+*/
+
+.menubar.toolbar:backdrop,
+.primary-toolbar:backdrop,
+.primary-toolbar .toolbar:backdrop,
+.primary-toolbar.toolbar:backdrop {
+	background-color: @toolbar_bg_color;
+	background-image: none;
+	color: mix (@toolbar_bg_color, @toolbar_fg_color, 0.5);
+}
+
+.menubar.toolbar GtkComboBox:backdrop,
+.menubar.toolbar .button *:backdrop,
+.menubar.toolbar .button:backdrop,
+.primary-toolbar GtkComboBox:backdrop,
+.primary-toolbar .button *:backdrop,
+.primary-toolbar .button:backdrop {
+	background-color: @transparent;
+	background-image: none;
+	color: mix (@toolbar_bg_color, @toolbar_fg_color, 0.5);
+	box-shadow: none;
+}
+.primary-toolbar GtkComboBox:backdrop,
+.primary-toolbar .button *:backdrop,
+.primary-toolbar .button:backdrop {
+	border-color: @transparent;
+	-unico-border-gradient: none;
+}
+
+.menubar.toolbar .button *:hover:backdrop,
+.primary-toolbar .button *:hover:backdrop {
+	color: mix (@toolbar_bg_color, @toolbar_fg_color, 0.5);
+	box-shadow: none;
+}
+
+.menubar.toolbar .raised .button:backdrop,
+.menubar.toolbar .raised.button:backdrop,
+.menubar.toolbar .button:hover:backdrop,
+.menubar.toolbar .button:active:backdrop,
+.menubar.toolbar .button:insensitive:backdrop,
+.primary-toolbar .raised .button:backdrop,
+.primary-toolbar .raised.button:backdrop,
+.primary-toolbar .button:hover:backdrop,
+.primary-toolbar .button:active:backdrop,
+.primary-toolbar .button:insensitive:backdrop {
+	box-shadow: none;
+	-unico-focus-fill-color: @transparent;
+	-unico-focus-border-color: @transparent;
+	-unico-focus-outer-stroke-color: @transparent;
+	-unico-outer-stroke-color: @transparent;
+	-unico-outer-stroke-gradient: none;
+}
+
+.menubar.toolbar GtkComboBox.combobox-entry .button:backdrop,
+.primary-toolbar GtkComboBox.combobox-entry .button:backdrop {
+	box-shadow: none;
+	-unico-outer-stroke-color: @transparent;
+	-unico-outer-stroke-gradient: none;
+}
+
+.menubar.toolbar GtkComboBox.combobox-entry .button:backdrop,
+.menubar.toolbar .raised .button:backdrop,
+.menubar.toolbar .raised.button:backdrop,
+.menubar.toolbar .button:hover:backdrop,
+.primary-toolbar GtkComboBox.combobox-entry .button:backdrop,
+.primary-toolbar .raised .button:backdrop,
+.primary-toolbar .raised.button:backdrop,
+.primary-toolbar .button:hover:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@toolbar_bg_color, 1.06)),
+					to (shade (@toolbar_bg_color, 0.98)));
+	box-shadow: none;
+	border-color: shade (@toolbar_bg_color, 0.885);
+	-unico-border-gradient: none;
+	-unico-glow-color: @transparent;
+	-unico-glow-gradient: none;
+	-unico-inner-stroke-color: @transparent;
+	-unico-inner-stroke-gradient: none;
+}
+
+.menubar.toolbar .button:active:backdrop,
+.primary-toolbar .button:active:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@toolbar_bg_color, 0.9)),
+					to (shade (@toolbar_bg_color, 0.95)));
+	box-shadow: none;
+	border-color: shade (@toolbar_bg_color, 0.8);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-color: @transparent;
+	-unico-inner-stroke-gradient: none;
+}
+
+.menubar.toolbar .button:active:hover:backdrop,
+.primary-toolbar .button:active:hover:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@toolbar_bg_color, 0.95)),
+					to (shade (@toolbar_bg_color, 1.0)));
+	box-shadow: none;
+	border-color: shade (@toolbar_bg_color, 0.8);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-color: @transparent;
+	-unico-inner-stroke-gradient: none;
+}
+
+.menubar.toolbar .button:active:insensitive:backdrop,
+.menubar.toolbar .button:insensitive:backdrop,
+.primary-toolbar .button:active:insensitive:backdrop,
+.primary-toolbar .button:insensitive:backdrop {
+	box-shadow: none;
+	-unico-glow-color: @transparent;
+	-unico-glow-gradient: none;
+	-unico-outer-stroke-color: @transparent;
+	-unico-outer-stroke-gradient: none;
+}
+
+.menubar.toolbar .button:insensitive:backdrop,
+.primary-toolbar .button:insensitive:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@toolbar_bg_color, 1.01)),
+					to (shade (@toolbar_bg_color, 0.99)));
+	box-shadow: none;
+	-unico-inner-stroke-color: @transparent;
+	-unico-inner-stroke-gradient: none;
+}
+
+.menubar.toolbar .button:active:insensitive:backdrop,
+.primary-toolbar .button:active:insensitive:backdrop {
+	background-image: -gtk-gradient (linear, left top, left bottom,
+					from (shade (@toolbar_bg_color, 0.94)),
+					to (shade (@toolbar_bg_color, 1.02)));
+	box-shadow: none;
+	-unico-inner-stroke-color: @transparent;
+	-unico-inner-stroke-gradient: none;
+}
+
+.menubar.toolbar .entry:backdrop,
+.menubar.toolbar .entry:active:backdrop,
+.menubar.toolbar .entry:focused:backdrop,
+.primary-toolbar .entry:backdrop,
+.primary-toolbar .entry:active:backdrop,
+.primary-toolbar .entry:focused:backdrop {
+	color: @text_color;
+	-unico-outer-stroke-color: @transparent;
+	-unico-outer-stroke-gradient: none;
+}
+
+.menubar.toolbar .entry:backdrop,
+.primary-toolbar .entry:backdrop {
+	border-color: shade (@toolbar_bg_color, 0.85);
+	-unico-border-gradient: none;
+}
+
+.menubar.toolbar .entry:insensitive:backdrop,
+.primary-toolbar .entry:insensitive:backdrop {
+	-unico-outer-stroke-color: @transparent;
+	-unico-outer-stroke-gradient: none;
+}
+
+.menubar.toolbar .entry:focused:backdrop,
+.primary-toolbar .entry:focused:backdrop {
+	border-color: shade (@toolbar_bg_color, 0.775);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-color: @transparent;
+	-unico-inner-stroke-gradient: none;
+}
+
+.menubar.toolbar GtkSeparatorToolItem:backdrop,
+.menubar.toolbar .separator:backdrop,
+.menubar.toolbar .separator:insensitive:backdrop,
+.primary-toolbar GtkSeparatorToolItem:backdrop,
+.primary-toolbar .separator:backdrop,
+.primary-toolbar .separator:insensitive:backdrop {
+	border-color: shade (@toolbar_bg_color, 0.94);
+	-unico-border-gradient: none;
+	-unico-inner-stroke-color: @transparent;
+	-unico-inner-stroke-gradient: none;
+}
+
+.menubar.toolbar:backdrop,
+.menubar.toolbar *:backdrop,
+.menubar.toolbar .button:backdrop,
+.menubar.toolbar .button *:backdrop,
+.menubar.toolbar .button *:active:backdrop,
+.primary-toolbar:backdrop,
+.primary-toolbar *:backdrop,
+.primary-toolbar.toolbar:backdrop,
+.primary-toolbar .toolbar:backdrop,
+.primary-toolbar .button:backdrop,
+.primary-toolbar .button *:backdrop,
+.primary-toolbar .button *:active:backdrop,
+.whatever {
+	text-shadow: none;
+	icon-shadow: none;
+}
+
+.menubar.toolbar .trough:backdrop,
+.menubar.toolbar .trough row:backdrop,
+.menubar.toolbar .trough row:hover:backdrop,
+.menubar.toolbar .trough row:selected:backdrop,
+.menubar.toolbar .menubar.toolbar .trough row:selected:focused:backdrop,
+.menubar.toolbar .trough.vertical:backdrop,
+.primary-toolbar .trough:backdrop,
+.primary-toolbar .trough row:backdrop,
+.primary-toolbar .trough row:hover:backdrop,
+.primary-toolbar .trough row:selected:backdrop,
+.primary-toolbar .menubar.toolbar .trough row:selected:focused:backdrop,
+.primary-toolbar .trough.vertical:backdrop,
+whatever {
+	background-color: shade (@toolbar_bg_color, 1.08);
+	background-image: none;
+	border-color: shade (@toolbar_bg_color, 0.9);
+	-unico-border-gradient: none;
+}
+.menubar.toolbar .trough:insensitive:backdrop,
+.menubar.toolbar .trough row:insensitive:backdrop,
+.menubar.toolbar .trough row:selected:insensitive:backdrop,
+.menubar.toolbar .trough.vertical:insensitive:backdrop,
+.primary-toolbar .trough:insensitive:backdrop,
+.primary-toolbar .trough row:insensitive:backdrop,
+.primary-toolbar .trough row:selected:insensitive:backdrop,
+.primary-toolbar .trough.vertical:insensitive:backdrop,
+whatever {
+	background-color: shade (@toolbar_bg_color, 0.95);
+	background-image: none;
+	border-color: shade (@toolbar_bg_color, 0.9);
+	-unico-border-gradient: none;
+}
+
+
+
+
+/*
+ *********************************************************************
+ * FILE MANAGER
+ *********************************************************************
+*/
+
+MarlinViewWindow .view:selected:backdrop,
+NemoWindow .view:selected:backdrop,
+NautilusWindow .view:selected:backdrop {
+	background-image: none;
+	background-color: mix (@fmmainview_fg_color, @fmmainview_bg_color, 0.85);
+	color: @fmmainview_fg_color;
+}
+
+NemoTrashBar.info:backdrop,
+NemoXContentBar.info:backdrop,
+NemoSearchBar.info:backdrop,
+NemoQueryEditor.info:backdrop,
+NautilusTrashBar.info:backdrop,
+NautilusXContentBar.info:backdrop,
+NautilusSearchBar.info:backdrop,
+NautilusQueryEditor.info:backdrop {
+	background-image: none;
+	background-color: shade (@fmmainview_bg_color, 0.95);
+	border-bottom-color: shade (@fmmainview_bg_color, 0.85);
+	color: @fmmainviewfg_color;
+	-unico-inner-stroke-gradient: none;
+}
+
+.nemo-cluebar-label:backdrop,
+.nautilus-cluebar-label:backdrop {
+	color: mix (@bg_color, @fg_color, 0.75);
+}
+
+MarlinViewWindow .sidebar:backdrop,
+MarlinViewWindow .sidebar .view:backdrop,
+NemoWindow .sidebar:backdrop,
+NemoWindow .sidebar .view:backdrop,
+NautilusWindow .sidebar:backdrop,
+NautilusWindow .sidebar .view:backdrop {
+	color: mix (@fmsidebarrow_fg_color, @fmsidebarrow_bg_color, 0.2);
+	text-shadow: none;
+}
+
+MarlinViewWindow .sidebar row:selected:backdrop,
+MarlinViewWindow .sidebar row:selected:focused:backdrop,
+NemoWindow .sidebar row:selected:backdrop,
+NemoWindow .sidebar row:selected:focused:backdrop,
+NautilusWindow .sidebar row:selected:backdrop,
+NautilusWindow .sidebar row:selected:focused:backdrop {
+	background-image: none;
+	background-color: mix (@fmsidebarrow_fg_color, @fmsidebarrow_bg_color, 0.9);
+	color: @fmsidebarrow_fg_color;
+	-unico-border-gradient: none;
+}
+
+NemoPathbarButton:backdrop,
+whatever {
+	background-image: none;
+	border-color: shade (@toolbar_bg_color, 0.925);
+	box-shadow:	none;
+}
+
+NemoPathbarButton:active:backdrop,
+whatever {
+	background-image: none;
+	background-color: shade (@toolbar_bg_color, 0.9);
+}
+

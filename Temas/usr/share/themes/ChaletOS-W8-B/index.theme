@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=ChaletOS-W8-B
+Comment=HomeOS X Blue from Blue variant of zonColor
+
+[X-GNOME-Metatheme]
+GtkTheme=ChaletOS-W8-B
+MetacityTheme=ChaletOS-W8-B
+ShellTheme=ChaletOS-W8-B
+IconTheme=ChaletOS Emerald-light
+CursorTheme=ChaletOSBlue
+ButtonLayout=close:menu
+GtkColorScheme=@RESET

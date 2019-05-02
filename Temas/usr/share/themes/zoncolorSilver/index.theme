@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=zonColor Silver
+Comment=Silver variant of zonColor
+
+[X-GNOME-Metatheme]
+GtkTheme=zoncolorSilver
+MetacityTheme=zoncolor
+ShellTheme=zoncolorDayLight
+IconTheme=zoncolorSilver
+CursorTheme=zoncolor
+BackgroundImage=Pictures/zoncolorSlate.png
+ButtonLayout=close:menu
+GtkColorScheme=@RESET

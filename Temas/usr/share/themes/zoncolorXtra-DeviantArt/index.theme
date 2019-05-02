@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=zonColor Xtra-DeviantArt
+Comment=Xtra-DeviantArt variant of zonColor
+
+[X-GNOME-Metatheme]
+GtkTheme=zoncolorXtra-DeviantArt
+MetacityTheme=zoncolorFlat
+ShellTheme=zoncolorDarkNight
+IconTheme=zoncolor
+CursorTheme=zoncolor
+BackgroundImage=Pictures/zoncolor.png
+ButtonLayout=close:menu
+GtkColorScheme=@RESET

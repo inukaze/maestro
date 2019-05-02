@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=ChaletOS-W10-W
+Comment=ChaletOS-W10-W
+
+[X-GNOME-Metatheme]
+GtkTheme=ChaletOS-W10-W
+MetacityTheme=ChaletOS-W10-W
+ShellTheme=ChaletOS-W10-W
+IconTheme=ChaletOS Emerald-Light
+CursorTheme=ChaletOS-W10-W
+GtkColorScheme=@RESET

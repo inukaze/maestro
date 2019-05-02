@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=zonColor Xtra-iOS
+Comment=Xtra-iOS variant of zonColor
+
+[X-GNOME-Metatheme]
+GtkTheme=zoncolorXtra-iOS
+MetacityTheme=zoncolorXtra-CupertinoGrey
+ShellTheme=zoncolorDayLight
+IconTheme=zoncolorXtra-Slate-Faenza-Light
+CursorTheme=zoncolor
+BackgroundImage=Pictures/zoncolor.png
+ButtonLayout=close,minimize,maximize:menu
+GtkColorScheme=@RESET
