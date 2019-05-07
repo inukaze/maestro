@@ -1,6 +1,47 @@
 #!/usr/bin/env bash
 
+echo '
+Autor ----------------> Inukaze ( Venezuela )
+Sitio ----------------> https://goo.gl/ij6WqW
+Correo-E -------------> bloginukaze@gmail.com
+Licencia -------------> GPL 2
+
+******* Inicio : Acerca de este Script ********
+				  
+  Yo intento escribir scripts compatibles con
+   Sistemas operativos Unix & POSIX , y otros
+   Sistemas operativos que soporten bash
+
+  Este archivo es un guion simple para 
+   Descargar y compilar Mupen64Plus
+
+******** Fin : Acerca de este Script **********'
+sleep 3
+
+if [ "$(whoami)" != root ]; then
+
+	echo
+	echo
+	echo 'Por favor ejecuta este guion como SuperUsuario (root)'
+	echo
+	echo 'Utilize este Script bajo su Propio Riesgro'
+	echo 'El Autor , o sea yo , no me hago responsable'
+	echo 'de las consecuencias imprevistas que puedan'
+	echo 'acontecer en tu sistema operativo'
+	echo
+else
+# Obtener la Arquitectura
+Arquitectura=$(uname -m)
+case "$Arquitectura" in
+	x86)    Arquitectura="x32"						;;
+	i?86)   Arquitectura="x32"						;;
+	amd64)  Arquitectura="x64"						;;
+	x86_64) Arquitectura="x64"						;;
+	* ) echo    "Tu Arquitectura '$Arquitectura' -> NO ESTA SOPORTADA."	;;
+esac
+
 mkdir -p /tmp/src/mupen64plus
+mkdir -p /opt/emu/mupen64plus
 cd /tmp/src/mupen64plus
 CARPETA="/tmp/src/mupen64plus"
 git clone https://github.com/mupen64plus/mupen64plus-core
@@ -17,12 +58,9 @@ git clone https://github.com/mupen64plus/mupen64plus-video-arachnoid
 git clone https://github.com/mupen64plus/mupen64plus-rsp-z64
 git clone https://github.com/mupen64plus/mupen64plus-ui-python
 git clone https://github.com/mupen64plus/mupen64plus-rom
-
-# Exporting Paths for each part : you must install "cpuid" on your distro, to use "native" flag.
 # Exportando las "Rutas" para cada parte
 # Necesitaras tener instalada en tu distro la herramienta "cpuid"
 # Para poder utilizar las "banderas" (flags) de optimizacion correspondientes a tu procesador.
-
 
 # Optimizaciones
 export {C,CXX}FLAGS='-O3 -march=native -mtune=native'
@@ -35,17 +73,17 @@ export PIC=1 # Codigo de Posicion Independiente
 export HLEVIDEO=1 # RSP Z64 & CXD4 : Mover emulacion de tareas graficas al complemento de video HLE
 
 # Para el Nucleo :
-export TARGETDIR="/media/Compartido/Videojuegos/Emuladores/Nintendo64/mupen64plus"
+#export TARGETDIR="/media/Compartido/Videojuegos/Emuladores/Nintendo64/mupen64plus"
+export TARGETDIR="/opt/emu/mupen64plus"
 export PREFIX="$TARGETDIR"
-export SHAREDIR="$TARGETDIR/share/"
-export LIBDIR="$TARGETDIR/lib/"
-export INCDIR="$TARGETDIR/include/"
+export SHAREDIR="$TARGETDIR/share"
+export LIBDIR="$TARGETDIR/lib"
+export INCDIR="$TARGETDIR/include"
 
 # Para Los Complementos :
 export PREFIX="$TARGETDIR"
 export LIBDIR="$TARGETDIR/lib/"
 export PLUGINDIR="$TARGETDIR/plugin/"
-
 
 # Para la Interfaz de Consola :
 export COREDIR="$TARGETDIR/lib/"
@@ -59,29 +97,30 @@ export ICONSDIR="$TARGETDIR/share/icons/"
 cd "$CARPETA"
 cd mupen64plus-core/projects/unix
 make clean
-make  all
+make all
 make install
 
 #002 Complemento RSP - HLE :
 cd "$CARPETA"
-cd mupen64plus-rsp-hle/project/unix
+cd mupen64plus-rsp-hle/projects/unix
 make clean
 make all
 make install
+cp *.so "$PLUGINDIR"
 
 #003 Complemento RSP - z64 :
 cd "$CARPETA"
-cd mupen64plus-rsp-z64/project/unix
+cd mupen64plus-rsp-z64/projects/unix
 make clean
 make all
-make install
+cp *.so "$PLUGINDIR"
 
 #004 Complemento RSP - cxd4
 cd "$CARPETA"
-cd mupen64plus-rsp-cxd4/project/unix
+cd mupen64plus-rsp-cxd4/projects/unix
 make clean
 make all
-make install
+cp *.so "$PLUGINDIR"
 
 #005 Complemento de Audio - SDL
 cd "$CARPETA"
@@ -131,9 +170,9 @@ cd "$CARPETA"
 cd mupen64plus-video-z64/projects/unix
 make clean
 make all
-make install
+cp *.so "$PLUGINDIR" &> /dev/null
 
-#012 Consola de Interfaz :
+#012 Interfaz de Consola:
 cd "$CARPETA"
 cd mupen64plus-ui-console/projects/unix/
 make clean
@@ -143,8 +182,50 @@ make install
 #013 Interfaz Python :
 cd "$CARPETA"
 cd mupen64plus-ui-python
-sudo python setup.py install
+python setup.py install
+echo '[Desktop Entry]
+Name=M64Py
+Exec=/usr/local/bin/m64py %f
+Terminal=false
+Type=Application
+Icon=m64py
+Comment=A frontend for Mupen64Plus
+Categories=Game;Emulator;
+MimeType=application/x-n64-rom;
+Keywords=Emulator;Nintendo64;Mupen64plus;' | tee /usr/share/applications/m64py.desktop
+chmod a+o+x /usr/share/applications/m64py.desktop
+cd /usr/share/icons/
+wget -c "https://github.com/mupen64plus/mupen64plus-ui-python/raw/master/xdg/m64py.png"
 
+#014 Interfaz Qt :
+cd "$CARPETA"
+git clone https://github.com/dh4/mupen64plus-qt
+cd mupen64plus-qt
+qmake mupen64plus-qt.pro
+make
+cp mupen64plus-qt /usr/bin/
+cp ./resources/mupen64plus-qt.desktop /usr/share/applications/mupen64plus-qt.desktop
+cp ./resources/images/mupen64plus.png /usr/share/icons/mupen64plus-qt.png
+
+#015 Complemento de Video - GLideN64
+cd "$CARPETA"
+git clone https://github.com/gonetz/GLideN64
+cd GLideN64/src
+chmod +x getRevision.sh
+./getRevision.sh
+cmake -DVEC4_OPT=On -DMUPENPLUSAPI=On .
+make
+cd plugin/Release/
+cp *.so "$PLUGINDIR"
+
+# Terminar de preparar los archivos necesarios
 # Crear / Actualizar los enlaces necesarios para ser utilizados con la rutina
 # y el enlazador "ld.so" del sistema
-sudo ldconfig
+chmod a+o+x "$TARGETDIR/mupen64plus.desktop" ; mv "$TARGETDIR/mupen64plus.desktop" "/usr/share/applications/"
+mv "$SHAREDIR/icons/48x48/apps/mupen64plus.png" "/usr/share/icons/hicolor/48x48/apps/"
+mv "$SHAREDIR/icons/scalable/apps/mupen64plus.svg" "/usr/share/icons/hicolor/scalable/apps/"
+mv "$SHAREDIR/man6/mupen64plus.6" "/usr/share/man/man6/"
+rm -rf "$SHAREDIR/icons"
+rm -rf "$SHAREDIR/man6"
+ldconfig
+fi
