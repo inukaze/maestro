@@ -213,7 +213,8 @@ git clone https://github.com/gonetz/GLideN64
 cd GLideN64/src
 chmod +x getRevision.sh
 ./getRevision.sh
-cmake -DVEC4_OPT=On -DMUPENPLUSAPI=On .
+#cmake -DVEC4_OPT=On -DMUPENPLUSAPI=On .
+cmake -DMUPENPLUSAPI=On .
 make
 cd plugin/Release/
 cp *.so "$PLUGINDIR"
