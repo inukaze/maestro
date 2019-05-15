@@ -69,7 +69,7 @@ fi
 
 # Compilar:
 mkdir build ; cd build
-cmake -DENABLE_CCDDA:BOOL="1" -DUSE_LIBARCHIVE:BOOL="1" -DUSE_LIBCDIO:BOOL="1" -DBUILD_SIO1:BOOL="1" -DCMAKE_INSTALL_PREFIX:PATH="$PREFIJO" ..
+cmake -DENABLE_CCDDA:BOOL="1" -DUSE_LIBARCHIVE:BOOL="1" -DUSE_LIBCDIO:BOOL="1" -DBUILD_SIO1:BOOL="1" -DCMAKE_INSTALL_PREFIX:PATH="$PREFIJO" -DCMAKE_BUILD_TYPE=Debug ..
 make
 
 # Instalar
@@ -167,7 +167,7 @@ ln -sf "/usr/lib/x86_64-linux-gnu/games/psemu/libpeopsxgl.so"	        "$HOME/.pc
 export PATH="$PREFIJO/bin/":$PATH
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$PREFIJO/games/psemu/"
 cd "$PREFIJO/bin"
-./pcsxr.real "$@"
+SDL_AUDIODRIVER=pulse ./pcsxr.real "$@"
 echo' | tee "/tmp/pcsxr"
 
 mv /tmp/pcsxr /usr/bin/pcsxr
@@ -188,7 +188,7 @@ Comment[zh_CN]=Sony PlayStation 模拟器
 Comment[zh_TW]=Sony PlayStation 模擬器
 Comment[es_ES]=Emulador de Sony PlayStation 1
 Comment[es_VE]=Emulador de Sony PlayStation 1
-Exec=/usr/bin/pcsxr.real
+Exec=/usr/bin/pcsxr
 Icon=pcsxr-icon
 Categories=Game;' | sudo tee /usr/share/applications/pcsxr.desktop
 
@@ -244,7 +244,7 @@ ln -sf "$PREFIJO/lib/games/psemu/libpeopsxgl.so"	"$HOME/.pcsxr/plugins/libpeopsx
 export PATH="$PREFIJO/bin/":$PATH
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$PREFIJO/games/psemu/"
 cd "$PREFIJO/bin"
-./pcsxr "$@"
+SDL_AUDIODRIVER=pulse ./pcsxr "$@"
 echo' | tee "/tmp/pcsxr"
 
 mv /tmp/pcsxr /usr/bin/pcsxr
