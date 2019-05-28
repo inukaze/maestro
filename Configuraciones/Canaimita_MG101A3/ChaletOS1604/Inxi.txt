@@ -1,0 +1,26 @@
+[1;34mSystem:   [0;37m [1;34mHost:[0;37m canaimita-mg101a3 [1;34mKernel:[0;37m 4.4.0-148-generic x86_64 (64 bit) [1;34mDesktop:[0;37m Xfce 4.12.3[0;37m
+[1;34m          [0;37m [1;34mDistro:[0;37m Ubuntu 16.04 xenial[0;37m
+[1;34mMachine:  [0;37m [1;34mMobo:[0;37m Intel [1;34mmodel:[0;37m Intel powered classmate PC [1;34mv:[0;37m BP PV[0;37m
+[1;34m          [0;37m [1;34mBios:[0;37m Phoenix [1;34mv:[0;37m BPPNV10A.86A.0018.2012.0511.1546 [1;34mdate:[0;37m 05/11/2012[0;37m
+[1;34mCPU:      [0;37m [1;34mSingle core[0;37m Intel Atom N455 (-HT-)[0;37m [1;34mcache:[0;37m 512 KB[0;37m 
+[1;34m          [0;37m [1;34mclock speeds:[0;37m [1;34mmax:[0;37m 1667 MHz [1;34m1:[0;37m 1333 MHz [1;34m2:[0;37m 1000 MHz[0;37m
+[1;34mGraphics: [0;37m [1;34mCard:[0;37m Intel Atom Processor D4xx/D5xx/N4xx/N5xx Integrated Graphics Controller[0;37m
+[1;34m          [0;37m [1;34mDisplay Server:[0;37m X.Org 1.18.4 [1;34mdrivers:[0;37m intel (unloaded: fbdev,vesa) [1;34mResolution:[0;37m 1024x600@60.19hz[0;37m
+[1;34m          [0;37m [1;34mGLX Renderer:[0;37m Mesa DRI Intel Pineview M [1;34mGLX Version:[0;37m 1.4 Mesa 18.0.5[0;37m
+[1;34mAudio:    [0;37m [1;34mCard[0;37m Intel NM10/ICH7 Family High Definition Audio Controller [1;34mdriver:[0;37m snd_hda_intel[0;37m
+[1;34m          [0;37m [1;34mSound:[0;37m Advanced Linux Sound Architecture [1;34mv:[0;37m k4.4.0-148-generic[0;37m
+[1;34mNetwork:  [0;37m [1;34mCard-1:[0;37m Realtek RTL810xE PCI Express Fast Ethernet controller [1;34mdriver:[0;37m r8169[0;37m
+[1;34m          [0;37m [1;34mIF:[0;37m enp5s0 [1;34mstate:[0;37m down [1;34mmac:[0;37m <filter>[0;37m
+[1;34m          [0;37m [1;34mCard-2:[0;37m Realtek RTL8188CE 802.11b/g/n WiFi Adapter [1;34mdriver:[0;37m rtl8192ce[0;37m
+[1;34m          [0;37m [1;34mIF:[0;37m wlp7s0 [1;34mstate:[0;37m up [1;34mmac:[0;37m <filter>[0;37m
+[1;34mDrives:   [0;37m [1;34mHDD Total Size:[0;37m 321.1GB (10.3% used) [1;34mID-1:[0;37m /dev/sda [1;34mmodel:[0;37m ST320LM000_HM321 [1;34msize:[0;37m 320.1GB[0;37m
+[1;34m          [0;37m [1;34mID-2:[0;37m USB /dev/sdb [1;34mmodel:[0;37m DataTraveler_2.0 [1;34msize:[0;37m 1.0GB[0;37m
+[1;34mPartition:[0;37m [1;34mID-1:[0;37m / [1;34msize:[0;37m 47G [1;34mused:[0;37m 12G (27%) [1;34mfs:[0;37m ext3 [1;34mdev:[0;37m /dev/sda6[0;37m
+[1;34m          [0;37m [1;34mID-2:[0;37m /boot [1;34msize:[0;37m 1.1G [1;34mused:[0;37m 114M (12%) [1;34mfs:[0;37m ext2 [1;34mdev:[0;37m /dev/sda3[0;37m
+[1;34m          [0;37m [1;34mID-3:[0;37m /home [1;34msize:[0;37m 47G [1;34mused:[0;37m 3.3G (8%) [1;34mfs:[0;37m ext3 [1;34mdev:[0;37m /dev/sda7[0;37m
+[1;34m          [0;37m [1;34mID-4:[0;37m swap-1 [1;34msize:[0;37m 2.16GB [1;34mused:[0;37m 0.00GB (0%) [1;34mfs:[0;37m swap [1;34mdev:[0;37m /dev/sda5[0;37m
+[1;34mRAID:     [0;37m No RAID devices: /proc/mdstat, md_mod kernel module present[0;37m
+[1;34mSensors:  [0;37m [1;34mSystem Temperatures: cpu:[0;37m 64.0C [1;34mmobo:[0;37m N/A[0;37m
+[1;34m          [0;37m [1;34mFan Speeds (in rpm): cpu:[0;37m N/A[0;37m
+[1;34mInfo:     [0;37m [1;34mProcesses:[0;37m 178 [1;34mUptime:[0;37m 1:32 [1;34mMemory:[0;37m 427.4/981.8MB [1;34mClient:[0;37m Shell (bash) [1;34minxi:[0;37m 2.2.35[0;37m [0;37m
+[0m
