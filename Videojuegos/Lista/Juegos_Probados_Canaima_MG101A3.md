@@ -2,11 +2,16 @@ Lista de Videojuegos Probados en Distros de 64 Bits:
 -------------------------------
 
 Bueno aqui hare una Tabla de los VideoJuegos que he probados y que me han funcionado en la
-Canaimita MG101A3. Nota usando videojuegos nativos para Liñux y nativos para Windows
+Canaimita MG101A3. 
+
+NOTA 1 : Usando videojuegos nativos para Liñux y nativos para Windows
 mediante la capa de compatibilidad Wine. Wine a nivel de sistema version : 4.3 (Desarrollo)
 La gran mayoria lo uso desde PlayOnLinux + Wine : 1.8.6 como minimo. ya que las versiones
 anteriores no cargan por algunas incompatibilidades solo me dan el error 
 
+NOTA 2 : Si la planeas usar especialmente para videojuegos mi recomendacion es que instales
+Windows Mini XP con Service Pack 4 extraoficial + sus controladores y podras jugar muchos
+videojuegos nativos para windows con una fluidez correcta, por ejemplo Ragnarok Online 1.
 
 ```
 libGL error: unable to load driver: i915_dri.so
@@ -24,8 +29,7 @@ A
 
 |Titulo|Notas
 |------|-----
-| Ages Of Empires 1 + Expansion (+Partida Intranet)	|	Wine : Funciona perfectamente
-| Ages Of Empires 2 + Expansion (+Partida Intranet)	|	Wine : Funciona perfectamente
+| Ages Of Empires 1 + Expansion				|	Wine : Funciona perfectamente
 | Assault Cube						|	Nativo : Funciona Perfectamente
 | Another Metroid 2 Remake / AM2R			|	Nativo : No inicia, da el error "Excepción de coma flotante"
 
@@ -104,7 +108,7 @@ G
 
 |Titulo|Notas
 |------|-----
-| GunMetal			| Steam + Wine 1.9.21 [Proton Reemplazado](../Guion/Reemplazar_Proton37_Por_Wine): Extremadamente lento.
+| GunMetal						|	Steam + Wine 1.9.21 [Proton Reemplazado](../Guion/Reemplazar_Proton37_Por_Wine): Extremadamente lento.
 
 
 H
@@ -221,6 +225,7 @@ S
 | Super Crate Box					|	Nativo (Steam) : No funciona.
 | Street Racing Syndicate				|	Steam + Wine 1.9.21 [Proton Reemplazado](../Guion/Reemplazar_Proton37_Por_Wine): No Inicia
 | Secrets Of Magic 2					|	Nativo : No inicia.
+| System Shock						|	Nativo (Usando el motor Shockolate v0.6) : Fluye decentemente.
 
 T
 -
@@ -240,7 +245,7 @@ U
 
 |Titulo|Notas
 |------|-----
-| Unreal Gold						|	Steam + Wine 1.9.21 [Proton Reemplazado](../Guion/Reemplazar_Proton37_Por_Wine): Instalo DirectX. 
+| Urban Terror 4.3.4					|	Nativo : Funciona perfectamente, es mejor usar un raton usb, y no meterse en partidas donde hayan mas de 6 jugadores en total incluyendote
 
 
 V
