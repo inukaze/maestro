@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+# Autor     :	Inukaze ( Venezuela )
+# Sitio     :	http://https://goo.gl/ij6WqW
+# Correo    :	bloginukaze@gmail.com
+# Licencia  :	GPL 2
+# Funcion   :	Inizializar "Robin Hood : Leyend Of Sheerwood" correctamente
+
+# Solucion de Resolucion
+xrandr --current | grep current | awk '{print $8}' >> /tmp/Resolucion1
+xrandr --current | grep current | awk '{print $10}' >> /tmp/Resolucion2
+sed 's/.$//' /tmp/Resolucion2 >> /tmp/Resolucion3 && mv -f /tmp/Resolucion3 /tmp/Resolucion2
+P1Resolucion=$(cat /tmp/Resolucion1)
+P2Resolucion=$(cat /tmp/Resolucion2)
+rm /tmp/Resolucion1 /tmp/Resolucion2
+echo "$P1Resolucion"'x'"$P2Resolucion" >> Resolucion
+Resolucion=$(cat Resolucion) ; export Resolucion
+rm Resolucion
+# Solucion de Resolucion
+
+function Video(){
+Tarjeta=$(lspci -v | grep "VGA" | cut -d " " -f05)
+if [ "$Tarjeta" = "NVIDIA" ]; then
+    Controlador=$(lspci -nnk | grep -i vga -A3 | grep 'in use' | cut -d " " -f05)
+    if [ "$Controlador" = "nvidia" ]; then
+	binario_ns=$(whereis -B "/usr/sbin" "/usr/local/sbin" "/sbin" "/usr/bin" "/usr/local/bin" "/bin" -b nvidia-settings | grep -i "nvidia-settings" | cut -d " " -f02)
+	binario_xr=$(whereis -B "/usr/sbin" "/usr/local/sbin" "/sbin" "/usr/bin" "/usr/local/bin" "/bin" -b xrandr | grep -i "xrandr" | cut -d " " -f02)
+	if test -x "$binario_ns"
+	then
+	    #echo "encontrado el ejecutable : nvidia-settings"
+	    Cambiador="$binario_ns"
+	    
+	    #Cambiar la resolucion usando nvidia :
+	    $Cambiador --assign CurrentMetaMode="640x480_75 +0+0"
+	else
+	    #echo "no se encontro el ejecutable : nvidia-settings"
+	    Cambiador="$binario_xr"
+	    $Cambiador -s 640x480
+	fi
+    fi    
+fi
+}
+
+#Introducir la ruta de librerias ".libs32" en la variable de entorno del sistema
+export LD_LIBRARY_PATH="$PWD/.libs32"
+
+#Iniciarlizar el dispositivo DSP para reparar el sonido 
+export SDL_AUDIODRIVER="DSP"
+
+#Cargar en una ventana (Nvidia Privativo):
+#Xephyr -ac -screen 800x600 -br -reset -terminate :2.0 +extension Composite +extension DAMAGE +extension DOUBLE-BUFFER +extension DPMS +extension GLX +extension RANDR +extension RENDER +extension X-Resource +extension XFIXES &
+#export DISPLAY=:2.0
+
+#Inicializar el binario ejecutable dinamico
+./.robin.dinamico
+    if [ "$Cambiador" = "$binario_ns" ]; then
+          $Cambiador --assign CurrentMetaMode="$Resolucion +0+0"
+    fi
+
+    if [ "$Cambiador" = "$binario_xr" ]; then
+          $Cambiador -s "$Resolucion"
+    fi
+
+#Si la ejecucion del binario ejecutable termina en un error (Estado de salida diferente de 0)
+if [ $? -gt 0 ]
+then
+    #Inicializar el binario ejecutable estatico
+    ./.robin.estatico
+        if [ "$Cambiador" = "$binario_ns" ]; then
+              $Cambiador --assign CurrentMetaMode="$Resolucion +0+0"
+        fi
+
+        if [ "$Cambiador" = "$binario_xr" ]; then
+              $Cambiador -s "$Resolucion"
+        fi
+#    exit 0
+fi
