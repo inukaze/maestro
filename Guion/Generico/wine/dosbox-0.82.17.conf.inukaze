@@ -1,0 +1,38 @@
+# This is the configuration file for DOSBox 0.82.17. (Please use the latest version of DOSBox)
+# Lines starting with a # are comment lines and are ignored by DOSBox.
+# They are used to (briefly) document the effect of each option.
+# To write out ALL options, use command 'config -all' with -wc or -writeconf options.
+
+[sdl]
+output=opengl
+
+[dosbox]
+machine=pc98
+
+[dos]
+umb=false
+
+[cpu]
+core=normal
+cputype=auto
+cycles=16384
+cycleup=1024
+cycledown=1024
+
+[autoexec]
+# Lines in this section will be run at startup.
+# You can put your MOUNT lines here.
+@echo off > NUL
+mount c "/media/Audiovisual/msdos/c/PC-98/Touhou" > NUL
+c: > NUL
+echo.
+echo "The Games folder are just the numbers : 01, 02, 03, 04 or 05"
+echo.
+echo "The Games are :"
+echo.
+echo "01 -> The Highly Responsive to Prayers"
+echo "02 -> The Story of Eastern Wonderland"
+echo "03 -> Phantasmagoria_of_Dim.Dream"
+echo "04 -> Lotus Land Story"
+echo "05 -> Mystic Square"
+echo.
