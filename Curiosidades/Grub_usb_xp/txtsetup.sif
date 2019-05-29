@@ -191,6 +191,7 @@ _6    = %bootname6%,"%boottagfile6%",,""
 1994 = NLDRV\008
 
 [SourceDisksFiles]
+SSA.exe = 100,,,,,,_x,2,0,0
 _default.pif = 1,,,,,,,1,2,0
 4mmdat.sys = 100,,,,,,,4,1
 6to4svc.dll = 100,,,,,,,2,0,0
