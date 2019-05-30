@@ -13,33 +13,24 @@ Crear un USB de Instalacion de WindowsXP usando GRUB2 pre-requisitos para seguir
 
 
 > 01) Ingresar al modo SuperUsuario : 
-
-<br> `su` <br>
+`su`
 
 > 02) Crear la carpeta /media/usb : 
-
-`mkdir -p /media/usb` <br>
+`mkdir -p /media/usb`
 
 > 03) Identificar Pendrive, Su Particion y su UUID e instalarle el sector de arranque con ms-sys
-
-
 `USBPART=$(blkid | grep "MiniXP" | awk '{print$01}' | sed 's/\/*:$//') ; echo "Particion USB=$USBPART"` <br>
 `USB=$(echo "$USBPART" | sed 's/[0-9]*//g') ; echo "Dispositivo USB=$USB"` <br>
 `UUID=$(blkid | grep "MiniXP" | awk '{print$03}' | sed -n 's/.*UUID=\"\([^\"]*\)\".*/\1/p')` <br>
 
-
 > 04) Montar la particion en /media/usb, nota X sera el valor que corresponde a una letra (Dispositivo) y # a un numero (Particion), por ejemplo : **mount /dev/sdX# /media/usb -o umask=000** , para dejarlo mas claro seria algo asi : 
-
 `mount "$USBPART" /media/usb -o umask=000` <br>
 
-
 > 05) Extrae la ISO con este comando :
-
 `7z x 'WinXP-MiniOS v2018.00 x86.iso'` <br>
 
 
 > 06) Acomodar archivos
-
 `echo "Transformar MAYUSCULAS en minusculas :"` <br>
 `find . -depth -exec rename 's/(.*)\/([^\/]*)/$1\/\L$2/' {} \;` <br>
 
@@ -59,7 +50,7 @@ Crear un USB de Instalacion de WindowsXP usando GRUB2 pre-requisitos para seguir
 `mv 'i386' ./'$win_nt$.~ls'/` <br>
 `wget -c https://github.com/inukaze/maestro/raw/master/Curiosidades/Grub_usb_xp/ssa.ex_ -P ./'$win_nt$'.~ls/i386/` <br>
 
-> 08) Crear o ajustar configuraciones faltantes :
+> 07) Crear o ajustar configuraciones faltantes :
 
 `echo 'Primero el "boot".ini'`
 
@@ -220,7 +211,7 @@ menuentry "Instalacion de MiniOS (Windows XP)" {
 }' | tee ./grub/grub.cfg
 ```
 
-> 10) Copiar los archivos, Crear enlaces simbolicos, Instalar GRUB en el dispositivo USB y probarlo usando QEMU + KVM:
+> 08) Copiar los archivos, Crear enlaces simbolicos, Instalar GRUB en el dispositivo USB y probarlo usando QEMU + KVM:
 
 
 `cp './$win_nt$.~ls'/i386/ntldr ./ntldr` <br>
