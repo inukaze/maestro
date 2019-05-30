@@ -12,9 +12,11 @@ Crear un USB de Instalacion de WindowsXP usando GRUB2 pre-requisitos para seguir
 # Procedimiento : Abrir una terminal y utilizar los siguientes comandos 
 
 
-> 01) Ingresar al modo SuperUsuario : `su`
+> 01) Ingresar al modo SuperUsuario : 
+`su`
 
-> 02) Crear la carpeta /media/usb : `mkdir -p /media/usb`
+> 02) Crear la carpeta /media/usb : 
+`mkdir -p /media/usb`
 
 > 03) Identificar Pendrive, Su Particion y su UUID e instalarle el sector de arranque con ms-sys <br>
 
@@ -24,10 +26,14 @@ USB=$(echo "$USBPART" | sed 's/[0-9]*//g') ; echo "Dispositivo USB=$USB"
 UUID=$(blkid | grep "MiniXP" | awk '{print$03}' | sed -n 's/.*UUID=\"\([^\"]*\)\".*/\1/p')
 ```
 
-> 04) Montar la particion en /media/usb, nota X sera el valor que corresponde a una letra (Dispositivo) y # a un numero (Particion), por ejemplo : **mount /dev/sdX# /media/usb -o umask=000** , para dejarlo mas claro seria algo asi : 
-`mount "$USBPART" /media/usb -o umask=000` <br>
+> 04) Montar la particion en /media/usb
+      Nota X sera el valor que corresponde a una letra (Dispositivo) y # a un numero (Particion)
+      Por Ejemplo : **mount /dev/sdX# /media/usb -o umask=000** , para dejarlo mas claro seria algo asi : 
 
-> 05) Extrae la ISO con este comando : `7z x 'WinXP-MiniOS v2018.00 x86.iso'`
+     `mount "$USBPART" /media/usb -o umask=000` <br>
+
+> 05) Extrae la ISO con este comando : 
+`7z x 'WinXP-MiniOS v2018.00 x86.iso'`
 
 > 06) Acomodar archivos<br>
 
@@ -43,70 +49,16 @@ mv winxp-minios v2018.00 x86.iso ../
 mkdir -p 'grub'
 mkdir -p '$win_nt$.~ls'
 mkdir -p '$win_nt$.~bt'
-wget -c https://github.com/inukaze/maestro/raw/master/Curiosidades/Grub_usb_xp/bootsect.dat -P ./'$win_nt$'.~bt/
 mv '$oem$' '$win_nt$.~ls'/
 mv win51 ./'$win_nt$.~ls'/
 mv win51ip ./'$win_nt$.~ls'/
 mv win51ip.sp3 ./'$win_nt$.~ls'/
 mv 'i386' ./'$win_nt$.~ls'/
-wget -c https://github.com/inukaze/maestro/raw/master/Curiosidades/Grub_usb_xp/ssa.ex_ -P ./'$win_nt$'.~ls/i386/
 ```
 
-> 07) Crear o ajustar configuraciones faltantes : <br>
+> 07) Crear la configuracion para el gestor de arranque <br>
 
 ```
-echo 'Primero el "boot".ini :'
-echo '[Boot Loader]
-Timeout=30
-Default=multi(0)disk(0)rdisk(1)partition(1)\WINDOWS
-[Operating Systems]
-C:\$win_nt$.~bt\bootsect.dat = "1ro, Instalacion Textual (Iniciar desde el USB otra vez, luego de finalizar)"
-multi(0)disk(0)rdisk(1)partition(1)\WINDOWS="2do, Instalacion Grafica, contiuar + 1er inicio de Windows" /fastdetect
-C:\ = "---> DEPURAR, en caso de que HAL.DLL o NTOSKRNL.EXE no consigan errores <---"
-multi(0)disk(0)rdisk(1)partition(2)\WINDOWS="Depurar Inicio rDisco 1 particion 2" /fastdetect
-multi(0)disk(0)rdisk(1)partition(3)\WINDOWS="Depurar Inicio rDisco 1 particion 3" /fastdetect
-multi(0)disk(0)rdisk(1)partition(4)\WINDOWS="Depurar Inicio rDisco 1 particion 4" /fastdetect
-multi(0)disk(0)rdisk(2)partition(1)\WINDOWS="Depurar Inicio rDisco 2 particion 1" /fastdetect
-multi(0)disk(0)rdisk(2)partition(2)\WINDOWS="Depurar Inicio rDisco 2 particion 2" /fastdetect
-multi(0)disk(0)rdisk(2)partition(3)\WINDOWS="Depurar Inicio rDisco 2 particion 3" /fastdetect
-multi(0)disk(0)rdisk(2)partition(4)\WINDOWS="Depurar Inicio rDisco 2 particion 4" /fastdetect
-' | tee ./boot.ini
-
-echo 'Segundo el migrate.inf :'
-echo '[Version]
-Signature = "$Windows NT$"
-
-[Addreg]
-HKLM,"SYSTEM\MountedDevices",,0x00000010
-HKLM,"SYSTEM\ControlSet001\Control\StorageDevicePolicies","WriteProtect",%REG_DWORD%,1
-HKLM,"SYSTEM\MountedDevices","\DosDevices\W:",0x00030001,\
-5F,00,3F,00,3F,00,5F,00,55,00,53,00,42,00,53,00,54,00,4F,00,52,00,23,00,44,00,69,00,73,00,6B,00,26,00,56,00,65,00,6E,00,5F,00,4B,00,69,00,6E,00,67,00,73,00,74,00,6F,00,6E,00,26,00,50,00,72,00,6F,00,64,00,5F,00,44,00,61,00,74,00,61,00,54,00,72,00,61,00,76,00,65,00,6C,00,65,00,72,00,5F,00,32,00,2E,00,30,00,26,00,52,00,65,00,76,00,5F,00,31,00,2E,00,30,00,30,00,23,00,30,00,30,00,31,00,39,00,45,00,30,00,36,00,42,00,30,00,37,00,42,00,33,00,35,00,43,00,38,00,38,00,30,00,38,00,30,00,39,00,32,00,44,00,33,00,41,00,26,00,30,00,23,00,7B,00,35,00,33,00,66,00,35,00,36,00,33,00,30,00,37,00,2D,00,62,00,36,00,62,00,66,00,2D,00,31,00,31,00,64,00,30,00,2D,00,39,00,34,00,66,00,32,00,2D,00,30,00,30,00,61,00,30,00,63,00,39,00,31,00,65,00,66,00,62,00,38,00,62,00,7D,00
-
-[Strings]
-;Handy macro substitutions non-localizable
-REG_SZ = 0x00000000
-REG_BINARY = 0x00000001
-REG_DWORD = 0x00010001
-REG_MULTI_SZ = 0x00010000
-REG_SZ_APPEND = 0x00010008
-REG_EXPAND_SZ = 0x00020000
-' | tee './$win_nt$.~bt'/migrate.inf
-
-echo 'Tercero el winnt.sif'
-echo '[Data]
-    floppyless = "1"
-    msdosinitiated = "1"
-
-[GuiRunOnce]
-    "SSA /UnrenameFolders /PendingDelete"
-
-[SetupParams]
-    UserExecute = "SSA /RenameFolders /BootINIGenerate /Office2007ProblemFix"
-' | tee ./'$win_nt$.~bt'/winnt.sif
-
-echo 'Cuarto y ultimo archivo txtsetup.sif'
-rm ./'$win_nt$.~ls'/i386/txtsetup.sif ; wget -c https://github.com/inukaze/maestro/raw/master/Curiosidades/Grub_usb_xp/txtsetup.sif -P ./'$win_nt$.~ls'/i386
-
 echo 'Crear el archivo "./grub/grub.cfg" con el siguiente contenido :'
 echo '#
 # DO NOT EDIT THIS FILE
@@ -205,7 +157,7 @@ menuentry "Instalacion de MiniOS (Windows XP)" {
 }' | tee ./grub/grub.cfg
 ```
 
-> 08) Copiar los archivos e Instalar GRUB en el dispositivo USB:
+> 08) Copiar los archivos, Descargar e Instalar GRUB en el dispositivo USB:
 
 ```
 echo "Copiar archivos necesarios para la instalacion"
@@ -345,6 +297,19 @@ cp './$win_nt$.~ls'/i386/cmdide.sy_ ./'$win_nt$.~bt'/cmdide.sy_
 cp './$win_nt$.~ls'/i386/usbhub.sy_ ./'$win_nt$.~bt'/usbhub.sy_
 cp './$win_nt$.~ls'/i386/nvraid.sy_ ./'$win_nt$.~bt'/nvraid.sy_
 cp './$win_nt$.~ls'/i386/usbehci.sy_ ./'$win_nt$.~bt'/usbehci.sy_
+cp './$win_nt$.~ls'/i386/bootfont.bin ./'$win_nt$.~ls'/
+cp -r './$win_nt$.~ls'/i386/system32 ./'$win_nt$.~bt'/
+rm -rf ./txtsetup.sif
+rm -rf ./'$win_nt$'.~bt/bootsect.dat
+rm -rf ./'$win_nt$'.~bt/migrate.inf
+rm -rf ./'$win_nt$'.~bt/spddlang.sy_
+rm -rf ./'$win_nt$'.~bt/txtsetup.sif
+rm -rf ./'$win_nt$'.~bt/winnt.sif
+rm -rf ./'$win_nt$'.~ls/i386/ssa.ex_
+rm -rf ./'$win_nt$'.~ls/i386/txtsetup.sif
+wget -c https://github.com/inukaze/maestro/raw/master/Curiosidades/Grub_usb_xp/MiniOS_XP_2018.tar.bz2
+tar xfvj MiniOS_XP_2018.tar.bz2
+rm -rf MiniOS_XP_2018.tar.bz2
 cp -av * /media/usb/
 
 echo "Instalar GRUB en el Pendrive (En mi caso tarda alrededor de 10 minutos en hacerlo):"
