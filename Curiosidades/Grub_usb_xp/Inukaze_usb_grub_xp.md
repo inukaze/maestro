@@ -490,7 +490,7 @@ Haz click en "Aceptar" (Ya que este es el tema que es aplicado por defecto al in
 
 Ahora puedes mandar a apagar la maquina virtual e iniciarla una vez mas:
 
-`kvm -hda miniosxp.qcow2 -vga std -usbdevice tablet -net none` 
+`kvm -hda $HOME/miniosxp.qcow2 -vga std -usbdevice tablet -net none` 
 
 
 NOTAS : 
