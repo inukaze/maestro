@@ -368,35 +368,46 @@ qemu-img create -f qcow2 "$HOME/miniosxp.qcow2" 5G
 
 echo 'Inicia la instalacion y solo crea la particion luego sal de la instalacion'
 sudo kvm -hda $HOME/miniosxp.qcow2 -hdb $USB -m 512 -boot menu=on -vga std -usbdevice tablet -net none
+
 ```
 Se iniciara la ventana del QEMU + KVM, Presiona ESC rapidamente para que aparezca el menú de seleccion de dispositivo para iniciar
+
 ![Probando el USB usando QMU+KVM](./img/InuTutorial-MiniXP-USBGRUB-005.png)
 
 Presiona el numero en el teclado que corresponda al pendrive en mi caso aqui es el 2.
+
 ![QMU+KVM Elegir Segundo Disco Duro](./img/InuTutorial-MiniXP-USBGRUB-006.png)
 
 Ahora carga GRUB2, con las flechas direccionales colocate sobre "Iniciar Instalacion ..." y presiona Entrar
+
 ![GRUB2 e Iniciar Instalacion](./img/InuTutorial-MiniXP-USBGRUB-007.png)
 
 Inicializara el programa de instalacion de Windows XP, presiona Entrar para Continuar
+
 ![Instalacion de Windows XP](./img/InuTutorial-MiniXP-USBGRUB-008.png)
 
 Te mostrara el acuerdo de licencia con el usuario final, presiona F8 para continuar
+
 ![Contrato de Licencia con Usuario Final](./img/InuTutorial-MiniXP-USBGRUB-009.png)
 
 Esto es muy importante colocate sobre el "Espacio no particionado" y presiona la "C"
+
 ![Asignar el area no particionada](./img/InuTutorial-MiniXP-USBGRUB-010.png)
 
 Deja que asigne todo la cantidad que quiera y presiona Entrar
+
 ![Tamaño de la particion](./img/InuTutorial-MiniXP-USBGRUB-011.png)
 
 Una vez notes que ya la particion ha sido creada. debes salir del instalador
+
 ![Particion Creada con el Tamaño indicado](./img/InuTutorial-MiniXP-USBGRUB-012.png)
 
 Presiona F3 para indicarle que saldras del instalador
+
 ![Salir del Instalador](./img/InuTutorial-MiniXP-USBGRUB-013.png)
 
 Si presiona F3 nuevamente te indicara que en 15 segundos se reiniciara, pero tu solo cierra la ventana
+
 ![Confirmar Salir del instalador](./img/InuTutorial-MiniXP-USBGRUB-014.png)
 
 Continua en la terminal usando los comandos :
@@ -407,61 +418,80 @@ echo 'Vuelve a "Iniciar la instalacion" y ahora si formatea la particion en NTFS
 lsusb
 sudo kvm -hda $HOME/miniosxp.qcow2 -usb -device usb-host,hostbus=1,hostaddr=9 -m 512 -boot menu=on -vga std -usbdevice tablet -net none
 ```
+
 ![Progreso en la Terminal](./img/InuTutorial-MiniXP-USBGRUB-015.png)
 
 Selecciona el dispositivo correspondiente al Pendrive USB, en mi caso sigue siendo el 2.
+
 ![Selecciona nuevamente el segundo dispositivo](./img/InuTutorial-MiniXP-USBGRUB-016.png)
 
 En el GRUB2 otra vez, vuelve a "Iniciar la Instalacion . . ."
+
 ![Iniciar instalacion por segunda vez](./img/InuTutorial-MiniXP-USBGRUB-017.png)
 
 Ahora notaras que las particiones tienen letras diferentes y la principal es la C:
 Colocate sobre la C y presiona Entrar
+
 ![Particion C](./img/InuTutorial-MiniXP-USBGRUB-018.png)
 
 Con Windows XP se recomienda usar el formato NTFS debido a que es más rapido que FAT(32)
+
 ![Formato NTFS](./img/InuTutorial-MiniXP-USBGRUB-019.png)
 
-Si no estas pendiente de la instalacion y cuando termine la primera copia de archivos
-El Programa de instalacion reiniciara, pero si no estas para elegir el Pendrive USB
+Si no estas pendiente de la instalacion y cuando termine
+la primera copia de archivos el Programa de instalacion
+reiniciara, pero si no estas para elegir el Pendrive USB
 Para iniciar, intentara iniciar desde el disco duro y veras este error :
 ![Error al intenta iniciar directo desde la imagen de disco duro](./img/InuTutorial-MiniXP-USBGRUB-020.png)
 
-Si lo ves simplemente reinicia y vuelve a iniciar desde el dispositivo USB usando el Menu
-que se abre al presiona ESC para que te permite elegir desde cual dispositivo iniciar.
+Si lo ves simplemente reinicia y vuelve a iniciar desde 
+el dispositivo USB usando el Menu que se abre al presiona
+ESC para que te permite elegir desde cual dispositivo iniciar.
 cuando veas el GRUB2 nuevamente ahora usa la opcion "Continuar con la instalacion..."
+
 ![GRUB2 Selecciona Continuar](./img/InuTutorial-MiniXP-USBGRUB-021.png)
 
 El Programa de instalacion iniciara la instalacion de Windows XP normalmente
+
 ![Iniciando la continuacion de la instalacion](./img/InuTutorial-MiniXP-USBGRUB-022.png)
 
 Al Terminar de preparar notaras que este instalador fue modificado por el autor de la iso
+
 ![Continua la instalacion de Windows XP](./img/InuTutorial-MiniXP-USBGRUB-023.png)
 
+
 Despues lo tipico elegir la Region Geografica, Idiomas Soportados.
+
 ![Determina los idiomas y formatos que se usaran](./img/InuTutorial-MiniXP-USBGRUB-024.png)
 
 Sigue con el procedimiento normalmente
+
 ![Establecer a los usuarios](./img/InuTutorial-MiniXP-USBGRUB-025.png)
 
 Y listo habras finalizado la instalacion de MiniOS 2018.0 (Windows XP)
-Aunque en QEMU+KVM tiene unos pequeños fallos<br>
+Aunque en QEMU+KVM tiene unos pequeños fallos
+
 ![Sistema Instalado y listo para usar](./img/InuTutorial-MiniXP-USBGRUB-026.png)
 
-Solo debes ir al Explorador de Windows entrar en el Pendrive y usar el archivo llamado "MiniOS" que estan en la raiz
-luego de eso, simplemente haz click secundario en el escritorio y 
-entra en la opcion del sub-menu que se llama "Propiedades"<br>
+Solo debes ir al Explorador de Windows entrar en el Pendrive y 
+usar el archivo llamado "MiniOS" que estan en la raiz luego de
+Eso, simplemente haz click secundario en el escritorio y entra
+En la opcion del sub-menu que se llama "Propiedades"
+
 ![Propiedades de Pantalla](./img/InuTutorial-MiniXP-USBGRUB-027.png)
 
-Selecciona "MiniOS Theme"<br>
+Selecciona "MiniOS Theme"
+
 ![Propiedades de Pantalla](./img/InuTutorial-MiniXP-USBGRUB-028.png)
 
 Haz click en "Aceptar" (Ya que este es el tema que es aplicado por defecto al iniciar por primera vez)
+
 ![Propiedades de Pantalla](./img/InuTutorial-MiniXP-USBGRUB-029.png)
 
-Ahora puedes mandar a apagar la maquina virtual e iniciarla una vez mas:<br>
+Ahora puedes mandar a apagar la maquina virtual e iniciarla una vez mas:
+
 `kvm -hda miniosxp.qcow2 -vga std -usbdevice tablet -net none` 
-<br>
+
 
 NOTAS : 
 1)  Si instalas el MiniOS dentro de QEMU y te pide el serial utiliza -> **B77QF DP27W 4H68R 72B48 78RPD**
@@ -474,23 +504,22 @@ NOTAS :
     `sudo kvm -hda $HOME/miniosxp.qcow2 -usb -device usb-host,hostbus=1,hostaddr=9 -m 512 -boot menu=on -vga std -usbdevice tablet -net none`
 
     Esta vez seleccionando la opcion "Continuar con la instalacion"
-<br> 
-    En el sitio de microsoft hay una explicacion mas detallada de las [**Opciones para boot.ini**](https://support.microsoft.com/en-us/help/833721/available-switch-options-for-the-windows-xp-and-the-windows-server-200)
-<br>
+
+    En el sitio de microsoft hay una explicacion mas detallada de las [Opciones para boot.ini](https://support.microsoft.com/en-us/help/833721/available-switch-options-for-the-windows-xp-and-the-windows-server-200)
 
 4)  A veces aparece el Pendrive como "C" y el Espacio sin particionar, si es asi crea la particion y luego sal del instalador
     Vuelve a iniciarlo ya que windows debe ser instalado en C para que no de problemas.<br>
-
 
 5)  Al finalizar la primera fase de copiar de archivos te dara un error que dice "windows root\system32\hal.dll" simplemente presiona
     Entrar y QEMU se reiniciara, presiona ESC rapidamente para abrir el menu y vuelve a iniciar desde el USB, cuando cargue GRUB
     Ahora selecciona la opcion "Continuar con la instalacion".<br>
 
-
 6)  Por algun motivo o extraña razon que no entiendo (Solo al usar KVM) el contenido que deberia ser copiado y aplicado automaticamente durante la instalacion
     No procede automaticamente, asi que luego de instalar deberas ejecutar el archivo del pendrive llamado "MiniOS" 
     Y Finalmente aplicar el Tema "MiniOS" en las "Propiedades" de Pantalla<br>
 
-7)  Para terminar de probar inicia la imagen del disco duro sin iniciar el usb :<br>
-    `kvm -hda miniosxp.qcow2 -vga std -usbdevice tablet -net none`<br></br>
+7)  Para terminar de probar inicia la imagen del disco duro sin iniciar el usb :
+    
+    `kvm -hda miniosxp.qcow2 -vga std -usbdevice tablet -net none`
+    
     Deberia iniciar sin problemas, indicandote de que la instalacion fue efectiva.
