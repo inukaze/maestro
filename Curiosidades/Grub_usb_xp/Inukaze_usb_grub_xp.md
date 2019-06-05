@@ -444,32 +444,31 @@ Despues lo tipico elegir la Region Geografica, Idiomas Soportados.
 Sigue con el procedimiento normalmente
 ![Establecer a los usuarios](./img/InuTutorial-MiniXP-USBGRUB-025.png)
 
-Y listo habras finalizado la instalacion de MiniOS 2018.0 (Windows XP) aunque en QEMU+KVM tiene unos pequeños fallos
+Y listo habras finalizado la instalacion de MiniOS 2018.0 (Windows XP)
+Aunque en QEMU+KVM tiene unos pequeños fallos<br>
 ![Sistema Instalado y listo para usar](./img/InuTutorial-MiniXP-USBGRUB-026.png)
 
 Solo debes ir al Explorador de Windows entrar en el Pendrive y usar el archivo llamado "MiniOS" que estan en la raiz
-luego de eso, simplemente haz click secundario en el escritorio y entra en la opcion del sub-menu que se llama "Propiedades"
+luego de eso, simplemente haz click secundario en el escritorio y 
+entra en la opcion del sub-menu que se llama "Propiedades"<br>
 ![Propiedades de Pantalla](./img/InuTutorial-MiniXP-USBGRUB-027.png)
 
-Selecciona "MiniOS Theme"
+Selecciona "MiniOS Theme"<br>
 ![Propiedades de Pantalla](./img/InuTutorial-MiniXP-USBGRUB-028.png)
 
 Haz click en "Aceptar" (Ya que este es el tema que es aplicado por defecto al iniciar por primera vez)
 ![Propiedades de Pantalla](./img/InuTutorial-MiniXP-USBGRUB-029.png)
 
-Ahora puedes mandar a apagar la maquina virtual e iniciarla una vez mas :
+Ahora puedes mandar a apagar la maquina virtual e iniciarla una vez mas:<br>
 `kvm -hda miniosxp.qcow2 -vga std -usbdevice tablet -net none` 
-
 <br>
 
 NOTAS : 
 1)  Si instalas el MiniOS dentro de QEMU y te pide el serial utiliza -> **B77QF DP27W 4H68R 72B48 78RPD**
-<br>
 
 2)  Si despues de usar "Iniciar la instalacion" notas que tras reiniciar el QEMU se estanca en "Booting from Hard Disk"
     Solo debes volver a instalarle GRUB al USB :
     `grub-install $USB --boot-directory=/media/usb --removable --target=i386-pc`
-<br>
 
 3)  Despues de que le re-instales el grub ahora vuelve a iniciar QEMU con :
     `sudo kvm -hda $HOME/miniosxp.qcow2 -usb -device usb-host,hostbus=1,hostaddr=9 -m 512 -boot menu=on -vga std -usbdevice tablet -net none`
@@ -492,6 +491,6 @@ NOTAS :
     No procede automaticamente, asi que luego de instalar deberas ejecutar el archivo del pendrive llamado "MiniOS" 
     Y Finalmente aplicar el Tema "MiniOS" en las "Propiedades" de Pantalla<br>
 
-7)  Para terminar de probar inicia la imagen del disco duro sin iniciar el usb :
-    `kvm -hda miniosxp.qcow2 -vga std -usbdevice tablet -net none`
+7)  Para terminar de probar inicia la imagen del disco duro sin iniciar el usb :<br>
+    `kvm -hda miniosxp.qcow2 -vga std -usbdevice tablet -net none`<br></br>
     Deberia iniciar sin problemas, indicandote de que la instalacion fue efectiva.
