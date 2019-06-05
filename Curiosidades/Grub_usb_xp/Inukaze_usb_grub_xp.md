@@ -5,12 +5,12 @@ Crear un USB de Instalacion de WindowsXP usando GRUB2 pre-requisitos para seguir
 
   - Pendrive de al menos 1GB
   - Pendrive Formateado en NTFS
-  - Pendrive con la etiqueta : MiniXP
+  - Pendrive con la etiqueta : MiniXP ![Pendrive USB con Etiqueta MiniXP](./img/InuTutorial-MiniXP-USBGRUB-000.png)
   - Sistema Operativo GNU/Linux
   - Descargar [**MiniOSXP**](https://shrtz.me/5BlOydr) del Sitio [**WindowsMiniOS**](https://www.windowsminios.org/descargas-minios/)
+  - Opcional : QEMU + KVM -> Solo para probar
 
 # Procedimiento : Abrir una terminal y utilizar los siguientes comandos 
-
 
 > 01) Ingresar al modo SuperUsuario : 
 `su`
@@ -33,7 +33,7 @@ UUID=$(blkid | grep "MiniXP" | awk '{print$03}' | sed -n 's/.*UUID=\"\([^\"]*\)\
      `mount "$USBPART" /media/usb -o umask=000` <br>
 
 > 05) Extrae la ISO con este comando : 
-`7z x 'WinXP-MiniOS v2018.00 x86.iso'`
+`7z x 'WinXP-MiniOS v2018.00 x86.iso' -o"WinXP-MiniOS v2018.00 x86" ; chmod 777 -R "WinXP-MiniOS v2018.00 x86" ; cd "WinXP-MiniOS v2018.00 x86"`
 
 > 06) Acomodar archivos<br>
 
@@ -45,7 +45,6 @@ echo "Borrar archivos innecesarios :"
 rm -rf '[boot]' "autorun.inf" "zwindowsxp minios.pdf" "bootfont.bin" zrufus-2.*.exe
 
 echo "Mover archivos :"
-mv winxp-minios v2018.00 x86.iso ../
 mkdir -p 'grub'
 mkdir -p '$win_nt$.~ls'
 mkdir -p '$win_nt$.~bt'
@@ -149,12 +148,43 @@ menuentry "Apagar" {
 	halt
 }
 
-menuentry "Instalacion de MiniOS (Windows XP)" {
+menuentry "Iniciar Instalacion de MiniOS" {
     insmod part_msdos
     insmod ntldr
     search --no-floppy --fs-uuid --set=root '"$UUID"'
     ntldr /bootmgr
+    boot
+}
+    
+menuentry "Continuar con la Instalacion de MiniOS" {
+    insmod part_msdos
+    insmod ntldr
+    search --no-floppy --fs-uuid --set=root '"$UUID"'
+    ntldr /ntldr
+    boot
 }' | tee ./grub/grub.cfg
+
+echo '[Boot Loader]
+Timeout=30
+Default=multi(0)disk(0)rdisk(1)partition(1)\WINDOWS
+[Operating Systems]
+multi(0)disk(0)rdisk(1)partition(1)\WINDOWS="MiniOS" /noexecute=optin /fastdetect' | tee ./boot.ini
+
+echo '@echo off
+mkdir c:\welcome
+mkdir c:\Windows\Web\Wallpaper
+mkdir c:\Windows\Cursors\"Aero Cursors"
+copy /Y "D:\$WIN_NT$.~LS\$oem$\$1\welcome\*.*" "c:\welcome"
+copy /Y "D:\$WIN_NT$.~LS\$oem$\$$\*.*" "C:\Windows\"
+copy /Y "D:\$WIN_NT$.~LS\$oem$\$$\cursors\aero cursors\*.*" "C:\WINDOWS\Cursors\Aero Cursors"
+copy /Y "D:\$WIN_NT$.~LS\$oem$\$$\media\*.*" "C:\WINDOWS\Media"
+copy /Y "D:\$WIN_NT$.~LS\$oem$\$$\system32\*.*" "C:\WINDOWS\system32
+copy /Y "D:\$WIN_NT$.~LS\$oem$\$$\temp\*.*" "C:\WINDOWS\Temp
+copy /Y "D:\$WIN_NT$.~LS\$oem$\$$\web\wallpaper\*.*" "C:\WINDOWS\Web\Wallpaper
+copy /Y "D:\$WIN_NT$.~LS\$oem$\$docs\all users\escritorio\*.*" "C:\Documents and Settings\All Users\Escritorio"
+copy /Y "D:\$WIN_NT$.~LS\$oem$\$docs\all users\menú inicio\programas\inicio\*.*" "C:\Documents and Settings\All Users\Menú Inicio\Programas\Inicio"
+vbscript TemaMiniOS.vbs
+' | tee ./MiniOS.bat
 ```
 
 > 08) Copiar los archivos, Descargar e Instalar GRUB en el dispositivo USB:
@@ -316,11 +346,55 @@ echo "Instalar GRUB en el Pendrive (En mi caso tarda alrededor de 10 minutos en 
 grub-install $USB --boot-directory=/media/usb --removable --target=i386-pc
 
 echo "Desmontar pendrive sin expulsarlo"
-su -c "umount /media/usb" root
+su -c "umount /media/usb" root ; exit
 
-echo "Probar usando QEMU + KVM ( NOTA -> me da el error 4 con setupdd.sy_ ):"
+# Opcional : Probar mediante QEMU + KVM :
+
+echo "Identifica el Pendrive USB como usuario comun :"
+USBPART=$(blkid | grep "MiniXP" | awk '{print$01}' | sed 's/\/*:$//') ; echo "Particion USB=$USBPART"
+USB=$(echo "$USBPART" | sed 's/[0-9]*//g') ; echo "Dispositivo USB=$USB"
+UUID=$(blkid | grep "MiniXP" | awk '{print$03}' | sed -n 's/.*UUID=\"\([^\"]*\)\".*/\1/p')
+
+echo "Probar usando QEMU + KVM:"
 qemu-img create -f qcow2 "$HOME/miniosxp.qcow2" 5G
-kvm -hda $USB -hdb $HOME/miniosxp.qcow2 -m 512 -vga std -usbdevice tablet -net none
-```
 
+echo 'Inicia la instalacion y solo crea la particion luego sal de la instalacion'
+sudo kvm -hda $HOME/miniosxp.qcow2 -hdb $USB -m 512 -boot menu=on -vga std -usbdevice tablet -net none
+
+reset
+echo 'usa "lsusb" toma los valores del "Bus" y del "Device" que sea de tu Pendrive. En mi caso Bus 001, Device 009'
+echo 'Vuelve a "Iniciar la instalacion" y ahora si formatea la particion en NTFS'
+lsusb
+sudo kvm -hda $HOME/miniosxp.qcow2 -usb -device usb-host,hostbus=1,hostaddr=9 -m 512 -boot menu=on -vga std -usbdevice tablet -net none
+```
 <br>
+
+NOTAS : 
+1)  Si instalas el MiniOS dentro de QEMU y te pide el serial utiliza -> **B77QF DP27W 4H68R 72B48 78RPD**
+<br>
+2)  Si despues de usar "Iniciar la instalacion" notas que tras reiniciar el QEMU se estanca en "Booting from Hard Disk"
+    Solo debes volver a instalarle GRUB al USB :
+    `grub-install $USB --boot-directory=/media/usb --removable --target=i386-pc`
+<br>
+3)  Despues de que le re-instales el grub ahora vuelve a iniciar QEMU con :
+    `sudo kvm -hda $HOME/miniosxp.qcow2 -usb -device usb-host,hostbus=1,hostaddr=9 -m 512 -boot menu=on -vga std -usbdevice tablet -net none`
+
+    Esta vez seleccionando la opcion "Continuar con la instalacion"
+<br> 
+    En el sitio de microsoft hay una explicacion mas detallada de las [**Opciones para boot.ini**](https://support.microsoft.com/en-us/help/833721/available-switch-options-for-the-windows-xp-and-the-windows-server-200)
+<br>
+4)  A veces aparece el Pendrive como "C" y el Espacio sin particionar, si es asi crea la particion y luego sal del instalador
+    Vuelve a iniciarlo ya que windows debe ser instalado en C para que no de problemas.
+
+5)  Al finalizar la primera fase de copiar de archivos te dara un error que dice "windows root\system32\hal.dll" simplemente presiona
+    Entrar y QEMU se reiniciara, presiona ESC rapidamente para abrir el menu y vuelve a iniciar desde el USB, cuando cargue GRUB
+    Ahora selecciona la opcion "Continuar con la instalacion".
+
+6)  Por algun motivo o extraña razon que no entiendo (Solo al usar KVM) el contenido que deberia ser copiado y aplicado automaticamente durante la instalacion
+    No procede automaticamente, asi que luego de instalar deberas ejecutar el archivo del pendrive llamado "MiniOS" 
+    
+    Y Finalmente aplicar el Tema "MiniOS" en las "Propiedades" de Pantalla
+
+7)  Para terminar de probar inicia la imagen del disco duro sin iniciar el usb :
+    `kvm -hda miniosxp.qcow2 -vga std -usbdevice tablet -net none`
+    Deberia iniciar sin problemas, indicandote de que la instalacion fue efectiva.
