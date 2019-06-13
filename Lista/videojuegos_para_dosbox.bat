@@ -1,7 +1,7 @@
 @echo off
 cls
 echo NOTA : Estos titulos estan en revision para ver cuales son los mejores segun
-echo Todo el planeta. los que ya tienen "Lanzador" es porque ya los probe
+echo Todo el planeta. los que ya tienen "Lanzador" es a causa de que ya los probe
 echo y funcionan perfectamente, pero quiero separar la lista entre los videojuegos
 echo que no requieren CD y los que si.
 echo.
