@@ -1,3 +1,4 @@
+@echo off
 cls
 echo NOTA : Estos titulos estan en revision para ver cuales son los mejores segun
 echo Todo el planeta. los que ya tienen "Lanzador" es porque ya los probe
