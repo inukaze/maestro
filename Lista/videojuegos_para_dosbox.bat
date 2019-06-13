@@ -362,3 +362,179 @@ echo * Viaje al centro de la Tierra
 echo * World Wide Rally 
 echo * Zona 0 
 echo *******************************************************************************
+echo Juegos Liberados (Excluir los que no sean de msdos) :
+echo Sitio Fuente -> https://web.archive.org/web/20150326185750/http://liberatedgames.org/gameletter.php
+echo.
+echo Abuse
+echo Adventures of Fatman, The
+echo Adventures of Maddog Williams
+echo Alien Carnage
+echo Aliens vs. Predator
+echo Allegiance
+echo Anacreon
+echo Arctic Software
+echo At the Carnival
+echo B.C. Kid
+echo BackLash
+echo Battle of Britain
+echo Beneath a Steel Sky
+echo Beyond Castle Wolfenstein
+echo Beyond the Titanic
+echo Bio Menace
+echo Blade of Exile
+echo BMX Simulator
+echo Boppin'
+echo Brany Skeldalu (Gates of Skeldal)	
+echo Castle of the Winds: A Question of Vengeance
+echo Castle of the Winds: Lifthransir's Bane
+echo Caves of Thor
+echo Centipede
+echo Chinese Checkers
+echo Chopper
+echo Civilization: Call to Power 2
+echo Command & Conquer - Brotherhood of Nod 
+echo Command & Conquer - Global Defense Initiative
+echo Command and Conquer: Tiberian Sun & Firestorm Expansion	
+echo Commando
+echo Conquest of Elysium II 
+echo Crossbow
+echo Dark Ages
+echo Dead meets Lead
+echo Death Rally
+echo Descent
+echo Descent II
+echo Desert Falcon
+echo Dig Dug
+echo Dink Smallwood
+echo Doom
+echo Doom 2
+echo Doom 3
+echo Dragon History
+echo Drascula: The Vampire Strikes Back
+echo Drum Blaster
+echo Ducks
+echo Duke Nukem 3D
+echo Elder Scrolls: Arena, The
+echo Enemy Engaged: Comanche Hokum
+echo Enemy Nations
+echo Enemy Territory: Quake War
+echo F.E.A.R. Combat
+echo Fish Fillets
+echo Flight of the Amazon Queen	
+echo Food Fight
+echo Fool's Errand, The
+echo Freespace 2
+echo Galactic Patrol
+echo Galaga
+echo Glider 4.0
+echo Glider PRO
+echo God of Thunder
+echo Golgotha
+echo Grand Theft Auto
+echo Grand Theft Auto 2	
+echo Ground Control
+echo Hat Trick
+echo Helherron
+echo Heretic
+echo Hexen
+echo Hexen II
+echo Hidden & Dangerous	
+echo Homeworld
+echo Inner Worlds
+echo Iron Seed
+echo Katakis
+echo Ken's Labyrinth	
+echo Kroz
+echo Labyrinth of Time
+echo Lure of the Temptress	
+echo Maelstrom
+echo Marathon
+echo Marathon 2
+echo Marathon Infinity
+echo MechCommander 2
+echo Mechwarrior 4 Mercenaries	
+echo Micropolis
+echo MiG Alley
+echo Monuments of Mars
+echo MotorPsycho
+echo Ms. Pac Man
+echo No Gravity
+echo Odyssey - The Legend of Nemesis
+echo One Must Fall: 2097
+echo Overkill
+echo Penumbra: Overture
+echo Pharaoh's Tomb
+echo phoenicas
+echo PsychoDelic
+echo Purge
+echo Pyrrhic Tales: Prelude to Darkness	
+echo Quake
+echo Quake II
+echo Quake III : Arena
+echo R-Type 
+echo Railroad Tycoon
+echo Realms
+echo Redhook's Revenge
+echo Return to Castle Wolfenstein
+echo Return to Castle Wolfenstein : Enemy Territory
+echo Rise of the Triad
+echo Robot Battle
+echo Robotron 2084
+echo Ryzom
+echo Sam & Max - Abe Lincoln Must Die
+echo Savage: The Battle for Newerth
+echo Shadow Warrior
+echo SkyRoads
+echo Spear of Destiny
+echo Spheres of Chaos
+echo Spin Around
+echo Star Wraith 2
+echo Star Wraith: Shadows of Orion 
+echo Stargunner
+echo Starsiege: Tribes
+echo Strange Adventures In Infinite Space	
+echo Supernova
+echo TerraFire
+echo The Elder Scrolls II: Daggerfall
+echo The Spirit Engine 2
+echo Theseus - Return of the Hero
+echo Titans of Steel: Warring Sun
+echo Treasure Island Dizzy
+echo Tribes 2
+echo Trivia Whiz
+echo Tyrian 2000
+echo Ultima 4
+echo Universal Combat
+echo Ur-Quan Masters, The (Star Control 2)
+echo Wari: The Ancient Game of Africa
+echo Warzone 2100
+echo Weekend Warrior
+echo Wild Metal
+echo Witches
+echo Wolfenstein 3D
+echo Word Whiz
+echo X-Men: The Ravages of Apocalypse	
+echo Xenophage: Alien Bloodsport
+echo XERIX II: The Caverns of Mars 
+echo Xevious
+echo.
+echo en GOG -> https://www.gog.com/games?system=lin_mint,lin_ubuntu&sort=popularity&page=1&price=free
+echo.
+echo War for the Overworld: Crucible
+echo Lure of the Temptress
+echo Beneath a Steel Sky
+echo Shadow Warrior Classic Complete
+echo Jill of the Jungle: The Complete Trilogy
+echo Eschalon: Book I
+echo Stargunner
+echo Akalabeth: World of Doom
+echo Bio Menace
+echo 
+echo 
+echo 
+echo 
+echo 
+echo 
+echo 
+echo 
+echo 
