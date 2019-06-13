@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+
+echo '
+Autor ----------------> Inukaze ( Venezuela )
+Sitio ----------------> https://goo.gl/ij6WqW
+Correo-E -------------> bloginukaze@gmail.com
+Licencia -------------> GPL 2
+
+******* Inicio : Acerca de este guión ******** 
+
+ Es para Descargar, Optimizar
+ Configurar y Compilar "Automaticamente"
+ la utilidad "cdemu" junto con "gcdemu"
+ que es basicamente el "Daemon Tools"
+ para Liñux si hablamos en terminos
+ de equivalencia e importancia.
+
+ Este guión compilara la version 
+ en desarrollo de dicho software
+ 
+******** Fin : Acerca de este guión **********
+'
+sleep 3
+
+if [ "$(whoami)" != root ]; then
+
+	echo
+	echo
+	echo 'Por favor ejecuta este guion como SuperUsuario (root)'
+	echo
+	echo 'Utilize este Script bajo su Propio Riesgro'
+	echo 'El Autor , o sea yo , no me hago responsable'
+	echo 'de las consecuencias imprevistas que puedan'
+	echo 'acontecer en tu sistema operativo'
+	echo
+else
+# Obtener la Arquitectura
+Arquitectura=$(uname -m)
+case "$Arquitectura" in
+	x86)    Arquitectura="x32"						;;
+	i?86)   Arquitectura="x32"						;;
+	amd64)  Arquitectura="x64"						;;
+	x86_64) Arquitectura="x64"						;;
+	* ) echo    "Tu Arquitectura '$Arquitectura' -> NO ESTA SOPORTADA."	;;
+esac
+
+#Definir Variables :
+PREFIJO="/usr"
+
+#Crear directorios
+mkdir -p /tmp/cdf 
+mkdir -p "$PREFIJO"
+cd /tmp/cdf
+
+#Descargar (Requiere git preinstalado)
+git clone https://github.com/cdemu/cdemu
+
+
+# Establecer Optimizaciones
+if [ "$Arquitectura" = "x64" ]; then
+	export {C,CXX}FLAGS='-O2 -fPIC -march=native -mtune=native -pipe'
+	export OPTFLAGS='-O2 -fPIC -march=native -mtune=native -pipe'
+fi
+if [ "$Arquitectura" = "x32" ]; then
+	export {C,CXX}FLAGS='-O2 -march=native -mtune=native -pipe'
+	export OPTFLAGS='-O2 -march=native -mtune=native -pipe'
+fi
+
+#Ingresar al directorio del codigo fuente
+
+#Primero : El modulo para linux
+cd cdemu/vhba-module ; make ; make install ; cd ..
+
+#Segundo : La libreria para el sistema
+cd libmirage ; mkdir build ; cd build ; cmake -DCMAKE_INSTALL_PREFIX:PATH="$PREFIJO" .. ; make ; make install ; cd ../../
+
+#Tercero : El Demonio
+cd cdemu-daemon ; mkdir build ; cd build ; cmake -DCMAKE_INSTALL_PREFIX:PATH="$PREFIJO" .. ; make ; make install ; cd ../../
+
+#Cuarto : Analizador de Imagenes de disco
+cd image-analyzer ; mkdir build ; cd build ; cmake -DCMAKE_INSTALL_PREFIX:PATH="$PREFIJO" .. ; make ; make install ; cd ../../
+
+#Quinto : Cliente cdemu
+cd cdemu-client/ ; mkdir build ; cd build ; cmake -DCMAKE_INSTALL_PREFIX:PATH="$PREFIJO" .. ; make ; make install ; cd ../../
+
+#Sexto : Applet gcdemu [No me gustan que estas cosas esten hechas en python]
+cd gcdemu/ ; mkdir build ; cd build ; cmake -DCMAKE_INSTALL_PREFIX:PATH="$PREFIJO" .. ; make ; make install ; cd ../../
+
+#Listo : Finalizar cosas :
+modprobe vhba
+ldconfig
+echo 'KERNEL=="vhba_ctl", SUBSYSTEM=="misc", TAG+="udev-acl"' | tee /etc/udev/rules.d/vhba-dkms.udev
+udevadm control --reload-rules ; udevadm trigger
+
+fi
