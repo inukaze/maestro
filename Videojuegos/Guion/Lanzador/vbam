@@ -1,0 +1,268 @@
+#!/usr/bin/env bash
+
+Nombre="VisualBoyAdvance-M"
+GUION=$(readlink -f $0)
+SCRIPTPATH=`dirname $GUION`
+sleep 3
+
+function Re_solucion(){
+# Solucion de Resolucion
+echo `xrandr --current | grep current | awk '{print $8}'` >> /tmp/ancho
+echo `xrandr --current | grep current | awk '{print $10}'` >> /tmp/alto
+cat /tmp/alto | sed -i 's/,//g' /tmp/alto
+ANCHO=$(cat /tmp/ancho)
+ALTO=$(cat /tmp/alto)
+rm /tmp/ancho /tmp/alto
+echo "$ANCHO"'x'"$ALTO" >> /tmp/Resolucion
+ResolucionEnPantallaCompleta=$(cat /tmp/Resolucion)
+rm /tmp/Resolucion
+# Solucion de Resolucion
+}
+
+# Obtener la Arquitectura
+Arquitectura=$(uname -m)
+case "$Arquitectura" in
+	x86)    Arquitectura="x32"						;;
+	i?86)   Arquitectura="x32"						;;
+	amd64)  Arquitectura="x64"						;;
+	x86_64) Arquitectura="x64"						;;
+	* ) echo    "Tu Arquitectura '$Arquitectura' -> NO ESTA SOPORTADA."	;;
+esac
+
+echo '
+Autor ----------------> Inukaze ( Venezuela )
+Sitio ----------------> https://goo.gl/ij6WqW
+Correo-E -------------> bloginukaze@gmail.com
+Licencia -------------> GPL 2
+
+******* Inicio : Acerca de este Script ********
+				  
+  Yo intento escribir scripts compatibles con
+   Sistemas operativos Unix & POSIX , y otros
+   Sistemas operativos que soporten bash
+
+  Este archivo es un simple lanzador 
+   Detectara la arquitectura del Sistema
+   Operativo en uso e intentara iniciar.
+
+******** Fin : Acerca de este Script **********
+
+	  Iniciando ---> '$Nombre'
+'
+
+if [ "$Arquitectura" = "x32" ]; then
+	export LD_LIBRARY_PATH="./.libs32"
+	Ejecutable=".wx-vbam.$Arquitectura"
+fi
+
+if [ "$Arquitectura" = "x64" ]; then
+	export LD_LIBRARY_PATH="./.libs64"
+	Ejecutable=".wx-vbam.$Arquitectura"
+fi
+
+#Comprobar que no existe el directorio, en caso de que exista moverlo temporalmente
+
+
+#Comprobar "QUE NO EXISTE" el directorio que se utilizara
+if test ! -d "$HOME/.vbam"
+then
+	mkdir -p "$HOME/.vbam" &> /dev/null
+fi
+
+#Comprobar "QUE NO EXISTE" el archivo de configuracion que se utilizara:
+if test ! -f "$HOME/.vbam/vbam.ini"
+then
+	touch "$HOME/.vbam/vbam.ini" &> /dev/null
+	echo '[Display]
+Bilinear=0
+Filter=none
+FilterPlugin=
+IFB=none
+KeepOnTop=0
+MaxThreads=2
+RenderMethod=opengl
+Scale=3
+Stretch=1
+[GB]
+BiosFile='$PWD/.gb_bios.bin'
+GBCBiosFile='$PWD/.gbc_bios.bin'
+GBCROMDir='$PWD/userdata/roms/GBC'
+PrintAutoPage=1
+PrintScreenCap=1
+ROMDir='$PWD/userdata/roms/GB'
+Palette0=1B8E,02C0,0DA0,1140,1B8E,02C0,0DA0,1140
+Palette1=7BDE,5778,5640,0000,7BDE,529C,2990,0000
+Palette2=7FFF,56B5,318C,0000,7FFF,56B5,318C,0000
+[GBA]
+BiosFile='$PWD/.gba_bios.bin'
+LinkAuto=0
+LinkFast=0
+LinkHost=
+LinkProto=0
+LinkTimeout=1
+LinkType=0
+ROMDir='$PWD/userdata/roms/GBA'
+[General]
+AutoLoadLastState=0
+BatteryDir='$PWD/userdata/battery'
+FreezeRecent=0
+OnlineUpdates=daily
+RecordingDir='$PWD/userdata/video'
+RewindInterval=0
+ScreenshotDir='$PWD/userdata/screenshot'
+StateDir='$PWD/userdata/state'
+StatusBar=1
+[Joypad]
+AutofireThrottle=1
+Default=1
+[Joypad/1]
+Up=UP
+Down=DOWN
+Left=LEFT
+Right=RIGHT
+A=Z
+B=X
+L=A
+R=S
+Select=BACK
+Start=ENTER
+MotionUp=
+MotionDown=
+MotionLeft=
+MotionRight=
+MotionIn=
+MotionOut=
+AutoA=Q
+AutoB=W
+Speed=SPACE
+Capture=F12
+GS=
+[Joypad/2]
+Up=
+Down=
+Left=
+Right=
+A=
+B=
+L=
+R=
+Select=
+Start=
+MotionUp=
+MotionDown=
+MotionLeft=
+MotionRight=
+MotionIn=
+MotionOut=
+AutoA=
+AutoB=
+Speed=
+Capture=
+GS=
+[Joypad/3]
+Up=
+Down=
+Left=
+Right=
+A=
+B=
+L=
+R=
+Select=
+Start=
+MotionUp=
+MotionDown=
+MotionLeft=
+MotionRight=
+MotionIn=
+MotionOut=
+AutoA=
+AutoB=
+Speed=
+Capture=
+GS=
+[Joypad/4]
+Up=
+Down=
+Left=
+Right=
+A=
+B=
+L=
+R=
+Select=
+Start=
+MotionUp=
+MotionDown=
+MotionLeft=
+MotionRight=
+MotionIn=
+MotionOut=
+AutoA=
+AutoB=
+Speed=
+Capture=
+GS=
+[Sound]
+AudioAPI=sdl
+AudioDevice=
+Buffers=10
+Enable=783
+GBAFiltering=50
+GBAInterpolation=1
+GBDeclicking=1
+GBEcho=20
+GBEnableEffects=0
+GBStereo=15
+GBSurround=0
+Quality=44
+Volume=100
+[geometry]
+fullScreen=0
+windowX=0
+windowY=0
+[preferences]
+LinkNumPlayers=2
+agbPrint=0
+autoFrameSkip=0
+autoPatch=1
+autoSaveCheatList=1
+borderAutomatic=1
+borderOn=0
+captureFormat=0
+cheatsEnabled=0
+disableStatus=0
+emulatorType=0
+flashSize=0
+frameSkip=0
+fsColorDepth=32
+fsFrequency=60
+fsHeight=600
+fsWidth=800
+gbPaletteOption=0
+gbPrinter=0
+gdbBreakOnLoad=0
+gdbPort=55555
+maxScale=0
+pauseWhenInactive=1
+rtcEnabled=1
+saveType=0
+showSpeed=0
+showSpeedTransparent=1
+skipBios=0
+skipSaveGameBattery=0
+skipSaveGameCheats=0
+speedupFrameSkip=9
+speedupThrottle=0
+throttle=100
+useBiosGB=1
+useBiosGBA=1
+useBiosGBC=1
+vsync=0' | tee "$HOME/.vbam/vbam.ini" &> /dev/null
+fi
+
+	export Arquitecturas
+	for Arquitecturas in $Arquitectura; do
+		test -x ./$Ejecutable || continue
+		exec ./$Ejecutable "$@"
+	done
