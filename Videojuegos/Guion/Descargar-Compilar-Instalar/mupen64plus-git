@@ -105,36 +105,36 @@ make install
 #Enlazar la libreria principal de Mupen64Plus al Sistema :
 if [ "$Arquitectura" = "x64" ]; then
     if [ -d "/usr/x86_64-linux-gnu/lib64" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/x86_64-linux-gnu/lib64/libmupen64plus.so"
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/x86_64-linux-gnu/lib64/libmupen64plus.so.2"
     fi
     if [ -d "/usr/x86_64-linux-gnu/lib" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/x86_64-linux-gnu/lib/libmupen64plus.so"
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/x86_64-linux-gnu/lib/libmupen64plus.so.2"
     fi
     if [ -d "/usr/local/lib/x86_64-linux-gnu" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib/x86_64-linux-gnu/libmupen64plus.so"
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib/x86_64-linux-gnu/libmupen64plus.so.2"
     fi
     if [ -d "/usr/lib/x86_64-linux-gnu" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/lib/x86_64-linux-gnu/libmupen64plus.so"
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/lib/x86_64-linux-gnu/libmupen64plus.so.2"
     fi
     if [ -d "/usr/local/lib64" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib64/libmupen64plus.so"
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib64/libmupen64plus.so.2"
     fi
     if [ -d "/lib64" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/lib64/libmupen64plus.so"
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/lib64/libmupen64plus.so.2"
     fi
     if [ -d "/lib64" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/lib64/libmupen64plus.so"
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/lib64/libmupen64plus.so.2"
     fi
 fi
 if [ "$Arquitectura" = "x32" ]; then
     if [ -d "/usr/local/lib" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib/libmupen64plus.so"
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib/libmupen64plus.so.2"
     fi
     if [ -d "/lib" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/lib/libmupen64plus.so"
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/lib/libmupen64plus.so.2"
     fi
     if [ -d "/usr/lib" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib/libmupen64plus.so"
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib/libmupen64plus.so.2"
     fi
 fi
 
