@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+#Defino "menu" que basicamente llamara a "dialog" con opciones especificas
+menu=(dialog --keep-tite --menu "Seleciona alguna opcion:" 22 76 16)
+
+# Defino la Lista (Arrays) de las opciones disponibles
+opciones=(
+1 "Opcion 1"
+2 "Opcion 2"
+3 "Opcion 3"
+4 "Opcion 4"
+)
+
+# La variable opciones que llamara al resultado de la variable "menu"
+# y usando la "substitucion" al usuario elegir una opcion dicha substuticion
+# es realizada. lo cual devuelve el resultado de "elegir" en las "opciones"
+# utilizando case que funcionara en todas las distros.
+opciones=$("${menu[@]}" "${opciones[@]}" 2>&1 >/dev/tty)
+
+for elegir in $opciones
+do
+    case $elegir in
+        1)
+            echo '"1" Primera Opcion'
+            ;;
+        2)
+            echo '"2" Segunda Opcion'
+            ;;
+        3)
+            echo '"3" Tercera Opcion'
+            ;;
+        4)
+            echo '"4" Cuarta Opcion'
+            ;;
+    esac
+done
