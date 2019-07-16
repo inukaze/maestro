@@ -102,6 +102,42 @@ make clean
 make all
 make install
 
+#Enlazar la libreria principal de Mupen64Plus al Sistema :
+if [ "$Arquitectura" = "x64" ]; then
+    if [ -d "/usr/x86_64-linux-gnu/lib64" ] ; then
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/x86_64-linux-gnu/lib64/libmupen64plus.so"
+    fi
+    if [ -d "/usr/x86_64-linux-gnu/lib" ] ; then
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/x86_64-linux-gnu/lib/libmupen64plus.so"
+    fi
+    if [ -d "/usr/local/lib/x86_64-linux-gnu" ] ; then
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib/x86_64-linux-gnu/libmupen64plus.so"
+    fi
+    if [ -d "/usr/lib/x86_64-linux-gnu" ] ; then
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/lib/x86_64-linux-gnu/libmupen64plus.so"
+    fi
+    if [ -d "/usr/local/lib64" ] ; then
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib64/libmupen64plus.so"
+    fi
+    if [ -d "/lib64" ] ; then
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/lib64/libmupen64plus.so"
+    fi
+    if [ -d "/lib64" ] ; then
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/lib64/libmupen64plus.so"
+    fi
+fi
+if [ "$Arquitectura" = "x32" ]; then
+    if [ -d "/usr/local/lib" ] ; then
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib/libmupen64plus.so"
+    fi
+    if [ -d "/lib" ] ; then
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/lib/libmupen64plus.so"
+    fi
+    if [ -d "/usr/lib" ] ; then
+	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib/libmupen64plus.so"
+    fi
+fi
+
 #002 Complemento RSP - HLE :
 cd "$CARPETA"
 cd mupen64plus-rsp-hle/projects/unix
@@ -209,7 +245,28 @@ cp mupen64plus-qt /usr/bin/
 cp ./resources/mupen64plus-qt.desktop /usr/share/applications/mupen64plus-qt.desktop
 cp ./resources/images/mupen64plus.png /usr/share/icons/mupen64plus-qt.png
 
-#015 Complemento de Video - GLideN64
+#015 Interfaz Qt Alternativa
+cd "$CARPETA"
+git clone https://github.com/robalni/mupen64plus-ui
+cd mupen64plus-ui/
+qmake mupen64plus-ui.pro
+make
+mv mupen64plus mupen64plus-ui
+cp mupen64plus-ui "$PREFIX/mupen64plus-ui"
+cp resources/images/mupen64plus.png "$PREFIX/mupen64plus-ui.png"
+echo '[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Mupen64Plus
+GenericName=Mupen64Plus Launcher
+Comment=An emulator for Nintendo 64
+Exec='"$PREFIX/mupen64plus-ui"'
+Icon='"$PREFIX/mupen64plus-ui.png"'
+Terminal=false
+Categories=Game;Emulator;
+Keywords=emulator;mupen;mupen64plus;Nintendo;64;' | sudo tee /usr/share/applications/mupen64plus-ui.desktop
+
+#016 Complemento de Video - GLideN64
 cd "$CARPETA"
 git clone https://github.com/gonetz/GLideN64
 cd GLideN64/src
