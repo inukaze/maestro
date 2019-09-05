@@ -18,6 +18,20 @@ Licencia -------------> GPL 2
 ******** Fin : Acerca de este Script **********'
 sleep 3
 
+unset MensajeBase
+
+function MensajeBase()
+{
+echo -e "\nLa forma correcta de utilizar este guion es :\n$0 instalar <modulo> <opcion>\n"
+echo -e "Modulos Disponibles :\nNucleo\nRSP     [Opciones : HLE, Z64, CXD4]\nSDL     [Opciones : Audio, Entrada]\nIGU     [Opciones : Terminal (Necesaria), Python, QT, UI], IGU=Interfaz Grafica para Usuario\nVideo   [Opciones : Glide64, Glide64Mk2, GlideN64, Rice, Z64]\nTodo    [Lo instalara todo : Modulos + Opciones]"
+echo -e "\nPor Ejemplo :\n1) $0 instalar sdl audio \n2) sudo $0 instalar igu ui\n3) su -c '"$0" instalar video rice' root\n"
+}
+
+#NOTAS :
+#1) Debo encontrar : las dependencias escenciales/basicas para poder compilar cada uno de los componentes
+#2) Debo escribir una(s) funcion(es) que me permitan : 1 - Determinar la distro, 2 - Determinar el gestor de paquetes instalado, 3 - Instalar dependencias
+#3) Luego de tener eso, añadirle una parte grafica a este guion permitiendo asi, a traves de seleccion multiple seleccionar que cosas se van a instalar.
+
 if [ "$(whoami)" != root ]; then
 
 	echo
@@ -29,6 +43,7 @@ if [ "$(whoami)" != root ]; then
 	echo 'de las consecuencias imprevistas que puedan'
 	echo 'acontecer en tu sistema operativo'
 	echo
+	MensajeBase
 else
 # Obtener la Arquitectura
 Arquitectura=$(uname -m)
@@ -40,184 +55,292 @@ case "$Arquitectura" in
 	* ) echo    "Tu Arquitectura '$Arquitectura' -> NO ESTA SOPORTADA."	;;
 esac
 
+# Optimizaciones #NOTA : se requiere tener instalado 'cpuid' para usar el valor "native" en -march.
+CFLAGS='-O3 -march=native -mtune=native' ; CXXFLAGS='-O3 -march=native -mtune=native' ; OPTFLAGS='-O3 -march=native -mtune=native'
+export {C,CXX}FLAGS='-O3 -march=native -mtune=native' ; export OPTFLAGS='-O3 -march=native -mtune=native'
+
+#Crear Directorios que se usaran e ingresar al directorio de trabajo "/tmp/src/mupen64plus" despues de crearlo
 mkdir -p /tmp/src/mupen64plus
 mkdir -p /opt/videojuegos/emuladores
 cd /tmp/src/mupen64plus
-CARPETA="/tmp/src/mupen64plus"
-git clone https://github.com/mupen64plus/mupen64plus-core
-git clone https://github.com/mupen64plus/mupen64plus-video-rice
-git clone https://github.com/mupen64plus/mupen64plus-rsp-cxd4
-git clone https://github.com/mupen64plus/mupen64plus-input-sdl
-git clone https://github.com/mupen64plus/mupen64plus-audio-sdl
-git clone https://github.com/mupen64plus/mupen64plus-video-z64
-git clone https://github.com/mupen64plus/mupen64plus-ui-console
-git clone https://github.com/mupen64plus/mupen64plus-video-glide64mk2
-git clone https://github.com/mupen64plus/mupen64plus-rsp-hle
-git clone https://github.com/mupen64plus/mupen64plus-video-glide64
-git clone https://github.com/mupen64plus/mupen64plus-video-arachnoid
-git clone https://github.com/mupen64plus/mupen64plus-rsp-z64
-git clone https://github.com/mupen64plus/mupen64plus-ui-python
-git clone https://github.com/mupen64plus/mupen64plus-rom
-# Exportando las "Rutas" para cada parte
-# Necesitaras tener instalada en tu distro la herramienta "cpuid"
-# Para poder utilizar las "banderas" (flags) de optimizacion correspondientes a tu procesador.
 
-# Optimizaciones
-export {C,CXX}FLAGS='-O3 -march=native -mtune=native'
-export OPTFLAGS='-O3 -march=native -mtune=native'
-
-# Cosas :
+#VARIABLES :
+CARPETA="/tmp/src/mupen64plus" #Directorio de Trabajo
 export DEBUG=1 # Simbolos de depuracion
 export V=1 # Salida Verbosa
 export PIC=1 # Codigo de Posicion Independiente 
 export HLEVIDEO=1 # RSP Z64 & CXD4 : Mover emulacion de tareas graficas al complemento de video HLE
 
-# Para el Nucleo :
-#export TARGETDIR="/media/Compartido/Videojuegos/Emuladores/Nintendo64/mupen64plus"
-export TARGETDIR="/opt/videojuegos/emuladores/mupen64plus-git"
-export PREFIX="$TARGETDIR"
-export SHAREDIR="$TARGETDIR/share"
-export LIBDIR="$TARGETDIR/lib"		    #Predeterminado para todas las distro -> /usr/lib/mupen64plus
-export INCDIR="$TARGETDIR/include"	    #Predeterminado para todas las distro -> /usr/include/mupen64plus
+# Exportando las "Rutas" para cada parte
+# Necesitaras tener instalada en tu distro la herramienta "cpuid"
+# Para poder utilizar las "banderas" (flags) de optimizacion correspondientes a tu procesador.
 
-##
+# Para el Nucleo :
+#export TARGETDIR="/usr"
+export TARGETDIR="/opt/videojuegos/emuladores/mupen64plus-git"
+export PREFIX="$TARGETDIR"			#Predeterminado para todas las distros -> /usr
+export SHAREDIR="$TARGETDIR/share"		#Predeterminado para todas las distros -> /usr/share
+export LIBDIR="$TARGETDIR/lib"			#Predeterminado para todas las distros -> /usr/lib/mupen64plus
+export INCDIR="$TARGETDIR/include"		#Predeterminado para todas las distros -> /usr/include/mupen64plus
 
 # Para Los Complementos :
-export PREFIX="$TARGETDIR"		    #Predeterminado para todas las distro -> /usr/share/games/mupen64plus
-export LIBDIR="$TARGETDIR/lib/"		    #Predeterminado para todas las distro -> /usr/lib/mupen64plus
-export PLUGINDIR="$TARGETDIR/plugin/"	    #Predeterminado para todas las distro -> /usr/lib/mupen64plus
+export PREFIX="$TARGETDIR"			#Predeterminado para todas las distros -> /usr/share/games/mupen64plus
+export LIBDIR="$TARGETDIR/lib/"			#Predeterminado para todas las distros -> /usr/lib/mupen64plus
+export PLUGINDIR="$TARGETDIR/plugin/"		#Predeterminado para todas las distros -> /usr/lib/mupen64plus
 
 # Para la Interfaz de Consola :
-export COREDIR="$TARGETDIR/lib/"	    #Predeterminado para todas las distro -> /usr/lib/mupen64plus
-export APIDIR="$TARGETDIR/include/"	    #Predeterminado para todas las distro -> /usr/include/mupen64plus
-export BINDIR="$TARGETDIR"		    #Predeterminado para todas las distro -> /usr/games
-export MANDIR="$TARGETDIR/share/"	    #Predeterminado para todas las distro -> /usr/share/man
-export APPSDIR="$TARGETDIR"		    #Predeterminado para todas las distro -> /usr/share/applications
-export ICONSDIR="$TARGETDIR/share/icons/"   #Predeterminado para todas las distro -> /usr/share/icons
+export COREDIR="$TARGETDIR/lib/"		#Predeterminado para todas las distros -> /usr/lib/mupen64plus
+export APIDIR="$TARGETDIR/include/"		#Predeterminado para todas las distros -> /usr/include/mupen64plus
+export BINDIR="$TARGETDIR"			#Predeterminado para todas las distros -> /usr/games
+export MANDIR="$TARGETDIR/share/"		#Predeterminado para todas las distros -> /usr/share/man
+export APPSDIR="$TARGETDIR"			#Predeterminado para todas las distros -> /usr/share/applications
+export ICONSDIR="$TARGETDIR/share/icons/"	#Predeterminado para todas las distros -> /usr/share/icons
 
-#001 El Nucleo :
+#Prevenir las funciones para que no sean usadas automaticamente
+#al iniciar este guion :
+unset core
+unset rsp_hle
+unset rsp_z64
+unset rsp_cxd4
+unset sdl_audio
+unset sdl_entrada
+unset video_arachnoid
+unset video_glide64
+unset video_glide64mk2
+unset video_rice
+unset video_z64
+unset video_gliden64
+unset igu_terminal
+unset igu_python
+unset igu_qt
+unset igu_ui
+unset rom
+
+function dependencias{
+#qmake=4.0.0
+
+#RESOLVER DEPENDENCIAS de forma Manual [Puede ser fuera de la funcion, o en otra funcion para esto]
+QMAKE=$(qmake -version | tail -n1 | awk '{print $4}')
+if (( $(awk 'BEGIN {print ("'4.0.0'" < "'$QMAKE'")}') )); then
+    echo 'QMake QT Version : '"$QMAKE"''
+    echo 'Version minima requerida o superior NO Encontrada'
+    echo 'Si intentara descargar, compilar e instalar QT Version : '"$QMAKE.tar.gz"''
+    mkdir -p "/tmp/cdf" ; cd "/tmp/cdf"
+    wget -c "https://www./$QMAKE.tar.gz"
+    tar xfvz "$QMAKE.tar.gz"
+    cd "$QMAKE"
+    ./autogen.sh
+fi
+#RESOLVER DEPENDENCIAS de forma Manual [Puede ser fuera de la funcion, o en otra funcion para esto]
+}
+
+function core(){
+#001 El Nucleo / La Base :
+git clone https://github.com/mupen64plus/mupen64plus-core
 cd "$CARPETA"
 cd mupen64plus-core/projects/unix
 make clean
 make all
 make install
+    #Enlazar la libreria principal de Mupen64Plus al Sistema :
+    if [ "$Arquitectura" = "x64" ]; then
+	if [ -d "/usr/x86_64-linux-gnu/lib64" ] ; then
+	    ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/x86_64-linux-gnu/lib64/libmupen64plus.so.2"
+	fi
+	if [ -d "/usr/x86_64-linux-gnu/lib" ] ; then
+	    ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/x86_64-linux-gnu/lib/libmupen64plus.so.2"
+	fi
+	if [ -d "/usr/local/lib/x86_64-linux-gnu" ] ; then
+	    ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib/x86_64-linux-gnu/libmupen64plus.so.2"
+	fi
+	if [ -d "/usr/lib/x86_64-linux-gnu" ] ; then
+	    ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/lib/x86_64-linux-gnu/libmupen64plus.so.2"
+	fi
+	if [ -d "/usr/local/lib64" ] ; then
+	    ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib64/libmupen64plus.so.2"
+	fi
+	if [ -d "/lib64" ] ; then
+	    ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/lib64/libmupen64plus.so.2"
+	fi
+	if [ -d "/lib64" ] ; then
+	    ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/lib64/libmupen64plus.so.2"
+	fi
+    fi
+    
+    if [ "$Arquitectura" = "x32" ]; then
+	if [ -d "/usr/local/lib" ] ; then
+	    ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib/libmupen64plus.so.2"
+	fi
+	if [ -d "/lib" ] ; then
+	    ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/lib/libmupen64plus.so.2"
+	fi
+	if [ -d "/usr/lib" ] ; then
+	    ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib/libmupen64plus.so.2"
+	fi
+    fi
 
-#Enlazar la libreria principal de Mupen64Plus al Sistema :
-if [ "$Arquitectura" = "x64" ]; then
-    if [ -d "/usr/x86_64-linux-gnu/lib64" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/x86_64-linux-gnu/lib64/libmupen64plus.so.2"
-    fi
-    if [ -d "/usr/x86_64-linux-gnu/lib" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/x86_64-linux-gnu/lib/libmupen64plus.so.2"
-    fi
-    if [ -d "/usr/local/lib/x86_64-linux-gnu" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib/x86_64-linux-gnu/libmupen64plus.so.2"
-    fi
-    if [ -d "/usr/lib/x86_64-linux-gnu" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/lib/x86_64-linux-gnu/libmupen64plus.so.2"
-    fi
-    if [ -d "/usr/local/lib64" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib64/libmupen64plus.so.2"
-    fi
-    if [ -d "/lib64" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/lib64/libmupen64plus.so.2"
-    fi
-    if [ -d "/lib64" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/lib64/libmupen64plus.so.2"
-    fi
-fi
-if [ "$Arquitectura" = "x32" ]; then
-    if [ -d "/usr/local/lib" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib/libmupen64plus.so.2"
-    fi
-    if [ -d "/lib" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/lib/libmupen64plus.so.2"
-    fi
-    if [ -d "/usr/lib" ] ; then
-	ln -s "$PREFIX/lib/libmupen64plus.so.2.0.0" "/usr/local/lib/libmupen64plus.so.2"
-    fi
-fi
+# Terminar de preparar los archivos necesarios
+# Crear / Actualizar los enlaces necesarios para ser utilizados con la rutina
+# y el enlazador "ld.so" del sistema
+chmod a+o+x "$TARGETDIR/mupen64plus.desktop" ; mv "$TARGETDIR/mupen64plus.desktop" "/usr/share/applications/"
+mv "$SHAREDIR/icons/48x48/apps/mupen64plus.png" "/usr/share/icons/hicolor/48x48/apps/"
+mv "$SHAREDIR/icons/scalable/apps/mupen64plus.svg" "/usr/share/icons/hicolor/scalable/apps/"
+mv "$SHAREDIR/man6/mupen64plus.6" "/usr/share/man/man6/"
+rm -rf "$SHAREDIR/icons"
+rm -rf "$SHAREDIR/man6"
+ldconfig
+}
 
-#002 Complemento RSP - HLE :
+function rsp_hle()
+{
+##002 Complemento : "Procesador de señal de realidad : Emulación de alto nivel" [RSP - HLE] :
+#Descargar
+git clone https://github.com/mupen64plus/mupen64plus-rsp-hle
+# Ir a a la carpeta establecida en la variable CARPETA
 cd "$CARPETA"
+# Inregresar a la carpeta "projects/unix" del directorio que se acaba de descargar de internet
 cd mupen64plus-rsp-hle/projects/unix
+# Limpiar cualquier archivo indeseado
 make clean
+# Compilar todo
 make all
+#Instalar complemento, en caso de que no tenga install, copiar manualmente la libreria generada "muepn64plus-rsp-hle.so" al directorio de complementos.
 make install
 cp *.so "$PLUGINDIR"
+}
 
-#003 Complemento RSP - z64 :
+
+function rsp_z64()
+{
+##003 Complemento : "Procesador de señal de realidad : Emulación de bajo nivel (z64)" [RSP - Z64] :
+#Descargar mediante git
+git clone https://github.com/mupen64plus/mupen64plus-rsp-z64
+# Ir a a la carpeta establecida en la variable CARPETA
 cd "$CARPETA"
+# Inregresar a la carpeta "projects/unix" del directorio que se acaba de descargar de internet
 cd mupen64plus-rsp-z64/projects/unix
+# Limpiar cualquier archivo indeseado
 make clean
+# Compilar todo
 make all
+#Instalar complemento, en caso de que no tenga install, copiar manualmente la libreria generada "muepn64plus-rsp-z64.so" al directorio de complementos.
 cp *.so "$PLUGINDIR"
+}
 
+function rsp_cxd4()
+{
 #004 Complemento RSP - cxd4
+##004 Complemento : Procesador de señal de realidad : Procesador de señal de tecnología (cxd4)" [RSP - CXD4] :
+#Descargar mediante git
+git clone https://github.com/mupen64plus/mupen64plus-rsp-cxd4
+# Ir a a la carpeta establecida en la variable CARPETA
 cd "$CARPETA"
 cd mupen64plus-rsp-cxd4/projects/unix
 make clean
 make all
 cp *.so "$PLUGINDIR"
+}
 
+
+function rom()
+{
+cd "$CARPETA"
+git clone https://github.com/mupen64plus/mupen64plus-rom
+cd mupen64plus-rom
+cp "m64p_test_rom.v64" "$PREFIX/"
+}
+
+function sdl_audio()
+{
 #005 Complemento de Audio - SDL
+git clone https://github.com/mupen64plus/mupen64plus-audio-sdl
 cd "$CARPETA"
 cd mupen64plus-audio-sdl/projects/unix
 make clean
 make all
 make install
+}
 
+function sdl_entrada()
+{
 #006 Complemento de Entrada - SDL
+git clone https://github.com/mupen64plus/mupen64plus-input-sdl
 cd "$CARPETA"
 cd mupen64plus-input-sdl/projects/unix
 make clean
 make all
 make install
+}
 
+function video_arachnoid(){
 #007 Complemento de Video - Arachnoid
+git clone https://github.com/mupen64plus/mupen64plus-video-arachnoid
 cd "$CARPETA"
 cd mupen64plus-video-arachnoid/projects/unix
 make clean
 make all
 make install
+}
 
+function video_glide64(){
 #008 Complemento de Video - Glide64
+git clone https://github.com/mupen64plus/mupen64plus-video-glide64
 cd "$CARPETA"
 cd mupen64plus-video-glide64/projects/unix
 make clean
 make all
 make install
 cd ../../..
+}
 
+function video_glide64mk2()
+{
 #009 Complemento de Video - Glide64mk2
+git clone https://github.com/mupen64plus/mupen64plus-video-glide64mk2
 cd "$CARPETA"
 cd mupen64plus-video-glide64mk2/projects/unix
 make clean
 make all
 make install
+}
 
+function video_rice()
+{
 #010 Complemento de Video - Rice
+git clone https://github.com/mupen64plus/mupen64plus-video-rice
 cd "$CARPETA"
 cd mupen64plus-video-rice/projects/unix
 make clean
 make all
 make install
+}
 
+function video_z64()
+{
 #011 Complemento de Video - z64
+git clone https://github.com/mupen64plus/mupen64plus-video-z64
 cd "$CARPETA"
 cd mupen64plus-video-z64/projects/unix
 make clean
 make all
 cp *.so "$PLUGINDIR" &> /dev/null
+}
 
+function igu_terminal()
+{
 #012 Interfaz de Consola:
+git clone https://github.com/mupen64plus/mupen64plus-ui-console
 cd "$CARPETA"
 cd mupen64plus-ui-console/projects/unix/
 make clean
 make all
 make install
+}
 
+function igu_python()
+{
 #013 Interfaz Python :
+git clone https://github.com/mupen64plus/mupen64plus-ui-python
 cd "$CARPETA"
 cd mupen64plus-ui-python
 python setup.py install
@@ -234,7 +357,10 @@ Keywords=Emulator;Nintendo64;Mupen64plus;' | tee /usr/share/applications/m64py.d
 chmod a+o+x /usr/share/applications/m64py.desktop
 cd /usr/share/icons/
 wget -c "https://github.com/mupen64plus/mupen64plus-ui-python/raw/master/xdg/m64py.png"
+}
 
+function igu_qt()
+{
 #014 Interfaz Qt :
 cd "$CARPETA"
 git clone https://github.com/dh4/mupen64plus-qt
@@ -244,8 +370,11 @@ make
 cp mupen64plus-qt /usr/bin/
 cp ./resources/mupen64plus-qt.desktop /usr/share/applications/mupen64plus-qt.desktop
 cp ./resources/images/mupen64plus.png /usr/share/icons/mupen64plus-qt.png
+}
 
-#015 Interfaz Qt Alternativa
+function igu_ui()
+{
+#015 Interfaz Qt Alternativa [Esta mejor trabajada]
 cd "$CARPETA"
 git clone https://github.com/robalni/mupen64plus-ui
 cd mupen64plus-ui/
@@ -265,7 +394,10 @@ Icon='"$PREFIX/mupen64plus-ui.png"'
 Terminal=false
 Categories=Game;Emulator;
 Keywords=emulator;mupen;mupen64plus;Nintendo;64;' | sudo tee /usr/share/applications/mupen64plus-ui.desktop
+}
 
+function video_gliden64()
+{
 #016 Complemento de Video - GLideN64
 cd "$CARPETA"
 git clone https://github.com/gonetz/GLideN64
@@ -277,15 +409,134 @@ cmake -DMUPENPLUSAPI=On .
 make
 cd plugin/Release/
 cp *.so "$PLUGINDIR"
+}
 
-# Terminar de preparar los archivos necesarios
-# Crear / Actualizar los enlaces necesarios para ser utilizados con la rutina
-# y el enlazador "ld.so" del sistema
-chmod a+o+x "$TARGETDIR/mupen64plus.desktop" ; mv "$TARGETDIR/mupen64plus.desktop" "/usr/share/applications/"
-mv "$SHAREDIR/icons/48x48/apps/mupen64plus.png" "/usr/share/icons/hicolor/48x48/apps/"
-mv "$SHAREDIR/icons/scalable/apps/mupen64plus.svg" "/usr/share/icons/hicolor/scalable/apps/"
-mv "$SHAREDIR/man6/mupen64plus.6" "/usr/share/man/man6/"
-rm -rf "$SHAREDIR/icons"
-rm -rf "$SHAREDIR/man6"
-ldconfig
+#Si el usuario no pasa ningun parametro indicar como se usa este guion
+if [ -z "$1" ]; then
+    MensajeBase
+fi
+
+#Guion : Aqui se ha definido como se utilizara este guion correctamente para instalar lo que se desee de forma especifica.
+#Entrada : Cualquier palabra pasada por el parametro $1 sera convertida en minusculas
+Entrada=$(echo "$1" | tr -s  '[:upper:]'  '[:lower:]')
+
+#Si el usuario usa este guion por ejemplo 
+#./esteguion instalar
+#le mostrara lo que esta contenido en la funcion 'echo'
+if [ "$Entrada" == "instalar" ]; then
+MensajeBase
+#Entrada : Cualquier palabra pasada por el parametro $2 sera convertida en minusculas
+Entrada=$(echo "$2" | tr -s  '[:upper:]'  '[:lower:]')
+	    if [ "$Entrada" == "nucleo" ]; then
+	    echo "Has decidido : $1 el $2"
+	    core
+	    fi
+	    if [ "$Entrada" == "rsp" ]; then
+	    echo -e 'Debes especificar que tipo de complemento "Procesador de señal de realidad (RSP) : Emulación de alto nivel (HLE)" quieres instalar, puede ser\nhle\nz64\cxd4'
+		    #Entrada : Cualquier palabra pasada por el parametro $3 sera convertida en minusculas
+		    Entrada=$(echo "$3" | tr -s  '[:upper:]'  '[:lower:]')
+		    if [ "$Entrada" == "hle" ]; then
+		    echo "Has decidido $1 el complemento : $3"
+		    rsp_hle
+		    fi
+		    if [ "$Entrada" == "z64" ]; then
+		    echo 'Has decidido '"'$1'"' el complemento : "Procesador de señal de realidad : Emulación de bajo nivel ('"$3"')'
+		    rsp_z64
+		    fi
+		    if [ "$Entrada" == "cxd4" ]; then
+		    echo 'Has decidido '"'$1'"' el complemento : "Procesador de señal de realidad : Procesador de señal de tecnología" ('"$3"')'
+		    rsp_cxd4
+		    fi
+	    fi
+	    if [ "$Entrada" == "sdl" ]; then
+	    echo -e "Debes especificar cual complemento SDL deseas instalar, esta disponible\n\nAudio\nEntrada"
+	    #Entrada : Cualquier palabra pasada por el parametro $3 sera convertida en minusculas
+	    Entrada=$(echo "$3" | tr -s  '[:upper:]'  '[:lower:]')
+		    if [ "$Entrada" == "audio" ]; then
+		    echo "Has seleccionado : $1 $3"
+		    echo 'Has decidido '"'$1'"' el complemento '"$2"' de '"$3"''
+		    sdl_audio
+		    fi
+		    if [ "$Entrada" == "entrada" ]; then
+		    echo 'Has decidido '"'$1'"' el complemento '"$2"' de '"$3"''
+		    sdl_entrada
+		    fi
+	    fi
+	    if [ "$Entrada" == "video" ]; then
+	    echo -e "Debes especificar cual complemento de video, esta disponible\n\nArachnoid\nGlide64\nGlide64Mk2\nGlideN64\nRice\nZ64"
+	    #Entrada : Cualquier palabra pasada por el parametro $3 sera convertida en minusculas
+	    Entrada=$(echo "$3" | tr -s  '[:upper:]'  '[:lower:]')
+		    if [ "$Entrada" == "arachnoid" ]; then
+		    echo "Has seleccionado : $1 $3"
+		    echo 'Has decidido '"'$1'"' el complemento de '"$2"' : '"$3"''
+		    video_arachnoid
+		    fi
+		    if [ "$Entrada" == "glide64" ]; then
+		    echo 'Has decidido '"'$1'"' el complemento de '"$2"' : '"$3"''
+		    video_glide64
+		    fi
+		    if [ "$Entrada" == "glide64mk2" ]; then
+		    echo 'Has decidido '"'$1'"' el complemento de '"$2"' : '"$3"''
+		    video_glide64mk2
+		    fi
+		    if [ "$Entrada" == "rice" ]; then
+		    echo 'Has decidido '"'$1'"' el complemento de '"$2"' : '"$3"''
+		    video_rice
+		    fi
+		    if [ "$Entrada" == "z64" ]; then
+		    echo 'Has decidido '"'$1'"' el complemento de '"$2"' : '"$3"''
+		    video_z64
+		    fi
+		    if [ "$Entrada" == "gliden64" ]; then
+		    echo 'Has decidido '"'$1'"' el complemento de '"$2"' : '"$3"''
+		    video_gliden64
+		    fi
+	    fi
+	    if [ "$Entrada" == "igu" ]; then
+	    echo -e "Debes especificar cual Interfaz para usuario quieres instalar\n\nTerminal\nPython\nQT\nUI"
+	    #Entrada : Cualquier palabra pasada por el parametro $3 sera convertida en minusculas
+	    Entrada=$(echo "$3" | tr -s  '[:upper:]'  '[:lower:]')
+		    if [ "$Entrada" == "terminal" ]; then
+		    echo 'Has decidido '"'$1'"' la interfaz para usuario : '"$3"''
+		    igu_terminal
+		    fi
+		    if [ "$Entrada" == "python" ]; then
+		    echo 'Has decidido '"'$1'"' la interfaz para usuario : '"$3"''
+		    igu_python
+		    fi
+		    if [ "$Entrada" == "qt" ]; then
+		    echo 'Has decidido '"'$1'"' la interfaz para usuario : '"$3"''
+		    igu_qt
+		    fi
+		    if [ "$Entrada" == "ui" ]; then
+		    echo 'Has decidido '"'$1'"' la interfaz para usuario : '"$3"''
+		    igu_ui
+		    fi
+	    fi
+	    if [ "$Entrada" == "todo" ]; then
+	    #Entrada : Cualquier palabra pasada por el parametro $3 sera convertida en minusculas
+	    echo "Has seleccionado : $1 $2"
+	    core
+	    rsp_hle
+	    rsp_z64
+	    rsp_cxd4
+	    sdl_audio
+	    sdl_entrada
+	    video_arachnoid
+	    video_glide64
+	    video_glide64mk2
+	    video_rice
+	    video_z64
+	    video_gliden64
+	    igu_terminal
+	    igu_python
+	    igu_qt
+	    igu_ui
+	    fi
+fi
+
+#
+#Final de la primera condicion : La que establece que este guion se debe usar con permisos administrativos
+#Por ejemplo la cuenta del SuperUsuario
+#
 fi
